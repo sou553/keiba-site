@@ -3,40 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f4f1e8">
-  <title>出走馬一覧</title>
-  <meta name="description" content="予想まとめ・人気馬の乖離・出走馬一覧をスマホで見やすく整理したレース詳細ページ。">
+  <meta name="theme-color" content="#f6f3ea">
+  <title>出走馬一覧 | 予想整理サイト</title>
+  <meta name="description" content="予想まとめ、人気馬の乖離、出走馬一覧をnetkeiba風で整理したスマホ向けレース詳細ページ。">
   <link rel="stylesheet" href="./static/style.css">
 </head>
 <body data-data-root="./data" data-race-page="race_detail.html" data-past-page="past_detail.html" data-betting-page="betting.html">
   <div class="site-shell">
-    <header class="site-topbar">
-      <div class="site-topbar__inner">
-        <a class="site-brand" href="./index.html">
-          <span class="site-brand__mark">競</span>
-          <span>
-            <span class="site-brand__title">予想整理サイト</span>
-            <span class="site-brand__sub">出走馬一覧 / 予想まとめ</span>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-brand" href="./index.html" aria-label="トップへ戻る">
+          <span class="site-brand__icon">競</span>
+          <span class="site-brand__texts">
+            <strong class="site-brand__title">予想整理サイト</strong>
+            <span class="site-brand__sub">出走馬一覧 / 予想まとめ / 人気乖離</span>
           </span>
         </a>
-        <div class="site-utility">上から 予想まとめ → 人気乖離 → 出馬表 の順で確認</div>
       </div>
     </header>
 
-    <main class="site-main">
+    <main class="page page--race-detail">
       <div id="race-app"></div>
-      <div class="page-foot-note">単勝オッズは <code>tansho_odds</code> を参照。人気とAI順位・適性順位のズレを優先表示。</div>
     </main>
   </div>
-
-  <script>
-  (function(){
-    const orig = EventTarget.prototype.addEventListener;
-    EventTarget.prototype.addEventListener = function(type, listener, options) {
-      return orig.call(this, type, listener, options);
-    };
-  })();
-  </script>
   <script src="./static/race.js"></script>
 </body>
 </html>
