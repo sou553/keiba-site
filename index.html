@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>予想まとめ</title>
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="./static/style.css">
+</head>
+<body data-data-root="./data" data-index-page="index.html" data-race-page="race_detail.html" data-past-page="past_detail.html" data-betting-page="betting.html">
+  <div class="page-shell">
+    <div class="page-topbar">
+      <div class="page-topbar__left">
+        <span class="page-badge">GitHub Pages 用</span>
+        <div class="page-link-row">
+          <a class="page-link-btn" href="./index.html">予想まとめ</a>
+          <a class="page-link-btn" href="./race_detail.html">出走馬一覧</a>
+          <a class="page-link-btn" href="./past_detail.html">過去走比較</a>
+          <a class="page-link-btn" href="./betting.html">買い目作成</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-note">
+      予想まとめページや。<code>./data/index.json</code> と <code>./data/YYYYMMDD/races.json</code> を読んで、日付ごとのレース一覧を表示する。<br>
+      URL例: <code>?date=20260322</code>
+    </div>
+
+    <div id="index-app"></div>
+
+    <noscript>
+      <div class="page-status is-error">JavaScript を有効にしてな。</div>
+    </noscript>
+
+    <div class="footer-note">
+      JSON は <code>./data/index.json</code> と <code>./data/YYYYMMDD/races.json</code>、JS は <code>./static/index.js</code> を読む前提やで。
+    </div>
+  </div>
+
+  <script src="./static/index.js"></script>
+</body>
+</html>

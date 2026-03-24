@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>過去走比較</title>
+  <meta name="robots" content="index,follow">
+  <style>
+:root {
+  --bg: #f6f7fb;
+  --panel: #ffffff;
+  --line: #d8deea;
+  --text: #1d2433;
+  --muted: #667085;
+  --accent: #3056d3;
+  --accent-soft: #eef3ff;
+  --danger: #b42318;
+  --success: #027a48;
+  --shadow: 0 10px 24px rgba(16, 24, 40, 0.08);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.page-shell { max-width: 1400px; margin: 0 auto; padding: 18px 16px 28px; }
+.page-topbar { display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 14px; }
+.page-topbar__left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.page-badge { display: inline-flex; align-items: center; padding: 6px 10px; background: var(--accent-soft); color: var(--accent); border-radius: 999px; font-size: 12px; font-weight: 700; }
+.page-link-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.page-link-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 0 14px; border: 1px solid var(--line); background: #fff; border-radius: 10px; color: var(--text); font-weight: 600; }
+.page-link-btn:hover { background: #f8fafc; text-decoration: none; }
+.page-note { margin-bottom: 14px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--muted); font-size: 13px; box-shadow: var(--shadow); }
+.page-status { margin-bottom: 14px; padding: 12px 14px; border-radius: 12px; background: #eef4ff; color: var(--accent); border: 1px solid #cdddff; font-weight: 600; }
+.page-status.is-error { background: #fff1f0; color: var(--danger); border-color: #f4c7c3; }
+.race-page, .past-page, .betting-page { display: grid; gap: 14px; }
+.race-page__header, .past-page__header, .betting-page__header,
+.race-page__summary, .past-page__summary, .betting-page__controls,
+.race-page__controls, .past-page__controls, .betting-page__result,
+.bottom-panel, .page-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+.race-page__header, .past-page__header, .betting-page__header,
+.race-page__summary, .past-page__summary, .betting-page__controls,
+.race-page__controls, .past-page__controls, .betting-page__result,
+.bottom-panel, .page-card { padding: 16px; }
+.race-title-sub { color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+.race-title-main { margin: 0 0 8px; font-size: 28px; line-height: 1.25; }
+.race-title-meta { color: var(--muted); font-size: 14px; }
+.race-page__tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.race-tab { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; background: #fff; border: 1px solid var(--line); color: var(--text); font-weight: 700; }
+.race-tab.is-active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.race-tab:hover { text-decoration: none; }
+.summary-chip-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.summary-chip { display: inline-flex; align-items: center; min-height: 32px; padding: 0 10px; border-radius: 999px; background: #f2f4f7; color: #344054; font-size: 13px; font-weight: 700; }
+.top-ai-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.top-ai-card { border: 1px solid var(--line); border-radius: 14px; background: #fff; padding: 12px; }
+.top-ai-card__rank { font-size: 13px; color: var(--accent); font-weight: 800; margin-bottom: 4px; }
+.top-ai-card__name { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+.top-ai-card__meta { display: flex; gap: 8px; flex-wrap: wrap; color: var(--muted); font-size: 13px; }
+.control-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; }
+label { display: grid; gap: 6px; font-size: 13px; font-weight: 700; color: #344054; }
+input[type="text"], input[type="number"], select, textarea {
+  width: 100%; min-height: 40px; border: 1px solid var(--line); border-radius: 10px;
+  background: #fff; padding: 8px 10px; color: var(--text); font: inherit;
+}
+button {
+  min-height: 40px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px;
+  background: #fff; color: var(--text); font: inherit; font-weight: 700; cursor: pointer;
+}
+button:hover { background: #f8fafc; }
+.help-text, .empty-text, .horse-mini-meta { color: var(--muted); font-size: 13px; }
+.race-page__table-wrap, .past-page__table-wrap { overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); }
+.race-table, .past-table { width: 100%; border-collapse: collapse; min-width: 980px; }
+th, td { padding: 12px 10px; border-bottom: 1px solid #e9edf5; vertical-align: top; }
+th { position: sticky; top: 0; background: #f8fafc; z-index: 1; text-align: left; font-size: 13px; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.horse-link, .horse-toggle-link { font-weight: 800; }
+.past-run-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.past-run-card { border: 1px solid var(--line); border-radius: 14px; background: #fff; padding: 12px; }
+.past-run-card__title { font-weight: 800; margin-bottom: 8px; }
+.past-run-card__meta { color: var(--muted); font-size: 13px; display: grid; gap: 4px; }
+.tag-list { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { display: inline-flex; align-items: center; min-height: 26px; padding: 0 8px; border-radius: 999px; background: #eef2ff; color: #3b3f97; font-size: 12px; font-weight: 700; }
+.bottom-panels { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.bottom-panel h3 { margin: 0 0 10px; font-size: 16px; }
+.bottom-panel ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; }
+.betting-page__picker { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.picker-column { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 14px; box-shadow: var(--shadow); }
+.picker-column h3 { margin: 0 0 10px; }
+.picker-grid { display: grid; gap: 8px; }
+.picker-chip { display: block; width: 100%; text-align: left; min-height: auto; padding: 10px 12px; }
+.picker-chip.is-selected { border-color: var(--accent); background: var(--accent-soft); }
+.picker-chip__head { display: block; font-weight: 800; margin-bottom: 4px; }
+.picker-chip__meta { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+.ticket-actions { margin-bottom: 12px; }
+.ticket-list { display: grid; gap: 10px; margin-bottom: 12px; }
+.ticket-card { display: grid; grid-template-columns: 48px 1fr; gap: 10px; border: 1px solid var(--line); border-radius: 14px; background: #fff; padding: 10px; }
+.ticket-card__index { display: grid; place-items: center; border-radius: 10px; background: #f2f4f7; font-weight: 800; }
+.ticket-card__title { font-weight: 800; margin-bottom: 4px; }
+.ticket-card__horses { margin-bottom: 4px; }
+.ticket-card__meta { color: var(--muted); font-size: 13px; }
+.footer-note { margin-top: 18px; color: var(--muted); font-size: 12px; text-align: center; }
+@media (max-width: 760px) {
+  .page-shell { padding: 14px 10px 20px; }
+  .race-title-main { font-size: 22px; }
+  .race-page__tabs { gap: 6px; }
+  .race-tab { min-height: 36px; padding: 0 10px; font-size: 13px; }
+}
+
+  </style>
+</head>
+<body data-data-root="./data" data-race-page="race_detail.html" data-past-page="past_detail.html" data-betting-page="betting.html">
+  <div class="page-shell">
+    <div class="page-topbar">
+      <div class="page-topbar__left">
+        <span class="page-badge">GitHub Pages 用</span>
+        <div class="page-link-row">
+          <a class="page-link-btn" href="./index.html">トップ</a>
+          <a class="page-link-btn" href="./race_detail.html">出走馬一覧</a>
+          <a class="page-link-btn" href="./past_detail.html">過去走比較</a>
+          <a class="page-link-btn" href="./betting.html">買い目作成</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-note">
+      過去走比較ページや。past_runs を使って比較・展開表示する。<br>
+      URL例: <code>?date=20260322&amp;race_id=202606020801</code>
+    </div>
+
+    <div id="past-app"></div>
+
+    <noscript>
+      <div class="page-status is-error">JavaScript を有効にしてな。</div>
+    </noscript>
+
+    <div class="footer-note">
+      JSON は <code>./data/YYYYMMDD/race_&lt;race_id&gt;.json</code>、JS は <code>./static/past.js</code> を読む前提やで。
+    </div>
+  </div>
+
+  <script src="./static/past.js"></script>
+</body>
+</html>
