@@ -1,11 +1,6 @@
 {
   "dates": [
     {
-      "race_date": "20260314",
-      "race_count": 36,
-      "path": "20260314/races.json"
-    },
-    {
       "race_date": "20260315",
       "race_count": 36,
       "path": "20260315/races.json"
