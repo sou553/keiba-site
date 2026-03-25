@@ -62,6 +62,7 @@
   function fmtNum(v, d = 1, fb = '—') { return getRA().fmtNum(v, d, fb); }
   function fmtPct01(v, d = 1, fb = '—') { return getRA().fmtPct(v, d, fb); }
   function escapeHtml(v) { return (getRA().escapeHtml || getRA().esc)(v); }
+  function formatRank(v) { const n = raToNum(v); return n === null ? '—' : `${fmt(n)}位`; }
 
   function avg(arr) {
     const xs = arr.filter((v) => Number.isFinite(v));
@@ -185,6 +186,7 @@
     const runSurface = normalizeSurface(run.surface || distanceInfo.surface);
     const runDistance = raToNum(run.distance_m || distanceInfo.distance);
     const sameDistance = currentDistance !== null && runDistance !== null && currentDistance === runDistance;
+    const sameVenue = !!currentCourse && !!courseName && currentCourse === courseName;
     const sameCourse = !!currentCourse && !!courseName && sameDistance && currentCourse === courseName && (!currentSurface || !runSurface || currentSurface === runSurface);
 
     return {
@@ -205,6 +207,7 @@
       distance_m: runDistance,
       distance_text: run.distance_text || distanceInfo.text || (runSurface && runDistance ? `${runSurface}${runDistance}` : null),
       going: run.going || null,
+      same_venue: sameVenue,
       time: run.time || null,
       margin: run.margin || null,
       passing: run.passing || null,
@@ -245,6 +248,7 @@
     const courseAdvScore = raToNum(horse.course_adv_score);
     const sameDistanceCount = calcRecentMetric(runs, (run) => run.same_distance);
     const sameCourseCount = calcRecentMetric(runs, (run) => run.same_course);
+    const sameVenueCount = calcRecentMetric(runs, (run) => run.same_venue);
     const recentTop3Count = calcRecentMetric(runs.slice(0, 3), (run) => run.finish !== null && run.finish <= 3);
     const recentBoardCount = calcRecentMetric(runs.slice(0, 3), (run) => run.finish !== null && run.finish <= 5);
     const recentAvgFinish = avg(runs.slice(0, 3).map((run) => raToNum(run.finish)));
@@ -267,6 +271,7 @@
         course_adv_score: courseAdvScore,
         same_distance_count: sameDistanceCount,
         same_course_count: sameCourseCount,
+        same_venue_count: sameVenueCount,
         recent_top3_count: recentTop3Count,
         recent_board_count: recentBoardCount,
         recent_avg_finish: recentAvgFinish,
@@ -276,27 +281,72 @@
         reasons_pos_display: filterRaceDetailReasonTags(normalizeReasonList(horse.reasons_pos)),
         reasons_neg_list: normalizeReasonList(horse.reasons_neg),
         style_est: horse.style || horse.style_est || null,
+        memo_year_sex: extractTaggedValue(normalizeReasonList(horse.reasons_pos), [/^(?:年齢性別|性齢)[:：](.+)$/]) || formatSexAgeForMemo(horse.sex_age),
+        memo_same_course: extractTaggedValue(normalizeReasonList(horse.reasons_pos), [/^同コース経験[:：](.+)$/]) || formatExperienceCount(sameCourseCount),
+        memo_same_venue: extractTaggedValue(normalizeReasonList(horse.reasons_pos), [/^同競馬場経験[:：](.+)$/]) || formatExperienceCount(sameVenueCount),
       },
     };
+  }
+
+  function getModelRank(horse, year) {
+    return horse.model_scores?.[year]?.rank ?? horse[`rank_${year}`] ?? horse[`pred_rank_${year}`] ?? horse[`ai_rank_${year}`] ?? null;
+  }
+  function getModelScore(horse, year) {
+    return horse.model_scores?.[year]?.score ?? horse[`_pwin_softmax_${year}`] ?? horse[`pwin_softmax_${year}`] ?? horse[`score_${year}`] ?? horse[`_score_${year}`] ?? null;
+  }
+
+  function detectModelYears(horses, rawYears) {
+    const base = Array.isArray(rawYears) && rawYears.length ? rawYears.map(String) : [];
+    ['2008', '2015', '2019'].forEach((year) => {
+      if (base.includes(year)) return;
+      if (horses.some((h) => getModelRank(h, year) !== null || getModelScore(h, year) !== null)) base.push(year);
+    });
+    return base;
+  }
+
+  function ensureModelRanks(horses, years) {
+    (years || []).forEach((year) => {
+      const scored = horses
+        .map((horse, idx) => ({ horse, idx, score: raToNum(getModelScore(horse, year)), rank: raToNum(getModelRank(horse, year)) }))
+        .filter((item) => item.score !== null || item.rank !== null);
+      if (!scored.length) return;
+
+      scored.forEach((item) => {
+        item.horse.model_scores = item.horse.model_scores || {};
+        item.horse.model_scores[year] = item.horse.model_scores[year] || {};
+        if (item.score !== null && item.horse.model_scores[year].score == null) item.horse.model_scores[year].score = item.score;
+        if (item.rank !== null && item.horse.model_scores[year].rank == null) item.horse.model_scores[year].rank = item.rank;
+      });
+
+      const needFill = scored.some((item) => item.rank === null);
+      if (!needFill) return;
+
+      const ranked = scored
+        .filter((item) => item.score !== null)
+        .sort((a, b) => (b.score - a.score) || (a.idx - b.idx));
+
+      let displayRank = 0;
+      let lastScore = null;
+      ranked.forEach((item, pos) => {
+        if (lastScore === null || item.score !== lastScore) displayRank = pos + 1;
+        item.horse.model_scores[year].rank = displayRank;
+        lastScore = item.score;
+      });
+    });
   }
 
   function prepareRaceData(raw) {
     const race = raw.race || {};
     const horses = (raw.horses || []).map(prepareHorse);
+    const modelYears = detectModelYears(horses, raw.modelYears);
+    ensureModelRanks(horses, modelYears);
     return {
       race_date: raw.race_date,
       race,
       horses,
       summary: raw.summary || {},
-      modelYears: raw.modelYears || ['2008', '2015', '2019'].filter((year) => horses.some((h) => h.model_scores?.[year])),
+      modelYears,
     };
-  }
-
-  function getModelRank(horse, year) {
-    return horse.model_scores?.[year]?.rank ?? null;
-  }
-  function getModelScore(horse, year) {
-    return horse.model_scores?.[year]?.score ?? null;
   }
 
   function analyzeRace(prepared) {
@@ -664,16 +714,18 @@
                   <div class="detail-kv__item"><div class="detail-kv__label">近3走要約</div><div class="detail-kv__value">${escapeHtml(buildRecentBrief(horse))}</div></div>
                   <div class="detail-kv__item"><div class="detail-kv__label">危険人気理由</div><div class="detail-kv__value">${escapeHtml(horse._analysis.danger_reason || '—')}</div></div>
                   <div class="detail-kv__item"><div class="detail-kv__label">穴候補理由</div><div class="detail-kv__value">${escapeHtml(horse._analysis.hole_reason || '—')}</div></div>
-                  <div class="detail-kv__item"><div class="detail-kv__label">同距離 / 同コース</div><div class="detail-kv__value">${escapeHtml(fmt(horse._norm.same_distance_count))}走 / ${escapeHtml(fmt(horse._norm.same_course_count))}走</div></div>
-                  <div class="detail-kv__item"><div class="detail-kv__label">近3走掲示板</div><div class="detail-kv__value">${escapeHtml(fmt(horse._norm.recent_board_count))}回 / 近3走</div></div>
+                  <div class="detail-kv__item"><div class="detail-kv__label">年齢性別</div><div class="detail-kv__value">${escapeHtml(fmt(horse._norm.memo_year_sex))}</div></div>
+                  <div class="detail-kv__item"><div class="detail-kv__label">同コース経験</div><div class="detail-kv__value">${escapeHtml(fmt(horse._norm.memo_same_course))}</div></div>
+                  <div class="detail-kv__item"><div class="detail-kv__label">同競馬場経験</div><div class="detail-kv__value">${escapeHtml(fmt(horse._norm.memo_same_venue))}</div></div>
+                  <div class="detail-kv__item"><div class="detail-kv__label">同距離 / 近3走掲示板</div><div class="detail-kv__value">${escapeHtml(fmt(horse._norm.same_distance_count))}走 / ${escapeHtml(fmt(horse._norm.recent_board_count))}回</div></div>
                 </div>
               </div>
               <div class="detail-box">
                 <h4 class="detail-box__title">モデル比較</h4>
                 <div class="model-rank-list compact-model-list">
-                  <div class="model-rank-item"><div><div class="model-rank-item__name">総合AI</div><div class="model-rank-item__meta">勝率 ${escapeHtml(fmtPct01(horse._norm.p_win))} / 複勝率 ${escapeHtml(fmtPct01(horse._norm.p_top3))}</div></div><div class="model-rank-item__rank">${escapeHtml(fmt(horse._norm.pred_order))}位</div></div>
-                  <div class="model-rank-item"><div><div class="model-rank-item__name">コース適性</div><div class="model-rank-item__meta">スコア ${escapeHtml(fmtNum(horse._norm.course_adv_score, 1))}</div></div><div class="model-rank-item__rank">${escapeHtml(fmt(horse._norm.course_adv_rank))}位</div></div>
-                  ${state.data.modelYears.map((year) => `<div class="model-rank-item"><div><div class="model-rank-item__name">${escapeHtml(year)}モデル</div><div class="model-rank-item__meta">スコア ${escapeHtml(fmtNum(getModelScore(horse, year), 3))}</div></div><div class="model-rank-item__rank">${escapeHtml(fmt(getModelRank(horse, year)))}位</div></div>`).join('')}
+                  <div class="model-rank-item"><div><div class="model-rank-item__name">総合AI</div><div class="model-rank-item__meta">勝率 ${escapeHtml(fmtPct01(horse._norm.p_win))} / 複勝率 ${escapeHtml(fmtPct01(horse._norm.p_top3))}</div></div><div class="model-rank-item__rank">${escapeHtml(formatRank(horse._norm.pred_order))}</div></div>
+                  <div class="model-rank-item"><div><div class="model-rank-item__name">コース適性</div><div class="model-rank-item__meta">スコア ${escapeHtml(fmtNum(horse._norm.course_adv_score, 1))}</div></div><div class="model-rank-item__rank">${escapeHtml(formatRank(horse._norm.course_adv_rank))}</div></div>
+                  ${state.data.modelYears.map((year) => `<div class="model-rank-item"><div><div class="model-rank-item__name">${escapeHtml(year)}モデル</div><div class="model-rank-item__meta">スコア ${escapeHtml(fmtNum(getModelScore(horse, year), 3))}</div></div><div class="model-rank-item__rank">${escapeHtml(formatRank(getModelRank(horse, year)))}</div></div>`).join('')}
                 </div>
               </div>
             </div>

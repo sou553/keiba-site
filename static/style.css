@@ -1246,8 +1246,8 @@ body { font-size: 15px; }
 .cell--action { justify-content: center; }
 .table-toggle { min-height: 38px; min-width: 74px; }
 .text-odds-hot { color: #b53d31; }
-.horse-detail-row { background: #faf6ee; border-top: 1px dashed #ddceb7; }
-.horse-detail-row__inner { padding: 14px 16px 16px; display: grid; gap: 14px; }
+.horse-detail-row { background: transparent; border-top: none; margin: 10px 0 14px; }
+.horse-detail-row__inner { padding: 16px 18px 18px; display: grid; gap: 14px; background: #faf6ee; border: 1px solid #e2d5c2; border-radius: 16px; }
 .horse-detail-grid--top { display: grid; grid-template-columns: 1.1fr .9fr; gap: 14px; }
 .compact-kv .detail-kv__item { min-height: auto; }
 .detail-box__title { margin: 0 0 10px; font-size: 14px; }
@@ -1302,8 +1302,8 @@ body { font-size: 15px; }
 }
 .past-horse-card__title { font-size: 15px; font-weight: 900; color: var(--blue-dark); margin-bottom: 4px; }
 .past-horse-card__meta { color: var(--muted); font-size: 12px; }
-.past-horse-card__detail { padding: 0 16px 14px; display:none; border-top:1px dashed #e6dac8; }
-.past-horse-card.is-open .past-horse-card__detail { display:grid; gap:10px; padding-top:14px; }
+.past-horse-card__detail { padding: 0 16px 16px; display:none; border-top:1px dashed #e6dac8; margin-top: 8px; }
+.past-horse-card.is-open .past-horse-card__detail { display:grid; gap:12px; padding-top:16px; }
 
 @media (max-width: 1100px) {
   .horse-table-head, .horse-table-row {
