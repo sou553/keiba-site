@@ -1,410 +1,216 @@
 (function () {
   'use strict';
 
-  const PAGE_DEFAULTS = {
-    race: 'race_detail.html',
-    past: 'past_detail.html',
-    betting: 'betting.html',
-  };
-
-  const JRA_PLACE_MAP = {
-    '01': '札幌', '02': '函館', '03': '福島', '04': '新潟', '05': '東京',
-    '06': '中山', '07': '中京', '08': '京都', '09': '阪神', '10': '小倉',
-  };
-
-  const state = {
-    dates: [],
-    selectedDate: null,
-    races: [],
-    filtered: [],
-    keyword: '',
-    course: '',
-    oddsOnly: false,
-    divergenceOnly: false,
-  };
-
+  const PAGE_DEFAULTS = { race: 'race_detail.html', past: 'past_detail.html', betting: 'betting.html' };
+  const state = { dates: [], selectedDate: null, races: [], details: new Map(), keyword: '', course: '', oddsOnly: false, divergenceOnly: false };
   const qs = (s, r = document) => r.querySelector(s);
-  const qsa = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const RA = window.RaceAnalysis;
 
-  const esc = (v) => String(v ?? '')
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  function getDataRoot() { return document.body?.dataset?.dataRoot || './data'; }
+  function getPage(kind) { return document.body?.dataset?.[`${kind}Page`] || PAGE_DEFAULTS[kind]; }
+  async function fetchJson(path) { const res = await fetch(path, { cache: 'no-store' }); if (!res.ok) throw new Error(`JSON取得失敗: ${res.status} ${path}`); return res.json(); }
+  function setStatus(msg, isError = false) { const el = qs('#index-status'); if (!el) return; el.hidden = false; el.textContent = msg; el.classList.toggle('is-error', !!isError); }
+  function clearStatus() { const el = qs('#index-status'); if (!el) return; el.hidden = true; el.textContent = ''; el.classList.remove('is-error'); }
+  function buildUrl(kind, raceId, date) { return `${getPage(kind)}?${new URLSearchParams({ date, race_id: raceId }).toString()}`; }
 
-  const toNum = (v) => {
-    if (v === null || v === undefined || v === '') return null;
-    const n = Number(v);
-    return Number.isFinite(n) ? n : null;
-  };
-
-  const fmt = (v, fb = '—') => (v === null || v === undefined || v === '' ? fb : String(v));
-  const fmtNum = (v, d = 1, fb = '—') => {
-    const n = toNum(v);
-    return n === null ? fb : n.toFixed(d).replace(/\.0$/, '');
-  };
-  const fmtPct = (v, d = 1, fb = '—') => {
-    const n = toNum(v);
-    return n === null ? fb : `${(n * 100).toFixed(d)}%`.replace(/\.0%$/, '%');
-  };
-
-  function getDataRoot() {
-    return document.body?.dataset?.dataRoot || './data';
-  }
-
-  function getPage(kind) {
-    return document.body?.dataset?.[`${kind}Page`] || PAGE_DEFAULTS[kind];
-  }
-
-  async function fetchJson(path) {
-    const res = await fetch(path, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`JSON取得失敗: ${res.status} ${path}`);
-    return res.json();
-  }
-
-  function setStatus(msg, isError = false) {
-    const el = qs('#index-status');
-    if (!el) return;
-    el.hidden = false;
-    el.textContent = msg;
-    el.classList.toggle('is-error', !!isError);
-  }
-
-  function clearStatus() {
-    const el = qs('#index-status');
-    if (!el) return;
-    el.hidden = true;
-    el.textContent = '';
-    el.classList.remove('is-error');
-  }
-
-  function normalizeCourse(race) {
-    if (race.course) return String(race.course);
-    const text = String(race.course_name || '');
-    for (const name of Object.values(JRA_PLACE_MAP)) {
-      if (text.includes(name)) return name;
-    }
-    const rid = String(race.race_id || '').replace(/\D/g, '');
-    if (rid.length >= 6) return JRA_PLACE_MAP[rid.slice(4, 6)] || '';
-    return '';
-  }
-
-  function raceStateLabel(race) {
-    const top = Array.isArray(race.top_ai) ? race.top_ai : [];
-    const p1 = toNum(top[0]?.p_win);
-    const p2 = toNum(top[1]?.p_win);
-    const odds1 = toNum(top[0]?.tansho_odds);
-
-    if (p1 !== null && p2 !== null && p1 - p2 <= 0.035) return ['混戦', 'badge--warn'];
-    if (p1 !== null && p1 >= 0.45 && odds1 !== null && odds1 <= 3.5) return ['本命堅め', 'badge--blue'];
-    if (p1 !== null && p1 < 0.24) return ['見送り寄り', 'badge--red'];
-    return ['標準', 'badge--plain'];
-  }
-
-  function quickInsight(race) {
-    const top = Array.isArray(race.top_ai) ? race.top_ai : [];
-    if (!top.length) return '上位候補情報なし';
-    const top1 = top[0];
-    const top2 = top[1];
-    const p1 = toNum(top1?.p_win);
-    const p2 = toNum(top2?.p_win);
-    const pop1 = toNum(top1?.popularity);
-
-    if (p1 !== null && p2 !== null && p1 - p2 >= 0.10) {
-      return `本命 ${fmt(top1.umaban)} ${fmt(top1.horse_name)} が優勢`;
-    }
-    if (pop1 !== null && pop1 >= 5) {
-      return `AI上位に人気薄気配あり: ${fmt(top1.umaban)} ${fmt(top1.horse_name)}`;
-    }
-    if (p1 !== null && p2 !== null && p1 - p2 <= 0.035) {
-      return '上位拮抗。相手比較を優先';
-    }
-    return `中心候補: ${fmt(top1.umaban)} ${fmt(top1.horse_name)}`;
-  }
-
-  function hasOdds(race) {
-    return (Array.isArray(race.top_ai) ? race.top_ai : []).some((h) => toNum(h?.tansho_odds) !== null);
-  }
-
-  function hasDivergence(race) {
-    const top = Array.isArray(race.top_ai) ? race.top_ai : [];
-    return top.some((h) => {
-      const po = toNum(h?.popularity);
-      const ai = toNum(h?.pred_order);
-      return po !== null && ai !== null && Math.abs(po - ai) >= 3;
-    });
-  }
-
-  function buildPageUrl(kind, race) {
-    const params = new URLSearchParams({ date: state.selectedDate, race_id: race.race_id });
-    return `${getPage(kind)}?${params.toString()}`;
-  }
-
-  function baseLayout() {
+  function layout() {
     const root = qs('#index-app');
-    if (!root) throw new Error('#index-app が見つからへん');
     root.innerHTML = `
       <div class="index-page">
         <div id="index-status" class="page-status" hidden></div>
-
         <section class="index-hero card">
           <div class="index-hero__text">
             <div class="badge badge--blue">予想まとめ</div>
-            <h1>まずトップで触るレースを選ぶ</h1>
-            <p>日付ごとの全レースを、上位評価と単勝オッズを中心に縦で見やすく整理。スマホでは上から順に読める形に寄せた。</p>
+            <h1>netkeiba寄せの予想トップ</h1>
+            <p>人気馬の評価、穴候補、危険人気をレース単位で先に見てから、出走馬一覧・過去走比較・買い目作成へ進める形や。</p>
           </div>
           <div id="hero-stats" class="hero-stats"></div>
         </section>
 
         <section class="card filter-panel">
-          <div class="section-title-row">
-            <div>
-              <h2 class="section-title">開催日</h2>
-              <div class="section-subtitle">新しい日付から順に表示。横スクロール対応。</div>
-            </div>
-          </div>
+          <div class="section-title-row"><div><h2 class="section-title">開催日</h2><div class="section-subtitle">横スクロール対応。新しい日付から順に表示。</div></div></div>
           <div id="date-strip" class="date-strip"></div>
         </section>
 
         <section class="card filter-panel">
-          <div class="section-title-row">
-            <div>
-              <h2 class="section-title">絞り込み</h2>
-              <div class="section-subtitle">レース名・馬名・競馬場・単勝あり・人気乖離ありで絞れる。</div>
-            </div>
-          </div>
+          <div class="section-title-row"><div><h2 class="section-title">絞り込み</h2><div class="section-subtitle">競馬場、キーワード、単勝あり、人気乖離ありで絞れる。</div></div></div>
           <div class="filter-grid">
-            <label>
-              キーワード
-              <input id="filter-keyword" type="text" placeholder="レース名・馬名・競馬場">
-            </label>
-            <label>
-              競馬場
-              <select id="filter-course"><option value="">すべて</option></select>
-            </label>
+            <label>キーワード<input id="filter-keyword" type="text" placeholder="レース名・馬名・競馬場"></label>
+            <label>競馬場<select id="filter-course"><option value="">すべて</option></select></label>
             <label class="check-pill"><input id="filter-odds" type="checkbox"> 単勝オッズあり</label>
             <label class="check-pill"><input id="filter-divergence" type="checkbox"> 人気乖離あり</label>
           </div>
-          <div style="margin-top:12px; display:flex; justify-content:flex-end;">
-            <button id="filter-reset" type="button">絞り込み解除</button>
-          </div>
+          <div style="margin-top:12px; display:flex; justify-content:flex-end;"><button id="filter-reset" type="button">絞り込み解除</button></div>
         </section>
 
         <section class="card race-list-panel">
-          <div class="section-title-row">
-            <div>
-              <h2 class="section-title">レース一覧</h2>
-              <div id="race-meta" class="section-subtitle"></div>
-            </div>
-          </div>
+          <div class="section-title-row"><div><h2 class="section-title">レース一覧</h2><div id="race-meta" class="section-subtitle"></div></div></div>
           <div id="race-list" class="race-list"></div>
         </section>
-      </div>
-    `;
+      </div>`;
   }
 
   function renderHeroStats() {
-    const el = qs('#hero-stats');
-    if (!el) return;
+    const el = qs('#hero-stats'); if (!el) return;
     const totalDates = state.dates.length;
-    const totalRaces = state.dates.reduce((sum, d) => sum + (toNum(d.race_count) || 0), 0);
-    const selectedRaces = state.races.length;
-    el.innerHTML = [
-      ['開催日数', totalDates],
-      ['総レース数', totalRaces],
-      ['選択日レース数', selectedRaces],
-    ].map(([label, value]) => `
-      <div class="hero-stat">
-        <div class="hero-stat__label">${esc(label)}</div>
-        <div class="hero-stat__value">${esc(fmt(value))}</div>
-      </div>
+    const totalRaces = state.races.length;
+    const analyzed = Array.from(state.details.values()).length;
+    el.innerHTML = [ ['開催日数', totalDates], ['選択日レース数', totalRaces], ['詳細読込', analyzed] ].map(([label, value]) => `
+      <div class="hero-stat"><div class="hero-stat__label">${RA.esc(label)}</div><div class="hero-stat__value">${RA.esc(value)}</div></div>
     `).join('');
   }
 
   function renderDates() {
-    const row = qs('#date-strip');
-    if (!row) return;
-    row.innerHTML = state.dates.map((d) => {
-      const active = d.race_date === state.selectedDate;
-      return `
-        <button class="date-chip${active ? ' is-active' : ''}" type="button" data-date="${esc(d.race_date)}">
-          <span>${esc(d.race_date)}</span>
-          <span class="date-chip__meta">${esc(fmt(d.race_count))}R</span>
-        </button>
-      `;
-    }).join('');
-
-    qsa('[data-date]', row).forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        const date = btn.getAttribute('data-date');
-        if (!date || date === state.selectedDate) return;
-        await loadDate(date);
-      });
-    });
+    const wrap = qs('#date-strip'); if (!wrap) return;
+    wrap.innerHTML = state.dates.map((d) => `
+      <button type="button" class="date-chip${state.selectedDate === d.race_date ? ' is-active' : ''}" data-date="${RA.esc(d.race_date)}">${RA.esc(d.race_date)}<span class="date-chip__meta">${RA.esc(d.race_count)}R</span></button>
+    `).join('');
+    wrap.querySelectorAll('[data-date]').forEach((btn) => btn.addEventListener('click', async () => {
+      state.selectedDate = btn.dataset.date;
+      await loadRaces(state.selectedDate);
+      renderDates();
+    }));
   }
 
-  function populateCourseOptions() {
-    const select = qs('#filter-course');
-    if (!select) return;
-    const current = state.course;
-    const courses = Array.from(new Set(state.races.map(normalizeCourse).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'ja'));
-    select.innerHTML = `<option value="">すべて</option>` + courses.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
-    select.value = courses.includes(current) ? current : '';
+  function courseOptions(races) {
+    return [...new Set((races || []).map((r) => r.course || '').filter(Boolean))].sort();
   }
 
-  function applyFilters() {
+  function raceHasOdds(data) { return (data?.horses || []).some((h) => RA.toNum(h.tansho_odds) !== null); }
+  function raceHasDivergence(data) { const a = data?._analysis; return !!(a && (a.holeCandidates.length || a.dangerPopulars.length || a.courseValueList.length || a.courseDangerList.length)); }
+
+  function raceMatch(detail) {
+    const race = detail.race || {};
+    if (state.course && String(race.course || '') !== state.course) return false;
+    if (state.oddsOnly && !raceHasOdds(detail)) return false;
+    if (state.divergenceOnly && !raceHasDivergence(detail)) return false;
     const kw = state.keyword.trim().toLowerCase();
-    state.filtered = state.races.filter((race) => {
-      const hay = [
-        race.race_name,
-        normalizeCourse(race),
-        race.course_name,
-        ...(Array.isArray(race.top_ai) ? race.top_ai.map((h) => h?.horse_name).filter(Boolean) : []),
-      ].join(' ').toLowerCase();
+    if (!kw) return true;
+    const hay = [race.race_name, race.course, ...(detail.horses || []).slice(0, 6).map((h) => h.horse_name)].filter(Boolean).join(' ').toLowerCase();
+    return hay.includes(kw);
+  }
 
-      if (kw && !hay.includes(kw)) return false;
-      if (state.course && normalizeCourse(race) !== state.course) return false;
-      if (state.oddsOnly && !hasOdds(race)) return false;
-      if (state.divergenceOnly && !hasDivergence(race)) return false;
-      return true;
-    }).sort((a, b) => {
-      const an = toNum(a.race_no);
-      const bn = toNum(b.race_no);
-      if (an !== null && bn !== null && an !== bn) return an - bn;
-      return String(a.race_id || '').localeCompare(String(b.race_id || ''));
-    });
+  function predictionBlock(detail) {
+    const s = detail._analysis?.summary; if (!s) return '';
+    const main = s.mainHorse;
+    const hole = s.holeHorses?.[0] || s.courseValueList?.[0] || null;
+    const danger = s.dangerHorses?.[0] || s.courseDangerList?.[0] || null;
+    return `
+      <div class="race-card-summary">
+        <div class="summary-head-row">
+          <span class="badge ${s.status === '本命寄り' ? 'badge--blue' : s.status === '見送り寄り' ? 'badge--red' : 'badge--warn'}">${RA.esc(s.status)}</span>
+          ${hole ? `<span class="tag tag--plus">穴 ${RA.esc(hole.umaban)} ${RA.esc(hole.horse_name)}</span>` : ''}
+          ${danger ? `<span class="tag tag--minus">危険 ${RA.esc(danger.umaban)} ${RA.esc(danger.horse_name)}</span>` : ''}
+        </div>
+        ${main ? `
+          <div class="race-card-mainpick"><strong>◎ ${RA.esc(main.umaban)} ${RA.esc(main.horse_name)}</strong></div>
+          <div class="race-card-metrics">勝率 ${RA.fmtPct(main.p_win)} / 複勝率 ${RA.fmtPct(main.p_top3)} / 単勝 ${RA.fmtNum(main.tansho_odds)} / 人気 ${RA.fmt(main.popularity)}</div>
+        ` : ''}
+        ${s.popularSummary?.length ? `
+          <div class="popular-strip">
+            ${s.popularSummary.slice(0, 3).map((p) => `<span class="mini-pill ${popularClass(p.label)}">${RA.esc(p.popularity)}人気 ${RA.esc(p.umaban)} ${RA.esc(p.label)}</span>`).join('')}
+          </div>
+        ` : ''}
+      </div>`;
+  }
+
+  function popularClass(label) {
+    if (label === '信頼') return 'mini-pill--trust';
+    if (label === '危険') return 'mini-pill--danger';
+    if (label === 'やや危険') return 'mini-pill--warn';
+    return 'mini-pill--plain';
   }
 
   function renderRaceList() {
-    applyFilters();
-    const meta = qs('#race-meta');
-    const list = qs('#race-list');
-    if (!list) return;
-    if (meta) meta.textContent = `${fmt(state.selectedDate)} / ${fmt(state.filtered.length)}件表示 / 全${fmt(state.races.length)}R`;
-
-    if (!state.filtered.length) {
-      list.innerHTML = '<div class="empty-panel">該当レースがないで。</div>';
+    const list = qs('#race-list'); const meta = qs('#race-meta'); if (!list) return;
+    const details = Array.from(state.details.values()).filter(raceMatch);
+    meta.textContent = `${state.selectedDate || '—'} / ${details.length}件表示 / 全${state.races.length}R`;
+    if (!details.length) {
+      list.innerHTML = '<div class="sheet empty-state">該当レースなし</div>';
       return;
     }
-
-    list.innerHTML = state.filtered.map((race) => {
-      const [stateText, stateClass] = raceStateLabel(race);
-      const course = normalizeCourse(race);
-      const top1 = (race.top_ai || [])[0] || {};
-      const top2 = (race.top_ai || [])[1] || null;
-      const top3 = (race.top_ai || [])[2] || null;
-      const metaText = [
-        race.race_no != null ? `${race.race_no}R` : null,
-        course,
-        race.surface,
-        race.distance ? `${race.distance}m` : null,
-        race.headcount ? `${race.headcount}頭` : null,
-      ].filter(Boolean).join(' / ');
-
+    list.innerHTML = details.map((detail) => {
+      const race = detail.race || {};
+      const courseLine = [race.race_no ? `${race.race_no}R` : '', race.course, race.surface, race.distance ? `${race.distance}m` : '', race.headcount ? `${race.headcount}頭` : ''].filter(Boolean).join(' / ');
       return `
-        <article class="race-row sheet">
-          <div class="race-row__top">
-            <div class="race-row__title-block">
-              <div class="race-row__date">${esc(state.selectedDate)}</div>
-              <h3 class="race-row__title">${esc(`${fmt(race.race_no)}R ${fmt(race.race_name, '')}`.trim())}</h3>
-              <div class="race-row__meta">${esc(metaText || '条件情報なし')}</div>
-              <div class="race-row__state">
-                <span class="badge ${esc(stateClass)}">${esc(stateText)}</span>
-                ${hasOdds(race) ? '<span class="badge badge--plain">単勝オッズあり</span>' : ''}
-                ${hasDivergence(race) ? '<span class="badge badge--warn">人気乖離あり</span>' : ''}
-              </div>
+        <article class="race-card race-card--compact">
+          <div class="race-card__head">
+            <div>
+              <div class="race-card__date">${RA.esc(detail.race_date || '')}</div>
+              <h3 class="race-card__title">${RA.esc(race.race_no ? `${race.race_no}R ` : '')}${RA.esc(race.race_name || '')}</h3>
+              <div class="race-card__meta">${RA.esc(courseLine)}</div>
             </div>
-            <div class="race-row__summary">
-              <div class="top-pick-box">
-                <div class="top-pick-box__label">AI 1位</div>
-                <div class="top-pick-box__name">${esc(`${fmt(top1.umaban)} ${fmt(top1.horse_name)}`)}</div>
-                <div class="top-pick-box__meta">勝率 ${esc(fmtPct(top1.p_win))} / 複勝率 ${esc(fmtPct(top1.p_top3))} / 単勝 ${esc(fmtNum(top1.tansho_odds))} / 人気 ${esc(fmt(top1.popularity))}</div>
-              </div>
-              <div class="inline-note">${esc(quickInsight(race))}</div>
-              <div class="inline-note">相手候補: ${esc([top2 && `${fmt(top2.umaban)} ${fmt(top2.horse_name)}`, top3 && `${fmt(top3.umaban)} ${fmt(top3.horse_name)}`].filter(Boolean).join(' / ') || '—')}</div>
+            <div class="tag-list">
+              <span class="tag">race_id ${RA.esc(race.race_id || '')}</span>
             </div>
           </div>
-          <div class="race-row__actions">
-            <a class="action-link action-link--primary" href="${esc(buildPageUrl('race', race))}">出走馬一覧</a>
-            <a class="action-link" href="${esc(buildPageUrl('past', race))}">過去走比較</a>
-            <a class="action-link" href="${esc(buildPageUrl('betting', race))}">買い目作成</a>
+          ${predictionBlock(detail)}
+          <div class="race-card__actions">
+            <a class="action-link action-link--primary" href="${RA.esc(buildUrl('race', race.race_id, detail.race_date))}">出走馬一覧</a>
+            <a class="action-link" href="${RA.esc(buildUrl('past', race.race_id, detail.race_date))}">過去走比較</a>
+            <a class="action-link" href="${RA.esc(buildUrl('betting', race.race_id, detail.race_date))}">買い目作成</a>
           </div>
-        </article>
-      `;
+        </article>`;
     }).join('');
   }
 
-  function bindControls() {
-    qs('#filter-keyword')?.addEventListener('input', (e) => {
-      state.keyword = e.currentTarget.value || '';
-      renderRaceList();
-    });
-    qs('#filter-course')?.addEventListener('change', (e) => {
-      state.course = e.currentTarget.value || '';
-      renderRaceList();
-    });
-    qs('#filter-odds')?.addEventListener('change', (e) => {
-      state.oddsOnly = !!e.currentTarget.checked;
-      renderRaceList();
-    });
-    qs('#filter-divergence')?.addEventListener('change', (e) => {
-      state.divergenceOnly = !!e.currentTarget.checked;
-      renderRaceList();
-    });
+  function bindFilters() {
+    qs('#filter-keyword')?.addEventListener('input', (e) => { state.keyword = e.target.value || ''; renderRaceList(); });
+    qs('#filter-course')?.addEventListener('change', (e) => { state.course = e.target.value || ''; renderRaceList(); });
+    qs('#filter-odds')?.addEventListener('change', (e) => { state.oddsOnly = !!e.target.checked; renderRaceList(); });
+    qs('#filter-divergence')?.addEventListener('change', (e) => { state.divergenceOnly = !!e.target.checked; renderRaceList(); });
     qs('#filter-reset')?.addEventListener('click', () => {
-      state.keyword = '';
-      state.course = '';
-      state.oddsOnly = false;
-      state.divergenceOnly = false;
-      qs('#filter-keyword').value = '';
-      qs('#filter-course').value = '';
-      qs('#filter-odds').checked = false;
-      qs('#filter-divergence').checked = false;
+      state.keyword = ''; state.course = ''; state.oddsOnly = false; state.divergenceOnly = false;
+      qs('#filter-keyword').value = ''; qs('#filter-course').value = ''; qs('#filter-odds').checked = false; qs('#filter-divergence').checked = false;
       renderRaceList();
     });
   }
 
-  function updateUrl(date) {
-    const u = new URL(window.location.href);
-    if (date) u.searchParams.set('date', date);
-    else u.searchParams.delete('date');
-    history.replaceState({}, '', u.toString());
-  }
-
-  function requestedDate() {
-    return new URLSearchParams(window.location.search).get('date');
-  }
-
-  async function loadIndex() {
-    const index = await fetchJson(`${getDataRoot()}/index.json`);
-    state.dates = Array.isArray(index?.dates) ? index.dates.slice() : [];
-    state.dates.sort((a, b) => String(b.race_date || '').localeCompare(String(a.race_date || '')));
-    if (!state.dates.length) throw new Error('index.json に dates が入ってへん。');
-  }
-
-  async function loadDate(date) {
-    setStatus(`${date} のレース一覧を読み込み中...`);
-    const payload = await fetchJson(`${getDataRoot()}/${date}/races.json`);
-    state.selectedDate = date;
-    state.races = Array.isArray(payload?.races) ? payload.races.slice() : [];
-    updateUrl(date);
+  async function loadRaces(date) {
+    setStatus('開催日のレース一覧を読み込み中…');
+    const data = await fetchJson(`${getDataRoot()}/${date}/races.json`);
+    state.races = data.races || [];
+    const select = qs('#filter-course');
+    if (select) select.innerHTML = `<option value="">すべて</option>${courseOptions(state.races).map((c) => `<option value="${RA.esc(c)}">${RA.esc(c)}</option>`).join('')}`;
+    state.details = new Map();
     renderHeroStats();
-    renderDates();
-    populateCourseOptions();
+    renderRaceList();
+    clearStatus();
+    await loadRaceDetails(date);
+  }
+
+  async function loadRaceDetails(date) {
+    setStatus('各レースの人気判定と予想まとめを計算中…');
+    const tasks = state.races.map(async (race) => {
+      const path = `${getDataRoot()}/${race.detail_path || `${date}/race_${race.race_id}.json`}`;
+      const detail = await fetchJson(path);
+      detail._analysis = RA.analyzeRaceHorses(detail.horses || []);
+      return detail;
+    });
+    const results = await Promise.all(tasks);
+    results.forEach((detail) => state.details.set(detail.race?.race_id || detail.race_id, detail));
+    renderHeroStats();
     renderRaceList();
     clearStatus();
   }
 
   async function init() {
-    baseLayout();
-    bindControls();
-    setStatus('トップJSONを読み込み中...');
-    await loadIndex();
-    const req = requestedDate();
-    const target = state.dates.some((d) => d.race_date === req) ? req : state.dates[0].race_date;
-    await loadDate(target);
+    try {
+      layout(); bindFilters();
+      setStatus('開催日一覧を読み込み中…');
+      const idx = await fetchJson(`${getDataRoot()}/index.json`);
+      state.dates = idx.dates || [];
+      state.selectedDate = new URLSearchParams(location.search).get('date') || state.dates[0]?.race_date || null;
+      renderDates();
+      renderHeroStats();
+      if (!state.selectedDate) throw new Error('開催日データが見つからへん');
+      await loadRaces(state.selectedDate);
+      renderDates();
+    } catch (err) {
+      console.error(err);
+      setStatus(err?.message || 'index.js 初期化に失敗した', true);
+    }
   }
 
-  init().catch((err) => {
-    console.error(err);
-    setStatus(err?.message || '初期化に失敗したで。', true);
-  });
+  document.addEventListener('DOMContentLoaded', init);
 })();

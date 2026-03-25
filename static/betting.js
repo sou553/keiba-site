@@ -1,459 +1,208 @@
 (function () {
   'use strict';
 
-  const PAGE_DEFAULTS = {
-    race: 'race_detail.html',
-    past: 'past_detail.html',
-    betting: 'betting.html',
-  };
+  const PAGE_DEFAULTS = { race: 'race_detail.html', past: 'past_detail.html', betting: 'betting.html' };
+  const state = { data: null, analysis: null, betType: 'umaren', betMode: 'nagashi', stake: 100, main: new Set(), sub: new Set(), third: new Set() };
+  const qs = (s, r = document) => r.querySelector(s);
+  const qsa = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const RA = window.RaceAnalysis;
 
-  const state = {
-    data: null,
-    betType: 'umaren',
-    betMode: 'nagashi',
-    stake: 100,
-    main: new Set(),
-    sub: new Set(),
-    third: new Set(),
-  };
-
-  function qs(s, root = document) { return root.querySelector(s); }
-  function qsa(s, root = document) { return Array.from(root.querySelectorAll(s)); }
-  function escapeHtml(v) { return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-  function fmt(v, fb = '—') { return v == null || v === '' ? fb : String(v); }
-  function toNum(v) { const n = Number(v); return Number.isFinite(n) ? n : null; }
-  function fmtNum(v, d = 1, fb = '—') { const n = toNum(v); return n == null ? fb : n.toFixed(d).replace(/\.0$/, ''); }
-  function fmtPct(v, d = 1, fb = '—') { const n = toNum(v); return n == null ? fb : `${(n * 100).toFixed(d)}%`; }
   function getDataRoot() { return document.body?.dataset?.dataRoot || './data'; }
-  function getPageName(kind) { return document.body?.dataset?.[`${kind}Page`] || PAGE_DEFAULTS[kind]; }
-
+  function getPage(kind) { return document.body?.dataset?.[`${kind}Page`] || PAGE_DEFAULTS[kind]; }
   function getJsonPath() {
-    const params = new URLSearchParams(window.location.search);
-    const direct = params.get('json') || document.body?.dataset?.json;
-    if (direct) return direct;
-    const raceId = params.get('race_id') || params.get('raceId') || document.body?.dataset?.raceId;
-    const date = params.get('date') || params.get('raceDate') || document.body?.dataset?.raceDate;
-    if (!raceId || !date) throw new Error('race_id と date をURLパラメータに入れてな。例: ?date=20260322&race_id=202606020801');
+    const p = new URLSearchParams(location.search);
+    const raceId = p.get('race_id'); const date = p.get('date');
+    if (!raceId || !date) throw new Error('race_id と date をURLに入れてな。');
     return `${getDataRoot()}/${date}/race_${raceId}.json`;
   }
-
-  function buildPageUrl(kind, race) {
-    const page = getPageName(kind);
-    const params = new URLSearchParams({ date: race.race_date, race_id: race.race_id });
-    return `${page}?${params.toString()}`;
-  }
-
-  async function fetchJson(path) {
-    const res = await fetch(path, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`JSON取得失敗: ${res.status} ${path}`);
-    return res.json();
-  }
-
-  function setStatus(message, isError = false) {
-    const el = qs('#betting-status');
-    if (!el) return;
-    el.textContent = message;
-    el.hidden = false;
-    el.classList.toggle('is-error', !!isError);
-  }
-
-  function horseKey(h) { return String(h.horse_id ?? h.umaban ?? h.horse_name ?? ''); }
-  function horses() { return (state.data?.horses || []).slice().sort((a,b)=>(toNum(a.pred_order) ?? 999) - (toNum(b.pred_order) ?? 999) || (toNum(a.umaban) ?? 999) - (toNum(b.umaban) ?? 999)); }
-  function findHorse(id) { return horses().find((h)=>horseKey(h) === id); }
-  function selected(kind) { return kind === 'main' ? state.main : kind === 'sub' ? state.sub : state.third; }
-  function selectedHorses(kind) { return horses().filter((h)=>selected(kind).has(horseKey(h))); }
-
-  function raceName(data) { return data.race?.race_name || data.horses?.[0]?.title || '買い目作成'; }
+  function buildUrl(kind) { const race = state.data?.race || {}; return `${getPage(kind)}?${new URLSearchParams({ date: state.data?.race_date, race_id: race.race_id }).toString()}`; }
+  async function fetchJson(path) { const res = await fetch(path, { cache: 'no-store' }); if (!res.ok) throw new Error(`JSON取得失敗: ${res.status} ${path}`); return res.json(); }
+  function setStatus(msg, isError = false) { const el = qs('#betting-status'); if (!el) return; el.hidden = false; el.textContent = msg; el.classList.toggle('is-error', !!isError); }
+  function horseKey(h) { return String(h.horse_id || h.umaban || h.horse_name); }
+  function horses() { return (state.analysis?.sorted || state.data?.horses || []).slice(); }
+  function sel(kind) { return kind === 'main' ? state.main : kind === 'sub' ? state.sub : state.third; }
+  function findHorse(id) { return horses().find((h) => horseKey(h) === id); }
+  function sortedSelected(kind) { return horses().filter((h) => sel(kind).has(horseKey(h))); }
 
   function renderLayout() {
     const root = qs('#betting-app');
-    if (!root) throw new Error('#betting-app が見つからへん。betting.html に <div id="betting-app"></div> を置いてな。');
     root.innerHTML = `
       <section class="betting-page">
         <div id="betting-status" class="page-status" hidden></div>
-        <section id="betting-hero" class="sheet betting-hero"></section>
+        <section id="betting-hero" class="sheet race-hero"></section>
         <nav id="betting-tabs" class="page-tab-strip"></nav>
-        <section class="sheet betting-reco-panel" id="betting-reco"></section>
+        <section id="betting-summary" class="sheet summary-panel"></section>
         <section class="sheet betting-control-panel">
-          <div class="section-title-row">
-            <div>
-              <h2 class="section-title">買い目設定</h2>
-              <div class="section-subtitle">保存せず、この場だけで点数と組み合わせを作る形や。</div>
-            </div>
-          </div>
+          <div class="section-title-row"><div><h2 class="section-title">買い目設定</h2><div class="section-subtitle">保存はせず、この場だけで点数と組み合わせを作る形や。</div></div></div>
           <div class="betting-control-grid">
-            <label>1点金額
-              <input type="text" id="bet-stake" inputmode="numeric" value="100">
-            </label>
-            <div>
-              <div class="compare-toolbar__meta">券種</div>
-              <div class="segmented-row" id="bet-type-row"></div>
-            </div>
-            <div>
-              <div class="compare-toolbar__meta">方式</div>
-              <div class="segmented-row" id="bet-mode-row"></div>
-            </div>
+            <label>1点金額<input id="bet-stake" type="text" inputmode="numeric" value="100"></label>
+            <div><div class="compare-toolbar__meta">券種</div><div class="segmented-row" id="bet-type-row"></div></div>
+            <div><div class="compare-toolbar__meta">方式</div><div class="segmented-row" id="bet-mode-row"></div></div>
           </div>
           <div class="quick-pick-row" id="quick-pick-row"></div>
           <div class="betting-panel-note">単勝は主選択、馬連・ワイドは主選択と相手、三連複は主選択・相手・三列目を使うで。</div>
         </section>
         <section class="sheet betting-picker-panel">
-          <div class="section-title-row">
-            <div>
-              <h2 class="section-title">馬選択</h2>
-              <div class="section-subtitle">スマホでは、主選択・相手・三列目のボタンを押すだけで作れる。</div>
-            </div>
-          </div>
-          <div class="pick-board" id="pick-board"></div>
+          <div class="section-title-row"><div><h2 class="section-title">馬選択</h2><div class="section-subtitle">主選択・相手・三列目を押して組み合わせる。</div></div></div>
+          <div id="pick-board" class="pick-board"></div>
         </section>
         <section class="sheet betting-result-panel">
-          <div class="ticket-box__head">
-            <div>
-              <h2 class="section-title" style="margin:0;">買い目プレビュー</h2>
-              <div class="section-subtitle">表示だけ。保存はせえへん。</div>
-            </div>
-            <div class="summary-chip-row" id="bet-summary-chips"></div>
-          </div>
-          <div class="ticket-list" id="ticket-list"></div>
+          <div class="ticket-box__head"><div><h2 class="section-title" style="margin:0;">買い目プレビュー</h2><div class="section-subtitle">表示だけ。保存はしない。</div></div><div class="summary-chip-row" id="bet-summary-chips"></div></div>
+          <div id="ticket-list" class="ticket-list"></div>
           <textarea id="ticket-text" class="ticket-textarea" readonly></textarea>
         </section>
-        <div class="betting-sticky-bar">
-          <div class="betting-sticky-bar__main">
-            <div class="compare-toolbar__meta">合計</div>
-            <div class="betting-sticky-bar__value" id="sticky-total">0点 / 0円</div>
-          </div>
-          <button type="button" class="action-link action-link--primary ticket-copy" id="copy-ticket">買い目をコピー</button>
-        </div>
-      </section>
-    `;
+        <div class="betting-sticky-bar"><div class="betting-sticky-bar__main"><div class="compare-toolbar__meta">合計</div><div id="sticky-total" class="betting-sticky-bar__value">0点 / 0円</div></div><button id="copy-ticket" type="button" class="action-link action-link--primary ticket-copy">買い目をコピー</button></div>
+      </section>`;
   }
 
-  function courseText(data) {
-    const race = data.race || {};
-    const first = data.horses?.[0] || {};
-    const distance = race.distance || first.distance_m || '';
-    const surface = race.surface || first.surface || '';
-    return [race.course, race.race_no ? `${race.race_no}R` : null, raceName(data), surface, distance ? `${distance}m` : null, race.headcount ? `${race.headcount}頭` : null].filter(Boolean).join(' / ');
-  }
-
-  function renderHero(data) {
-    const hero = qs('#betting-hero');
-    if (!hero) return;
-    const top = (data.summary?.top_ai || [])[0] || horses()[0] || {};
+  function renderHero() {
+    const hero = qs('#betting-hero'); const race = state.data?.race || {}; const s = state.analysis?.summary;
     hero.innerHTML = `
-      <div class="race-hero__head">
-        <div>
-          <div class="race-hero__date">${escapeHtml(fmt(data.race_date, ''))}</div>
-          <h1 class="race-hero__title">${escapeHtml(courseText(data))}</h1>
-          <div class="race-hero__meta">買い目作成ページ</div>
-        </div>
-        <div class="tag-list">
-          <span class="tag tag--blue">保存なし</span>
-          <span class="tag">AI1位 ${escapeHtml(fmt(top.umaban))} ${escapeHtml(fmt(top.horse_name))}</span>
-        </div>
-      </div>
-      <div class="info-banner">AI1位 ${escapeHtml(fmt(top.umaban))} ${escapeHtml(fmt(top.horse_name))} を軸候補にして、主選択・相手・三列目を片手操作で組める形にしてあるで。</div>
-    `;
-    document.title = `${courseText(data)} | 買い目作成`;
+      <div class="race-hero__head"><div><div class="race-hero__date">${RA.esc(state.data?.race_date || '')}</div><h1 class="race-hero__title">${RA.esc(race.course || '')} ${RA.esc(race.race_no || '')}R ${RA.esc(race.race_name || '')}</h1><div class="race-hero__meta">${RA.esc([race.surface, race.distance ? `${race.distance}m` : '', race.headcount ? `${race.headcount}頭` : ''].filter(Boolean).join(' / '))}</div></div><div class="tag-list"><span class="tag tag--blue">買い目作成</span><span class="tag">${RA.esc(s?.status || '混戦')}</span></div></div>
+      <div class="info-banner">${RA.esc(s?.comment || '')}</div>`;
   }
 
-  function renderTabs(data) {
+  function renderTabs() {
     const nav = qs('#betting-tabs');
-    if (!nav) return;
-    const race = data.race || {};
-    race.race_date = data.race_date;
-    const items = [
-      { kind: 'race', label: '出走馬一覧', active: false },
-      { kind: 'past', label: '過去走比較', active: false },
-      { kind: 'betting', label: '買い目作成', active: true },
-    ];
-    nav.innerHTML = items.map((item) => `<a class="race-tab${item.active ? ' is-active' : ''}" href="${escapeHtml(buildPageUrl(item.kind, race))}">${escapeHtml(item.label)}</a>`).join('');
+    nav.innerHTML = `
+      <a class="race-tab" href="${RA.esc(buildUrl('race'))}">出走馬一覧</a>
+      <a class="race-tab" href="${RA.esc(buildUrl('past'))}">過去走比較</a>
+      <a class="race-tab is-active" href="${RA.esc(buildUrl('betting'))}">買い目作成</a>`;
   }
 
-  function divergenceItems() {
-    return horses().map((horse) => {
-      const pop = toNum(horse.popularity);
-      const ai = toNum(horse.pred_order);
-      const course = toNum(horse.course_adv_rank || horse.race_rank);
-      const aiDelta = pop != null && ai != null ? pop - ai : null;
-      const courseDelta = pop != null && course != null ? pop - course : null;
-      return { horse, pop, ai, course, aiDelta, courseDelta };
-    });
-  }
-
-  function recommendations() {
-    const hs = horses();
-    const top = hs[0] || {};
-    const second = hs[1] || {};
-    const third = hs[2] || {};
-    const deltas = divergenceItems();
-    const value = deltas.filter((x) => x.aiDelta != null && x.aiDelta >= 3).sort((a,b)=>(b.aiDelta||-99)-(a.aiDelta||-99))[0];
-    const danger = deltas.filter((x) => x.pop != null && x.pop <= 5 && ((x.aiDelta != null && x.aiDelta <= -3) || (x.courseDelta != null && x.courseDelta <= -4))).sort((a,b)=>(a.aiDelta||99)-(b.aiDelta||99))[0];
-    const p1 = toNum(top.p_top3) ?? 0;
-    const p2 = toNum(second.p_top3) ?? 0;
-    let stateText = '混戦';
-    let note = '上位の力差は大きくない。相手を広げる方が無難。';
-    if (p1 >= 0.7 && p1 - p2 >= 0.15) { stateText = '本命寄り'; note = '総合1位の信頼度が高め。軸流しが組みやすい。'; }
-    else if (p1 < 0.5 || p1 - p2 < 0.05) { stateText = '見送り寄り'; note = '1位と2位の差が小さく、軸を決め切りにくい。'; }
-    return { top, second, third, value: value?.horse, danger: danger?.horse, stateText, note };
-  }
-
-  function horseLine(h) {
-    if (!h) return '該当なし';
-    return `${fmt(h.umaban)} ${fmt(h.horse_name)}`;
-  }
-
-  function renderReco() {
-    const box = qs('#betting-reco');
-    if (!box) return;
-    const reco = recommendations();
+  function renderSummary() {
+    const box = qs('#betting-summary'); const s = state.analysis.summary;
     box.innerHTML = `
-      <div class="reco-grid">
-        <div class="reco-box reco-box--highlight">
-          <div class="tag-list" style="margin-bottom:8px;">
-            <span class="badge ${reco.stateText === '本命寄り' ? 'badge--blue' : reco.stateText === '見送り寄り' ? 'badge--red' : 'badge--warn'}">${escapeHtml(reco.stateText)}</span>
-          </div>
-          <h2 class="reco-box__title">予想まとめ</h2>
-          <div class="reco-main-name">◎ ${escapeHtml(horseLine(reco.top))}</div>
-          <div class="metric-row">
-            <span class="badge badge--plain">勝率 ${escapeHtml(fmtPct(reco.top?.p_win))}</span>
-            <span class="badge badge--plain">複勝率 ${escapeHtml(fmtPct(reco.top?.p_top3))}</span>
-            <span class="badge badge--plain">単勝 ${escapeHtml(fmtNum(reco.top?.tansho_odds, 1))}</span>
-            <span class="badge badge--plain">人気 ${escapeHtml(fmt(reco.top?.popularity))}</span>
-          </div>
-          <div class="reco-box__text" style="margin-top:10px;">${escapeHtml(reco.note)}</div>
-        </div>
-        <div class="reco-side-stack">
-          <div class="reco-box">
-            <h3 class="reco-box__title">本線と穴</h3>
-            <div class="reco-list">
-              <div class="reco-item"><div><strong>○ ${escapeHtml(horseLine(reco.second))}</strong><div class="pick-meta">相手本線</div></div></div>
-              <div class="reco-item"><div><strong>▲ ${escapeHtml(horseLine(reco.third))}</strong><div class="pick-meta">上位3頭目</div></div></div>
-              <div class="reco-item"><div><strong>☆ ${escapeHtml(horseLine(reco.value))}</strong><div class="pick-meta">人気よりAIが高い妙味馬</div></div></div>
-            </div>
-          </div>
-          <div class="reco-box">
-            <h3 class="reco-box__title">危険人気</h3>
-            <div class="reco-box__text">${escapeHtml(reco.danger ? `${horseLine(reco.danger)} は人気先行気味。相手までに抑える形が無難。` : '目立つ危険人気は少なめ。')}
-            </div>
-          </div>
-        </div>
+      <div class="section-title-row"><div><h2 class="section-title">予想まとめ</h2><div class="section-subtitle">人気判定ロジックをそのまま使って、軸候補・穴・危険人気を先に整理。</div></div></div>
+      <div class="summary-grid summary-grid--2">
+        <section class="summary-card"><div class="summary-card__head"><span class="badge ${s.status === '本命寄り' ? 'badge--blue' : s.status === '見送り寄り' ? 'badge--red' : 'badge--warn'}">${RA.esc(s.status)}</span></div>
+          ${s.mainHorse ? `<div class="summary-main-horse">◎ ${RA.esc(s.mainHorse.umaban)} ${RA.esc(s.mainHorse.horse_name)}</div><div class="summary-main-meta">勝率 ${RA.fmtPct(s.mainHorse.p_win)} / 複勝率 ${RA.fmtPct(s.mainHorse.p_top3)} / 単勝 ${RA.fmtNum(s.mainHorse.tansho_odds)} / 人気 ${RA.fmt(s.mainHorse.popularity)}</div>` : ''}
+          <div class="summary-comment">${RA.esc(s.comment || '')}</div>
+          ${s.lineHorses?.length ? `<div class="summary-chip-row">${s.lineHorses.map((h, i) => `<span class="mini-pill mini-pill--plain">${i === 0 ? '○' : '▲'} ${RA.esc(h.umaban)} ${RA.esc(h.horse_name)}</span>`).join('')}</div>` : ''}
+        </section>
+        <section class="summary-card"><h3 class="mini-title">人気馬まとめ</h3>
+          ${(s.popularSummary || []).slice(0,5).map((p) => `<div class="popular-summary-item"><div><strong>${RA.esc(p.popularity)}人気 ${RA.esc(p.umaban)} ${RA.esc(p.horse_name)}</strong><div class="popular-summary-meta">${RA.esc(p.comment || '')}</div></div><span class="mini-pill ${popularClass(p.label)}">${RA.esc(p.label || '妥当')}</span></div>`).join('') || '<div class="section-subtitle">人気上位データなし</div>'}
+        </section>
       </div>
-    `;
+      <div class="summary-grid summary-grid--2" style="margin-top:12px;">
+        <section class="summary-card"><h3 class="mini-title">穴候補</h3>${(s.holeHorses || []).length ? s.holeHorses.map((h) => `<div class="summary-list-row"><strong>${RA.esc(h.umaban)} ${RA.esc(h.horse_name)}</strong><div class="summary-row-meta">${RA.esc(h.hole_reason || '')}</div></div>`).join('') : '<div class="section-subtitle">該当馬なし</div>'}</section>
+        <section class="summary-card"><h3 class="mini-title">危険人気</h3>${(s.dangerHorses || []).length ? s.dangerHorses.map((h) => `<div class="summary-list-row"><strong>${RA.esc(h.umaban)} ${RA.esc(h.horse_name)}</strong><div class="summary-row-meta">${RA.esc(h.danger_reason || '')}</div></div>`).join('') : '<div class="section-subtitle">該当馬なし</div>'}</section>
+      </div>`;
   }
+
+  function popularClass(label) { if (label === '信頼') return 'mini-pill--trust'; if (label === '危険') return 'mini-pill--danger'; if (label === 'やや危険') return 'mini-pill--warn'; return 'mini-pill--plain'; }
 
   function renderControls() {
-    const typeRow = qs('#bet-type-row');
-    const modeRow = qs('#bet-mode-row');
-    const quick = qs('#quick-pick-row');
-    if (!typeRow || !modeRow || !quick) return;
-
-    const typeItems = [
-      ['tansho', '単勝'], ['umaren', '馬連'], ['wide', 'ワイド'], ['trio', '三連複'],
-    ];
-    typeRow.innerHTML = typeItems.map(([key, label]) => `<button type="button" class="segmented-btn${state.betType === key ? ' is-active' : ''}" data-bet-type="${key}">${label}</button>`).join('');
-
-    const modeItems = [
-      ['box', 'BOX'], ['nagashi', '軸流し'], ['formation', 'フォーメーション'],
-    ];
-    modeRow.innerHTML = modeItems.map(([key, label]) => `<button type="button" class="segmented-btn${state.betMode === key ? ' is-active' : ''}" data-bet-mode="${key}">${label}</button>`).join('');
-
+    const typeRow = qs('#bet-type-row'); const modeRow = qs('#bet-mode-row'); const quick = qs('#quick-pick-row');
+    typeRow.innerHTML = [['tansho','単勝'],['umaren','馬連'],['wide','ワイド'],['trio','三連複']].map(([k,l]) => `<button type="button" class="segmented-btn${state.betType === k ? ' is-active' : ''}" data-bet-type="${k}">${l}</button>`).join('');
+    modeRow.innerHTML = [['box','BOX'],['nagashi','軸流し'],['formation','フォーメーション']].map(([k,l]) => `<button type="button" class="segmented-btn${state.betMode === k ? ' is-active' : ''}" data-bet-mode="${k}">${l}</button>`).join('');
+    qsa('[data-bet-type]', typeRow).forEach((btn) => btn.onclick = () => { state.betType = btn.dataset.betType; renderControls(); renderBoard(); renderTickets(); });
+    qsa('[data-bet-mode]', modeRow).forEach((btn) => btn.onclick = () => { state.betMode = btn.dataset.betMode; renderControls(); renderBoard(); renderTickets(); });
+    const s = state.analysis.summary; const top = s.mainHorse; const second = s.lineHorses?.[0]; const third = s.lineHorses?.[1]; const hole = s.holeHorses?.[0];
     quick.innerHTML = `
-      <button type="button" class="quick-pick" id="auto-top3">AI上位3頭を主選択</button>
-      <button type="button" class="quick-pick" id="auto-nagashi">AI1位を軸・2〜5位を相手</button>
-      <button type="button" class="quick-pick" id="clear-all">選択クリア</button>
-    `;
-
-    qs('#bet-stake').value = String(state.stake || 100);
-    qsa('[data-bet-type]', typeRow).forEach((btn)=>btn.addEventListener('click', ()=>{ state.betType = btn.dataset.betType; renderControls(); renderPickBoard(); renderTickets(); }));
-    qsa('[data-bet-mode]', modeRow).forEach((btn)=>btn.addEventListener('click', ()=>{ state.betMode = btn.dataset.betMode; renderControls(); renderPickBoard(); renderTickets(); }));
-    qs('#bet-stake')?.addEventListener('input', (e)=>{ const n = Number(String(e.target.value).replace(/[^\d]/g, '')); state.stake = Number.isFinite(n) && n > 0 ? n : 100; renderTickets(); });
-    qs('#auto-top3')?.addEventListener('click', ()=>{
-      state.main.clear(); state.sub.clear(); state.third.clear();
-      horses().slice(0,3).forEach((h)=>state.main.add(horseKey(h)));
-      renderPickBoard(); renderTickets();
+      <button type="button" class="action-link" data-quick="axis-top">AI1位を軸にする</button>
+      <button type="button" class="action-link" data-quick="axis-top2">AI上位2頭を主選択</button>
+      <button type="button" class="action-link" data-quick="axis-hole">穴候補を相手に入れる</button>
+      <button type="button" class="action-link" data-quick="clear">選択解除</button>`;
+    qsa('[data-quick]', quick).forEach((btn) => btn.onclick = () => {
+      const action = btn.dataset.quick;
+      if (action === 'clear') { state.main.clear(); state.sub.clear(); state.third.clear(); renderBoard(); renderTickets(); return; }
+      if (action === 'axis-top' && top) { state.main = new Set([horseKey(findHorseByUmaban(top.umaban) || top)]); if (second) state.sub = new Set([horseKey(findHorseByUmaban(second.umaban) || second)]); }
+      if (action === 'axis-top2') { state.main = new Set([horseKey(findHorseByUmaban(top?.umaban) || top), horseKey(findHorseByUmaban(second?.umaban) || second)].filter(Boolean)); }
+      if (action === 'axis-hole' && hole) { state.sub.add(horseKey(findHorseByUmaban(hole.umaban) || hole)); }
+      renderBoard(); renderTickets();
     });
-    qs('#auto-nagashi')?.addEventListener('click', ()=>{
-      state.main.clear(); state.sub.clear(); state.third.clear();
-      const hs = horses();
-      if (hs[0]) state.main.add(horseKey(hs[0]));
-      hs.slice(1,5).forEach((h)=>state.sub.add(horseKey(h)));
-      hs.slice(1,6).forEach((h)=>state.third.add(horseKey(h)));
-      state.betMode = 'nagashi';
-      renderControls(); renderPickBoard(); renderTickets();
-    });
-    qs('#clear-all')?.addEventListener('click', ()=>{ state.main.clear(); state.sub.clear(); state.third.clear(); renderPickBoard(); renderTickets(); });
+    qs('#bet-stake').value = String(state.stake);
+    qs('#bet-stake').onchange = () => { state.stake = Math.max(100, Number(String(qs('#bet-stake').value).replace(/\D/g,'')) || 100); qs('#bet-stake').value = String(state.stake); renderTickets(); };
   }
+
+  function findHorseByUmaban(umaban) { return horses().find((h) => String(h.umaban) === String(umaban)); }
 
   function toggle(kind, id) {
-    const set = selected(kind);
+    const set = sel(kind);
     if (set.has(id)) set.delete(id); else set.add(id);
-    if (kind === 'main') { state.sub.delete(id); if (state.betType !== 'trio') state.third.delete(id); }
-    if (kind === 'sub' && state.betType !== 'trio') state.third.delete(id);
-    renderPickBoard(); renderTickets();
   }
 
-  function renderPickBoard() {
+  function renderBoard() {
     const board = qs('#pick-board');
-    if (!board) return;
-    const showThird = state.betType === 'trio' && state.betMode !== 'box';
-    board.innerHTML = horses().map((horse) => {
-      const id = horseKey(horse);
-      const mainOn = state.main.has(id);
-      const subOn = state.sub.has(id);
-      const thirdOn = state.third.has(id);
-      const danger = recommendations().danger;
-      const value = recommendations().value;
-      const tags = [];
-      if ((state.data.summary?.top_ai || []).slice(0,5).some((h)=>String(h.umaban) === String(horse.umaban))) tags.push('<span class="tag tag--blue">上位</span>');
-      if (danger && String(danger.umaban) === String(horse.umaban)) tags.push('<span class="tag tag--minus">危険人気</span>');
-      if (value && String(value.umaban) === String(horse.umaban)) tags.push('<span class="tag tag--plus">妙味</span>');
+    const rows = horses();
+    board.innerHTML = rows.map((h) => {
+      const id = horseKey(h); const main = state.main.has(id); const sub = state.sub.has(id); const third = state.third.has(id);
+      const label = h._analysis?.popular_label || '';
       return `
-        <article class="pick-card${mainOn ? ' is-main' : ''}">
-          <div class="pick-head">
-            <div>
-              <div class="pick-name">${escapeHtml(fmt(horse.umaban))} ${escapeHtml(fmt(horse.horse_name))}</div>
-              <div class="pick-meta">AI${escapeHtml(fmt(horse.pred_order))} / 単勝${escapeHtml(fmtNum(horse.tansho_odds, 1))} / 人気${escapeHtml(fmt(horse.popularity))}</div>
-            </div>
-            <div class="tag-list">${tags.join('')}</div>
+        <div class="pick-card">
+          <div class="pick-card__head"><div><strong>${RA.esc(h.umaban)} ${RA.esc(h.horse_name)}</strong><div class="pick-meta">AI${RA.esc(RA.fmt(h.pred_order))} / 人気${RA.esc(RA.fmt(h.popularity))} / 単勝${RA.esc(RA.fmtNum(h.tansho_odds))}</div></div><div class="tag-list">${label ? `<span class="mini-pill ${popularClass(label)}">${RA.esc(label)}</span>` : ''}${h._analysis?.hole_label ? `<span class="mini-pill mini-pill--trust">${RA.esc(h._analysis.hole_label)}</span>` : ''}${h._analysis?.danger_label ? `<span class="mini-pill mini-pill--danger">${RA.esc(h._analysis.danger_label)}</span>` : ''}</div></div>
+          <div class="pick-btn-row">
+            <button type="button" class="pick-btn${main ? ' is-active' : ''}" data-kind="main" data-id="${RA.esc(id)}">主選択</button>
+            <button type="button" class="pick-btn${sub ? ' is-active' : ''}" data-kind="sub" data-id="${RA.esc(id)}">相手</button>
+            <button type="button" class="pick-btn${third ? ' is-active' : ''}" data-kind="third" data-id="${RA.esc(id)}">三列目</button>
           </div>
-          <div class="metric-row">
-            <span class="badge badge--plain">勝率 ${escapeHtml(fmtPct(horse.p_win))}</span>
-            <span class="badge badge--plain">複勝率 ${escapeHtml(fmtPct(horse.p_top3))}</span>
-            <span class="badge badge--plain">適性 ${escapeHtml(fmt(horse.course_adv_rank || horse.race_rank))}</span>
-          </div>
-          <div class="pick-actions">
-            <button type="button" class="pick-btn${mainOn ? ' is-selected' : ''}" data-kind="main" data-id="${escapeHtml(id)}">主選択</button>
-            <button type="button" class="pick-btn${subOn ? ' is-selected' : ''}" data-kind="sub" data-id="${escapeHtml(id)}">相手</button>
-            ${showThird ? `<button type="button" class="pick-btn${thirdOn ? ' is-selected' : ''}" data-kind="third" data-id="${escapeHtml(id)}">三列目</button>` : ''}
-          </div>
-        </article>
-      `;
+        </div>`;
     }).join('');
-
-    qsa('[data-kind]', board).forEach((btn)=>btn.addEventListener('click', ()=>toggle(btn.dataset.kind, btn.dataset.id)));
+    qsa('[data-kind]', board).forEach((btn) => btn.onclick = () => { toggle(btn.dataset.kind, btn.dataset.id); renderBoard(); renderTickets(); });
   }
 
-  function combinations(list, size) {
+  function combinations(arr, k) {
     const out = [];
-    function rec(start, picked) {
-      if (picked.length === size) { out.push(picked.slice()); return; }
-      for (let i = start; i < list.length; i += 1) { picked.push(list[i]); rec(i + 1, picked); picked.pop(); }
+    function rec(start, pick) {
+      if (pick.length === k) { out.push(pick.slice()); return; }
+      for (let i = start; i < arr.length; i += 1) { pick.push(arr[i]); rec(i + 1, pick); pick.pop(); }
     }
-    rec(0, []);
-    return out;
+    rec(0, []); return out;
   }
-
-  function sortedPair(a,b) { return [a,b].sort((x,y)=>(toNum(x.umaban)??999)-(toNum(y.umaban)??999)); }
-  function sortedTriple(a,b,c) { return [a,b,c].sort((x,y)=>(toNum(x.umaban)??999)-(toNum(y.umaban)??999)); }
-  function uniqTickets(tickets) {
-    const map = new Map();
-    tickets.forEach((t)=>map.set(`${t.type}:${t.horses.map((h)=>h.umaban).join('-')}`, t));
-    return Array.from(map.values());
-  }
+  function uniqSorted(arr) { return [...new Set(arr)].sort((a, b) => (RA.toNum(a) ?? 999) - (RA.toNum(b) ?? 999) || String(a).localeCompare(String(b))); }
 
   function buildTickets() {
-    const main = selectedHorses('main');
-    const sub = selectedHorses('sub');
-    const third = selectedHorses('third');
-    const tickets = [];
-
-    if (state.betType === 'tansho') {
-      main.forEach((h)=>tickets.push({ type: '単勝', horses: [h] }));
-      return tickets;
+    const main = sortedSelected('main').map((h) => String(h.umaban));
+    const sub = sortedSelected('sub').map((h) => String(h.umaban));
+    const third = sortedSelected('third').map((h) => String(h.umaban));
+    let tickets = [];
+    if (state.betType === 'tansho') tickets = main.map((u) => [u]);
+    else if (state.betType === 'umaren' || state.betType === 'wide') {
+      if (state.betMode === 'box') tickets = combinations(uniqSorted([...main, ...sub, ...third]), 2);
+      else tickets = main.flatMap((m) => uniqSorted(sub).filter((s) => s !== m).map((s) => uniqSorted([m, s])));
+    } else if (state.betType === 'trio') {
+      if (state.betMode === 'box') tickets = combinations(uniqSorted([...main, ...sub, ...third]), 3);
+      else if (state.betMode === 'formation') tickets = main.flatMap((m) => uniqSorted(sub).filter((s) => s !== m).flatMap((s) => uniqSorted(third).filter((t) => t !== m && t !== s).map((t) => uniqSorted([m, s, t]))));
+      else tickets = main.flatMap((m) => combinations(uniqSorted(sub).filter((s) => s !== m), 2).map((pair) => uniqSorted([m, ...pair])));
     }
-
-    if (state.betType === 'umaren' || state.betType === 'wide') {
-      const label = state.betType === 'umaren' ? '馬連' : 'ワイド';
-      if (state.betMode === 'box') combinations(main, 2).forEach((pair)=>tickets.push({ type: label, horses: sortedPair(pair[0], pair[1]) }));
-      if (state.betMode === 'nagashi') main.forEach((m)=>sub.filter((s)=>horseKey(s)!==horseKey(m)).forEach((s)=>tickets.push({ type: label, horses: sortedPair(m, s) })));
-      if (state.betMode === 'formation') {
-        main.forEach((m)=>sub.forEach((s)=>{ if (horseKey(m) !== horseKey(s)) tickets.push({ type: label, horses: sortedPair(m, s) }); }));
-      }
-      return uniqTickets(tickets);
-    }
-
-    if (state.betType === 'trio') {
-      if (state.betMode === 'box') combinations(main, 3).forEach((tr)=>tickets.push({ type: '三連複', horses: sortedTriple(tr[0], tr[1], tr[2]) }));
-      if (state.betMode === 'nagashi') main.forEach((m)=>combinations(sub.filter((s)=>horseKey(s)!==horseKey(m)), 2).forEach((pair)=>tickets.push({ type: '三連複', horses: sortedTriple(m, pair[0], pair[1]) })));
-      if (state.betMode === 'formation') {
-        main.forEach((a)=>sub.forEach((b)=>third.forEach((c)=>{
-          const ids = [horseKey(a), horseKey(b), horseKey(c)];
-          if (new Set(ids).size === 3) tickets.push({ type: '三連複', horses: sortedTriple(a,b,c) });
-        })));
-      }
-      return uniqTickets(tickets);
-    }
-
-    return tickets;
-  }
-
-  function ticketText(tickets) {
-    const lines = tickets.map((t)=>`${t.type} ${t.horses.map((h)=>`${fmt(h.umaban)} ${fmt(h.horse_name)}`).join(' - ')}`);
-    return lines.join('\n');
+    const seen = new Set();
+    return tickets.filter((t) => { const key = t.join('-'); if (seen.has(key)) return false; seen.add(key); return true; });
   }
 
   function renderTickets() {
     const tickets = buildTickets();
-    const list = qs('#ticket-list');
-    const area = qs('#ticket-text');
-    const chips = qs('#bet-summary-chips');
-    const sticky = qs('#sticky-total');
-    if (!list || !area || !chips || !sticky) return;
-    const total = tickets.length * (Number(state.stake) || 0);
-    chips.innerHTML = `
-      <span class="summary-chip badge badge--blue">${escapeHtml(tickets.length)}点</span>
-      <span class="summary-chip badge badge--plain">${escapeHtml(fmt(state.stake))}円/点</span>
-      <span class="summary-chip badge badge--warn">${escapeHtml(total.toLocaleString('ja-JP'))}円</span>
-    `;
+    const list = qs('#ticket-list'); const text = qs('#ticket-text'); const chips = qs('#bet-summary-chips'); const sticky = qs('#sticky-total');
+    const total = tickets.length * state.stake;
+    chips.innerHTML = `<span class="mini-pill mini-pill--plain">${tickets.length}点</span><span class="mini-pill mini-pill--plain">${total.toLocaleString('ja-JP')}円</span><span class="mini-pill mini-pill--plain">${state.betType === 'tansho' ? '単勝' : state.betType === 'umaren' ? '馬連' : state.betType === 'wide' ? 'ワイド' : '三連複'}</span>`;
     sticky.textContent = `${tickets.length}点 / ${total.toLocaleString('ja-JP')}円`;
-
-    if (!tickets.length) {
-      list.innerHTML = '<div class="empty-panel">まだ買い目ができてへん。主選択や相手を押してみてな。</div>';
-      area.value = '';
-      return;
-    }
-    list.innerHTML = tickets.map((ticket) => `
-      <article class="ticket-card">
-        <div class="ticket-card__type">${escapeHtml(ticket.type)}</div>
-        <div class="ticket-card__horses">${escapeHtml(ticket.horses.map((h)=>`${fmt(h.umaban)} ${fmt(h.horse_name)}`).join(' - '))}</div>
-        <div class="ticket-card__meta">${escapeHtml(fmt(state.stake))}円 / 点</div>
-      </article>
-    `).join('');
-    area.value = ticketText(tickets);
+    list.innerHTML = tickets.length ? tickets.map((t) => `<div class="ticket-item"><span class="ticket-item__bet">${t.join(' - ')}</span><span class="ticket-item__yen">${state.stake}円</span></div>`).join('') : '<div class="section-subtitle">選択を入れるとここに買い目が出る。</div>';
+    text.value = tickets.map((t) => `${t.join(' - ')} ${state.stake}円`).join('\n');
   }
 
   function bindCopy() {
-    qs('#copy-ticket')?.addEventListener('click', async () => {
-      const text = qs('#ticket-text')?.value || '';
-      if (!text) { setStatus('コピーできる買い目がまだないで。', true); return; }
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus('買い目をコピーしたで。');
-        setTimeout(() => { const el = qs('#betting-status'); if (el) el.hidden = true; }, 1800);
-      } catch (err) {
-        console.error(err);
-        setStatus('コピーに失敗したで。手動でコピーしてな。', true);
-      }
-    });
+    qs('#copy-ticket').onclick = async () => {
+      const text = qs('#ticket-text').value;
+      if (!text) return;
+      try { await navigator.clipboard.writeText(text); qs('#copy-ticket').textContent = 'コピーした'; setTimeout(() => { qs('#copy-ticket').textContent = '買い目をコピー'; }, 1200); }
+      catch (_) { qs('#ticket-text').select(); document.execCommand('copy'); }
+    };
   }
 
   async function init() {
     try {
-      renderLayout();
-      setStatus('読み込み中...');
+      renderLayout(); setStatus('買い目ページを読み込み中…');
       state.data = await fetchJson(getJsonPath());
-      renderHero(state.data);
-      renderTabs(state.data);
-      renderReco();
-      renderControls();
-      renderPickBoard();
-      renderTickets();
-      bindCopy();
+      state.analysis = RA.analyzeRaceHorses(state.data.horses || []);
+      const top = state.analysis.summary.mainHorse; const second = state.analysis.summary.lineHorses?.[0]; const third = state.analysis.summary.lineHorses?.[1];
+      if (top) state.main.add(horseKey(findHorseByUmaban(top.umaban) || top));
+      if (second) state.sub.add(horseKey(findHorseByUmaban(second.umaban) || second));
+      if (third) state.third.add(horseKey(findHorseByUmaban(third.umaban) || third));
+      renderHero(); renderTabs(); renderSummary(); renderControls(); renderBoard(); renderTickets(); bindCopy();
+      document.title = `${state.data.race?.course || ''} ${state.data.race?.race_no || ''}R ${state.data.race?.race_name || ''} | 買い目作成`;
       qs('#betting-status').hidden = true;
     } catch (err) {
-      console.error(err);
-      setStatus(err?.message || '表示に失敗したで。', true);
+      console.error(err); setStatus(err?.message || 'betting.js 初期化に失敗した', true);
     }
   }
 
