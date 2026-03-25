@@ -655,6 +655,38 @@
     };
   }
 
+  function buildPopularHorseComment(horse, label) {
+    const popularity = horse._norm.popularity;
+    const predOrder = horse._norm.pred_order;
+    const courseRank = horse._norm.course_adv_rank;
+    const pTop3 = horse._norm.p_top3;
+
+    const parts = [];
+    if (predOrder !== null) parts.push(`AI${predOrder}位`);
+    if (courseRank !== null) parts.push(`適性${courseRank}位`);
+    if (pTop3 !== null) parts.push(`複勝率${fmtPct01(pTop3)}`);
+
+    if (label === '信頼' || label === '妥当') return parts.join(' / ');
+
+    if (label === 'やや危険') {
+      const warns = [];
+      if (predOrder !== null && popularity !== null && predOrder - popularity >= 3) warns.push('AI順位やや低め');
+      if (courseRank !== null && popularity !== null && courseRank - popularity >= 4) warns.push('適性順位やや低め');
+      if (pTop3 !== null && pTop3 < 0.35) warns.push('複勝率低め');
+      return warns.length ? `${parts.join(' / ')} / ${warns.join('・')}` : parts.join(' / ');
+    }
+
+    if (label === '危険') {
+      const warns = [];
+      if (predOrder !== null && popularity !== null && predOrder - popularity >= 3) warns.push('AI順位が人気より低い');
+      if (courseRank !== null && popularity !== null && courseRank - popularity >= 4) warns.push('適性順位が人気より低い');
+      if (pTop3 !== null && pTop3 < 0.35) warns.push('複勝率が低い');
+      return warns.length ? `${parts.join(' / ')} / ${warns.join('・')}` : parts.join(' / ');
+    }
+
+    return parts.join(' / ');
+  }
+
   function classifyPopularHorse(horse, modelYears) {
     const popularity = horse._norm.popularity;
     const predOrder = horse._norm.pred_order;
@@ -663,31 +695,142 @@
     const pWin = horse._norm.p_win;
     const danger = classifyDangerPopular(horse, modelYears);
 
-    if (popularity === null || popularity > 5) return { label: null, comment: null, danger_score: danger.score };
+    if (popularity === null || popularity > 5) {
+      return {
+        label: null,
+        comment: null,
+        danger_score: danger.score,
+      };
+    }
+
+    const aiGap = predOrder !== null ? (predOrder - popularity) : 0;
+    const courseGap = courseRank !== null ? (courseRank - popularity) : 0;
+
+    let weakCount = 0;
+    if (aiGap >= 3) weakCount += 1;
+    if (courseGap >= 4) weakCount += 1;
+    if (pTop3 !== null && pTop3 < 0.35) weakCount += 1;
+    if (pWin !== null && pWin < 0.08) weakCount += 1;
+    if (danger.score >= 0.60) weakCount += 1;
 
     const isReliable =
       predOrder !== null && predOrder <= popularity + 1 &&
       (courseRank === null || courseRank <= popularity + 2) &&
       pTop3 !== null && pTop3 >= 0.55;
 
-    const isDanger =
-      (predOrder !== null && predOrder >= popularity + 3) ||
-      (courseRank !== null && courseRank >= popularity + 4) ||
-      danger.score >= 0.52;
+    const isTopPopular = popularity <= 2;
 
-    let label = '妥当';
-    if (isReliable) label = '信頼';
-    else if (isDanger) label = '危険';
-    else {
-      const slightlyDanger = danger.score >= 0.42 || (pWin !== null && pWin < 0.12) || (pTop3 !== null && pTop3 < 0.45);
-      label = slightlyDanger ? 'やや危険' : '妥当';
+    if (isReliable) {
+      return {
+        label: '信頼',
+        comment: buildPopularHorseComment(horse, '信頼'),
+        danger_score: danger.score,
+      };
     }
 
-    const commentParts = [];
-    if (predOrder !== null) commentParts.push(`AI${predOrder}位`);
-    if (courseRank !== null) commentParts.push(`適性${courseRank}位`);
-    if (pTop3 !== null) commentParts.push(`複勝率${fmtPct01(pTop3)}`);
-    return { label, comment: commentParts.join(' / '), danger_score: danger.score };
+    const isDanger =
+      weakCount >= 3 ||
+      aiGap >= 4 ||
+      courseGap >= 6 ||
+      (pTop3 !== null && pTop3 < 0.20);
+
+    if (isDanger) {
+      return {
+        label: '危険',
+        comment: buildPopularHorseComment(horse, '危険'),
+        danger_score: danger.score,
+      };
+    }
+
+    const isSlightDanger =
+      weakCount >= 2 ||
+      (aiGap >= 3 && courseGap >= 3);
+
+    if (isSlightDanger) {
+      const label = isTopPopular ? '妥当' : 'やや危険';
+      return {
+        label,
+        comment: buildPopularHorseComment(horse, label),
+        danger_score: danger.score,
+      };
+    }
+
+    return {
+      label: '妥当',
+      comment: buildPopularHorseComment(horse, '妥当'),
+      danger_score: danger.score,
+    };
+  }
+
+  function classifyCourseGapHorse(horse) {
+    const popularity = horse._norm.popularity;
+    const courseRank = horse._norm.course_adv_rank;
+    const pTop3 = horse._norm.p_top3;
+
+    if (popularity === null || courseRank === null) {
+      return { type: null, label: null, score: null, gap: null, reason: null };
+    }
+
+    const gap = popularity - courseRank;
+    const reverseGap = courseRank - popularity;
+
+    const isCourseValue =
+      popularity >= 6 &&
+      courseRank <= 4 &&
+      gap >= 3 &&
+      pTop3 !== null && pTop3 >= 0.25;
+
+    const isStrongCourseValue =
+      popularity >= 8 &&
+      courseRank <= 3 &&
+      gap >= 5 &&
+      pTop3 !== null && pTop3 >= 0.30;
+
+    const isCourseDanger =
+      popularity <= 5 &&
+      reverseGap >= 4 &&
+      pTop3 !== null && pTop3 <= 0.45;
+
+    const isStrongCourseDanger =
+      popularity <= 3 &&
+      reverseGap >= 5 &&
+      pTop3 !== null && pTop3 <= 0.35;
+
+    const reason = `人気${popularity} / 適性${courseRank}${pTop3 !== null ? ` / 複勝率${fmtPct01(pTop3)}` : ''}`;
+
+    if (isStrongCourseValue) {
+      return { type: 'value', label: 'コース穴', score: gap, gap, reason };
+    }
+    if (isCourseValue) {
+      return { type: 'value', label: 'コース向き', score: gap, gap, reason };
+    }
+    if (isStrongCourseDanger) {
+      return { type: 'danger', label: '適性危険', score: reverseGap, gap: -reverseGap, reason };
+    }
+    if (isCourseDanger) {
+      return { type: 'danger', label: '人気先行', score: reverseGap, gap: -reverseGap, reason };
+    }
+
+    return { type: null, label: null, score: null, gap, reason: `人気${popularity} / 適性${courseRank}` };
+  }
+
+  function buildCourseGapLists(rows) {
+    const analyzed = rows.map((horse) => ({
+      ...horse,
+      _courseGap: classifyCourseGapHorse(horse),
+    }));
+
+    const valueList = analyzed
+      .filter((horse) => horse._courseGap.type === 'value')
+      .sort((a, b) => (b._courseGap.score ?? -999) - (a._courseGap.score ?? -999))
+      .slice(0, 3);
+
+    const dangerList = analyzed
+      .filter((horse) => horse._courseGap.type === 'danger')
+      .sort((a, b) => (b._courseGap.score ?? -999) - (a._courseGap.score ?? -999))
+      .slice(0, 3);
+
+    return { valueList, dangerList };
   }
 
   function analyzeRace(prepared) {
@@ -744,8 +887,9 @@
         comment: horse._analysis.popular_comment,
       }));
 
+    const courseGapLists = buildCourseGapLists(rows);
     const summary = buildPredictionSummary(race, rows, holeCandidates, dangerPopulars, popularSummary);
-    return { race, horses: rows, modelYears, holeCandidates, dangerPopulars, popularSummary, summary };
+    return { race, horses: rows, modelYears, holeCandidates, dangerPopulars, popularSummary, courseGapLists, summary };
   }
 
   function buildPredictionSummary(race, rows, holeCandidates, dangerPopulars, popularSummary) {
@@ -1009,27 +1153,42 @@
     if (!el) return;
     const aiHole = analysis.holeCandidates.filter((horse) => horse._analysis.gap_ai !== null).slice(0, 3);
     const aiDanger = analysis.dangerPopulars.filter((horse) => horse._analysis.over_ai !== null).slice(0, 3);
-    const courseHole = analysis.holeCandidates.filter((horse) => horse._analysis.gap_course !== null).slice(0, 3);
-    const courseDanger = analysis.dangerPopulars.filter((horse) => horse._analysis.over_course !== null).slice(0, 3);
+    const courseHole = analysis.courseGapLists?.valueList || [];
+    const courseDanger = analysis.courseGapLists?.dangerList || [];
 
-    function renderGroup(title, rows, type) {
+    function renderAiGroup(title, rows, type) {
       return `
         <div class="divergence-box__group">
           <div class="pick-box__label">${escapeHtml(title)}</div>
           ${rows.length ? rows.map((horse) => {
-            const delta = type === 'hole'
-              ? (horse._analysis.gap_ai ?? horse._analysis.gap_course)
-              : (horse._analysis.over_ai ?? horse._analysis.over_course);
+            const delta = type === 'hole' ? horse._analysis.gap_ai : horse._analysis.over_ai;
             return `
               <div class="divergence-line">
                 <div>
                   <div class="divergence-line__name">${escapeHtml(horse.umaban)} ${escapeHtml(horse.horse_name)}</div>
-                  <div class="divergence-line__sub">人気 ${escapeHtml(fmt(horse._norm.popularity))} / AI ${escapeHtml(fmt(horse._norm.pred_order))} / 適性 ${escapeHtml(fmt(horse._norm.course_adv_rank))}</div>
+                  <div class="divergence-line__sub">人気 ${escapeHtml(fmt(horse._norm.popularity))} / AI ${escapeHtml(fmt(horse._norm.pred_order))} / 複勝率 ${escapeHtml(fmtPct01(horse._norm.p_top3))}</div>
                 </div>
                 <span class="${escapeHtml(type === 'hole' ? 'badge badge--green delta-chip' : 'badge badge--red delta-chip')}">${type === 'hole' ? '+' : '-'}${escapeHtml(fmt(delta))}</span>
               </div>
             `;
           }).join('') : '<div class="note-text">該当馬なし</div>'}
+        </div>
+      `;
+    }
+
+    function renderCourseGroup(title, rows, type) {
+      return `
+        <div class="divergence-box__group">
+          <div class="pick-box__label">${escapeHtml(title)}</div>
+          ${rows.length ? rows.map((horse) => `
+            <div class="divergence-line">
+              <div>
+                <div class="divergence-line__name">${escapeHtml(horse.umaban)} ${escapeHtml(horse.horse_name)}</div>
+                <div class="divergence-line__sub">${escapeHtml(horse._courseGap?.reason || '')}</div>
+              </div>
+              <span class="${escapeHtml(type === 'hole' ? 'badge badge--green delta-chip' : 'badge badge--red delta-chip')}">${type === 'hole' ? '+' : ''}${escapeHtml(fmt(type === 'hole' ? horse._courseGap?.score : horse._courseGap?.gap))}</span>
+            </div>
+          `).join('') : '<div class="note-text">該当馬なし</div>'}
         </div>
       `;
     }
@@ -1044,13 +1203,13 @@
       <div class="divergence-grid">
         <div class="divergence-box">
           <h3 class="divergence-box__title">人気 × AI順位</h3>
-          ${renderGroup('妙味馬', aiHole, 'hole')}
-          ${renderGroup('危険人気馬', aiDanger, 'danger')}
+          ${renderAiGroup('妙味馬', aiHole, 'hole')}
+          ${renderAiGroup('危険人気馬', aiDanger, 'danger')}
         </div>
         <div class="divergence-box">
           <h3 class="divergence-box__title">人気 × 適性順位</h3>
-          ${renderGroup('コース向きで人気薄', courseHole, 'hole')}
-          ${renderGroup('人気先行で適性弱い', courseDanger, 'danger')}
+          ${renderCourseGroup('コース向きで人気薄', courseHole, 'hole')}
+          ${renderCourseGroup('人気先行で適性弱い', courseDanger, 'danger')}
         </div>
       </div>
     `;
