@@ -358,11 +358,49 @@
     };
   }
 
+
+
+  function extractTaggedValue(list, patterns) {
+    const arr = Array.isArray(list) ? list : [];
+    const regs = Array.isArray(patterns) ? patterns : [];
+    for (const raw of arr) {
+      const text = String(raw ?? '').trim();
+      if (!text) continue;
+      for (const reg of regs) {
+        const m = text.match(reg);
+        if (m && m[1]) return m[1].trim();
+      }
+    }
+    return null;
+  }
+
+  function formatSexAgeForMemo(sexAge) {
+    const s = String(sexAge ?? '').trim();
+    if (!s) return null;
+    if (s.includes('歳')) return s;
+    const m = s.match(/^([牡牝セ騙])\s*(\d+)$/);
+    if (m) return `${m[1]}${m[2]}歳`;
+    return s;
+  }
+
+  function formatExperienceCount(count) {
+    const n = toNum(count);
+    if (n === null) return null;
+    if (n <= 0) return 'なし';
+    if (n === 1) return '1走';
+    if (n <= 3) return '2-3走';
+    if (n <= 5) return '4-5走';
+    return '6走以上';
+  }
   const api = {
     toNum, clip, fmt, fmtNum, fmtPct, esc, escapeHtml: esc, round1, round3,
+    extractTaggedValue, formatSexAgeForMemo, formatExperienceCount,
     classifyHoleCandidate, classifyDangerPopular, classifyPopularHorse, classifyCourseGapHorse,
     analyzeRaceHorses,
   };
   global.RaceAnalysis = api;
   global.AC = api;
+  global.extractTaggedValue = extractTaggedValue;
+  global.formatSexAgeForMemo = formatSexAgeForMemo;
+  global.formatExperienceCount = formatExperienceCount;
 })(window);
