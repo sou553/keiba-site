@@ -2,10 +2,10 @@
   'use strict';
 
   const PAGE_DEFAULTS = { race: 'race_detail.html', past: 'past_detail.html', betting: 'betting.html' };
-  const state = { data: null, analysis: null, keyword: '', limit: 3, sameCourse: false, sameDistance: false, boardOnly: false, fastOnly: false, expanded: new Set() };
+  const state = { data: null, analysis: null, ra: null, keyword: '', limit: 3, sameCourse: false, sameDistance: false, boardOnly: false, fastOnly: false, expanded: new Set() };
   const qs = (s, r = document) => r.querySelector(s);
   const qsa = (s, r = document) => Array.from(r.querySelectorAll(s));
-  const RA = window.RaceAnalysis;
+  const RA = window.RaceAnalysis || window.AC || null;
 
   function getDataRoot() { return document.body?.dataset?.dataRoot || './data'; }
   function getPage(kind) { return document.body?.dataset?.[`${kind}Page`] || PAGE_DEFAULTS[kind]; }
@@ -45,10 +45,10 @@
     const rp = runCourse(run); const cp = currentCourse(); const rs = surface(run.surface || run.distance); const cs = currentSurface();
     return !!rp && !!cp && rp === cp && isSameDistance(run) && (!rs || !cs || rs === cs);
   }
-  function boardCount(runs, limit = 3) { return runs.slice(0, limit).filter((r) => { const f = RA.toNum(r.finish); return f != null && f <= 5; }).length; }
+  function boardCount(runs, limit = 3) { return runs.slice(0, limit).filter((r) => { const f = (state.ra || RA).toNum(r.finish); return f != null && f <= 5; }).length; }
   function avg(arr) { const xs = arr.filter((v) => Number.isFinite(v)); return xs.length ? xs.reduce((a,b)=>a+b,0)/xs.length : null; }
-  function avgFinish(runs, limit = 3) { return avg(runs.slice(0, limit).map((r) => RA.toNum(r.finish)).filter((v) => v != null)); }
-  function avgLast3f(runs, limit = 3) { return avg(runs.slice(0, limit).map((r) => RA.toNum(r.last3f)).filter((v) => v != null)); }
+  function avgFinish(runs, limit = 3) { return avg(runs.slice(0, limit).map((r) => (state.ra || RA).toNum(r.finish)).filter((v) => v != null)); }
+  function avgLast3f(runs, limit = 3) { return avg(runs.slice(0, limit).map((r) => (state.ra || RA).toNum(r.last3f)).filter((v) => v != null)); }
 
   function renderLayout() {
     const root = qs('#past-app');
@@ -76,15 +76,15 @@
   function renderHero() {
     const hero = qs('#past-hero'); const race = state.data?.race || {};
     hero.innerHTML = `
-      <div class="race-hero__head"><div><div class="race-hero__date">${RA.esc(state.data?.race_date || '')}</div><h1 class="race-hero__title">${RA.esc(race.course || '')} ${RA.esc(race.race_no || '')}R ${RA.esc(race.race_name || '')}</h1><div class="race-hero__meta">${RA.esc([race.surface, race.distance ? `${race.distance}m` : '', race.headcount ? `${race.headcount}頭` : ''].filter(Boolean).join(' / '))}</div></div><div class="tag-list"><span class="tag tag--blue">過去走比較</span><span class="tag">近走${state.limit}件表示</span></div></div>`;
+      <div class="race-hero__head"><div><div class="race-hero__date">${(state.ra || RA).esc(state.data?.race_date || '')}</div><h1 class="race-hero__title">${(state.ra || RA).esc(race.course || '')} ${(state.ra || RA).esc(race.race_no || '')}R ${(state.ra || RA).esc(race.race_name || '')}</h1><div class="race-hero__meta">${(state.ra || RA).esc([race.surface, race.distance ? `${race.distance}m` : '', race.headcount ? `${race.headcount}頭` : ''].filter(Boolean).join(' / '))}</div></div><div class="tag-list"><span class="tag tag--blue">過去走比較</span><span class="tag">近走${state.limit}件表示</span></div></div>`;
   }
 
   function renderTabs() {
     const nav = qs('#past-tabs');
     nav.innerHTML = `
-      <a class="race-tab" href="${RA.esc(buildUrl('race'))}">出走馬一覧</a>
-      <a class="race-tab is-active" href="${RA.esc(buildUrl('past'))}">過去走比較</a>
-      <a class="race-tab" href="${RA.esc(buildUrl('betting'))}">買い目作成</a>`;
+      <a class="race-tab" href="${(state.ra || RA).esc(buildUrl('race'))}">出走馬一覧</a>
+      <a class="race-tab is-active" href="${(state.ra || RA).esc(buildUrl('past'))}">過去走比較</a>
+      <a class="race-tab" href="${(state.ra || RA).esc(buildUrl('betting'))}">買い目作成</a>`;
   }
 
   function renderSummary() {
@@ -93,18 +93,18 @@
     box.innerHTML = `
       <div class="section-title-row"><div><h2 class="section-title">予想のまとめ</h2><div class="section-subtitle">過去走比較の前に、今の人気判定と本命方針を確認。</div></div></div>
       <div class="summary-grid summary-grid--2">
-        <section class="summary-card"><div class="summary-card__head"><span class="badge ${s.status === '本命寄り' ? 'badge--blue' : s.status === '見送り寄り' ? 'badge--red' : 'badge--warn'}">${RA.esc(s.status)}</span></div>
-          ${s.mainHorse ? `<div class="summary-main-horse">◎ ${RA.esc(s.mainHorse.umaban)} ${RA.esc(s.mainHorse.horse_name)}</div><div class="summary-main-meta">勝率 ${RA.fmtPct(s.mainHorse.p_win)} / 複勝率 ${RA.fmtPct(s.mainHorse.p_top3)} / 単勝 ${RA.fmtNum(s.mainHorse.tansho_odds)} / 人気 ${RA.fmt(s.mainHorse.popularity)}</div>` : ''}
-          <div class="summary-comment">${RA.esc(s.comment || '')}</div>
+        <section class="summary-card"><div class="summary-card__head"><span class="badge ${s.status === '本命寄り' ? 'badge--blue' : s.status === '見送り寄り' ? 'badge--red' : 'badge--warn'}">${(state.ra || RA).esc(s.status)}</span></div>
+          ${s.mainHorse ? `<div class="summary-main-horse">◎ ${(state.ra || RA).esc(s.mainHorse.umaban)} ${(state.ra || RA).esc(s.mainHorse.horse_name)}</div><div class="summary-main-meta">勝率 ${(state.ra || RA).fmtPct(s.mainHorse.p_win)} / 複勝率 ${(state.ra || RA).fmtPct(s.mainHorse.p_top3)} / 単勝 ${(state.ra || RA).fmtNum(s.mainHorse.tansho_odds)} / 人気 ${(state.ra || RA).fmt(s.mainHorse.popularity)}</div>` : ''}
+          <div class="summary-comment">${(state.ra || RA).esc(s.comment || '')}</div>
         </section>
         <section class="summary-card"><h3 class="mini-title">人気馬まとめ</h3>
           <div class="popular-summary-list">
-            ${(s.popularSummary || []).slice(0, 5).map((p) => `<div class="popular-summary-item"><div><strong>${RA.esc(p.popularity)}人気 ${RA.esc(p.umaban)} ${RA.esc(p.horse_name)}</strong><div class="popular-summary-meta">${RA.esc(p.comment || '')}</div></div><span class="mini-pill ${popularClass(p.label)}">${RA.esc(p.label || '妥当')}</span></div>`).join('') || '<div class="section-subtitle">人気上位データなし</div>'}
+            ${(s.popularSummary || []).slice(0, 5).map((p) => `<div class="popular-summary-item"><div><strong>${(state.ra || RA).esc(p.popularity)}人気 ${(state.ra || RA).esc(p.umaban)} ${(state.ra || RA).esc(p.horse_name)}</strong><div class="popular-summary-meta">${(state.ra || RA).esc(p.comment || '')}</div></div><span class="mini-pill ${popularClass(p.label)}">${(state.ra || RA).esc(p.label || '妥当')}</span></div>`).join('') || '<div class="section-subtitle">人気上位データなし</div>'}
         </section>
       </div>
       <div class="summary-grid summary-grid--2" style="margin-top:12px;">
-        <section class="summary-card"><h3 class="mini-title">穴候補</h3>${holes.length ? holes.map((h) => `<div class="summary-list-row"><strong>${RA.esc(h.umaban)} ${RA.esc(h.horse_name)}</strong><div class="summary-row-meta">${RA.esc(h.hole_reason || '')}</div></div>`).join('') : '<div class="section-subtitle">該当馬なし</div>'}</section>
-        <section class="summary-card"><h3 class="mini-title">危険人気</h3>${dangers.length ? dangers.map((h) => `<div class="summary-list-row"><strong>${RA.esc(h.umaban)} ${RA.esc(h.horse_name)}</strong><div class="summary-row-meta">${RA.esc(h.danger_reason || '')}</div></div>`).join('') : '<div class="section-subtitle">該当馬なし</div>'}</section>
+        <section class="summary-card"><h3 class="mini-title">穴候補</h3>${holes.length ? holes.map((h) => `<div class="summary-list-row"><strong>${(state.ra || RA).esc(h.umaban)} ${(state.ra || RA).esc(h.horse_name)}</strong><div class="summary-row-meta">${(state.ra || RA).esc(h.hole_reason || '')}</div></div>`).join('') : '<div class="section-subtitle">該当馬なし</div>'}</section>
+        <section class="summary-card"><h3 class="mini-title">危険人気</h3>${dangers.length ? dangers.map((h) => `<div class="summary-list-row"><strong>${(state.ra || RA).esc(h.umaban)} ${(state.ra || RA).esc(h.horse_name)}</strong><div class="summary-row-meta">${(state.ra || RA).esc(h.danger_reason || '')}</div></div>`).join('') : '<div class="section-subtitle">該当馬なし</div>'}</section>
       </div>`;
   }
 
@@ -126,21 +126,21 @@
   }
 
   function runCard(run) {
-    return `<div class="past-run-card"><div class="past-run-card__head"><strong>${RA.esc(run.date || '—')} ${RA.esc(run.race_name || '')}</strong><span class="tag">${RA.esc(run.finish != null ? `${run.finish}着` : '着順不明')}</span></div><div class="past-run-card__meta">${RA.esc([run.course || run.course_name, run.surface || '', run.distance_m || run.distance, run.going].filter(Boolean).join(' / '))}</div><div class="past-run-card__meta">人気 ${RA.esc(RA.fmt(run.popularity))} / 単勝 ${RA.esc(RA.fmtNum(run.win_odds || run.tansho_odds, 1))} / 上がり ${RA.esc(RA.fmtNum(run.last3f, 1))} / 通過 ${RA.esc(RA.fmt(run.passing))}</div></div>`;
+    return `<div class="past-run-card"><div class="past-run-card__head"><strong>${(state.ra || RA).esc(run.date || '—')} ${(state.ra || RA).esc(run.race_name || '')}</strong><span class="tag">${(state.ra || RA).esc(run.finish != null ? `${run.finish}着` : '着順不明')}</span></div><div class="past-run-card__meta">${(state.ra || RA).esc([run.course || run.course_name, run.surface || '', run.distance_m || run.distance, run.going].filter(Boolean).join(' / '))}</div><div class="past-run-card__meta">人気 ${(state.ra || RA).esc((state.ra || RA).fmt(run.popularity))} / 単勝 ${(state.ra || RA).esc((state.ra || RA).fmtNum(run.win_odds || run.tansho_odds, 1))} / 上がり ${(state.ra || RA).esc((state.ra || RA).fmtNum(run.last3f, 1))} / 通過 ${(state.ra || RA).esc((state.ra || RA).fmt(run.passing))}</div></div>`;
   }
 
   function renderList() {
     const list = qs('#past-list'); const meta = qs('#past-meta');
-    const rows = (state.data.horses || []).map(summarizedHorse).filter(matchSummary).sort((a, b) => (RA.toNum(a.horse.umaban) ?? 999) - (RA.toNum(b.horse.umaban) ?? 999));
+    const rows = (state.data.horses || []).map(summarizedHorse).filter(matchSummary).sort((a, b) => ((state.ra || RA).toNum(a.horse.umaban) ?? 999) - ((state.ra || RA).toNum(b.horse.umaban) ?? 999));
     meta.textContent = `${rows.length}頭表示 / 近走${state.limit}件`;
     list.innerHTML = rows.map((obj) => {
       const h = obj.horse; const key = String(h.horse_id || h.umaban || h.horse_name); const expanded = state.expanded.has(key);
       const runs = obj.runs.slice(0, state.limit);
       return `
         <article class="past-horse-card ${expanded ? 'is-open' : ''}">
-          <button type="button" class="past-horse-card__summary" data-horse-key="${RA.esc(key)}">
-            <div><div class="past-horse-card__title">${RA.esc(h.umaban)} ${RA.esc(h.horse_name)}</div><div class="past-horse-card__meta">近${state.limit}走 平均着順 ${RA.esc(RA.fmtNum(obj.avgFinish, 1))} / 掲示板 ${RA.esc(obj.board3)}回 / 上がり平均 ${RA.esc(RA.fmtNum(obj.avgLast3f, 1))}</div></div>
-            <div class="tag-list"><span class="tag ${obj.sameCourseCount > 0 ? 'tag--plus' : ''}">同コース ${RA.esc(obj.sameCourseCount)}</span><span class="tag ${obj.sameDistanceCount > 0 ? 'tag--plus' : ''}">同距離 ${RA.esc(obj.sameDistanceCount)}</span></div>
+          <button type="button" class="past-horse-card__summary" data-horse-key="${(state.ra || RA).esc(key)}">
+            <div><div class="past-horse-card__title">${(state.ra || RA).esc(h.umaban)} ${(state.ra || RA).esc(h.horse_name)}</div><div class="past-horse-card__meta">近${state.limit}走 平均着順 ${(state.ra || RA).esc((state.ra || RA).fmtNum(obj.avgFinish, 1))} / 掲示板 ${(state.ra || RA).esc(obj.board3)}回 / 上がり平均 ${(state.ra || RA).esc((state.ra || RA).fmtNum(obj.avgLast3f, 1))}</div></div>
+            <div class="tag-list"><span class="tag ${obj.sameCourseCount > 0 ? 'tag--plus' : ''}">同コース ${(state.ra || RA).esc(obj.sameCourseCount)}</span><span class="tag ${obj.sameDistanceCount > 0 ? 'tag--plus' : ''}">同距離 ${(state.ra || RA).esc(obj.sameDistanceCount)}</span></div>
           </button>
           <div class="past-horse-card__detail">${runs.length ? runs.map(runCard).join('') : '<div class="section-subtitle">過去走データなし</div>'}</div>
         </article>`;
@@ -160,11 +160,22 @@
     qs('#past-keyword').value = state.keyword; qs('#past-keyword').oninput = (e) => { state.keyword = e.target.value || ''; renderList(); };
   }
 
+  function createFallbackRA() {
+    const toNum = (v) => { if (v === null || v === undefined || v === '') return null; const n = Number(v); return Number.isFinite(n) ? n : null; };
+    const fmt = (v, fb = '—') => (v == null || v === '' ? fb : String(v));
+    const fmtNum = (v, d = 1, fb = '—') => { const n = toNum(v); return n == null ? fb : n.toFixed(d).replace(/\.0$/, ''); };
+    const fmtPct = (v, d = 1, fb = '—') => { const n = toNum(v); return n == null ? fb : `${(n * 100).toFixed(d).replace(/\.0$/, '')}%`; };
+    const esc = (v) => String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    const analyzeRaceHorses = (horses) => ({ summary: { status: '混戦', comment: '過去走比較用の簡易表示', mainHorse: null, lineHorses: [], holeHorses: [], dangerHorses: [], popularSummary: [] } });
+    return { toNum, fmt, fmtNum, fmtPct, esc, analyzeRaceHorses };
+  }
+
   async function init() {
     try {
       renderLayout(); setStatus('過去走データを読み込み中…');
       state.data = await fetchJson(getJsonPath());
-      state.analysis = RA.analyzeRaceHorses(state.data.horses || []);
+      state.ra = RA || createFallbackRA();
+      state.analysis = state.ra.analyzeRaceHorses(state.data.horses || []);
       renderHero(); renderTabs(); renderSummary(); bind(); renderList();
       document.title = `${state.data.race?.course || ''} ${state.data.race?.race_no || ''}R ${state.data.race?.race_name || ''} | 過去走比較`;
       qs('#past-status').hidden = true;
