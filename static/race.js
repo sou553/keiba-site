@@ -223,6 +223,11 @@
     return v.split(/[|、,\n]/).map((s) => s.trim()).filter(Boolean);
   }
 
+
+  function filterRaceDetailReasonTags(list) {
+    return (list || []).filter((tag) => tag && !/^休み明け[:：]/.test(String(tag).trim()));
+  }
+
   function calcRecentMetric(runs, predicate) {
     if (!runs.length) return 0;
     return runs.filter(predicate).length;
@@ -268,6 +273,7 @@
         recent_avg_last3f: recentAvgLast3f,
         layoff_days: layoffDays,
         reasons_pos_list: normalizeReasonList(horse.reasons_pos),
+        reasons_pos_display: filterRaceDetailReasonTags(normalizeReasonList(horse.reasons_pos)),
         reasons_neg_list: normalizeReasonList(horse.reasons_neg),
         style_est: horse.style || horse.style_est || null,
       },
@@ -617,7 +623,8 @@
     const head = `
       <div class="horse-table-head">
         <div>馬番 / 馬名</div>
-        <div>性齢・騎手</div>
+        <div>性齢</div>
+        <div>騎手</div>
         <div>人気</div>
         <div>単勝</div>
         <div>AI</div>
@@ -632,11 +639,12 @@
       const cardId = `horse-${escapeHtml(String(horse.horse_id || horse.umaban || horse.horse_name))}`;
       const isOpen = state.openCards.has(cardId);
       const rowClass = [horse._analysis.danger_label ? 'is-danger' : '', horse._analysis.hole_label ? 'is-hole' : ''].filter(Boolean).join(' ');
-      const tags = `${buildHorseMarks(horse)}${horse._norm.reasons_pos_list.slice(0, 3).map((tag) => `<span class="tag tag--plus">${escapeHtml(tag)}</span>`).join('')}`;
+      const tags = `${buildHorseMarks(horse)}${(horse._norm.reasons_pos_display || []).slice(0, 3).map((tag) => `<span class="tag tag--plus">${escapeHtml(tag)}</span>`).join('')}`;
       return `
         <div class="horse-table-row ${rowClass}" data-card-id="${cardId}">
           <div class="cell cell--name"><span class="horse-no-inline">${escapeHtml(fmt(horse.umaban))}</span><div><div class="horse-name-inline">${escapeHtml(horse.horse_name)}</div><div class="cell-note">${tags}</div></div></div>
-          <div class="cell"><div>${escapeHtml(fmt(horse.sex_age))}</div><div class="cell-note">${escapeHtml(fmt(horse.jockey))}</div></div>
+          <div class="cell">${escapeHtml(fmt(horse.sex_age))}</div>
+          <div class="cell">${escapeHtml(fmt(horse.jockey))}</div>
           <div class="cell cell--num">${escapeHtml(fmt(horse._norm.popularity))}</div>
           <div class="cell cell--num ${horse._norm.tansho_odds !== null && horse._norm.tansho_odds < 10 ? 'text-odds-hot' : ''}">${escapeHtml(fmtNum(horse._norm.tansho_odds, 1))}</div>
           <div class="cell cell--num">${escapeHtml(fmt(horse._norm.pred_order))}</div>
@@ -644,7 +652,7 @@
           <div class="cell cell--num">${escapeHtml(fmtPct01(horse._norm.p_win))}</div>
           <div class="cell cell--num">${escapeHtml(fmtPct01(horse._norm.p_top3))}</div>
           <div class="cell"><div class="cell-note">${escapeHtml(buildRecentBrief(horse))}</div></div>
-          <div class="cell cell--action"><button type="button" class="horse-toggle table-toggle" data-card-id="${cardId}">${isOpen ? '閉じる' : '詳細'}</button></div>
+          <div class="cell cell--action"><button type="button" class="horse-toggle table-toggle" data-card-id="${cardId}">${isOpen ? '詳細を閉じる' : '詳細を見る'}</button></div>
         </div>
         <div class="horse-detail-row" ${isOpen ? '' : 'hidden'} data-detail-for="${cardId}">
           <div class="horse-detail-row__inner">
@@ -657,7 +665,7 @@
                   <div class="detail-kv__item"><div class="detail-kv__label">危険人気理由</div><div class="detail-kv__value">${escapeHtml(horse._analysis.danger_reason || '—')}</div></div>
                   <div class="detail-kv__item"><div class="detail-kv__label">穴候補理由</div><div class="detail-kv__value">${escapeHtml(horse._analysis.hole_reason || '—')}</div></div>
                   <div class="detail-kv__item"><div class="detail-kv__label">同距離 / 同コース</div><div class="detail-kv__value">${escapeHtml(fmt(horse._norm.same_distance_count))}走 / ${escapeHtml(fmt(horse._norm.same_course_count))}走</div></div>
-                  <div class="detail-kv__item"><div class="detail-kv__label">休み明け</div><div class="detail-kv__value">${escapeHtml(formatLayoff(horse._norm.layoff_days))}</div></div>
+                  <div class="detail-kv__item"><div class="detail-kv__label">近3走掲示板</div><div class="detail-kv__value">${escapeHtml(fmt(horse._norm.recent_board_count))}回 / 近3走</div></div>
                 </div>
               </div>
               <div class="detail-box">

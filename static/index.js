@@ -93,24 +93,23 @@
   function predictionBlock(detail) {
     const s = detail._analysis?.summary; if (!s) return '';
     const main = s.mainHorse;
-    const hole = s.holeHorses?.[0] || s.courseValueList?.[0] || null;
-    const danger = s.dangerHorses?.[0] || s.courseDangerList?.[0] || null;
+    const hole = s.holeHorses?.[0] || null;
+    const danger = s.dangerHorses?.[0] || null;
+    const lines = s.lineHorses?.slice(0, 2) || [];
     return `
-      <div class="race-card-summary">
-        <div class="summary-head-row">
-          <span class="badge ${s.status === '本命寄り' ? 'badge--blue' : s.status === '見送り寄り' ? 'badge--red' : 'badge--warn'}">${RA.esc(s.status)}</span>
+      <div class="race-row__summary">
+        <div class="top-pick-box">
+          <div class="top-pick-box__label">${RA.esc(s.status || '予想まとめ')}</div>
+          ${main ? `<div class="top-pick-box__name">◎ ${RA.esc(main.umaban)} ${RA.esc(main.horse_name)}</div>` : ''}
+          <div class="top-pick-box__meta">${main ? `勝率 ${RA.fmtPct(main.p_win)} / 複勝率 ${RA.fmtPct(main.p_top3)} / 単勝 ${RA.fmtNum(main.tansho_odds)} / 人気 ${RA.fmt(main.popularity)}` : '上位評価を読み込み中'}</div>
+          ${lines.length ? `<div class="inline-note" style="margin-top:6px;">相手: ${lines.map((h) => `${RA.esc(h.umaban)} ${RA.esc(h.horse_name)}`).join(' / ')}</div>` : ''}
+        </div>
+        <div class="race-row__state">
+          <span class="badge ${s.status === '本命寄り' ? 'badge--blue' : s.status === '見送り寄り' ? 'badge--red' : 'badge--warn'}">${RA.esc(s.status || '混戦')}</span>
           ${hole ? `<span class="tag tag--plus">穴 ${RA.esc(hole.umaban)} ${RA.esc(hole.horse_name)}</span>` : ''}
           ${danger ? `<span class="tag tag--minus">危険 ${RA.esc(danger.umaban)} ${RA.esc(danger.horse_name)}</span>` : ''}
+          ${(s.popularSummary || []).slice(0, 2).map((p) => `<span class="mini-pill ${popularClass(p.label)}">${RA.esc(p.popularity)}人気 ${RA.esc(p.umaban)} ${RA.esc(p.label || '妥当')}</span>`).join('')}
         </div>
-        ${main ? `
-          <div class="race-card-mainpick"><strong>◎ ${RA.esc(main.umaban)} ${RA.esc(main.horse_name)}</strong></div>
-          <div class="race-card-metrics">勝率 ${RA.fmtPct(main.p_win)} / 複勝率 ${RA.fmtPct(main.p_top3)} / 単勝 ${RA.fmtNum(main.tansho_odds)} / 人気 ${RA.fmt(main.popularity)}</div>
-        ` : ''}
-        ${s.popularSummary?.length ? `
-          <div class="popular-strip">
-            ${s.popularSummary.slice(0, 3).map((p) => `<span class="mini-pill ${popularClass(p.label)}">${RA.esc(p.popularity)}人気 ${RA.esc(p.umaban)} ${RA.esc(p.label)}</span>`).join('')}
-          </div>
-        ` : ''}
       </div>`;
   }
 
@@ -133,19 +132,17 @@
       const race = detail.race || {};
       const courseLine = [race.race_no ? `${race.race_no}R` : '', race.course, race.surface, race.distance ? `${race.distance}m` : '', race.headcount ? `${race.headcount}頭` : ''].filter(Boolean).join(' / ');
       return `
-        <article class="race-card race-card--compact">
-          <div class="race-card__head">
-            <div>
-              <div class="race-card__date">${RA.esc(detail.race_date || '')}</div>
-              <h3 class="race-card__title">${RA.esc(race.race_no ? `${race.race_no}R ` : '')}${RA.esc(race.race_name || '')}</h3>
-              <div class="race-card__meta">${RA.esc(courseLine)}</div>
+        <article class="sheet race-row">
+          <div class="race-row__top">
+            <div class="race-row__title-block">
+              <div class="race-row__date">${RA.esc(detail.race_date || '')}</div>
+              <h3 class="race-row__title">${RA.esc(race.race_no ? `${race.race_no}R ` : '')}${RA.esc(race.race_name || '')}</h3>
+              <div class="race-row__meta">${RA.esc(courseLine)}</div>
+              <div class="race-row__state"><span class="tag tag--blue">race_id ${RA.esc(race.race_id || '')}</span></div>
             </div>
-            <div class="tag-list">
-              <span class="tag">race_id ${RA.esc(race.race_id || '')}</span>
-            </div>
+            ${predictionBlock(detail)}
           </div>
-          ${predictionBlock(detail)}
-          <div class="race-card__actions">
+          <div class="race-row__actions">
             <a class="action-link action-link--primary" href="${RA.esc(buildUrl('race', race.race_id, detail.race_date))}">出走馬一覧</a>
             <a class="action-link" href="${RA.esc(buildUrl('past', race.race_id, detail.race_date))}">過去走比較</a>
             <a class="action-link" href="${RA.esc(buildUrl('betting', race.race_id, detail.race_date))}">買い目作成</a>
