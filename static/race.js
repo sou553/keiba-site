@@ -1572,7 +1572,9 @@
               </div>
             </div>
 
-            
+            <div class="horse-card__aside">
+              <button type="button" class="horse-toggle" data-card-id="${id}">${isOpen ? '詳細を閉じる' : '詳細を見る'}</button>
+            </div>
           </div>
 
           <div class="horse-card__details" ${isOpen ? '' : 'hidden'}>
