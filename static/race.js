@@ -1595,7 +1595,6 @@
               <div class="metric-box">
                 <div class="metric-box__label">AI / 適性</div>
                 <div class="metric-box__value">${escapeHtml(fmt(horse._norm.pred_order))} / ${escapeHtml(fmt(horse._norm.course_adv_rank))}</div>
-                <div class="metric-box__sub">一致度 ${escapeHtml(fmtNum(horse._analysis.agreement_score, 2))}</div>
               </div>
 
               <div class="metric-box">
