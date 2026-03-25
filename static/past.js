@@ -8,82 +8,45 @@
   };
 
   const JRA_PLACE_MAP = {
-    '01': '札幌',
-    '02': '函館',
-    '03': '福島',
-    '04': '新潟',
-    '05': '東京',
-    '06': '中山',
-    '07': '中京',
-    '08': '京都',
-    '09': '阪神',
-    '10': '小倉',
+    '01': '札幌', '02': '函館', '03': '福島', '04': '新潟', '05': '東京',
+    '06': '中山', '07': '中京', '08': '京都', '09': '阪神', '10': '小倉',
   };
 
   const state = {
     data: null,
     keyword: '',
-    filterBoard3: false,
-    filterSameDistance: false,
+    viewLimit: 3,
     filterSameCourse: false,
+    filterSameDistance: false,
+    filterBoard: false,
+    filterFastLast3f: false,
     sortKey: 'umaban',
+    expanded: new Set(),
   };
 
-  function qs(selector, root = document) {
-    return root.querySelector(selector);
-  }
-
-  function escapeHtml(value) {
-    return String(value ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
-
-  function fmt(value, fallback = '—') {
-    return value == null || value === '' ? fallback : String(value);
-  }
-
-  function toNumber(value) {
-    if (value == null || value === '') return null;
-    const n = Number(value);
-    return Number.isFinite(n) ? n : null;
-  }
-
-  function fmtNum(value, digits = 1, fallback = '—') {
-    const n = toNumber(value);
-    return n == null ? fallback : n.toFixed(digits).replace(/\.0$/, '');
-  }
-
-  function getDataRoot() {
-    return document.body?.dataset?.dataRoot || './data';
-  }
-
-  function getPageName(kind) {
-    return document.body?.dataset?.[`${kind}Page`] || PAGE_DEFAULTS[kind];
-  }
+  function qs(s, root = document) { return root.querySelector(s); }
+  function qsa(s, root = document) { return Array.from(root.querySelectorAll(s)); }
+  function escapeHtml(v) { return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+  function fmt(v, fb = '—') { return v == null || v === '' ? fb : String(v); }
+  function toNum(v) { const n = Number(v); return Number.isFinite(n) ? n : null; }
+  function fmtNum(v, d = 1, fb = '—') { const n = toNum(v); return n == null ? fb : n.toFixed(d).replace(/\.0$/, ''); }
+  function fmtPct(v, d = 1, fb = '—') { const n = toNum(v); return n == null ? fb : `${(n * 100).toFixed(d)}%`; }
+  function getDataRoot() { return document.body?.dataset?.dataRoot || './data'; }
+  function getPageName(kind) { return document.body?.dataset?.[`${kind}Page`] || PAGE_DEFAULTS[kind]; }
 
   function getJsonPath() {
     const params = new URLSearchParams(window.location.search);
     const direct = params.get('json') || document.body?.dataset?.json;
     if (direct) return direct;
-
     const raceId = params.get('race_id') || params.get('raceId') || document.body?.dataset?.raceId;
     const date = params.get('date') || params.get('raceDate') || document.body?.dataset?.raceDate;
-    if (!raceId || !date) {
-      throw new Error('race_id と date をURLパラメータに入れてな。例: ?date=20260322&race_id=202606020801');
-    }
+    if (!raceId || !date) throw new Error('race_id と date をURLパラメータに入れてな。例: ?date=20260322&race_id=202606020801');
     return `${getDataRoot()}/${date}/race_${raceId}.json`;
   }
 
   function buildPageUrl(kind, race) {
     const page = getPageName(kind);
-    const params = new URLSearchParams({
-      date: race.race_date,
-      race_id: race.race_id,
-    });
+    const params = new URLSearchParams({ date: race.race_date, race_id: race.race_id });
     return `${page}?${params.toString()}`;
   }
 
@@ -101,106 +64,96 @@
     el.classList.toggle('is-error', !!isError);
   }
 
-  function clearStatus() {
-    const el = qs('#past-status');
-    if (!el) return;
-    el.hidden = true;
-    el.textContent = '';
-    el.classList.remove('is-error');
-  }
-
-  function parseDistanceValue(value) {
-    if (value == null || value === '') return null;
-    if (typeof value === 'number') return value;
-    const m = String(value).match(/(\d{3,4})/);
-    return m ? Number(m[1]) : null;
-  }
-
-  function parseSurfaceText(value) {
-    if (!value) return '';
-    const s = String(value);
-    if (s.includes('芝')) return '芝';
-    if (s.includes('ダ')) return 'ダ';
-    if (s.includes('障')) return '障';
-    return s;
-  }
-
-  function normalizeDate(value) {
-    if (!value) return null;
-    const s = String(value).replace(/\./g, '/').replace(/-/g, '/');
-    const d = new Date(s);
-    return Number.isNaN(d.getTime()) ? null : d;
-  }
-
-  function daysBetween(a, b) {
-    if (!a || !b) return null;
-    const ms = a.getTime() - b.getTime();
-    return Math.floor(ms / 86400000);
-  }
-
   function placeFromRaceId(raceId) {
     const rid = String(raceId ?? '').replace(/\D/g, '');
     if (rid.length < 6) return '';
     return JRA_PLACE_MAP[rid.slice(4, 6)] || '';
   }
 
-  function currentCourseLabel(race) {
-    return race.course || placeFromRaceId(race.race_id) || '';
+  function parseDistanceValue(v) {
+    if (v == null || v === '') return null;
+    const m = String(v).match(/(\d{3,4})/);
+    return m ? Number(m[1]) : null;
+  }
+
+  function surfaceOf(v) {
+    const s = String(v ?? '');
+    if (s.includes('芝')) return '芝';
+    if (s.includes('ダ')) return 'ダ';
+    if (s.includes('障')) return '障';
+    return s || '';
+  }
+
+  function raceName(data) {
+    const race = data.race || {};
+    const firstHorse = data.horses?.[0] || {};
+    return race.race_name || firstHorse.title || 'レース詳細';
+  }
+
+  function raceDistance(data) {
+    const race = data.race || {};
+    const firstHorse = data.horses?.[0] || {};
+    return race.distance || firstHorse.distance_m || parseDistanceValue(firstHorse.distance) || null;
+  }
+
+  function raceSurface(data) {
+    const race = data.race || {};
+    const firstHorse = data.horses?.[0] || {};
+    return race.surface || surfaceOf(firstHorse.surface || firstHorse.distance);
+  }
+
+  function currentCourse(data) {
+    const race = data.race || {};
+    return race.course || placeFromRaceId(race.race_id) || placeFromRaceId(data.horses?.[0]?.race_id);
   }
 
   function meaningfulPastRuns(horse) {
-    const runs = Array.isArray(horse.past_runs) ? horse.past_runs : [];
-    return runs.filter((run) => {
-      if (!run || typeof run !== 'object') return false;
-      return ['date', 'race_id', 'race_name', 'finish', 'distance', 'last3f', 'jockey'].some((k) => run[k] != null && run[k] !== '');
+    const fromArray = Array.isArray(horse.past_runs) ? horse.past_runs : [];
+    const valid = fromArray.filter((run) => run && typeof run === 'object' && ['date', 'race_id', 'race_name', 'finish', 'distance', 'last3f'].some((k) => run[k] != null && run[k] !== ''));
+    if (valid.length) return valid;
+    const buckets = {};
+    Object.keys(horse || {}).forEach((col) => {
+      const m = /^prev(\d+)_(.+)$/.exec(col);
+      if (!m) return;
+      const idx = Number(m[1]);
+      if (idx > 10) return;
+      buckets[idx] ||= { n: idx };
+      buckets[idx][m[2]] = horse[col];
     });
+    return Object.keys(buckets).map((k) => buckets[k]).filter((run) => ['date', 'race_id', 'race_name', 'finish', 'distance', 'last3f'].some((key) => run[key] != null && run[key] !== '')).sort((a,b)=>a.n-b.n);
   }
 
-  function getRunCourseName(run) {
+  function runCourse(run) {
     return run.course_name || run.course || placeFromRaceId(run.race_id) || '';
   }
 
-  function getRunDistanceText(run) {
-    return run.distance_text || run.distance || [parseSurfaceText(run.surface), parseDistanceValue(run.distance_m || run.distance)].filter(Boolean).join('');
+  function runDistanceText(run) {
+    return run.distance_text || run.distance || [surfaceOf(run.surface || run.distance), parseDistanceValue(run.distance_m || run.distance)].filter(Boolean).join('');
   }
 
-  function sameDistance(run, race) {
+  function sameDistance(run, data) {
     const rd = parseDistanceValue(run.distance_m || run.distance);
-    const cd = parseDistanceValue(race.distance);
+    const cd = parseDistanceValue(raceDistance(data));
     return rd != null && cd != null && rd === cd;
   }
 
-  function sameCourse(run, race) {
-    const runPlace = getRunCourseName(run);
-    const currentPlace = currentCourseLabel(race);
-    const runSurface = parseSurfaceText(run.surface || run.distance);
-    const currentSurface = parseSurfaceText(race.surface);
-    return !!runPlace && !!currentPlace && runPlace === currentPlace && sameDistance(run, race) && (!runSurface || !currentSurface || runSurface === currentSurface);
+  function sameCourse(run, data) {
+    const runPlace = runCourse(run);
+    const currentPlace = currentCourse(data);
+    const rs = surfaceOf(run.surface || run.distance);
+    const cs = surfaceOf(raceSurface(data));
+    return !!runPlace && !!currentPlace && runPlace === currentPlace && sameDistance(run, data) && (!rs || !cs || rs === cs);
   }
 
-  function boardCount(runs, limit = 3) {
-    return runs.slice(0, limit).filter((run) => {
-      const finish = toNumber(run.finish);
-      return finish != null && finish <= 5;
-    }).length;
-  }
+  function avg(values) { return values.length ? values.reduce((a,b)=>a+b,0)/values.length : null; }
+  function avgFinish(runs, limit = 3) { return avg(runs.slice(0, limit).map((r)=>toNum(r.finish)).filter((v)=>v != null)); }
+  function avgLast3f(runs, limit = 3) { return avg(runs.slice(0, limit).map((r)=>toNum(r.last3f)).filter((v)=>v != null)); }
+  function boardCount(runs, limit = 3) { return runs.slice(0, limit).filter((r)=>{ const f = toNum(r.finish); return f != null && f <= 5; }).length; }
 
-  function avgFinish(runs, limit = 3) {
-    const nums = runs.slice(0, limit).map((run) => toNumber(run.finish)).filter((v) => v != null);
-    if (!nums.length) return null;
-    return nums.reduce((a, b) => a + b, 0) / nums.length;
-  }
-
-  function avgLast3f(runs, limit = 3) {
-    const nums = runs.slice(0, limit).map((run) => toNumber(run.last3f)).filter((v) => v != null);
-    if (!nums.length) return null;
-    return nums.reduce((a, b) => a + b, 0) / nums.length;
-  }
-
-  function inferStyleFromPassing(passing) {
+  function inferStyle(passing) {
     if (!passing) return '';
     const nums = String(passing).match(/\d+/g);
-    if (!nums || !nums.length) return '';
+    if (!nums?.length) return '';
     const first = Number(nums[0]);
     if (first <= 3) return '先行';
     if (first <= 6) return '好位';
@@ -208,19 +161,31 @@
     return '追込';
   }
 
-  function styleTrendText(runs) {
-    const styles = runs.slice(0, 3).map((run) => inferStyleFromPassing(run.passing)).filter(Boolean);
-    if (!styles.length) return '不明';
-    const counts = styles.reduce((acc, style) => {
-      acc[style] = (acc[style] || 0) + 1;
-      return acc;
-    }, {});
-    const best = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] || styles[0];
-    return `${best}傾向`;
+  function styleTrend(runs) {
+    const arr = runs.slice(0, 3).map((r)=>inferStyle(r.passing)).filter(Boolean);
+    if (!arr.length) return '不明';
+    const cnt = {};
+    arr.forEach((s)=>cnt[s]=(cnt[s]||0)+1);
+    return Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0][0] + '傾向';
   }
 
-  function layoffText(raceDate, prevDate) {
-    const days = daysBetween(normalizeDate(raceDate), normalizeDate(prevDate));
+  function raceDateObj(v) {
+    if (!v) return null;
+    const s = String(v).replace(/\./g,'/').replace(/-/g,'/');
+    const d = new Date(s);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+
+  function daysBetween(a, b) {
+    if (!a || !b) return null;
+    return Math.floor((a.getTime() - b.getTime()) / 86400000);
+  }
+
+  function layoffText(data, firstRun) {
+    if (!firstRun) return '不明';
+    const cur = raceDateObj(data.race_date || data.race?.race_date || data.horses?.[0]?.date);
+    const prev = raceDateObj(firstRun.date);
+    const days = daysBetween(cur, prev);
     if (days == null) return '不明';
     if (days <= 21) return '中1-3週';
     if (days <= 42) return '中3-6週';
@@ -229,138 +194,140 @@
     return '半年以上';
   }
 
-  function distanceChangeText(race, prev1) {
-    if (!prev1) return '不明';
-    const current = parseDistanceValue(race.distance);
-    const prev = parseDistanceValue(prev1.distance_m || prev1.distance);
-    if (current == null || prev == null) return '不明';
-    const diff = current - prev;
+  function distanceChangeText(data, firstRun) {
+    if (!firstRun) return '不明';
+    const cur = parseDistanceValue(raceDistance(data));
+    const prev = parseDistanceValue(firstRun.distance_m || firstRun.distance);
+    if (cur == null || prev == null) return '不明';
+    const diff = cur - prev;
     if (diff === 0) return '同距離';
     return diff > 0 ? `${diff}m延長` : `${Math.abs(diff)}m短縮`;
   }
 
-  function prev1Brief(run) {
-    if (!run) return '前走データなし';
-    const items = [
-      run.finish != null ? `${fmt(run.finish)}着` : null,
-      getRunDistanceText(run),
-      run.going,
-      run.popularity != null ? `${fmt(run.popularity)}人気` : null,
-      run.last3f != null ? `上がり${fmtNum(run.last3f, 1)}` : null,
-    ].filter(Boolean);
-    return items.join(' / ') || '前走データなし';
-  }
-
-  function recent3Brief(runs) {
-    const recent = runs.slice(0, 3);
-    if (!recent.length) return '近3走データなし';
-    const finishes = recent.map((run) => fmt(run.finish)).join('-');
-    const avg = avgFinish(recent, 3);
-    return `近3走[${finishes}] 平均着順${avg != null ? avg.toFixed(1) : '—'}`;
-  }
-
-  function sameDistanceText(runs, race) {
-    return `同距離 ${runs.filter((run) => sameDistance(run, race)).length}走`;
-  }
-
-  function sameCourseText(runs, race) {
-    return `同コース ${runs.filter((run) => sameCourse(run, race)).length}走`;
-  }
-
-  function jockeyChangeText(horse, prev1) {
-    if (!prev1 || !horse.jockey || !prev1.jockey) return '不明';
-    return horse.jockey === prev1.jockey ? '継続騎乗' : `騎手替わり(${fmt(prev1.jockey)}→${fmt(horse.jockey)})`;
-  }
-
-  function weightChangeText(horse) {
-    const diff = toNumber(horse.horse_weight_diff);
-    if (diff == null) return '不明';
-    return diff > 0 ? `+${diff}kg` : `${diff}kg`;
-  }
-
-  function reasonsList(value) {
-    if (Array.isArray(value)) return value.filter(Boolean);
-    if (typeof value !== 'string') return [];
-    return value.split(/[|、,／/]/).map((x) => x.trim()).filter(Boolean);
-  }
-
-  function enrichHorse(horse, race) {
+  function summarizeHorse(horse, data) {
     const runs = meaningfulPastRuns(horse);
-    const prev1 = runs[0] || null;
-    const sameDistanceCount = runs.filter((run) => sameDistance(run, race)).length;
-    const sameCourseCount = runs.filter((run) => sameCourse(run, race)).length;
+    const sameCourseCount = runs.filter((r)=>sameCourse(r, data)).length;
+    const sameDistanceCount = runs.filter((r)=>sameDistance(r, data)).length;
     const board3 = boardCount(runs, 3);
-    const finishAvg3 = avgFinish(runs, 3);
-    const last3fAvg3 = avgLast3f(runs, 3);
-
+    const avgF = avgFinish(runs, 3);
+    const avgL3 = avgLast3f(runs, 3);
     return {
-      ...horse,
-      _pastRuns: runs,
-      _prev1Brief: prev1Brief(prev1),
-      _recent3Brief: recent3Brief(runs),
-      _sameDistanceText: sameDistanceText(runs, race),
-      _sameCourseText: sameCourseText(runs, race),
-      _sameDistanceCount: sameDistanceCount,
-      _sameCourseCount: sameCourseCount,
-      _layoffText: layoffText(race.race_date, prev1?.date),
-      _styleTrendText: styleTrendText(runs),
-      _distanceChangeText: distanceChangeText(race, prev1),
-      _jockeyChangeText: jockeyChangeText(horse, prev1),
-      _weightChangeText: weightChangeText(horse),
-      _recentTop5Count: board3,
-      _finishAvg3: finishAvg3,
-      _last3fAvg3: last3fAvg3,
-      _reasonsPosList: reasonsList(horse.reasons_pos),
-      _reasonsNegList: reasonsList(horse.reasons_neg),
+      horse,
+      runs,
+      sameCourseCount,
+      sameDistanceCount,
+      board3,
+      avgF,
+      avgL3,
+      style: styleTrend(runs),
+      layoff: layoffText(data, runs[0]),
+      distanceChange: distanceChangeText(data, runs[0]),
     };
   }
 
-  function createLayout() {
+  function allSummaries() {
+    return (state.data?.horses || []).map((h)=>summarizeHorse(h, state.data));
+  }
+
+  function filteredSummaries() {
+    let rows = allSummaries();
+    const keyword = state.keyword.trim().toLowerCase();
+    if (keyword) {
+      rows = rows.filter(({horse, runs}) => {
+        const hay = [horse.horse_name, horse.jockey, horse.trainer, currentCourse(state.data), ...runs.map((r)=>r.race_name), ...runs.map((r)=>runCourse(r))].join(' ').toLowerCase();
+        return hay.includes(keyword);
+      });
+    }
+    if (state.filterSameCourse) rows = rows.filter((r)=>r.sameCourseCount > 0);
+    if (state.filterSameDistance) rows = rows.filter((r)=>r.sameDistanceCount > 0);
+    if (state.filterBoard) rows = rows.filter((r)=>r.board3 > 0);
+    if (state.filterFastLast3f) rows = rows.filter((r)=>r.avgL3 != null && r.avgL3 <= 37.0);
+
+    const sorters = {
+      umaban: (a,b)=>(toNum(a.horse.umaban) ?? 999) - (toNum(b.horse.umaban) ?? 999),
+      ai: (a,b)=>(toNum(a.horse.pred_order) ?? 999) - (toNum(b.horse.pred_order) ?? 999),
+      course: (a,b)=>b.sameCourseCount - a.sameCourseCount || (toNum(a.horse.pred_order) ?? 999) - (toNum(b.horse.pred_order) ?? 999),
+      finish: (a,b)=>(a.avgF ?? 999) - (b.avgF ?? 999),
+      last3f: (a,b)=>(a.avgL3 ?? 999) - (b.avgL3 ?? 999),
+    };
+    rows.sort(sorters[state.sortKey] || sorters.umaban);
+    return rows;
+  }
+
+  function topCourseRows(rows) { return rows.filter((r)=>r.sameCourseCount > 0).sort((a,b)=>b.sameCourseCount-a.sameCourseCount || (a.avgF ?? 999)-(b.avgF ?? 999)).slice(0,3); }
+  function topFastRows(rows) { return rows.filter((r)=>r.avgL3 != null).sort((a,b)=>(a.avgL3 ?? 999)-(b.avgL3 ?? 999)).slice(0,3); }
+
+  function renderLayout() {
     const root = qs('#past-app');
     if (!root) throw new Error('#past-app が見つからへん。past_detail.html に <div id="past-app"></div> を置いてな。');
-
     root.innerHTML = `
       <section class="past-page">
         <div id="past-status" class="page-status" hidden></div>
-        <header id="past-header" class="past-page__header"></header>
-        <nav id="past-tabs" class="race-page__tabs"></nav>
-        <section id="past-race-summary" class="past-page__summary"></section>
-        <section id="past-controls" class="past-page__controls"></section>
-        <section class="past-page__table-wrap">
-          <table class="past-table">
-            <thead>
-              <tr>
-                <th>馬番</th>
-                <th>馬名</th>
-                <th>前走要約</th>
-                <th>近3走要約</th>
-                <th>条件一致</th>
-                <th>休み明け</th>
-                <th>脚質傾向</th>
-                <th>材料</th>
-              </tr>
-            </thead>
-            <tbody id="past-table-body"></tbody>
-          </table>
+        <section id="past-hero" class="sheet past-hero"></section>
+        <nav id="past-tabs" class="page-tab-strip"></nav>
+        <section class="sheet compare-toolbar">
+          <div class="section-title-row">
+            <div>
+              <h2 class="section-title">比較条件</h2>
+              <div class="section-subtitle">近走・同条件・上がりで素早く比較できる形にしとる。</div>
+            </div>
+          </div>
+          <div class="compare-toolbar__row">
+            <label>キーワード
+              <input type="text" id="past-keyword" placeholder="馬名・騎手・調教師・競馬場">
+            </label>
+            <label>並び順
+              <select id="past-sort">
+                <option value="umaban">馬番順</option>
+                <option value="ai">AI順</option>
+                <option value="course">同コース経験順</option>
+                <option value="finish">近3走平均着順</option>
+                <option value="last3f">近3走平均上がり</option>
+              </select>
+            </label>
+            <div>
+              <div class="filter-chip-row" id="past-limit-row"></div>
+            </div>
+          </div>
+          <div class="filter-chip-row" id="past-filter-row"></div>
+          <div class="compare-toolbar__meta" id="past-filter-meta"></div>
         </section>
-        <section id="past-bottom-panels" class="bottom-panels"></section>
+        <section class="sheet compare-summary-panel" id="past-summary"></section>
+        <section class="sheet compare-list-panel">
+          <div class="section-title-row">
+            <div>
+              <h2 class="section-title">馬ごとの比較</h2>
+              <div class="section-subtitle">要約だけ先に見て、必要な馬だけ展開できる。</div>
+            </div>
+          </div>
+          <div class="compare-list" id="past-list"></div>
+        </section>
       </section>
     `;
   }
 
-  function renderHeader(data) {
+  function renderHero(data) {
     const race = data.race || {};
-    const header = qs('#past-header');
-    if (!header) return;
-    const titleBits = [race.course, race.race_no != null ? `${race.race_no}R` : null, race.race_name].filter(Boolean);
-    const metaBits = [race.course_name, race.distance ? `${race.distance}m` : null, race.surface, race.going, race.headcount ? `${race.headcount}頭` : null].filter(Boolean);
-
-    header.innerHTML = `
-      <div class="race-title-sub">${escapeHtml(data.race_date || '')}</div>
-      <h1 class="race-title-main">${escapeHtml(titleBits.join(' '))}</h1>
-      <div class="race-title-meta">${escapeHtml(metaBits.join(' / ') || '条件情報なし')}</div>
+    const hero = qs('#past-hero');
+    if (!hero) return;
+    const title = [currentCourse(data), race.race_no ? `${race.race_no}R` : null, raceName(data)].filter(Boolean).join(' ');
+    const meta = [raceSurface(data), raceDistance(data) ? `${parseDistanceValue(raceDistance(data))}m` : null, race.going || data.horses?.[0]?.track_condition, race.headcount ? `${race.headcount}頭` : null].filter(Boolean).join(' / ');
+    const topAi = (data.summary?.top_ai || []).slice(0, 3).map((h)=>`${fmt(h.umaban)} ${fmt(h.horse_name)}`).join(' / ');
+    hero.innerHTML = `
+      <div class="race-hero__head">
+        <div>
+          <div class="race-hero__date">${escapeHtml(fmt(data.race_date, ''))}</div>
+          <h1 class="race-hero__title">${escapeHtml(title || '過去走比較')}</h1>
+          <div class="race-hero__meta">${escapeHtml(meta || '条件情報なし')}</div>
+        </div>
+        <div class="tag-list">
+          <span class="tag tag--blue">過去走比較</span>
+          <span class="tag">${escapeHtml(currentCourse(data) || '開催不明')}</span>
+        </div>
+      </div>
+      <div class="info-banner">AI上位: ${escapeHtml(topAi || '上位情報なし')}。近走の着順・同条件経験・上がりを一画面で比べやすくしたで。</div>
     `;
-    document.title = `${titleBits.join(' ')} | 過去走比較`;
+    document.title = `${title} | 過去走比較`;
   }
 
   function renderTabs(data) {
@@ -373,282 +340,224 @@
       { kind: 'past', label: '過去走比較', active: true },
       { kind: 'betting', label: '買い目作成', active: false },
     ];
-    nav.innerHTML = items.map((item) => `
-      <a class="race-tab${item.active ? ' is-active' : ''}" href="${escapeHtml(buildPageUrl(item.kind, race))}">${escapeHtml(item.label)}</a>
-    `).join('');
+    nav.innerHTML = items.map((item) => `<a class="race-tab${item.active ? ' is-active' : ''}" href="${escapeHtml(buildPageUrl(item.kind, race))}">${escapeHtml(item.label)}</a>`).join('');
   }
 
-  function renderRaceSummary(enriched) {
-    const el = qs('#past-race-summary');
+  function renderToolbarMeta(rows) {
+    const el = qs('#past-filter-meta');
     if (!el) return;
-
-    const withSameCourse = enriched.filter((h) => h._sameCourseCount > 0).length;
-    const withSameDistance = enriched.filter((h) => h._sameDistanceCount > 0).length;
-    const board3 = enriched.filter((h) => h._recentTop5Count >= 1).length;
-    const frontType = enriched.filter((h) => /先行|好位/.test(h._styleTrendText)).length;
-
-    el.innerHTML = `
-      <div class="summary-chip-row">
-        <span class="summary-chip">同コース経験 ${withSameCourse}頭</span>
-        <span class="summary-chip">同距離経験 ${withSameDistance}頭</span>
-        <span class="summary-chip">近3走掲示板内 ${board3}頭</span>
-        <span class="summary-chip">先行寄り ${frontType}頭</span>
-      </div>
-    `;
+    el.textContent = `${rows.length}頭表示 / 全${(state.data?.horses || []).length}頭`;
   }
 
   function renderControls() {
-    const el = qs('#past-controls');
-    if (!el) return;
-    el.innerHTML = `
-      <div class="control-row">
-        <label>検索 <input type="text" id="past-keyword" placeholder="馬名 / 騎手 / 血統"></label>
-        <label>並び替え
-          <select id="past-sort-key">
-            <option value="umaban">馬番</option>
-            <option value="same_course">同コース数</option>
-            <option value="same_distance">同距離数</option>
-            <option value="recent_top5">近3走掲示板内</option>
-            <option value="last3f_avg">近3走上がり平均</option>
-            <option value="finish_avg">近3走平均着順</option>
-          </select>
-        </label>
-        <label><input type="checkbox" id="past-filter-board3"> 近3走掲示板内あり</label>
-        <label><input type="checkbox" id="past-filter-same-distance"> 同距離経験あり</label>
-        <label><input type="checkbox" id="past-filter-same-course"> 同コース経験あり</label>
+    const limitRow = qs('#past-limit-row');
+    const filterRow = qs('#past-filter-row');
+    if (!limitRow || !filterRow) return;
+
+    const limitItems = [
+      { value: 3, label: '近3走' },
+      { value: 5, label: '近5走' },
+    ];
+    limitRow.innerHTML = limitItems.map((item) => `<button type="button" class="filter-chip${state.viewLimit === item.value ? ' is-active' : ''}" data-limit="${item.value}">${item.label}</button>`).join('');
+
+    const filters = [
+      { key: 'sameCourse', label: '同コース' },
+      { key: 'sameDistance', label: '同距離' },
+      { key: 'board', label: '近3走掲示板' },
+      { key: 'fastLast3f', label: '上がり優秀' },
+    ];
+    filterRow.innerHTML = filters.map((item) => {
+      const on = item.key === 'sameCourse' ? state.filterSameCourse : item.key === 'sameDistance' ? state.filterSameDistance : item.key === 'board' ? state.filterBoard : state.filterFastLast3f;
+      return `<button type="button" class="filter-chip${on ? ' is-active' : ''}" data-filter="${item.key}">${item.label}</button>`;
+    }).join('') + `<button type="button" class="filter-chip is-ghost" id="past-clear-filter">絞り込み解除</button>`;
+
+    qs('#past-keyword').value = state.keyword;
+    qs('#past-sort').value = state.sortKey;
+
+    qsa('[data-limit]', limitRow).forEach((btn)=>btn.addEventListener('click', ()=>{ state.viewLimit = Number(btn.dataset.limit) || 3; renderSummaryAndList(); renderControls(); }));
+    qsa('[data-filter]', filterRow).forEach((btn)=>btn.addEventListener('click', ()=>{
+      const key = btn.dataset.filter;
+      if (key === 'sameCourse') state.filterSameCourse = !state.filterSameCourse;
+      if (key === 'sameDistance') state.filterSameDistance = !state.filterSameDistance;
+      if (key === 'board') state.filterBoard = !state.filterBoard;
+      if (key === 'fastLast3f') state.filterFastLast3f = !state.filterFastLast3f;
+      renderSummaryAndList(); renderControls();
+    }));
+    qs('#past-clear-filter')?.addEventListener('click', ()=>{
+      state.keyword = '';
+      state.filterSameCourse = false;
+      state.filterSameDistance = false;
+      state.filterBoard = false;
+      state.filterFastLast3f = false;
+      state.sortKey = 'umaban';
+      renderControls();
+      renderSummaryAndList();
+    });
+    qs('#past-keyword')?.addEventListener('input', (e)=>{ state.keyword = e.target.value || ''; renderSummaryAndList(); renderToolbarMeta(filteredSummaries()); });
+    qs('#past-sort')?.addEventListener('change', (e)=>{ state.sortKey = e.target.value || 'umaban'; renderSummaryAndList(); });
+  }
+
+  function summaryLine(label, row, extra) {
+    if (!row) return `<div class="reason-item"><div><div class="reason-item__text">${label}</div><div class="reason-item__sub">該当なし</div></div></div>`;
+    return `
+      <div class="insight-item">
+        <div>
+          <div class="insight-item__name">${escapeHtml(label)} ${escapeHtml(fmt(row.horse.umaban))} ${escapeHtml(fmt(row.horse.horse_name))}</div>
+          <div class="insight-item__sub">${escapeHtml(extra)}</div>
+        </div>
       </div>
     `;
-
-    qs('#past-keyword')?.addEventListener('input', (e) => {
-      state.keyword = e.target.value.trim().toLowerCase();
-      renderTable();
-      renderBottomPanels();
-    });
-    qs('#past-sort-key')?.addEventListener('change', (e) => {
-      state.sortKey = e.target.value;
-      renderTable();
-      renderBottomPanels();
-    });
-    qs('#past-filter-board3')?.addEventListener('change', (e) => {
-      state.filterBoard3 = e.target.checked;
-      renderTable();
-      renderBottomPanels();
-    });
-    qs('#past-filter-same-distance')?.addEventListener('change', (e) => {
-      state.filterSameDistance = e.target.checked;
-      renderTable();
-      renderBottomPanels();
-    });
-    qs('#past-filter-same-course')?.addEventListener('change', (e) => {
-      state.filterSameCourse = e.target.checked;
-      renderTable();
-      renderBottomPanels();
-    });
   }
 
-  function horseMatches(horse) {
-    if (state.filterBoard3 && horse._recentTop5Count < 1) return false;
-    if (state.filterSameDistance && horse._sameDistanceCount < 1) return false;
-    if (state.filterSameCourse && horse._sameCourseCount < 1) return false;
-    if (!state.keyword) return true;
+  function renderSummaryAndList() {
+    const rows = filteredSummaries();
+    renderToolbarMeta(rows);
+    const summary = qs('#past-summary');
+    const list = qs('#past-list');
+    if (!summary || !list) return;
 
-    const hay = [
-      horse.horse_name,
-      horse.jockey,
-      horse.trainer,
-      horse.sire,
-      horse.dam_sire,
-      horse._prev1Brief,
-      horse._recent3Brief,
-    ].filter(Boolean).join(' ').toLowerCase();
-    return hay.includes(state.keyword);
-  }
+    const courseRows = topCourseRows(rows);
+    const fastRows = topFastRows(rows);
+    const noteParts = [
+      state.filterSameCourse ? '同コースのみ' : null,
+      state.filterSameDistance ? '同距離のみ' : null,
+      state.filterBoard ? '近3走掲示板あり' : null,
+      state.filterFastLast3f ? '上がり優秀のみ' : null,
+    ].filter(Boolean);
 
-  function compareHorse(a, b) {
-    switch (state.sortKey) {
-      case 'same_course':
-        return b._sameCourseCount - a._sameCourseCount || (toNumber(a.umaban) || 999) - (toNumber(b.umaban) || 999);
-      case 'same_distance':
-        return b._sameDistanceCount - a._sameDistanceCount || (toNumber(a.umaban) || 999) - (toNumber(b.umaban) || 999);
-      case 'recent_top5':
-        return b._recentTop5Count - a._recentTop5Count || (toNumber(a.umaban) || 999) - (toNumber(b.umaban) || 999);
-      case 'last3f_avg': {
-        const av = a._last3fAvg3 ?? 999;
-        const bv = b._last3fAvg3 ?? 999;
-        return av - bv || (toNumber(a.umaban) || 999) - (toNumber(b.umaban) || 999);
-      }
-      case 'finish_avg': {
-        const av = a._finishAvg3 ?? 999;
-        const bv = b._finishAvg3 ?? 999;
-        return av - bv || (toNumber(a.umaban) || 999) - (toNumber(b.umaban) || 999);
-      }
-      case 'umaban':
-      default:
-        return (toNumber(a.umaban) || 999) - (toNumber(b.umaban) || 999);
-    }
-  }
-
-  function tagsHtml(horse) {
-    const tags = [
-      ...horse._reasonsPosList.slice(0, 3).map((x) => ({ text: x, cls: 'tag--plus' })),
-      ...horse._reasonsNegList.slice(0, 2).map((x) => ({ text: x, cls: 'tag--minus' })),
-    ];
-    return tags.map((tag) => `<span class="tag ${tag.cls}">${escapeHtml(tag.text)}</span>`).join('');
-  }
-
-  function runCardHtml(run, race) {
-    return `
-      <article class="past-run-card">
-        <header class="past-run-card__head">
-          <div class="past-run-card__date">${escapeHtml(fmt(run.date))}</div>
-          <div class="past-run-card__course">${escapeHtml([getRunCourseName(run), run.race_no != null ? `${fmt(run.race_no)}R` : null].filter(Boolean).join(' '))}</div>
-          <div class="past-run-card__name">${escapeHtml(fmt(run.race_name))}</div>
-        </header>
-        <div class="past-run-card__main">
-          <div class="past-run-card__result">
-            <span class="result-rank">${escapeHtml(fmt(run.finish))}着</span>
-            <span class="result-pop">${escapeHtml(fmt(run.popularity))}人気</span>
-            <span class="result-odds">${escapeHtml(fmtNum(run.win_odds, 1))}</span>
+    summary.innerHTML = `
+      <div class="compare-summary-grid">
+        <div class="compare-note-box">
+          <h2 class="compare-note-box__title">比較メモ</h2>
+          <div class="compare-note-box__text">
+            ${escapeHtml(currentCourse(state.data) || '当該コース')} / ${escapeHtml(surfaceOf(raceSurface(state.data)) || '条件')} / ${escapeHtml(fmt(parseDistanceValue(raceDistance(state.data)), '—'))}m を基準に、近${state.viewLimit}走で比較しとる。${noteParts.length ? `現在は ${noteParts.join('・')} で絞り込み中。` : '現在は全体比較。'}
           </div>
-          <dl class="past-run-card__spec">
-            <div><dt>条件</dt><dd>${escapeHtml([getRunDistanceText(run), fmt(run.going)].filter(Boolean).join(' / '))}</dd></div>
-            <div><dt>頭数</dt><dd>${escapeHtml(run.field_size != null ? `${fmt(run.field_size)}頭` : '—')}</dd></div>
-            <div><dt>騎手</dt><dd>${escapeHtml([fmt(run.jockey), run.burden_weight != null ? fmtNum(run.burden_weight, 1) : null].filter(Boolean).join(' / '))}</dd></div>
-            <div><dt>時計</dt><dd>${escapeHtml(fmt(run.time))}</dd></div>
-            <div><dt>着差</dt><dd>${escapeHtml(fmt(run.margin))}</dd></div>
-            <div><dt>通過</dt><dd>${escapeHtml(fmt(run.passing))}</dd></div>
-            <div><dt>上がり</dt><dd>${escapeHtml(fmtNum(run.last3f, 1))}</dd></div>
-            <div><dt>馬体重</dt><dd>${escapeHtml(run.horse_weight != null ? `${fmt(run.horse_weight)}(${fmt(run.horse_weight_diff)})` : '—')}</dd></div>
-            <div><dt>ペース</dt><dd>${escapeHtml(fmt(run.pace))}</dd></div>
-          </dl>
-          <div class="past-run-card__flags">
-            ${sameCourse(run, race) ? '<span class="tag tag--info">同コース</span>' : ''}
-            ${sameDistance(run, race) ? '<span class="tag tag--match">同距離</span>' : ''}
+          <div class="tag-list" style="margin-top:10px;">
+            <span class="tag tag--blue">同コース重視</span>
+            <span class="tag">距離替わり: 要確認</span>
+            <span class="tag">ローテ: ${escapeHtml(rows[0]?.layoff || '不明')}</span>
           </div>
         </div>
-      </article>
-    `;
-  }
-
-  function rowHtml(horse, race) {
-    const anchorId = `horse-${horse.umaban ?? horse.horse_name ?? Math.random()}`;
-    const detailHidden = horse._pastRuns.length ? '' : ' hidden';
-
-    return `
-      <tr id="${escapeHtml(anchorId)}" class="horse-summary-row" data-detail-id="detail-${escapeHtml(anchorId)}">
-        <td>${fmt(horse.umaban)}</td>
-        <td>
-          <button type="button" class="horse-toggle-link" data-detail-id="detail-${escapeHtml(anchorId)}">${escapeHtml(fmt(horse.horse_name))}</button>
-          <div class="horse-blood-mini">${escapeHtml([horse.sire, horse.dam_sire].filter(Boolean).join(' × '))}</div>
-        </td>
-        <td>${escapeHtml(horse._prev1Brief)}</td>
-        <td>${escapeHtml(horse._recent3Brief)}</td>
-        <td>
-          <span>${escapeHtml(horse._sameDistanceText)}</span><br>
-          <span>${escapeHtml(horse._sameCourseText)}</span><br>
-          <span>${escapeHtml(horse._distanceChangeText)}</span>
-        </td>
-        <td>
-          <span>${escapeHtml(horse._layoffText)}</span><br>
-          <span class="horse-mini-meta">${escapeHtml(horse._jockeyChangeText)}</span><br>
-          <span class="horse-mini-meta">${escapeHtml(horse._weightChangeText)}</span>
-        </td>
-        <td>${escapeHtml(horse._styleTrendText)}</td>
-        <td><div class="tag-list">${tagsHtml(horse)}</div></td>
-      </tr>
-      <tr id="detail-${escapeHtml(anchorId)}" class="horse-detail-row" hidden${detailHidden}>
-        <td colspan="8">
-          <div class="past-run-grid">
-            ${horse._pastRuns.map((run) => runCardHtml(run, race)).join('') || '<div class="empty-text">過去走データなし</div>'}
+        <div class="compare-side-stack">
+          <div class="compare-side-box">
+            <h3 class="compare-side-box__title">同コースで気になる馬</h3>
+            <div class="insight-list">
+              ${courseRows.map((row) => summaryLine('注目', row, `同コース${row.sameCourseCount}回 / 平均着順${row.avgF != null ? row.avgF.toFixed(1) : '—'}`)).join('') || '<div class="compare-side-box__text">該当なし</div>'}
+            </div>
           </div>
-        </td>
-      </tr>
+          <div class="compare-side-box">
+            <h3 class="compare-side-box__title">上がり優秀</h3>
+            <div class="insight-list">
+              ${fastRows.map((row) => summaryLine('上がり', row, `近3走平均上がり${row.avgL3 != null ? row.avgL3.toFixed(1) : '—'} / ${row.style}`)).join('') || '<div class="compare-side-box__text">該当なし</div>'}
+            </div>
+          </div>
+        </div>
+      </div>
     `;
-  }
 
-  function renderTable() {
-    const tbody = qs('#past-table-body');
-    if (!tbody || !state.data) return;
-    const race = state.data.race || {};
-    const enriched = (state.data.horses || []).map((horse) => enrichHorse(horse, race));
-    const filtered = enriched.filter(horseMatches).sort(compareHorse);
-    state._filtered = filtered;
-
-    tbody.innerHTML = filtered.map((horse) => rowHtml(horse, race)).join('') || '<tr><td colspan="8" class="empty-text">該当馬なし</td></tr>';
-
-    tbody.querySelectorAll('.horse-toggle-link').forEach((button) => {
-      button.addEventListener('click', () => {
-        const detailId = button.dataset.detailId;
-        const detailRow = detailId ? qs(`#${CSS.escape(detailId)}`) : null;
-        if (!detailRow) return;
-        detailRow.hidden = !detailRow.hidden;
-      });
-    });
-
-    const hash = window.location.hash.replace('#', '');
-    if (hash) {
-      const summaryRow = qs(`#${CSS.escape(hash)}`);
-      const detailRow = qs(`#detail-${CSS.escape(hash)}`);
-      if (summaryRow) summaryRow.scrollIntoView({ block: 'center' });
-      if (detailRow) detailRow.hidden = false;
+    if (!rows.length) {
+      list.innerHTML = `<div class="empty-panel">条件に合う馬がおらへん。絞り込みを少し戻してみてな。</div>`;
+      return;
     }
-  }
 
-  function renderBottomPanels() {
-    const root = qs('#past-bottom-panels');
-    if (!root) return;
-    const horses = Array.isArray(state._filtered) ? state._filtered : [];
+    list.innerHTML = rows.map((row) => {
+      const horse = row.horse;
+      const id = String(horse.horse_id ?? horse.umaban ?? horse.horse_name ?? '');
+      const expanded = state.expanded.has(id);
+      const recentRuns = row.runs.slice(0, state.viewLimit);
+      const topTags = [];
+      if (row.sameCourseCount > 0) topTags.push(`<span class="tag tag--blue">同コース${row.sameCourseCount}</span>`);
+      if (row.sameDistanceCount > 0) topTags.push(`<span class="tag">同距離${row.sameDistanceCount}</span>`);
+      if (row.board3 > 0) topTags.push(`<span class="tag tag--plus">近3走掲示板${row.board3}</span>`);
+      if (row.avgL3 != null && row.avgL3 <= 37.0) topTags.push(`<span class="tag tag--plus">上がり優秀</span>`);
+      return `
+        <article class="card compare-card">
+          <div class="compare-card__head">
+            <div class="compare-card__horse">
+              <div class="horse-no">${escapeHtml(fmt(horse.umaban))}</div>
+              <div>
+                <h3 class="compare-card__name">${escapeHtml(fmt(horse.horse_name))}</h3>
+                <div class="compare-card__sub">AI${escapeHtml(fmt(horse.pred_order))} / 単勝${escapeHtml(fmtNum(horse.tansho_odds, 1))} / 人気${escapeHtml(fmt(horse.popularity))} / ${escapeHtml(fmt(horse.jockey))}</div>
+                <div class="tag-list" style="margin-top:8px;">${topTags.join('') || '<span class="tag">比較タグなし</span>'}</div>
+              </div>
+            </div>
+            <div class="compare-kpi-grid">
+              <div class="compare-kpi"><div class="compare-kpi__label">近3走平均着順</div><div class="compare-kpi__value">${escapeHtml(row.avgF != null ? row.avgF.toFixed(1) : '—')}</div></div>
+              <div class="compare-kpi"><div class="compare-kpi__label">近3走平均上がり</div><div class="compare-kpi__value">${escapeHtml(row.avgL3 != null ? row.avgL3.toFixed(1) : '—')}</div></div>
+              <div class="compare-kpi"><div class="compare-kpi__label">脚質傾向</div><div class="compare-kpi__value">${escapeHtml(row.style)}</div></div>
+            </div>
+            <div class="compare-card__right">
+              <span class="badge badge--plain">${escapeHtml(row.distanceChange)}</span>
+              <span class="badge badge--plain">${escapeHtml(row.layoff)}</span>
+              <button type="button" class="horse-toggle" data-toggle="${escapeHtml(id)}">${expanded ? '閉じる' : '近走を開く'}</button>
+            </div>
+          </div>
+          <div class="compare-card__body" ${expanded ? '' : 'hidden'}>
+            <div class="detail-box">
+              <h4 class="detail-box__title">比較要約</h4>
+              <div class="detail-kv">
+                <div class="detail-kv__item"><div class="detail-kv__label">近3走</div><div class="detail-kv__value">${escapeHtml(recentRuns.map((r)=>fmt(r.finish)).join(' → ') || '—')}</div></div>
+                <div class="detail-kv__item"><div class="detail-kv__label">同コース / 同距離</div><div class="detail-kv__value">${escapeHtml(`${row.sameCourseCount}回 / ${row.sameDistanceCount}回`)}</div></div>
+                <div class="detail-kv__item"><div class="detail-kv__label">前走ひとこと</div><div class="detail-kv__value">${escapeHtml(recentRuns[0] ? `${fmt(recentRuns[0].finish)}着・${fmt(runDistanceText(recentRuns[0]))}・上がり${fmtNum(recentRuns[0].last3f, 1)}` : '前走データなし')}</div></div>
+                <div class="detail-kv__item"><div class="detail-kv__label">メモ</div><div class="detail-kv__value">${escapeHtml(row.board3 > 0 ? '近走で掲示板実績あり。' : '近走はやや詰めたい。')}</div></div>
+              </div>
+            </div>
+            <div class="run-card-grid">
+              ${recentRuns.length ? recentRuns.map((run) => `
+                <section class="run-card">
+                  <div class="run-card__head">
+                    <div>
+                      <h4 class="run-card__title">${escapeHtml(fmt(run.date, '日付不明'))} ${escapeHtml(fmt(run.race_name, '前走'))}</h4>
+                      <div class="run-card__meta">${escapeHtml(runCourse(run) || '開催不明')} / ${escapeHtml(runDistanceText(run) || '距離不明')} / ${escapeHtml(fmt(run.going, '馬場不明'))}</div>
+                    </div>
+                    <div class="tag-list">
+                      <span class="badge badge--plain">${escapeHtml(`${fmt(run.finish)}着`)}</span>
+                      <span class="badge badge--plain">${escapeHtml(`${fmt(run.popularity)}人気`)}</span>
+                    </div>
+                  </div>
+                  <div class="run-card__stat-row">
+                    ${sameCourse(run, state.data) ? '<span class="tag tag--blue">同コース</span>' : ''}
+                    ${sameDistance(run, state.data) ? '<span class="tag">同距離</span>' : ''}
+                    ${toNum(run.finish) != null && toNum(run.finish) <= 5 ? '<span class="tag tag--plus">掲示板内</span>' : ''}
+                  </div>
+                  <div class="run-card__table">
+                    <div class="run-kv"><div class="run-kv__label">人気 / 単勝</div><div class="run-kv__value">${escapeHtml(`${fmt(run.popularity)}人気 / ${fmtNum(run.win_odds, 1)}`)}</div></div>
+                    <div class="run-kv"><div class="run-kv__label">騎手</div><div class="run-kv__value">${escapeHtml(fmt(run.jockey))}</div></div>
+                    <div class="run-kv"><div class="run-kv__label">上がり</div><div class="run-kv__value">${escapeHtml(fmtNum(run.last3f, 1))}</div></div>
+                    <div class="run-kv"><div class="run-kv__label">通過</div><div class="run-kv__value">${escapeHtml(fmt(run.passing))}</div></div>
+                    <div class="run-kv"><div class="run-kv__label">タイム</div><div class="run-kv__value">${escapeHtml(fmt(run.time))}</div></div>
+                    <div class="run-kv"><div class="run-kv__label">着差</div><div class="run-kv__value">${escapeHtml(fmtNum(run.margin, 1))}</div></div>
+                  </div>
+                </section>
+              `).join('') : '<div class="empty-panel">過去走データなし</div>'}
+            </div>
+          </div>
+        </article>
+      `;
+    }).join('');
 
-    const sameCourseTop = horses.filter((h) => h._sameCourseCount > 0).sort((a, b) => b._sameCourseCount - a._sameCourseCount).slice(0, 5);
-    const last3fTop = horses.filter((h) => h._last3fAvg3 != null).sort((a, b) => a._last3fAvg3 - b._last3fAvg3).slice(0, 5);
-    const frontTop = horses.filter((h) => /先行|好位/.test(h._styleTrendText)).slice(0, 5);
-    const layoffWarn = horses.filter((h) => /3-6か月|半年以上/.test(h._layoffText)).slice(0, 5);
-
-    const listHtml = (items, formatter) => items.length
-      ? `<ul>${items.map((item) => `<li>${formatter(item)}</li>`).join('')}</ul>`
-      : '<div class="empty-text">該当なし</div>';
-
-    root.innerHTML = `
-      <div class="bottom-panel">
-        <h3>同コース上位</h3>
-        ${listHtml(sameCourseTop, (h) => `${escapeHtml(fmt(h.umaban))} ${escapeHtml(fmt(h.horse_name))} / ${escapeHtml(h._sameCourseText)}`)}
-      </div>
-      <div class="bottom-panel">
-        <h3>上がり優秀馬</h3>
-        ${listHtml(last3fTop, (h) => `${escapeHtml(fmt(h.umaban))} ${escapeHtml(fmt(h.horse_name))} / 平均${escapeHtml(fmtNum(h._last3fAvg3, 1))}`)}
-      </div>
-      <div class="bottom-panel">
-        <h3>先行安定馬</h3>
-        ${listHtml(frontTop, (h) => `${escapeHtml(fmt(h.umaban))} ${escapeHtml(fmt(h.horse_name))} / ${escapeHtml(h._styleTrendText)}`)}
-      </div>
-      <div class="bottom-panel">
-        <h3>休み明け注意馬</h3>
-        ${listHtml(layoffWarn, (h) => `${escapeHtml(fmt(h.umaban))} ${escapeHtml(fmt(h.horse_name))} / ${escapeHtml(h._layoffText)}`)}
-      </div>
-    `;
+    qsa('[data-toggle]', list).forEach((btn) => btn.addEventListener('click', () => {
+      const id = btn.dataset.toggle;
+      if (!id) return;
+      if (state.expanded.has(id)) state.expanded.delete(id); else state.expanded.add(id);
+      renderSummaryAndList();
+    }));
   }
 
   async function init() {
     try {
-      createLayout();
+      renderLayout();
       setStatus('読み込み中...');
-      const data = await fetchJson(getJsonPath());
-      state.data = data;
-      clearStatus();
-      renderHeader(data);
-      renderTabs(data);
-      renderRaceSummary((data.horses || []).map((horse) => enrichHorse(horse, data.race || {})));
+      state.data = await fetchJson(getJsonPath());
+      renderHero(state.data);
+      renderTabs(state.data);
       renderControls();
-      renderTable();
-      renderBottomPanels();
-    } catch (error) {
-      console.error(error);
-      try {
-        createLayout();
-      } catch (_) {
-        // noop
-      }
-      setStatus(error.message || '表示に失敗したで', true);
+      renderSummaryAndList();
+      setStatus('');
+      qs('#past-status').hidden = true;
+    } catch (err) {
+      console.error(err);
+      setStatus(err?.message || '表示に失敗したで。', true);
     }
   }
 
