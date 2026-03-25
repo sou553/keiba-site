@@ -1,69 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>出走馬一覧 | 予想整理サイト</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>出走馬一覧</title>
   <link rel="stylesheet" href="./static/style.css">
 </head>
-<body>
-  <div class="site-shell">
-    <header class="site-header sticky-top">
-      <div class="site-header__inner page-width">
-        <a class="site-logo" href="./index.html" aria-label="ホーム">
-          <span class="site-logo__mark">競</span>
-          <span class="site-logo__text">予想整理サイト</span>
-        </a>
-      </div>
-    </header>
+<body data-data-root="./data">
+  <header class="nk-site-header">
+    <a href="./index.html" class="nk-site-logo-link"><div class="nk-site-logo">競</div></a>
+    <div class="nk-site-title">予想整理サイト</div>
+  </header>
 
-    <main class="page-width page-main">
-      <div id="race-header" class="hero-panel hero-panel--race">
-        <div class="skeleton-line skeleton-line--lg"></div>
-        <div class="skeleton-line skeleton-line--md"></div>
-      </div>
-
-      <nav id="race-nav" class="page-nav sticky-subnav" aria-label="ページ遷移"></nav>
-
-      <section class="content-panel">
-        <div id="summary-root"></div>
-      </section>
-
-      <section class="content-panel">
-        <div class="section-heading">
-          <div>
-            <h2 class="section-title">人気馬の乖離</h2>
-            <p class="section-note">人気と AI / 適性順位のズレを独立表示。</p>
-          </div>
-        </div>
-        <div id="gap-root"></div>
-      </section>
-
-      <section class="content-panel">
-        <div class="section-heading section-heading--stack">
-          <div>
-            <h2 class="section-title">出走馬一覧</h2>
-            <p id="horse-meta" class="section-note"></p>
-          </div>
-          <div class="section-tools">
-            <label class="field-inline field-inline--search">
-              <input id="horse-search" class="field-input" type="text" placeholder="馬名・騎手・調教師で検索">
-            </label>
-            <label class="field-inline">
-              <select id="horse-sort" class="field-select">
-                <option value="pred">AI順</option>
-                <option value="popularity">人気順</option>
-                <option value="odds">単勝順</option>
-                <option value="course">適性順</option>
-                <option value="number">馬番順</option>
-              </select>
-            </label>
-          </div>
-        </div>
-        <div id="horse-list" class="horse-card-list"></div>
-      </section>
-    </main>
-  </div>
+  <main class="nk-page-wrap">
+    <div id="race-app"></div>
+  </main>
 
   <script src="./static/analysis_common.js"></script>
   <script src="./static/race.js"></script>

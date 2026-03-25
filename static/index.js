@@ -1,145 +1,135 @@
-(async function () {
-  const AC = window.AnalysisCommon || {};
+(function () {
+  const AC0 = window.AC || {};
+  const escapeHtml = typeof AC0.escapeHtml === 'function'
+    ? AC0.escapeHtml
+    : function (v) {
+        return String(v ?? '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      };
+  const toNum = typeof AC0.toNum === 'function'
+    ? AC0.toNum
+    : function (v) {
+        if (v === null || v === undefined || v === '') return null;
+        const n = Number(v);
+        return Number.isFinite(n) ? n : null;
+      };
+  const formatPct01 = typeof AC0.roundPct01 === 'function'
+    ? AC0.roundPct01
+    : function (v) {
+        const n = toNum(v);
+        return n === null ? '—' : `${Math.round(n * 1000) / 10}%`;
+      };
+  const formatOdds = typeof AC0.formatOdds === 'function'
+    ? AC0.formatOdds
+    : function (v) {
+        const n = toNum(v);
+        return n === null ? '—' : String(Math.round(n * 10) / 10);
+      };
+  const dataRoot = typeof AC0.resolveDataRoot === 'function' ? AC0.resolveDataRoot() : './data';
+  const fetchJson = typeof AC0.fetchJson === 'function'
+    ? AC0.fetchJson
+    : async function (path) {
+        const res = await fetch(path, { cache: 'no-cache' });
+        if (!res.ok) throw new Error(`${res.status} ${res.statusText}: ${path}`);
+        return res.json();
+      };
 
-  const dateTabsEl = document.getElementById('date-tabs');
-  const keywordInput = document.getElementById('keyword-input');
-  const placeSelect = document.getElementById('place-select');
-  const oddsOnlyCheck = document.getElementById('odds-only-check');
-  const clearBtn = document.getElementById('clear-filter-btn');
-  const raceListEl = document.getElementById('race-list');
-  const listMetaEl = document.getElementById('list-meta');
+  const els = {
+    dateTabs: document.getElementById('date-tabs'),
+    raceListMeta: document.getElementById('race-list-meta'),
+    raceList: document.getElementById('race-list'),
+    keyword: document.getElementById('filter-keyword'),
+    course: document.getElementById('filter-course'),
+    oddsOnly: document.getElementById('filter-odds-only'),
+    reset: document.getElementById('filter-reset'),
+  };
 
-  let indexJson = null;
-  let currentDate = '';
-  let races = [];
+  let state = {
+    index: null,
+    currentDate: '',
+    currentRaces: [],
+  };
 
-  function renderEmpty(message) {
-    raceListEl.innerHTML = `<div class="empty-state">${AC.escapeHtml ? AC.escapeHtml(message) : message}</div>`;
+  function raceKeyword(r) {
+    const top = (r.top_ai || []).map(x => `${x.umaban ?? ''} ${x.horse_name ?? ''}`).join(' ');
+    return [r.race_name, r.course, r.course_name, top].filter(Boolean).join(' ');
   }
 
-  async function fetchJson(path) {
-    const res = await fetch(path, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`${path} の読込に失敗`);
-    return res.json();
-  }
-
-  function getCurrentQueryDate() {
-    const p = new URLSearchParams(location.search);
-    return p.get('date') || '';
-  }
-
-  function setQueryDate(date) {
-    const p = new URLSearchParams(location.search);
-    p.set('date', date);
-    history.replaceState({}, '', `${location.pathname}?${p.toString()}`);
-  }
-
-  function renderDateTabs() {
-    dateTabsEl.innerHTML = (indexJson?.dates || []).map((d, idx) => {
-      const active = d.race_date === currentDate || (!currentDate && idx === 0);
-      return `<button class="date-tab ${active ? 'is-active' : ''}" data-date="${d.race_date}" type="button">${d.race_date} <span style="opacity:.75">${d.race_count}R</span></button>`;
+  function buildDateTabs(indexJson) {
+    const dates = indexJson.dates || [];
+    els.dateTabs.innerHTML = dates.map((d, idx) => {
+      const active = d.race_date === state.currentDate || (!state.currentDate && idx === 0);
+      return `<button class="nk-date-chip ${active ? 'is-active' : ''}" data-date="${escapeHtml(d.race_date)}">${escapeHtml(d.race_date)} <span>${escapeHtml(d.race_count)}R</span></button>`;
     }).join('');
 
-    dateTabsEl.querySelectorAll('.date-tab').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        currentDate = btn.dataset.date || '';
-        setQueryDate(currentDate);
-        loadDate(currentDate);
-        renderDateTabs();
-      });
+    els.dateTabs.querySelectorAll('[data-date]').forEach(btn => {
+      btn.addEventListener('click', () => loadDate(btn.dataset.date));
     });
   }
 
-  function populatePlaceOptions() {
-    const places = [...new Set((races || []).map(r => r.course).filter(Boolean))].sort();
-    const current = placeSelect.value;
-    placeSelect.innerHTML = `<option value="">すべて</option>` + places.map(p => `<option value="${AC.escapeHtml(p)}">${AC.escapeHtml(p)}</option>`).join('');
-    placeSelect.value = places.includes(current) ? current : '';
+  function renderCourseOptions(races) {
+    const uniq = [...new Set(races.map(r => r.course).filter(Boolean))];
+    const prev = els.course.value;
+    els.course.innerHTML = ['<option value="">すべて</option>']
+      .concat(uniq.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`))
+      .join('');
+    if (uniq.includes(prev)) els.course.value = prev;
   }
 
-  function buildSummaryLabel(race) {
-    const top = race.top_ai && race.top_ai[0] ? race.top_ai[0] : null;
-    if (!top) return '情報不足';
-    const pTop3 = AC.toNum(top.p_top3) ?? 0;
-    const pWin = AC.toNum(top.p_win) ?? 0;
-    if (pTop3 >= 0.7 && pWin >= 0.22) return '本命寄り';
-    if (pTop3 < 0.5) return '見送り寄り';
-    return '混戦';
-  }
+  function getFilteredRaces() {
+    const q = (els.keyword.value || '').trim().toLowerCase();
+    const course = els.course.value || '';
+    const oddsOnly = !!els.oddsOnly.checked;
 
-  function getAiSummary(race) {
-    const top = race.top_ai && race.top_ai[0] ? race.top_ai[0] : null;
-    if (!top) return null;
-    const second = race.top_ai && race.top_ai[1] ? race.top_ai[1] : null;
-    const line = [];
-    if (second) line.push(`${second.umaban} ${second.horse_name}`);
-    if (race.top_ai[2]) line.push(`${race.top_ai[2].umaban} ${race.top_ai[2].horse_name}`);
-    return {
-      label: buildSummaryLabel(race),
-      main: `${top.umaban} ${top.horse_name}`,
-      meta: `勝率 ${AC.pct(top.p_win)} / 複勝率 ${AC.pct(top.p_top3)} / 単勝 ${AC.odds(top.tansho_odds)} / 人気 ${top.popularity ?? '—'}`,
-      note: line.length ? `相手: ${line.join(' / ')}` : ''
-    };
-  }
-
-  function filterRaces() {
-    const kw = keywordInput.value.trim().toLowerCase();
-    const place = placeSelect.value;
-    const oddsOnly = oddsOnlyCheck.checked;
-
-    return races.filter((race) => {
-      if (place && race.course !== place) return false;
+    return state.currentRaces.filter(r => {
+      if (course && r.course !== course) return false;
       if (oddsOnly) {
-        const hasOdds = (race.top_ai || []).some(h => AC.toNum(h.tansho_odds) !== null);
+        const hasOdds = (r.top_ai || []).some(h => toNum(h.tansho_odds) !== null);
         if (!hasOdds) return false;
       }
-      if (!kw) return true;
-      const text = [
-        race.race_name,
-        race.course,
-        race.course_name,
-        ...(race.top_ai || []).map(h => h.horse_name)
-      ].filter(Boolean).join(' ').toLowerCase();
-      return text.includes(kw);
+      if (q) {
+        const text = raceKeyword(r).toLowerCase();
+        if (!text.includes(q)) return false;
+      }
+      return true;
     });
   }
 
-  function renderRaceList() {
-    const filtered = filterRaces();
-    listMetaEl.textContent = `${currentDate} / ${filtered.length}件表示 / 全${races.length}R`;
+  function renderRaces() {
+    const filtered = getFilteredRaces();
+    els.raceListMeta.textContent = `${state.currentDate} / ${filtered.length}件表示 / 全${state.currentRaces.length}R`;
 
     if (!filtered.length) {
-      renderEmpty('条件に合うレースがありません。');
+      els.raceList.innerHTML = '<div class="nk-empty">該当レースなし</div>';
       return;
     }
 
-    raceListEl.innerHTML = filtered.map((race) => {
-      const sum = getAiSummary(race);
-      const summaryLabelClass = sum?.label === '見送り寄り' ? 'summary-label summary-label--skip' : 'summary-label';
+    els.raceList.innerHTML = filtered.map(r => {
+      const top = (r.top_ai || [])[0] || {};
+      const top2 = (r.top_ai || [])[1] || {};
+      const cond = [r.course, r.surface, r.distance ? `${r.distance}m` : '', r.headcount ? `${r.headcount}頭` : ''].filter(Boolean).join(' / ');
       return `
-        <article class="race-row">
-          <div class="race-row__left">
-            <div class="race-row__date">${AC.escapeHtml(currentDate)}</div>
-            <div class="race-row__title">${AC.escapeHtml(race.race_no ?? '')}R ${AC.escapeHtml(race.race_name || '')}</div>
-            <div class="race-row__meta">${AC.escapeHtml([race.course, race.surface, race.distance ? `${race.distance}m` : null, race.headcount ? `${race.headcount}頭` : null].filter(Boolean).join(' / '))}</div>
-            <div class="race-tag-list" style="margin-top:10px;">
-              <span class="race-tag">race_id ${AC.escapeHtml(race.race_id || '')}</span>
-            </div>
+        <article class="nk-race-row-card">
+          <div class="nk-race-row-main">
+            <div class="nk-race-no">${escapeHtml(r.race_no ?? '')}R</div>
+            <div class="nk-race-name">${escapeHtml(r.race_name ?? '')}</div>
+            <div class="nk-race-cond">${escapeHtml(cond)}</div>
+            <div class="nk-race-id-chip">race_id ${escapeHtml(r.race_id ?? '')}</div>
           </div>
-          <div class="race-row__center">
-            <div class="race-row__summary">
-              ${sum ? `
-                <div class="${summaryLabelClass}">${AC.escapeHtml(sum.label)}</div>
-                <div class="summary-name">◎ ${AC.escapeHtml(sum.main)}</div>
-                <div class="summary-meta">${AC.escapeHtml(sum.meta)}</div>
-                ${sum.note ? `<div class="summary-note">${AC.escapeHtml(sum.note)}</div>` : ''}
-              ` : '<div class="empty-state">AI要約なし</div>'}
-            </div>
+          <div class="nk-race-row-ai">
+            <div class="nk-mini-title">AI本線</div>
+            <div class="nk-ai-main-name">◎ ${escapeHtml(top.umaban ?? '')} ${escapeHtml(top.horse_name ?? '—')}</div>
+            <div class="nk-ai-main-meta">勝率 ${formatPct01(top.p_win)} / 複勝率 ${formatPct01(top.p_top3)} / 単勝 ${formatOdds(top.tansho_odds)} / 人気 ${escapeHtml(top.popularity ?? '—')}</div>
+            ${top2.horse_name ? `<div class="nk-ai-sub-meta">相手: ${escapeHtml(top2.umaban ?? '')} ${escapeHtml(top2.horse_name ?? '')}</div>` : ''}
           </div>
-          <div class="race-row__right">
-            <a class="btn btn--primary" href="./race_detail.html?date=${encodeURIComponent(currentDate)}&race_id=${encodeURIComponent(race.race_id)}">出走馬一覧</a>
-            <a class="btn" href="./past_detail.html?date=${encodeURIComponent(currentDate)}&race_id=${encodeURIComponent(race.race_id)}">過去走比較</a>
-            <a class="btn" href="./betting.html?date=${encodeURIComponent(currentDate)}&race_id=${encodeURIComponent(race.race_id)}">買い目作成</a>
+          <div class="nk-race-row-actions">
+            <a class="nk-action-btn is-primary" href="./race_detail.html?date=${encodeURIComponent(state.currentDate)}&race_id=${encodeURIComponent(r.race_id)}">出走馬一覧</a>
+            <a class="nk-action-btn" href="./past_detail.html?date=${encodeURIComponent(state.currentDate)}&race_id=${encodeURIComponent(r.race_id)}">過去走比較</a>
+            <a class="nk-action-btn" href="./betting.html?date=${encodeURIComponent(state.currentDate)}&race_id=${encodeURIComponent(r.race_id)}">買い目作成</a>
           </div>
         </article>
       `;
@@ -147,39 +137,36 @@
   }
 
   async function loadDate(date) {
-    raceListEl.innerHTML = `<div class="empty-state">読み込み中...</div>`;
+    state.currentDate = date;
+    const json = await fetchJson(`${dataRoot}/${date}/races.json`);
+    state.currentRaces = json.races || [];
+    buildDateTabs(state.index);
+    renderCourseOptions(state.currentRaces);
+    renderRaces();
+  }
+
+  async function init() {
     try {
-      const json = await fetchJson(`./data/${date}/races.json`);
-      races = json.races || [];
-      populatePlaceOptions();
-      renderRaceList();
-    } catch (e) {
-      renderEmpty(e.message || 'レース一覧の読み込みに失敗しました。');
+      state.index = await fetchJson(`${dataRoot}/index.json`);
+      const firstDate = state.index?.dates?.[0]?.race_date || '';
+      state.currentDate = firstDate;
+      buildDateTabs(state.index);
+      await loadDate(state.currentDate);
+
+      [els.keyword, els.course, els.oddsOnly].forEach(el => {
+        el?.addEventListener('input', renderRaces);
+        el?.addEventListener('change', renderRaces);
+      });
+      els.reset?.addEventListener('click', () => {
+        els.keyword.value = '';
+        els.course.value = '';
+        els.oddsOnly.checked = false;
+        renderRaces();
+      });
+    } catch (err) {
+      els.raceList.innerHTML = `<div class="nk-error-box">${escapeHtml(err?.message || String(err))}</div>`;
     }
   }
 
-  async function boot() {
-    try {
-      indexJson = await fetchJson('./data/index.json');
-    } catch (e) {
-      renderEmpty('data/index.json の読み込みに失敗しました。');
-      return;
-    }
-
-    currentDate = getCurrentQueryDate() || indexJson?.dates?.[0]?.race_date || '';
-    renderDateTabs();
-    await loadDate(currentDate);
-
-    keywordInput.addEventListener('input', renderRaceList);
-    placeSelect.addEventListener('change', renderRaceList);
-    oddsOnlyCheck.addEventListener('change', renderRaceList);
-    clearBtn.addEventListener('click', () => {
-      keywordInput.value = '';
-      placeSelect.value = '';
-      oddsOnlyCheck.checked = false;
-      renderRaceList();
-    });
-  }
-
-  boot();
+  document.addEventListener('DOMContentLoaded', init);
 })();
