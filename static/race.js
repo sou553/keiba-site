@@ -1487,7 +1487,7 @@
   function buildPositiveMemo(horse) {
     const items = [];
     if (horse._norm.style_est) items.push(`脚質:${horse._norm.style_est}`);
-    if (horse._norm.layoff_days !== null) items.push(`休み明け:${formatLayoff(horse._norm.layoff_days)}`);
+    //if (horse._norm.layoff_days !== null) items.push(`休み明け:${formatLayoff(horse._norm.layoff_days)}`);
     if (horse.sire) items.push(`父血統:${horse.sire}`);
     if (horse._norm.same_course_count > 0) items.push(`同コース経験:${horse._norm.same_course_count}走`);
     if (horse._norm.same_place_count > 0) items.push(`同競馬場経験:${horse._norm.same_place_count}走`);
@@ -1572,11 +1572,7 @@
               </div>
             </div>
 
-            <div class="horse-card__aside">
-              ${horse._analysis.hole_label ? `<span class="${badgeClassByLabel(horse._analysis.hole_label)}">${escapeHtml(horse._analysis.hole_label)}</span>` : ''}
-              ${horse._analysis.danger_label ? `<span class="${badgeClassByLabel(horse._analysis.danger_label)}">${escapeHtml(horse._analysis.danger_label)}</span>` : ''}
-              <button type="button" class="horse-toggle" data-card-id="${id}">${isOpen ? '詳細を閉じる' : '詳細を見る'}</button>
-            </div>
+            
           </div>
 
           <div class="horse-card__details" ${isOpen ? '' : 'hidden'}>
