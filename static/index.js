@@ -21,7 +21,7 @@
         <section class="index-hero card">
           <div class="index-hero__text">
             <div class="badge badge--blue">予想まとめ</div>
-            <h1>netkeiba寄せの予想トップ</h1>
+            <h1>予想トップ</h1>
             <p>人気馬の評価、穴候補、危険人気をレース単位で先に見てから、出走馬一覧・過去走比較・買い目作成へ</p>
           </div>
           <div id="hero-stats" class="hero-stats"></div>
