@@ -1151,22 +1151,46 @@
   function renderDivergence(analysis) {
     const el = qs('#divergence-panel');
     if (!el) return;
-    const aiHole = analysis.holeCandidates.filter((horse) => horse._analysis.gap_ai !== null).slice(0, 3);
-    const aiDanger = analysis.dangerPopulars.filter((horse) => horse._analysis.over_ai !== null).slice(0, 3);
-    const courseHole = analysis.courseGapLists?.valueList || [];
-    const courseDanger = analysis.courseGapLists?.dangerList || [];
+
+    const rows = analysis.horses || [];
+
+    const aiHole = rows
+      .filter((horse) => horse._norm.popularity !== null && horse._norm.pred_order !== null)
+      .filter((horse) => horse._norm.popularity >= 6 && (horse._norm.popularity - horse._norm.pred_order) >= 5)
+      .sort((a, b) => ((b._norm.popularity - b._norm.pred_order) - (a._norm.popularity - a._norm.pred_order)) || sortByPredThenTop3(a, b))
+      .slice(0, 3);
+
+    const aiDanger = rows
+      .filter((horse) => horse._norm.popularity !== null && horse._norm.pred_order !== null)
+      .filter((horse) => horse._norm.popularity <= 5 && (horse._norm.pred_order - horse._norm.popularity) >= 5)
+      .sort((a, b) => ((b._norm.pred_order - b._norm.popularity) - (a._norm.pred_order - a._norm.popularity)) || ((a._norm.popularity ?? 999) - (b._norm.popularity ?? 999)))
+      .slice(0, 3);
+
+    const courseHole = rows
+      .filter((horse) => horse._norm.popularity !== null && horse._norm.course_adv_rank !== null)
+      .filter((horse) => horse._norm.popularity >= 6 && (horse._norm.popularity - horse._norm.course_adv_rank) >= 5)
+      .sort((a, b) => ((b._norm.popularity - b._norm.course_adv_rank) - (a._norm.popularity - a._norm.course_adv_rank)) || sortByPredThenTop3(a, b))
+      .slice(0, 3);
+
+    const courseDanger = rows
+      .filter((horse) => horse._norm.popularity !== null && horse._norm.course_adv_rank !== null)
+      .filter((horse) => horse._norm.popularity <= 5 && (horse._norm.course_adv_rank - horse._norm.popularity) >= 5)
+      .sort((a, b) => ((b._norm.course_adv_rank - b._norm.popularity) - (a._norm.course_adv_rank - a._norm.popularity)) || ((a._norm.popularity ?? 999) - (b._norm.popularity ?? 999)))
+      .slice(0, 3);
 
     function renderAiGroup(title, rows, type) {
       return `
         <div class="divergence-box__group">
           <div class="pick-box__label">${escapeHtml(title)}</div>
           ${rows.length ? rows.map((horse) => {
-            const delta = type === 'hole' ? horse._analysis.gap_ai : horse._analysis.over_ai;
+            const delta = type === 'hole'
+              ? (horse._norm.popularity - horse._norm.pred_order)
+              : (horse._norm.pred_order - horse._norm.popularity);
             return `
               <div class="divergence-line">
                 <div>
                   <div class="divergence-line__name">${escapeHtml(horse.umaban)} ${escapeHtml(horse.horse_name)}</div>
-                  <div class="divergence-line__sub">人気 ${escapeHtml(fmt(horse._norm.popularity))} / AI ${escapeHtml(fmt(horse._norm.pred_order))} / 複勝率 ${escapeHtml(fmtPct01(horse._norm.p_top3))}</div>
+                  <div class="divergence-line__sub">人気 ${escapeHtml(fmt(horse._norm.popularity))} / AI ${escapeHtml(fmt(horse._norm.pred_order))}${horse._norm.p_top3 !== null ? ` / 複勝率 ${escapeHtml(fmtPct01(horse._norm.p_top3))}` : ''}</div>
                 </div>
                 <span class="${escapeHtml(type === 'hole' ? 'badge badge--green delta-chip' : 'badge badge--red delta-chip')}">${type === 'hole' ? '+' : '-'}${escapeHtml(fmt(delta))}</span>
               </div>
@@ -1180,15 +1204,20 @@
       return `
         <div class="divergence-box__group">
           <div class="pick-box__label">${escapeHtml(title)}</div>
-          ${rows.length ? rows.map((horse) => `
-            <div class="divergence-line">
-              <div>
-                <div class="divergence-line__name">${escapeHtml(horse.umaban)} ${escapeHtml(horse.horse_name)}</div>
-                <div class="divergence-line__sub">${escapeHtml(horse._courseGap?.reason || '')}</div>
+          ${rows.length ? rows.map((horse) => {
+            const delta = type === 'hole'
+              ? (horse._norm.popularity - horse._norm.course_adv_rank)
+              : (horse._norm.course_adv_rank - horse._norm.popularity);
+            return `
+              <div class="divergence-line">
+                <div>
+                  <div class="divergence-line__name">${escapeHtml(horse.umaban)} ${escapeHtml(horse.horse_name)}</div>
+                  <div class="divergence-line__sub">人気 ${escapeHtml(fmt(horse._norm.popularity))} / 適性 ${escapeHtml(fmt(horse._norm.course_adv_rank))}${horse._norm.p_top3 !== null ? ` / 複勝率 ${escapeHtml(fmtPct01(horse._norm.p_top3))}` : ''}</div>
+                </div>
+                <span class="${escapeHtml(type === 'hole' ? 'badge badge--green delta-chip' : 'badge badge--red delta-chip')}">${type === 'hole' ? '+' : '-'}${escapeHtml(fmt(delta))}</span>
               </div>
-              <span class="${escapeHtml(type === 'hole' ? 'badge badge--green delta-chip' : 'badge badge--red delta-chip')}">${type === 'hole' ? '+' : ''}${escapeHtml(fmt(type === 'hole' ? horse._courseGap?.score : horse._courseGap?.gap))}</span>
-            </div>
-          `).join('') : '<div class="note-text">該当馬なし</div>'}
+            `;
+          }).join('') : '<div class="note-text">該当馬なし</div>'}
         </div>
       `;
     }
@@ -1197,7 +1226,7 @@
       <div class="section-title-row">
         <div>
           <h2 class="section-title">人気馬の乖離</h2>
-          <div class="section-subtitle">人気と AI / 適性順位のズレを独立表示</div>
+          <div class="section-subtitle">ここだけはシンプル判定。人気薄は差5以上、人気上位も差5以上だけ表示</div>
         </div>
       </div>
       <div class="divergence-grid">
