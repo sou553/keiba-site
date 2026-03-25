@@ -563,7 +563,7 @@ select {
 .horse-summary-metrics {
   display: grid;
   gap: 8px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
 }
 .metric-box {
   padding: 10px 12px;
