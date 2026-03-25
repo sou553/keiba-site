@@ -1,373 +1,274 @@
+(async function () {
+  const AC = window.AnalysisCommon;
+  const headerEl = document.getElementById('race-header');
+  const navEl = document.getElementById('race-nav');
+  const summaryRoot = document.getElementById('summary-root');
+  const gapRoot = document.getElementById('gap-root');
+  const horseListEl = document.getElementById('horse-list');
+  const horseMetaEl = document.getElementById('horse-meta');
+  const horseSearch = document.getElementById('horse-search');
+  const horseSort = document.getElementById('horse-sort');
 
-(() => {
-  const params = new URLSearchParams(location.search);
-  const raceDate = params.get("date");
-  const raceId = params.get("race_id");
-  const dataRoot = document.body.dataset.dataRoot || "./data";
+  const { date, raceId } = AC.getDateAndRaceId();
+  let payload = null;
+  let horses = [];
 
-  const $ = (sel) => document.querySelector(sel);
-  const esc = (v) => String(v ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
-  const toNum = (v) => { const n = Number(v); return Number.isFinite(n) ? n : null; };
-  const pct = (v) => { const n=toNum(v); return n===null ? "—" : `${Math.round(n*1000)/10}%`; };
-  const odds = (v) => { const n=toNum(v); return n===null ? "—" : `${Math.round(n*10)/10}`; };
-  const fmtRank = (v) => { const n=toNum(v); return n===null ? "—" : `${n}位`; };
-  const clip = (v,min=0,max=1) => Math.max(min, Math.min(max, Number.isFinite(v) ? v : min));
-  const avg = (arr) => { const xs = arr.filter(Number.isFinite); return xs.length ? xs.reduce((a,b)=>a+b,0)/xs.length : null; };
-  const std = (arr) => { const xs = arr.filter(Number.isFinite); if(xs.length <= 1) return 0; const m=avg(xs); return Math.sqrt(xs.reduce((s,x)=>s+(x-m)**2,0)/xs.length); };
-
-  function sortByPred(a,b){
-    const ap = toNum(a.pred_order) ?? 999;
-    const bp = toNum(b.pred_order) ?? 999;
-    if(ap !== bp) return ap-bp;
-    return (toNum(b.p_top3) ?? -1) - (toNum(a.p_top3) ?? -1);
+  async function fetchJson(path) {
+    const res = await fetch(path, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`${path} の読込に失敗しました。`);
+    return res.json();
   }
 
-  function modelRankArray(h){
-    const ranks = [];
-    if(h.model_scores && typeof h.model_scores === 'object'){
-      Object.values(h.model_scores).forEach(m => {
-        const r = toNum(m?.rank);
-        if(r !== null) ranks.push(r);
-      });
-    }
-    const p = toNum(h.pred_order);
-    if(p !== null) ranks.push(p);
-    return [...new Set(ranks)];
-  }
-  function agreementScore(h){
-    const rs = modelRankArray(h);
-    if(rs.length <= 1) return 0.5;
-    return clip(1 - std(rs)/5, 0, 1);
-  }
-  function dangerScore(h){
-    const pop = toNum(h.popularity);
-    const pred = toNum(h.pred_order);
-    const course = toNum(h.course_adv_rank);
-    const pTop3 = toNum(h.p_top3);
-    const pWin = toNum(h.p_win);
-    const overAi = (pred !== null && pop !== null) ? pred - pop : 0;
-    const overCourse = (course !== null && pop !== null) ? course - pop : 0;
-    return (
-      0.35 * clip(overAi/8,0,1) +
-      0.25 * clip(overCourse/8,0,1) +
-      0.20 * clip((0.50 - (pTop3 ?? 0))/0.40,0,1) +
-      0.10 * clip((0.18 - (pWin ?? 0))/0.18,0,1) +
-      0.10 * clip(std(modelRankArray(h))/5,0,1)
-    );
-  }
-
-  function classifyPopularHorse(h){
-    const pop = toNum(h.popularity);
-    const pred = toNum(h.pred_order);
-    const course = toNum(h.course_adv_rank);
-    const pTop3 = toNum(h.p_top3);
-    const pWin = toNum(h.p_win);
-    if(pop === null || pop > 5) return {label:null, comment:null};
-
-    const aiGap = (pred !== null) ? pred - pop : 0;
-    const courseGap = (course !== null) ? course - pop : 0;
-    let weakCount = 0;
-    if(aiGap >= 3) weakCount += 1;
-    if(courseGap >= 4) weakCount += 1;
-    if(pTop3 !== null && pTop3 < 0.35) weakCount += 1;
-    if(pWin !== null && pWin < 0.08) weakCount += 1;
-    if(dangerScore(h) >= 0.60) weakCount += 1;
-
-    const reliable = pred !== null && pred <= pop + 1 && (course === null || course <= pop + 2) && pTop3 !== null && pTop3 >= 0.55;
-    const topPop = pop <= 2;
-    if(reliable) return {label:"信頼", comment:`AI${pred ?? "—"}位 / 適性${course ?? "—"}位 / 複勝率${pct(pTop3)}`};
-
-    const isDanger = weakCount >= 3 || aiGap >= 4 || courseGap >= 6 || (pTop3 !== null && pTop3 < 0.20);
-    if(isDanger){
-      return {label:"危険", comment:`AI${pred ?? "—"}位 / 適性${course ?? "—"}位 / 複勝率${pct(pTop3)}`};
-    }
-    const slight = weakCount >= 2 || (aiGap >= 3 && courseGap >= 3);
-    if(slight){
-      const label = topPop ? "妥当" : "やや危険";
-      return {label, comment:`AI${pred ?? "—"}位 / 適性${course ?? "—"}位 / 複勝率${pct(pTop3)}`};
-    }
-    return {label:"妥当", comment:`AI${pred ?? "—"}位 / 適性${course ?? "—"}位 / 複勝率${pct(pTop3)}`};
-  }
-
-  function classifyHole(h){
-    const pop = toNum(h.popularity);
-    const pred = toNum(h.pred_order);
-    const course = toNum(h.course_adv_rank);
-    const pTop3 = toNum(h.p_top3);
-    const pWin = toNum(h.p_win);
-    const gapAi = (pop !== null && pred !== null) ? pop - pred : null;
-    const gapCourse = (pop !== null && course !== null) ? pop - course : null;
-    const score =
-      0.35 * clip(((gapAi ?? 0)/8),0,1) +
-      0.25 * clip(((gapCourse ?? 0)/8),0,1) +
-      0.20 * clip((((pTop3 ?? 0)-0.20)/0.40),0,1) +
-      0.10 * clip((((pWin ?? 0)-0.05)/0.20),0,1) +
-      0.10 * agreementScore(h);
-    const ok = pop !== null && pop >= 6 && (((gapAi ?? 0) >= 3) || ((gapCourse ?? 0) >= 4)) && (pTop3 ?? 0) >= 0.25;
-    if(!ok) return {label:null, score};
-    if(pop >= 8 && (gapAi ?? 0) >= 4 && (pTop3 ?? 0) >= 0.35 && score >= 0.68) return {label:"強穴", score};
-    if(score >= 0.55) return {label:"穴候補", score};
-    if(score >= 0.45) return {label:"軽穴", score};
-    return {label:null, score};
-  }
-
-  function classifyDanger(h){
-    const pop = toNum(h.popularity);
-    const pred = toNum(h.pred_order);
-    const course = toNum(h.course_adv_rank);
-    const pTop3 = toNum(h.p_top3);
-    const pWin = toNum(h.p_win);
-    const overAi = (pred !== null && pop !== null) ? pred - pop : null;
-    const overCourse = (course !== null && pop !== null) ? course - pop : null;
-    const score = dangerScore(h);
-    const ok = pop !== null && pop <= 5 && (((overAi ?? 0) >= 3) || ((overCourse ?? 0) >= 4)) && (pTop3 ?? 1) <= 0.45;
-    if(!ok) return {label:null, score};
-    if(pop <= 3 && (overAi ?? 0) >= 4 && (overCourse ?? 0) >= 5 && (pWin ?? 1) <= 0.10 && (pTop3 ?? 1) <= 0.35 && score >= 0.65) return {label:"強危険", score};
-    if(score >= 0.52) return {label:"危険人気", score};
-    if(score >= 0.42) return {label:"やや危険", score};
-    return {label:null, score};
-  }
-
-  // 乖離パネルはシンプル版
-  function simpleAiGap(h){
-    const pop = toNum(h.popularity), pred = toNum(h.pred_order);
-    if(pop === null || pred === null) return null;
-    const gap = pop - pred;
-    if(pop >= 6 && gap >= 5 && pred <= 3) return {type:"value", score:gap, reason:`人気${pop} / AI${pred} / 複勝率${pct(h.p_top3)}`};
-    if(pop <= 5 && -gap >= 5) return {type:"danger", score:gap, reason:`人気${pop} / AI${pred} / 複勝率${pct(h.p_top3)}`};
-    return null;
-  }
-
-  function simpleCourseGap(h){
-    const pop = toNum(h.popularity), course = toNum(h.course_adv_rank);
-    if(pop === null || course === null) return null;
-    const gap = pop - course;
-    if(pop >= 6 && gap >= 5 && course <= 3) return {type:"value", score:gap, reason:`人気${pop} / 適性${course} / 複勝率${pct(h.p_top3)}`};
-    if(pop <= 5 && -gap >= 5) return {type:"danger", score:gap, reason:`人気${pop} / 適性${course} / 複勝率${pct(h.p_top3)}`};
-    return null;
-  }
-
-  function pillClass(label){
-    if(label === "信頼") return "trust";
-    if(label === "危険") return "danger";
-    if(label === "やや危険") return "warn";
-    return "neutral";
-  }
-
-  function statusText(rows, dangerRows){
-    const top1 = rows[0], top2 = rows[1];
-    const p1 = toNum(top1?.p_win), p2 = toNum(top2?.p_win), t1 = toNum(top1?.p_top3);
-    const gap = (p1 !== null && p2 !== null) ? p1-p2 : null;
-    const strongDanger = dangerRows.filter(h => h._danger?.label === "強危険").length;
-    if(top1 && t1 !== null && t1 >= 0.70 && gap !== null && gap >= 0.08 && dangerRows.length <= 1){
-      return {status:"本命寄り", reasons:["総合1位の信頼度が高い","1位と2位の差が比較的大きい"]};
-    }
-    if(strongDanger >= 1 || dangerRows.length >= 2 || (gap !== null && gap <= 0.03) || (t1 !== null && t1 < 0.50)){
-      const rs = [];
-      if(dangerRows.length >= 2) rs.push("上位人気に強い危険人気がいる");
-      if(gap !== null && gap <= 0.03) rs.push("1位と2位の差が小さい");
-      if(t1 !== null && t1 < 0.50) rs.push("本命の複勝率が低め");
-      return {status:"見送り寄り", reasons:rs.length ? rs : ["上位評価が割れている"]};
-    }
-    return {status:"混戦", reasons:["上位評価が拮抗している"]};
-  }
-
-  function renderHead(data){
-    const race = data.race || {};
-    $("#race-head").innerHTML = `
-      <div class="nk-race-date">${esc(data.race_date ?? raceDate ?? "")}</div>
-      <div class="nk-race-title">${esc(race.race_no ?? "")}R ${esc(race.race_name ?? "")}</div>
-      <div class="nk-race-meta">${esc(race.course ?? "-")} / ${esc(race.surface ?? "-")} / ${esc(race.distance ?? "-")}m / ${esc(race.headcount ?? "-")}頭</div>
-      <div class="nk-tags" style="margin-top:10px">
-        <span class="nk-chip">race_id ${esc(race.race_id ?? raceId ?? "")}</span>
-      </div>
+  function buildHeader(race) {
+    headerEl.innerHTML = `
+      <div class="race-row__date">${AC.escapeHtml(date)}</div>
+      <h1 class="race-title">${AC.escapeHtml(race.course || '')} ${AC.escapeHtml(race.race_no || '')}R ${AC.escapeHtml(race.race_name || '')}</h1>
+      <div class="race-subtitle">${AC.escapeHtml(AC.getRaceLabel(race))}</div>
     `;
-    $("#tab-race").href = `./race_detail.html?date=${encodeURIComponent(data.race_date || raceDate)}&race_id=${encodeURIComponent(race.race_id || raceId)}`;
-    $("#tab-past").href = `./past_detail.html?date=${encodeURIComponent(data.race_date || raceDate)}&race_id=${encodeURIComponent(race.race_id || raceId)}`;
-    $("#tab-betting").href = `./betting.html?date=${encodeURIComponent(data.race_date || raceDate)}&race_id=${encodeURIComponent(race.race_id || raceId)}`;
+    navEl.innerHTML = AC.getNavHtml(date, raceId, 'race');
   }
 
-  function renderSummary(rows, statusObj, holes, dangers){
-    const top1 = rows[0], top2 = rows[1], top3 = rows[2];
-    $("#summary-panel").innerHTML = top1 ? `
-      <div class="nk-main-head">
+  function renderSummary(raceSummary) {
+    const statusClass = raceSummary.status === '見送り寄り' ? 'status-pill status-pill--skip' : (raceSummary.status === '本命寄り' ? 'status-pill status-pill--solid' : 'status-pill');
+    const main = raceSummary.main;
+    const line = raceSummary.line || [];
+    const popularRows = raceSummary.popularSummary || [];
+
+    summaryRoot.innerHTML = `
+      <div class="section-heading">
         <div>
-          <div class="nk-section-title">予想まとめ</div>
-          <div class="nk-section-sub">本命・相手本線・穴候補・危険人気を最初に確認できる形に整理</div>
+          <h2 class="section-title">予想まとめ</h2>
+          <p class="section-note">本命・相手本線・穴候補・危険人気を最初に確認できる形に整理。</p>
         </div>
-        <span class="nk-status status-${esc(statusObj.status)}">${esc(statusObj.status)}</span>
+        <span class="${statusClass}">${AC.escapeHtml(raceSummary.status)}</span>
       </div>
-      <div class="nk-main-name">◎ ${esc(top1.umaban)} ${esc(top1.horse_name)}</div>
-      <div class="nk-badges">
-        <span class="nk-badge nk-badge--blue">AI ${esc(top1.pred_order ?? "—")}</span>
-        <span class="nk-badge">${esc(top1.popularity ?? "—")}人気</span>
-        <span class="nk-badge">単勝 ${odds(top1.tansho_odds)}</span>
-        <span class="nk-badge nk-badge--green">勝率 ${pct(top1.p_win)}</span>
-        <span class="nk-badge nk-badge--green">複勝率 ${pct(top1.p_top3)}</span>
-      </div>
-    ` : `データなし`;
 
-    $("#line-panel").innerHTML = [top2, top3].filter(Boolean).map((h, i) => `
-      <div class="nk-list-row">
-        <div class="nk-list-main">
-          <div class="nk-list-name">${i===0 ? "○" : "▲"} ${esc(h.umaban)} ${esc(h.horse_name)}</div>
-          <div class="nk-list-meta">AI${esc(h.pred_order ?? "—")} / 複勝率${pct(h.p_top3)}</div>
-        </div>
-      </div>
-    `).join("") || `<div class="nk-muted">該当馬なし</div>`;
-
-    $("#hole-panel").innerHTML = holes.slice(0,3).map(h => `
-      <div class="nk-list-row">
-        <div class="nk-list-main">
-          <div class="nk-list-name">☆ ${esc(h.umaban)} ${esc(h.horse_name)}</div>
-          <div class="nk-list-meta">${esc(h._hole.label)} / AI${esc(h.pred_order ?? "—")} / 複勝率${pct(h.p_top3)} / 単勝${odds(h.tansho_odds)}</div>
-        </div>
-      </div>
-    `).join("") || `<div class="nk-muted">該当馬なし</div>`;
-
-    $("#danger-panel").innerHTML = dangers.slice(0,3).map(h => `
-      <div class="nk-list-row">
-        <div class="nk-list-main">
-          <div class="nk-list-name">! ${esc(h.umaban)} ${esc(h.horse_name)}</div>
-          <div class="nk-list-meta">${esc(h._danger.label)} / 人気${esc(h.popularity ?? "—")} / AI${esc(h.pred_order ?? "—")} / 適性${esc(h.course_adv_rank ?? "—")} / 複勝率${pct(h.p_top3)}</div>
-        </div>
-      </div>
-    `).join("") || `<div class="nk-muted">該当馬なし</div>`;
-
-    $("#reason-panel").innerHTML = `
-      <div class="nk-note-item">
-        <div class="nk-note-title">ひとこと</div>
-        <div class="nk-note-sub">${esc(commentText(top1, top2, holes, dangers, statusObj.status))}</div>
-      </div>
-      ${statusObj.reasons.map(r => `
-        <div class="nk-note-item">
-          <div class="nk-note-title">${esc(r)}</div>
-          <div class="nk-note-sub">現在の人気・AI・適性・確率のバランスから判定</div>
-        </div>
-      `).join("")}
-    `;
-  }
-
-  function commentText(top1, top2, holes, dangers, status){
-    const parts = [];
-    if(status === "見送り寄り") parts.push("見送り寄り");
-    else if(top1) parts.push(`本命は${top1.umaban}`);
-    if(top2) parts.push(`相手本線は${top2.umaban}`);
-    if(holes[0]) parts.push(`穴は${holes[0].umaban}`);
-    if(dangers[0]) parts.push(`危険人気は${dangers[0].umaban}`);
-    return parts.join("。") + "。";
-  }
-
-  function renderPopularSummary(populars){
-    $("#popular-summary").innerHTML = populars.map(h => `
-      <div class="nk-list-row">
-        <div class="nk-list-main">
-          <div class="nk-list-name">${esc(h.popularity)}人気 ${esc(h.umaban)} ${esc(h.horse_name)}</div>
-          <div class="nk-list-meta">${esc(h._popular.comment || "")}</div>
-        </div>
-        <span class="nk-side-pill ${pillClass(h._popular.label)}">${esc(h._popular.label || "妥当")}</span>
-      </div>
-    `).join("") || `<div class="nk-muted">該当馬なし</div>`;
-  }
-
-  function renderGaps(rows){
-    const aiValues = rows.map(h => ({...h, _gap:simpleAiGap(h)})).filter(h => h._gap?.type === "value").sort((a,b)=>b._gap.score-a._gap.score).slice(0,3);
-    const aiDangers = rows.map(h => ({...h, _gap:simpleAiGap(h)})).filter(h => h._gap?.type === "danger").sort((a,b)=>a._gap.score-b._gap.score).slice(0,3);
-    const courseValues = rows.map(h => ({...h, _gap:simpleCourseGap(h)})).filter(h => h._gap?.type === "value").sort((a,b)=>b._gap.score-a._gap.score).slice(0,3);
-    const courseDangers = rows.map(h => ({...h, _gap:simpleCourseGap(h)})).filter(h => h._gap?.type === "danger").sort((a,b)=>a._gap.score-b._gap.score).slice(0,3);
-
-    $("#gap-panels").innerHTML = `
-      <div class="nk-gap-panel">
-        <div class="nk-gap-title">人気 × AI順位</div>
-        <div class="nk-gap-subtitle">妙味馬（人気6以下・差5以上・AI3位以内）</div>
-        ${aiValues.length ? aiValues.map(h => gapRow(h)).join("") : `<div class="nk-gap-empty">該当馬なし</div>`}
-        <div class="nk-gap-subtitle">危険人気馬（人気5以内・差5以上）</div>
-        ${aiDangers.length ? aiDangers.map(h => gapRow(h)).join("") : `<div class="nk-gap-empty">該当馬なし</div>`}
-      </div>
-      <div class="nk-gap-panel">
-        <div class="nk-gap-title">人気 × 適性順位</div>
-        <div class="nk-gap-subtitle">コース向きで人気薄（人気6以下・差5以上・適性3位以内）</div>
-        ${courseValues.length ? courseValues.map(h => gapRow(h)).join("") : `<div class="nk-gap-empty">該当馬なし</div>`}
-        <div class="nk-gap-subtitle">人気先行で適性弱い（人気5以内・差5以上）</div>
-        ${courseDangers.length ? courseDangers.map(h => gapRow(h)).join("") : `<div class="nk-gap-empty">該当馬なし</div>`}
-      </div>
-    `;
-  }
-
-  function gapRow(h){
-    return `
-      <div class="nk-gap-row">
-        <div>
-          <div class="nk-gap-name">${esc(h.umaban)} ${esc(h.horse_name)}</div>
-          <div class="nk-gap-meta">${esc(h._gap.reason)}</div>
-        </div>
-        <span class="nk-gap-score ${h._gap.score >= 0 ? "plus" : "minus"}">${h._gap.score >= 0 ? "+" : ""}${esc(h._gap.score)}</span>
-      </div>
-    `;
-  }
-
-  function renderHorseList(rows){
-    $("#horse-list").innerHTML = rows.map(h => `
-      <article class="nk-horse-card">
-        <div class="nk-horse-top">
-          <div>
-            <div class="nk-horse-name">${esc(h.umaban)} ${esc(h.horse_name)}</div>
-            <div class="nk-horse-sub">${esc(h.sex_age ?? "—")} / ${esc(h.jockey ?? "—")} / ${esc(h.trainer ?? "—")}</div>
+      <div class="summary-grid">
+        <div class="summary-main">
+          <span class="status-pill status-pill--solid">◎ 本命</span>
+          <div class="summary-main__horse">${main ? `${AC.escapeHtml(main.umaban)} ${AC.escapeHtml(main.horse_name)}` : '—'}</div>
+          <div class="summary-main__badges">
+            <span class="metric-badge metric-badge--blue">AI ${main?.pred_order ?? '—'}</span>
+            <span class="metric-badge">人気 ${main?.popularity ?? '—'}</span>
+            <span class="metric-badge">単勝 ${AC.odds(main?.tansho_odds)}</span>
+            <span class="metric-badge metric-badge--green">勝率 ${AC.pct(main?.p_win)}</span>
+            <span class="metric-badge metric-badge--green">複勝率 ${AC.pct(main?.p_top3)}</span>
           </div>
-          <span class="nk-side-pill ${pillClass(h._popular.label || "妥当")}">${esc(h._popular.label || "妥当")}</span>
         </div>
-        <div class="nk-horse-metrics">
-          <span class="nk-badge nk-badge--blue">AI ${esc(h.pred_order ?? "—")}</span>
-          <span class="nk-badge">適性 ${esc(h.course_adv_rank ?? "—")}</span>
-          <span class="nk-badge">人気 ${esc(h.popularity ?? "—")}</span>
-          <span class="nk-badge">単勝 ${odds(h.tansho_odds)}</span>
-          <span class="nk-badge nk-badge--green">勝率 ${pct(h.p_win)}</span>
-          <span class="nk-badge nk-badge--green">複勝率 ${pct(h.p_top3)}</span>
+
+        <div class="summary-side">
+          <div class="info-card">
+            <h3 class="info-card__title">相手本線</h3>
+            <div class="info-card__content">
+              ${line.length ? `<ul class="plain-list">${line.map((h, idx) => `<li>${idx === 0 ? '○' : '▲'} ${AC.escapeHtml(h.umaban)} ${AC.escapeHtml(h.horse_name)} / AI${h.pred_order ?? '—'} / 複勝率${AC.pct(h.p_top3)}</li>`).join('')}</ul>` : '該当なし'}
+            </div>
+          </div>
+          <div class="info-card">
+            <h3 class="info-card__title">穴候補</h3>
+            <div class="info-card__content">
+              ${raceSummary.hole ? `☆ ${AC.escapeHtml(raceSummary.hole.umaban)} ${AC.escapeHtml(raceSummary.hole.horse_name)}<br>${AC.escapeHtml(raceSummary.holeReason)}` : '該当なし'}
+            </div>
+          </div>
+          <div class="info-card">
+            <h3 class="info-card__title">危険人気</h3>
+            <div class="info-card__content">
+              ${raceSummary.danger ? `! ${AC.escapeHtml(raceSummary.danger.umaban)} ${AC.escapeHtml(raceSummary.danger.horse_name)}<br>${AC.escapeHtml(raceSummary.dangerReason)}` : '該当なし'}
+            </div>
+          </div>
+          <div class="info-card">
+            <h3 class="info-card__title">ひとこと</h3>
+            <div class="info-card__content">${AC.escapeHtml(raceSummary.comment || '—')}</div>
+          </div>
         </div>
-        <div class="nk-horse-note">
-          ${h._hole.label ? `穴評価: ${esc(h._hole.label)}。 ` : ""}
-          ${h._danger.label ? `危険評価: ${esc(h._danger.label)}。 ` : ""}
-          ${esc(h._popular.comment || "")}
+      </div>
+
+      <div class="section-heading" style="margin-top:18px; margin-bottom:10px;">
+        <div>
+          <h3 class="section-title" style="font-size:1.45rem;">人気馬まとめ</h3>
         </div>
-      </article>
-    `).join("");
+      </div>
+      <div class="popular-summary">
+        ${popularRows.length ? popularRows.map((row) => {
+          const cls = row.label === '信頼' ? 'badge-outline badge-outline--trust'
+            : row.label === '危険' ? 'badge-outline badge-outline--danger'
+            : row.label === 'やや危険' ? 'badge-outline badge-outline--warn'
+            : 'badge-outline badge-outline--neutral';
+          return `
+            <div class="popular-summary__item">
+              <div>
+                <div class="popular-summary__horse">${row.horse.popularity}人気 ${AC.escapeHtml(row.horse.umaban)} ${AC.escapeHtml(row.horse.horse_name)}</div>
+                <div class="popular-summary__meta">${AC.escapeHtml(row.reason)}</div>
+              </div>
+              <span class="${cls}">${AC.escapeHtml(row.label)}</span>
+            </div>
+          `;
+        }).join('') : '<div class="empty-state">人気馬まとめを表示できません。</div>'}
+      </div>
+
+      <div class="section-heading" style="margin-top:18px; margin-bottom:10px;">
+        <div>
+          <h3 class="section-title" style="font-size:1.45rem;">判定理由</h3>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card__content">
+          ${raceSummary.reasons.length ? `<ul class="plain-list">${raceSummary.reasons.map(r => `<li>${AC.escapeHtml(r)}</li>`).join('')}</ul>` : '特記事項なし'}
+        </div>
+      </div>
+    `;
   }
 
-  async function init(){
-    if(!raceDate || !raceId){
-      $("#race-head").textContent = "date / race_id が必要です";
+  function renderGapPanels(panels) {
+    function renderItems(items, plus) {
+      if (!items.length) return '<div class="gap-empty">該当馬なし</div>';
+      return items.map((x) => `
+        <div class="gap-item">
+          <div>
+            <div class="gap-item__name">${AC.escapeHtml(x.horse.umaban)} ${AC.escapeHtml(x.horse.horse_name)}</div>
+            <div class="gap-item__meta">${AC.escapeHtml(x.meta)}</div>
+          </div>
+          <div class="gap-item__score ${plus ? 'gap-item__score--plus' : 'gap-item__score--minus'}">${x.score > 0 ? '+' : ''}${x.score}</div>
+        </div>
+      `).join('');
+    }
+
+    gapRoot.innerHTML = `
+      <div class="gap-grid">
+        <div class="gap-panel">
+          <h3 class="gap-panel__title">人気 × AI順位</h3>
+          <div class="gap-group">
+            <div class="gap-group__title">妙味馬</div>
+            ${renderItems(panels.aiValue, true)}
+          </div>
+          <div class="gap-group">
+            <div class="gap-group__title">危険人気馬</div>
+            ${renderItems(panels.aiDanger, false)}
+          </div>
+        </div>
+        <div class="gap-panel">
+          <h3 class="gap-panel__title">人気 × 適性順位</h3>
+          <div class="gap-group">
+            <div class="gap-group__title">コース向きで人気薄</div>
+            ${renderItems(panels.courseValue, true)}
+          </div>
+          <div class="gap-group">
+            <div class="gap-group__title">人気先行で適性弱い</div>
+            ${renderItems(panels.courseDanger, false)}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function normalizeHorses(rawHorses) {
+    return (rawHorses || []).filter(h => h && h.horse_name).sort(AC.sortByPredThenTop3);
+  }
+
+  function getHorseStatusBadge(horse, summary) {
+    if (summary.main && String(summary.main.umaban) === String(horse.umaban)) {
+      return '<span class="summary-label">本命</span>';
+    }
+    if (summary.hole && String(summary.hole.umaban) === String(horse.umaban)) {
+      return '<span class="summary-label" style="background:#fff5e5;color:#aa7a0f;">穴候補</span>';
+    }
+    if (summary.danger && String(summary.danger.umaban) === String(horse.umaban)) {
+      return '<span class="summary-label summary-label--skip">危険人気</span>';
+    }
+    const popular = AC.classifyPopularHorseDetailed(horse);
+    if (popular.label === '信頼') return '<span class="summary-label" style="background:#edf8f2;color:#0f8a54;">信頼</span>';
+    return '';
+  }
+
+  function renderHorseCards(list, summary) {
+    if (!list.length) {
+      horseListEl.innerHTML = '<div class="empty-state">条件に合う馬がいません。</div>';
       return;
     }
-    const res = await fetch(`${dataRoot}/${raceDate}/race_${raceId}.json`, {cache:"no-cache"});
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
 
-    const rows = (data.horses || []).filter(h => h && h.horse_name).map(h => ({
-      ...h,
-      _hole: classifyHole(h),
-      _danger: classifyDanger(h),
-      _popular: classifyPopularHorse(h)
-    })).sort(sortByPred);
-
-    renderHead(data);
-
-    const populars = rows.filter(h => {
-      const p = toNum(h.popularity);
-      return p !== null && p <= 5;
-    }).sort((a,b)=>(toNum(a.popularity)??999)-(toNum(b.popularity)??999));
-
-    const holes = rows.filter(h => !!h._hole.label).sort((a,b)=>(b._hole.score??-1)-(a._hole.score??-1));
-    const dangers = rows.filter(h => !!h._danger.label).sort((a,b)=>(b._danger.score??-1)-(a._danger.score??-1));
-    const statusObj = statusText(rows, dangers);
-
-    renderSummary(rows, statusObj, holes, dangers);
-    renderPopularSummary(populars);
-    renderGaps(rows);
-    renderHorseList(rows);
+    horseListEl.innerHTML = list.map((horse) => `
+      <article class="horse-card">
+        <div class="horse-card__top">
+          <div class="horse-number">${AC.escapeHtml(horse.umaban ?? '—')}</div>
+          <div>
+            <div class="horse-name">${AC.escapeHtml(horse.horse_name || '')}</div>
+            <div class="horse-submeta">${AC.escapeHtml([horse.sex_age, horse.jockey, horse.trainer].filter(Boolean).join(' / ') || '情報なし')}</div>
+            <div class="horse-chips">
+              ${getHorseStatusBadge(horse, summary)}
+              ${horse.style ? `<span class="mini-chip">${AC.escapeHtml(horse.style)}</span>` : ''}
+              ${horse.sire ? `<span class="mini-chip">父 ${AC.escapeHtml(horse.sire)}</span>` : ''}
+            </div>
+          </div>
+          <div class="badge-outline badge-outline--neutral">AI ${horse.pred_order ?? '—'}</div>
+        </div>
+        <div class="horse-grid">
+          <div class="horse-stat"><div class="horse-stat__label">人気</div><div class="horse-stat__value">${horse.popularity ?? '—'}</div></div>
+          <div class="horse-stat"><div class="horse-stat__label">単勝</div><div class="horse-stat__value">${AC.odds(horse.tansho_odds)}</div></div>
+          <div class="horse-stat"><div class="horse-stat__label">勝率</div><div class="horse-stat__value">${AC.pct(horse.p_win)}</div></div>
+          <div class="horse-stat"><div class="horse-stat__label">複勝率</div><div class="horse-stat__value">${AC.pct(horse.p_top3)}</div></div>
+          <div class="horse-stat"><div class="horse-stat__label">適性順位</div><div class="horse-stat__value">${horse.course_adv_rank ?? '—'}</div></div>
+          <div class="horse-stat"><div class="horse-stat__label">馬体重</div><div class="horse-stat__value">${horse.horse_weight ?? '—'}</div></div>
+          <div class="horse-stat"><div class="horse-stat__label">増減</div><div class="horse-stat__value">${horse.horse_weight_diff ?? '—'}</div></div>
+          <div class="horse-stat"><div class="horse-stat__label">脚質</div><div class="horse-stat__value">${horse.style ?? '—'}</div></div>
+        </div>
+        <div class="horse-footer">
+          <div>${horse.reasons_pos ? `プラス要因: ${AC.escapeHtml(horse.reasons_pos)}` : 'プラス要因: —'}</div>
+          <div>${horse.reasons_neg ? `注意点: ${AC.escapeHtml(horse.reasons_neg)}` : '注意点: —'}</div>
+        </div>
+      </article>
+    `).join('');
   }
 
-  init().catch(err => {
-    console.error(err);
-    $("#race-head").textContent = "読み込みに失敗しました";
-  });
+  function applyFiltersAndRender(summary) {
+    const keyword = (horseSearch.value || '').trim().toLowerCase();
+    const sortMode = horseSort.value;
+
+    let list = [...horses];
+
+    if (keyword) {
+      list = list.filter((horse) => {
+        const text = [horse.horse_name, horse.jockey, horse.trainer].filter(Boolean).join(' ').toLowerCase();
+        return text.includes(keyword);
+      });
+    }
+
+    if (sortMode === 'popularity') {
+      list.sort((a, b) => (AC.toNum(a.popularity) ?? 999) - (AC.toNum(b.popularity) ?? 999));
+    } else if (sortMode === 'odds') {
+      list.sort((a, b) => (AC.toNum(a.tansho_odds) ?? 999) - (AC.toNum(b.tansho_odds) ?? 999));
+    } else if (sortMode === 'course') {
+      list.sort((a, b) => (AC.toNum(a.course_adv_rank) ?? 999) - (AC.toNum(b.course_adv_rank) ?? 999));
+    } else if (sortMode === 'number') {
+      list.sort((a, b) => (AC.toNum(a.umaban) ?? 999) - (AC.toNum(b.umaban) ?? 999));
+    } else {
+      list.sort(AC.sortByPredThenTop3);
+    }
+
+    horseMetaEl.textContent = `${list.length}頭表示 / AI・人気・適性・勝率をカード型で確認`;
+    renderHorseCards(list, summary);
+  }
+
+  async function boot() {
+    if (!date || !raceId) {
+      headerEl.innerHTML = '<div class="empty-state">date と race_id を URL に指定してください。</div>';
+      return;
+    }
+
+    try {
+      payload = await fetchJson(`./data/${date}/race_${raceId}.json`);
+      const race = payload.race || {};
+      horses = normalizeHorses(payload.horses || []);
+      buildHeader(race);
+      const summary = AC.buildRaceSummary(horses);
+      renderSummary(summary);
+      renderGapPanels(AC.buildSimpleGapPanels(horses));
+      applyFiltersAndRender(summary);
+
+      horseSearch.addEventListener('input', () => applyFiltersAndRender(summary));
+      horseSort.addEventListener('change', () => applyFiltersAndRender(summary));
+    } catch (e) {
+      headerEl.innerHTML = `<div class="empty-state">${AC.escapeHtml(e.message || 'レース詳細の読み込みに失敗しました。')}</div>`;
+    }
+  }
+
+  boot();
 })();

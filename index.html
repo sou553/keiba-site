@@ -1,48 +1,68 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>予想整理サイト</title>
   <link rel="stylesheet" href="./static/style.css">
 </head>
 <body>
-  <header class="nk-topbar">
-    <div class="nk-shell">
-      <div class="nk-brand">
-        <div class="nk-brand-logo">競</div>
-        <div class="nk-brand-title">予想整理サイト</div>
+  <div class="site-shell">
+    <header class="site-header sticky-top">
+      <div class="site-header__inner page-width">
+        <a class="site-logo" href="./index.html" aria-label="ホーム">
+          <span class="site-logo__mark">競</span>
+          <span class="site-logo__text">予想整理サイト</span>
+        </a>
       </div>
-      <div class="nk-date-tabs" id="date-tabs"></div>
-    </div>
-  </header>
+    </header>
 
-  <main class="nk-shell nk-stack">
-    <section class="nk-card nk-section">
-      <h2 class="nk-section-title">絞り込み</h2>
-      <p class="nk-section-sub">一覧性を優先して、スマホでも上から読みやすい形に整理。</p>
-      <div class="nk-filter-bar" style="margin-top:12px">
-        <label class="nk-field" style="flex:1 1 320px">
-          <span class="nk-label">キーワード</span>
-          <input class="nk-input" id="search-input" placeholder="レース名・競馬場・AI1位名">
-        </label>
-        <label class="nk-field" style="width:140px">
-          <span class="nk-label">競馬場</span>
-          <select class="nk-select" id="course-filter">
-            <option value="">すべて</option>
-          </select>
-        </label>
-        <label class="nk-check"><input type="checkbox" id="odds-only"> 単勝オッズあり</label>
-        <button class="nk-btn" id="reset-filter">絞り込み解除</button>
-      </div>
-    </section>
+    <main class="page-width page-main">
+      <section class="hero-panel">
+        <div class="hero-panel__head">
+          <h1 class="page-title">レース一覧</h1>
+          <p class="page-subtitle">一覧性を優先して、スマホでも上から読みやすい形に整理。</p>
+        </div>
 
-    <section class="nk-card nk-section">
-      <h2 class="nk-section-title">レース一覧</h2>
-      <p class="nk-section-sub" id="list-caption">読み込み中...</p>
-      <div class="nk-race-list" id="race-list" style="margin-top:12px"></div>
-    </section>
-  </main>
+        <div id="date-tabs" class="date-tabs" aria-label="日付一覧"></div>
+
+        <div class="filter-panel">
+          <div class="filter-grid">
+            <label class="field-block field-block--grow">
+              <span class="field-label">キーワード</span>
+              <input id="keyword-input" class="field-input" type="text" placeholder="レース名・競馬場・AI1位名">
+            </label>
+
+            <label class="field-block field-block--compact">
+              <span class="field-label">競馬場</span>
+              <select id="place-select" class="field-select">
+                <option value="">すべて</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="filter-actions">
+            <label class="check-chip">
+              <input id="odds-only-check" type="checkbox">
+              <span>単勝オッズあり</span>
+            </label>
+            <button id="clear-filter-btn" class="btn btn--ghost" type="button">絞り込み解除</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-panel">
+        <div class="section-heading">
+          <div>
+            <h2 class="section-title">レース一覧</h2>
+            <p id="list-meta" class="section-note">読み込み中...</p>
+          </div>
+        </div>
+        <div id="race-list" class="race-list"></div>
+      </section>
+    </main>
+  </div>
+
   <script src="./static/index.js"></script>
 </body>
 </html>

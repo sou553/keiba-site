@@ -1,71 +1,71 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>出走馬一覧</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>出走馬一覧 | 予想整理サイト</title>
   <link rel="stylesheet" href="./static/style.css">
 </head>
 <body>
-<header class="nk-topbar">
-  <div class="nk-shell">
-    <div class="nk-brand">
-      <div class="nk-brand-logo">競</div>
-      <div class="nk-brand-title">予想整理サイト</div>
-    </div>
-    <div class="nk-page-tabs">
-      <a class="nk-tab is-active" id="tab-race" href="#">出走馬一覧</a>
-      <a class="nk-tab" id="tab-past" href="#">過去走比較</a>
-      <a class="nk-tab" id="tab-betting" href="#">買い目作成</a>
-    </div>
+  <div class="site-shell">
+    <header class="site-header sticky-top">
+      <div class="site-header__inner page-width">
+        <a class="site-logo" href="./index.html" aria-label="ホーム">
+          <span class="site-logo__mark">競</span>
+          <span class="site-logo__text">予想整理サイト</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="page-width page-main">
+      <div id="race-header" class="hero-panel hero-panel--race">
+        <div class="skeleton-line skeleton-line--lg"></div>
+        <div class="skeleton-line skeleton-line--md"></div>
+      </div>
+
+      <nav id="race-nav" class="page-nav sticky-subnav" aria-label="ページ遷移"></nav>
+
+      <section class="content-panel">
+        <div id="summary-root"></div>
+      </section>
+
+      <section class="content-panel">
+        <div class="section-heading">
+          <div>
+            <h2 class="section-title">人気馬の乖離</h2>
+            <p class="section-note">人気と AI / 適性順位のズレを独立表示。</p>
+          </div>
+        </div>
+        <div id="gap-root"></div>
+      </section>
+
+      <section class="content-panel">
+        <div class="section-heading section-heading--stack">
+          <div>
+            <h2 class="section-title">出走馬一覧</h2>
+            <p id="horse-meta" class="section-note"></p>
+          </div>
+          <div class="section-tools">
+            <label class="field-inline field-inline--search">
+              <input id="horse-search" class="field-input" type="text" placeholder="馬名・騎手・調教師で検索">
+            </label>
+            <label class="field-inline">
+              <select id="horse-sort" class="field-select">
+                <option value="pred">AI順</option>
+                <option value="popularity">人気順</option>
+                <option value="odds">単勝順</option>
+                <option value="course">適性順</option>
+                <option value="number">馬番順</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <div id="horse-list" class="horse-card-list"></div>
+      </section>
+    </main>
   </div>
-</header>
 
-<main class="nk-shell nk-stack">
-  <section class="nk-card nk-section">
-    <div id="race-head">読み込み中...</div>
-  </section>
-
-  <section class="nk-hero">
-    <div class="nk-main-pick" id="summary-panel"></div>
-    <div class="nk-summary-box nk-popular-side">
-      <div class="nk-section-title">人気馬まとめ</div>
-      <div id="popular-summary" class="nk-list"></div>
-    </div>
-  </section>
-
-  <section class="nk-grid-2">
-    <div class="nk-mini-box">
-      <div class="nk-mini-title">相手本線</div>
-      <div id="line-panel" class="nk-list"></div>
-    </div>
-    <div class="nk-mini-box">
-      <div class="nk-mini-title">穴候補</div>
-      <div id="hole-panel" class="nk-list"></div>
-    </div>
-    <div class="nk-mini-box">
-      <div class="nk-mini-title">危険人気</div>
-      <div id="danger-panel" class="nk-list"></div>
-    </div>
-    <div class="nk-mini-box">
-      <div class="nk-mini-title">ひとこと / 判定理由</div>
-      <div id="reason-panel" class="nk-note-list"></div>
-    </div>
-  </section>
-
-  <section class="nk-card nk-section">
-    <div class="nk-section-title">人気馬の乖離</div>
-    <p class="nk-section-sub">人気とAI / 適性順位のズレを独立表示。乖離パネルは差5以上をシンプル表示。</p>
-    <div class="nk-gap-panels" id="gap-panels" style="margin-top:12px"></div>
-  </section>
-
-  <section class="nk-card nk-section">
-    <div class="nk-section-title">出走馬一覧</div>
-    <p class="nk-section-sub">予想まとめは厳しめ、一覧はスマホで比較しやすいカード型。</p>
-    <div class="nk-horse-list" id="horse-list" style="margin-top:12px"></div>
-  </section>
-</main>
-
-<script src="./static/race.js"></script>
+  <script src="./static/analysis_common.js"></script>
+  <script src="./static/race.js"></script>
 </body>
 </html>
