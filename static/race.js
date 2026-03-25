@@ -1489,7 +1489,7 @@
   function buildPositiveMemo(horse) {
     const items = [];
     if (horse._norm.style_est) items.push(`脚質:${horse._norm.style_est}`);
-    if (horse._norm.layoff_days !== null) items.push(`休み明け:${formatLayoff(horse._norm.layoff_days)}`);
+    //if (horse._norm.layoff_days !== null) items.push(`休み明け:${formatLayoff(horse._norm.layoff_days)}`);
     if (horse.sire) items.push(`父血統:${horse.sire}`);
     if (horse._norm.same_course_count > 0) items.push(`同コース経験:${horse._norm.same_course_count}走`);
     if (horse._norm.same_place_count > 0) items.push(`同競馬場経験:${horse._norm.same_place_count}走`);
@@ -1504,12 +1504,12 @@
     const ai = horse._norm.pred_order;
     const course = horse._norm.course_adv_rank;
     const odds = horse._norm.tansho_odds;
-    if (pop !== null && ai !== null && ai - pop >= 3) items.push(`人気よりAIが${ai - pop}段下`);
-    if (pop !== null && course !== null && course - pop >= 4) items.push(`人気より適性が${course - pop}段下`);
-    if (horse._norm.p_top3 !== null && horse._norm.p_top3 < 0.35) items.push(`複勝率${fmtPct01(horse._norm.p_top3)}と低め`);
-    if (horse._norm.p_win !== null && horse._norm.p_win < 0.08) items.push(`勝率${fmtPct01(horse._norm.p_win)}と低め`);
+    //if (pop !== null && ai !== null && ai - pop >= 3) items.push(`人気よりAIが${ai - pop}段下`);
+    //if (pop !== null && course !== null && course - pop >= 4) items.push(`人気より適性が${course - pop}段下`);
+    //if (horse._norm.p_top3 !== null && horse._norm.p_top3 < 0.35) items.push(`複勝率${fmtPct01(horse._norm.p_top3)}と低め`);
+    //if (horse._norm.p_win !== null && horse._norm.p_win < 0.08) items.push(`勝率${fmtPct01(horse._norm.p_win)}と低め`);
     if (horse._norm.recent_top3_count === 0 && horse.past_runs.length >= 3) items.push('近3走で掲示板なし');
-    if (odds !== null && odds >= 50) items.push(`単勝${fmtOdds(odds)}で人気薄`);
+    //if (odds !== null && odds >= 50) items.push(`単勝${fmtOdds(odds)}で人気薄`);
     if (horse._analysis?.danger_reason) items.push(horse._analysis.danger_reason);
     return uniqueNonEmpty([...(horse._norm.reasons_neg_list || []), ...items]).join(' / ') || '—';
   }
@@ -1583,25 +1583,33 @@
 
             <div class="horse-summary-metrics">
               <div class="metric-box">
-                <div class="metric-box__label">人気 / 単勝</div>
+                <div class="metric-box__label">人気</div>
                 <div class="metric-box__value">${escapeHtml(fmt(horse._norm.popularity))}人気</div>
-                <div class="metric-box__sub">単勝 ${escapeHtml(fmtOdds(horse._norm.tansho_odds))}</div>
               </div>
+
+              <div class="metric-box">
+                <div class="metric-box__label">単勝</div>
+                <div class="metric-box__value">${escapeHtml(fmtOdds(horse._norm.tansho_odds))}</div>
+              </div>
+
               <div class="metric-box">
                 <div class="metric-box__label">AI / 適性</div>
                 <div class="metric-box__value">${escapeHtml(fmt(horse._norm.pred_order))} / ${escapeHtml(fmt(horse._norm.course_adv_rank))}</div>
                 <div class="metric-box__sub">一致度 ${escapeHtml(fmtNum(horse._analysis.agreement_score, 2))}</div>
               </div>
+
               <div class="metric-box">
-                <div class="metric-box__label">勝率 / 複勝率</div>
+                <div class="metric-box__label">勝率</div>
                 <div class="metric-box__value">${escapeHtml(fmtPct01(horse._norm.p_win))}</div>
-                <div class="metric-box__sub">複勝率 ${escapeHtml(fmtPct01(horse._norm.p_top3))}</div>
+              </div>
+
+              <div class="metric-box">
+                <div class="metric-box__label">複勝率</div>
+                <div class="metric-box__value">${escapeHtml(fmtPct01(horse._norm.p_top3))}</div>
               </div>
             </div>
 
             <div class="horse-card__aside">
-              ${horse._analysis.hole_label ? `<span class="${badgeClassByLabel(horse._analysis.hole_label)}">${escapeHtml(horse._analysis.hole_label)}</span>` : ''}
-              ${horse._analysis.danger_label ? `<span class="${badgeClassByLabel(horse._analysis.danger_label)}">${escapeHtml(horse._analysis.danger_label)}</span>` : ''}
               <button type="button" class="horse-toggle" data-card-id="${id}">${isOpen ? '詳細を閉じる' : '詳細を見る'}</button>
             </div>
           </div>
