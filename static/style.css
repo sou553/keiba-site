@@ -1184,3 +1184,161 @@ body { font-size: 15px; }
   .horse-table thead th, .horse-table tbody td { padding: 8px 6px; }
   .horse-table__name { font-size: 14px; }
 }
+
+/* compact tuning */
+body { font-size: 15px; }
+.site-brand__title { font-size: 17px; }
+.site-brand__sub, .section-subtitle, .popular-summary-meta, .summary-row-meta, .cell-note, .netkeiba-run-item__meta, .netkeiba-run-item__sub { font-size: 12px; }
+.section-title { font-size: 16px; }
+.mini-title { font-size: 14px; }
+.race-hero__title { font-size: clamp(28px, 4vw, 36px); }
+.race-hero__meta, .race-hero__date { font-size: 12px; }
+.badge, .tag, .sort-chip, .segmented-btn, .action-link, .btn-link, button { font-size: 12px; }
+
+/* horse table style */
+.horse-table-wrap { width: 100%; }
+.horse-table-head,
+.horse-table-row {
+  display: grid;
+  grid-template-columns: minmax(230px,2.1fr) minmax(120px,1.1fr) 76px 76px 68px 68px 86px 86px minmax(170px,1.55fr) 92px;
+  gap: 0;
+  align-items: stretch;
+}
+.horse-table-head {
+  background: #f4efe5;
+  border: 1px solid var(--line);
+  border-radius: 14px 14px 0 0;
+  font-weight: 800;
+  color: #5e5348;
+  font-size: 12px;
+}
+.horse-table-head > div {
+  padding: 10px 10px;
+  border-right: 1px solid #e4d9c8;
+}
+.horse-table-head > div:last-child { border-right: none; }
+.horse-table-body { border: 1px solid var(--line); border-top: none; border-radius: 0 0 16px 16px; overflow: hidden; }
+.horse-table-row {
+  background: linear-gradient(180deg, var(--paper) 0%, #fcf8ef 100%);
+  border-top: 1px solid #eadfce;
+}
+.horse-table-row:first-child { border-top: none; }
+.horse-table-row.is-danger { background: linear-gradient(180deg, #fffafa 0%, #fff6f4 100%); }
+.horse-table-row.is-hole { background: linear-gradient(180deg, #fcfff9 0%, #f7fff5 100%); }
+.horse-table-row .cell {
+  padding: 10px 10px;
+  border-right: 1px solid #efe4d3;
+  display: flex;
+  align-items: center;
+  min-height: 74px;
+}
+.horse-table-row .cell:last-child { border-right: none; }
+.cell--name { align-items: flex-start; gap: 10px; }
+.horse-no-inline {
+  flex: 0 0 auto;
+  width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--blue-soft); border: 1px solid #cbd8ff; color: var(--blue-dark); font-weight: 800;
+}
+.horse-name-inline { font-size: 14px; font-weight: 900; color: var(--blue-dark); margin-bottom: 4px; }
+.cell--num { justify-content: center; font-weight: 800; }
+.cell--action { justify-content: center; }
+.table-toggle { min-height: 38px; min-width: 74px; }
+.text-odds-hot { color: #b53d31; }
+.horse-detail-row { background: #faf6ee; border-top: 1px dashed #ddceb7; }
+.horse-detail-row__inner { padding: 14px 16px 16px; display: grid; gap: 14px; }
+.horse-detail-grid--top { display: grid; grid-template-columns: 1.1fr .9fr; gap: 14px; }
+.compact-kv .detail-kv__item { min-height: auto; }
+.detail-box__title { margin: 0 0 10px; font-size: 14px; }
+.horse-detail-section { display: grid; gap: 10px; }
+.horse-detail-section__head { display:flex; justify-content:space-between; align-items:end; gap:10px; }
+.horse-run-list { display: grid; gap: 10px; }
+.horse-run-actions { display:flex; gap:10px; flex-wrap:wrap; }
+.netkeiba-run-item {
+  display: grid;
+  grid-template-columns: 96px 1fr 54px;
+  gap: 10px;
+  align-items: stretch;
+  background: #fffdfa;
+  border: 1px solid #e2d5c2;
+  border-radius: 14px;
+  padding: 10px;
+}
+.netkeiba-run-item__date { font-size: 12px; color: var(--muted); font-weight: 700; }
+.netkeiba-run-item__race { font-size: 14px; margin-bottom: 4px; }
+.netkeiba-run-item__sub { color: #6b604f; margin-bottom: 4px; }
+.netkeiba-run-item__result {
+  display: grid; place-items: center;
+  width: 44px; min-height: 44px; border-radius: 10px;
+  background: #eef2fb; border: 1px solid #d8e0f7; color: var(--blue-dark); font-weight: 900; font-size: 22px;
+}
+.netkeiba-run-item__result.is-good { background: #fff4ce; border-color: #e6d16f; color: #907313; }
+.summary-split-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px; }
+.summary-mini-panel { border:1px solid #e3d7c6; border-radius:14px; padding:12px; background:#fffefa; }
+.summary-reason-list { margin: 6px 0 0 18px; padding: 0; }
+.summary-reason-list li { margin: 0 0 6px; }
+.gap-item { display:flex; justify-content:space-between; gap:10px; padding: 12px 0; border-top:1px dashed #eadfce; }
+.gap-item:first-of-type { border-top:none; }
+.gap-item__name { font-weight: 800; }
+.gap-item__meta { font-size: 12px; color: var(--muted); }
+.gap-pill { display:inline-flex; align-items:center; justify-content:center; min-width:50px; height:42px; border-radius:999px; border:1px solid #ddd1bf; font-weight:900; }
+.gap-pill--plus { background: #edf9f1; border-color:#cfe7d9; color: var(--green); }
+.gap-pill--minus { background: #fff2f0; border-color:#f0cdc9; color: var(--red); }
+.gap-box { border:1px solid #e2d5c2; border-radius:16px; padding:14px; background:#fffdfa; }
+.gap-group + .gap-group { margin-top: 12px; }
+.gap-group__title { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.skip-reason-list { display:grid; gap:10px; }
+.skip-reason-item { padding: 10px 12px; border-radius: 12px; background:#fffaf2; border:1px dashed #e1cfb0; }
+
+/* past detail beautify */
+.compare-toolbar__grid { display:grid; grid-template-columns: repeat(4, max-content) minmax(180px,1fr); gap: 10px 16px; align-items:end; }
+.compare-toolbar__search { min-width: 220px; }
+.past-list { display: grid; gap: 12px; }
+.past-horse-card { border:1px solid #e2d5c2; border-radius:16px; overflow:hidden; background:#fffefa; }
+.past-horse-card__summary {
+  width:100%; border:none; background:transparent; padding:14px 16px; min-height:auto;
+  display:flex; align-items:center; justify-content:space-between; gap:12px; text-align:left;
+}
+.past-horse-card__title { font-size: 15px; font-weight: 900; color: var(--blue-dark); margin-bottom: 4px; }
+.past-horse-card__meta { color: var(--muted); font-size: 12px; }
+.past-horse-card__detail { padding: 0 16px 14px; display:none; border-top:1px dashed #e6dac8; }
+.past-horse-card.is-open .past-horse-card__detail { display:grid; gap:10px; padding-top:14px; }
+
+@media (max-width: 1100px) {
+  .horse-table-head, .horse-table-row {
+    grid-template-columns: minmax(220px,2fr) 100px 64px 72px 60px 60px 76px 82px minmax(150px,1.2fr) 80px;
+  }
+}
+
+@media (max-width: 900px) {
+  .horse-table-head { display:none; }
+  .horse-table-body { border:none; background:transparent; }
+  .horse-table-row {
+    grid-template-columns: 1fr 1fr;
+    border:1px solid var(--line);
+    border-radius: 16px;
+    margin-bottom: 12px;
+    overflow:hidden;
+  }
+  .horse-table-row .cell { min-height: 54px; }
+  .cell--name { grid-column: 1 / -1; }
+  .cell--action { grid-column: 1 / -1; justify-content: flex-end; }
+  .horse-detail-grid--top, .summary-grid.summary-grid--2, .summary-split-grid, .divergence-grid { grid-template-columns:1fr; }
+  .netkeiba-run-item { grid-template-columns: 1fr; }
+  .netkeiba-run-item__result { width: 52px; }
+  .compare-toolbar__grid { grid-template-columns: 1fr 1fr; }
+  .compare-toolbar__search { grid-column: 1 / -1; min-width: 0; }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 14px; }
+  .page { padding: 12px; }
+  .card, .panel, .sheet { border-radius: 16px; }
+  .race-filter-grid { grid-template-columns: 1fr; }
+  .horse-sort-bar { display:flex; overflow:auto; gap:8px; }
+  .horse-table-row { grid-template-columns: 1fr 1fr; }
+  .horse-table-row .cell { padding: 8px; }
+  .horse-name-inline { font-size: 13px; }
+  .horse-no-inline { width: 30px; height: 30px; }
+  .summary-main-horse { font-size: 20px; }
+}
