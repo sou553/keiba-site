@@ -1492,7 +1492,7 @@
     if (horse._norm.same_course_count > 0) items.push(`同コース経験:${horse._norm.same_course_count}走`);
     if (horse._norm.same_place_count > 0) items.push(`同競馬場経験:${horse._norm.same_place_count}走`);
     if (horse._norm.recent_top3_count > 0) items.push(`近3走掲示板:${horse._norm.recent_top3_count}回`);
-    //if (horse._analysis?.hole_reason) items.push(horse._analysis.hole_reason);
+    if (horse._analysis?.hole_reason) items.push(horse._analysis.hole_reason);
     return uniqueNonEmpty([...(horse._norm.reasons_pos_list || []), ...items]).join(' / ') || '—';
   }
 
@@ -1504,11 +1504,11 @@
     const odds = horse._norm.tansho_odds;
     //if (pop !== null && ai !== null && ai - pop >= 3) items.push(`人気よりAIが${ai - pop}段下`);
     //if (pop !== null && course !== null && course - pop >= 4) items.push(`人気より適性が${course - pop}段下`);
-    if (horse._norm.p_top3 !== null && horse._norm.p_top3 < 0.35) items.push(`複勝率${fmtPct01(horse._norm.p_top3)}と低め`);
-    if (horse._norm.p_win !== null && horse._norm.p_win < 0.08) items.push(`勝率${fmtPct01(horse._norm.p_win)}と低め`);
+    //if (horse._norm.p_top3 !== null && horse._norm.p_top3 < 0.35) items.push(`複勝率${fmtPct01(horse._norm.p_top3)}と低め`);
+    //if (horse._norm.p_win !== null && horse._norm.p_win < 0.08) items.push(`勝率${fmtPct01(horse._norm.p_win)}と低め`);
     if (horse._norm.recent_top3_count === 0 && horse.past_runs.length >= 3) items.push('近3走で掲示板なし');
     //if (odds !== null && odds >= 50) items.push(`単勝${fmtOdds(odds)}で人気薄`);
-    //if (horse._analysis?.danger_reason) items.push(horse._analysis.danger_reason);
+    if (horse._analysis?.danger_reason) items.push(horse._analysis.danger_reason);
     return uniqueNonEmpty([...(horse._norm.reasons_neg_list || []), ...items]).join(' / ') || '—';
   }
 
