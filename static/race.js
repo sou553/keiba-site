@@ -1027,6 +1027,19 @@
     if (label === '強穴' || label === '穴候補' || label === '軽穴') return 'badge badge--green';
     return 'badge badge--plain';
   }
+  function rankColorClass(rank, prefix) {
+  const n = toNum(rank);
+  if (n === 1) return `metric-text metric-text--${prefix}-1`;
+  if (n === 2) return `metric-text metric-text--${prefix}-2`;
+  if (n === 3) return `metric-text metric-text--${prefix}-3`;
+  return 'metric-text';
+}
+
+function oddsColorClass(odds) {
+  const n = toNum(odds);
+  if (n !== null && n < 10) return 'metric-text metric-text--odds-hot';
+  return 'metric-text';
+}
 
   function metricPopularityClass(rank) {
   const n = toNum(rank);
