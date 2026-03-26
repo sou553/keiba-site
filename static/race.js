@@ -1596,7 +1596,7 @@
                 <div class="metric-box__label">AI/適正</div>
                 <div class="metric-box__value">${escapeHtml(fmt(horse._norm.pred_order))}/${escapeHtml(fmt(horse._norm.course_adv_rank))}</div>
               </div>
-
+            </div>
 
             <div class="horse-card__aside">
               <button type="button" class="horse-toggle" data-card-id="${id}">${isOpen ? '詳細を閉じる' : '詳細を見る'}</button>

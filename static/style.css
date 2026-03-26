@@ -561,9 +561,9 @@ select {
 .horse-sub { color: var(--muted); font-size: 13px; margin-top: 3px; }
 .horse-blood { color: var(--muted); font-size: 12px; margin-top: 4px; }
 .horse-summary-metrics {
-  display: flex;
+  display: grid;
   gap: 8px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 .metric-box {
   padding: 10px 12px;
@@ -578,6 +578,7 @@ select {
   display: grid;
   gap: 8px;
   min-width: 150px;
+  align-self: start;
 }
 .horse-toggle {
   min-width: 118px;
@@ -590,6 +591,7 @@ select {
   border-top: 1px dashed #dfd3c2;
   display: grid;
   gap: 12px;
+  clear: both;
 }
 .horse-detail-grid {
   display: grid;
