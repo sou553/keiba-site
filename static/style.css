@@ -574,84 +574,37 @@ select {
 
 .metric-box__sep {
   color: var(--muted);
-  font-weight: 700;
+  font-weight: 800;
 }
 
-.metric-num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* 囲みなし・文字色だけ */
+.metric-text {
   font-weight: 900;
-  line-height: 1.1;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
 }
 
-/* 人気 1-3 */
-.metric-box--pop1 {
-  border-color: #d9b24c;
-  background: linear-gradient(180deg, #fff8df 0%, #fff2c8 100%);
-}
-.metric-box--pop2 {
-  border-color: #b9c3d6;
-  background: linear-gradient(180deg, #f7f9fc 0%, #edf2f8 100%);
-}
-.metric-box--pop3 {
-  border-color: #d1a37e;
-  background: linear-gradient(180deg, #fff6ef 0%, #f8eadf 100%);
+/* 1番手 = 黄 */
+.metric-text--rank-1 {
+  color: #b8860b;
 }
 
-.metric-num--pop1 {
-  color: #9a6a00;
-}
-.metric-num--pop2 {
-  color: #5e6d87;
-}
-.metric-num--pop3 {
-  color: #9a5a2d;
+/* 2番手 = 青 */
+.metric-text--rank-2 {
+  color: #2f58c8;
 }
 
-/* 一桁オッズ */
-.metric-num--odds-hot {
-  color: var(--red);
-  background: var(--red-soft);
-  border: 1px solid #efc8c3;
-  border-radius: 999px;
-  padding: 2px 8px;
+/* 3番手 = 銅系 */
+.metric-text--rank-3 {
+  color: #b06a3c;
 }
 
-/* AI / 適正 box */
-.metric-box--strong {
-  border-color: #9fc3ff;
-  background: linear-gradient(180deg, #f4f8ff 0%, #eaf1ff 100%);
-}
-.metric-box--good {
-  border-color: #c8d9ff;
-  background: linear-gradient(180deg, #fafcff 0%, #f2f6ff 100%);
-}
-
-/* AI順位 */
-.metric-num--ai1 {
-  color: #1f56d8;
-  background: #eaf1ff;
-  border: 1px solid #cbd9ff;
-  border-radius: 999px;
-  padding: 2px 8px;
-}
-.metric-num--ai2,
-.metric-num--ai3 {
-  color: #315fb9;
-}
-
-/* 適性順位 */
-.metric-num--course1 {
-  color: #1f7a47;
-  background: #eef9f2;
-  border: 1px solid #cfe7d9;
-  border-radius: 999px;
-  padding: 2px 8px;
-}
-.metric-num--course2,
-.metric-num--course3 {
-  color: #2f7b59;
+/* 一桁オッズ = 赤 */
+.metric-text--odds-hot {
+  color: #c2524b;
 }
 .metric-box {
   padding: 10px 12px;

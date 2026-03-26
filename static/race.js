@@ -1625,27 +1625,27 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
             </div>
 
             <div class="horse-summary-metrics">
-              <div class="${metricBoxClassByPopularity(horse._norm.popularity)}">
+              <div class="metric-box">
                 <div class="metric-box__label">人気 / オッズ</div>
                 <div class="metric-box__value">
-                  <span class="${metricPopularityClass(horse._norm.popularity)}">
+                  <span class="${rankColorClass(horse._norm.popularity, 'rank')}">
                     ${escapeHtml(fmt(horse._norm.popularity))}人気
                   </span>
                   <span class="metric-box__sep"> / </span>
-                  <span class="${metricOddsClass(horse._norm.tansho_odds)}">
+                  <span class="${oddsColorClass(horse._norm.tansho_odds)}">
                     ${escapeHtml(fmtOdds(horse._norm.tansho_odds))}
                   </span>
                 </div>
               </div>
 
-              <div class="${metricBoxClassByAiCourse(horse._norm.pred_order, horse._norm.course_adv_rank)}">
+              <div class="metric-box">
                 <div class="metric-box__label">AI / 適正</div>
                 <div class="metric-box__value">
-                  <span class="${metricRankClass(horse._norm.pred_order, 'ai')}">
+                  <span class="${rankColorClass(horse._norm.pred_order, 'rank')}">
                     ${escapeHtml(fmt(horse._norm.pred_order))}
                   </span>
                   <span class="metric-box__sep"> / </span>
-                  <span class="${metricRankClass(horse._norm.course_adv_rank, 'course')}">
+                  <span class="${rankColorClass(horse._norm.course_adv_rank, 'rank')}">
                     ${escapeHtml(fmt(horse._norm.course_adv_rank))}
                   </span>
                 </div>
