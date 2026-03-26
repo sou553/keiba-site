@@ -1028,6 +1028,44 @@
     return 'badge badge--plain';
   }
 
+  function metricPopularityClass(rank) {
+  const n = toNum(rank);
+  if (n === 1) return 'metric-num metric-num--pop1';
+  if (n === 2) return 'metric-num metric-num--pop2';
+  if (n === 3) return 'metric-num metric-num--pop3';
+  return 'metric-num';
+}
+
+function metricOddsClass(odds) {
+  const n = toNum(odds);
+  if (n !== null && n < 10) return 'metric-num metric-num--odds-hot';
+  return 'metric-num';
+}
+
+function metricRankClass(rank, type = 'rank') {
+  const n = toNum(rank);
+  if (n === 1) return `metric-num metric-num--${type}1`;
+  if (n === 2) return `metric-num metric-num--${type}2`;
+  if (n === 3) return `metric-num metric-num--${type}3`;
+  return 'metric-num';
+}
+
+function metricBoxClassByPopularity(rank) {
+  const n = toNum(rank);
+  if (n === 1) return 'metric-box metric-box--pop1';
+  if (n === 2) return 'metric-box metric-box--pop2';
+  if (n === 3) return 'metric-box metric-box--pop3';
+  return 'metric-box';
+}
+
+function metricBoxClassByAiCourse(aiRank, courseRank) {
+  const ai = toNum(aiRank);
+  const course = toNum(courseRank);
+  if (ai === 1 || course === 1) return 'metric-box metric-box--strong';
+  if (ai === 2 || ai === 3 || course === 2 || course === 3) return 'metric-box metric-box--good';
+  return 'metric-box';
+}
+
   function renderPredictionSummary(analysis) {
     const el = qs('#prediction-summary');
     if (!el) return;
@@ -1587,21 +1625,32 @@
             </div>
 
             <div class="horse-summary-metrics">
-              <div class="metric-box">
-                <div class="metric-box__label">人気 (オッズ)</div>
-                <div class="metric-box__value">${escapeHtml(fmt(horse._norm.popularity))} (${escapeHtml(fmtOdds(horse._norm.tansho_odds))})</div>
+              <div class="${metricBoxClassByPopularity(horse._norm.popularity)}">
+                <div class="metric-box__label">人気 / オッズ</div>
+                <div class="metric-box__value">
+                  <span class="${metricPopularityClass(horse._norm.popularity)}">
+                    ${escapeHtml(fmt(horse._norm.popularity))}人気
+                  </span>
+                  <span class="metric-box__sep"> / </span>
+                  <span class="${metricOddsClass(horse._norm.tansho_odds)}">
+                    ${escapeHtml(fmtOdds(horse._norm.tansho_odds))}
+                  </span>
+                </div>
               </div>
 
-              <div class="metric-box">
-                <div class="metric-box__label">AI/適正</div>
-                <div class="metric-box__value">${escapeHtml(fmt(horse._norm.pred_order))}/${escapeHtml(fmt(horse._norm.course_adv_rank))}</div>
+              <div class="${metricBoxClassByAiCourse(horse._norm.pred_order, horse._norm.course_adv_rank)}">
+                <div class="metric-box__label">AI / 適正</div>
+                <div class="metric-box__value">
+                  <span class="${metricRankClass(horse._norm.pred_order, 'ai')}">
+                    ${escapeHtml(fmt(horse._norm.pred_order))}
+                  </span>
+                  <span class="metric-box__sep"> / </span>
+                  <span class="${metricRankClass(horse._norm.course_adv_rank, 'course')}">
+                    ${escapeHtml(fmt(horse._norm.course_adv_rank))}
+                  </span>
+                </div>
               </div>
             </div>
-
-            <div class="horse-card__aside">
-              <button type="button" class="horse-toggle" data-card-id="${id}">${isOpen ? '詳細を閉じる' : '詳細を見る'}</button>
-            </div>
-          </div>
 
           <div class="horse-card__details" ${isOpen ? '' : 'hidden'}>
             <div class="horse-detail-grid">
