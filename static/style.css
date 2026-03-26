@@ -1645,3 +1645,11 @@ body { font-size: 15px; }
     gap: 10px;
   }
 }
+
+
+.past-horse-card__submeta {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 3px;
+  line-height: 1.45;
+}
