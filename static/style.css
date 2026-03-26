@@ -1471,12 +1471,6 @@ body { font-size: 15px; }
   gap:10px;
   margin-bottom:6px;
 }
-.past-horse-card__submeta{
-  font-size:12px;
-  color:var(--muted);
-  line-height:1.45;
-  margin-top:3px;
-}
 .past-horse-card__blood{
   font-size:12px;
   color:#7a7263;
@@ -1558,5 +1552,131 @@ body { font-size: 15px; }
   }
   .bottom-panels{
     grid-template-columns:1fr;
+  }
+}
+
+/* ===== spacing-only patch: no function changes ===== */
+.past-page {
+  gap: 20px;
+}
+
+.compare-toolbar,
+#past-race-overview,
+#past-summary,
+.past-page > .sheet {
+  scroll-margin-top: 90px;
+}
+
+.compare-toolbar__grid--dense {
+  gap: 12px 14px;
+  margin-top: 12px;
+}
+
+.filter-check,
+.filter-field {
+  padding: 12px 14px;
+}
+
+.compare-toolbar__sort {
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+}
+
+.past-list {
+  gap: 16px;
+}
+
+.past-horse-card {
+  border-radius: 18px;
+}
+
+.past-horse-card__summary {
+  padding: 18px 20px;
+  gap: 18px;
+}
+
+.past-horse-card__title-row {
+  margin-bottom: 8px;
+}
+
+.past-horse-card__submeta {
+  margin-top: 5px;
+}
+
+.past-horse-card__blood {
+  margin-top: 6px;
+}
+
+.past-horse-card__brief {
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.past-horse-card__brief-line {
+  line-height: 1.55;
+}
+
+.past-horse-card__summary .tag-list {
+  gap: 8px;
+}
+
+.past-horse-card__detail {
+  padding: 0 20px 20px;
+  margin-top: 10px;
+}
+
+.past-horse-card.is-open .past-horse-card__detail {
+  padding-top: 18px;
+}
+
+.horse-run-actions {
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.netkeiba-run-item {
+  gap: 12px;
+  padding: 12px;
+}
+
+.netkeiba-run-item__race {
+  margin-bottom: 6px;
+}
+
+.netkeiba-run-item__sub,
+.netkeiba-run-item__meta {
+  line-height: 1.55;
+}
+
+.netkeiba-run-item__meta + .netkeiba-run-item__meta {
+  margin-top: 4px;
+}
+
+.bottom-panels {
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.bottom-panel__item {
+  padding: 10px 0;
+}
+
+@media (max-width: 720px) {
+  .past-page {
+    gap: 18px;
+  }
+
+  .past-horse-card__summary {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .past-horse-card__detail {
+    padding: 0 16px 16px;
+  }
+
+  .past-horse-card.is-open .past-horse-card__detail {
+    padding-top: 16px;
   }
 }
