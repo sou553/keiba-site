@@ -562,8 +562,8 @@ select {
 .horse-blood { color: var(--muted); font-size: 12px; margin-top: 4px; }
 .horse-summary-metrics {
   display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .metric-box {
   padding: 10px 12px;
