@@ -1588,19 +1588,15 @@
 
             <div class="horse-summary-metrics">
               <div class="metric-box">
-                <div class="metric-box__label">人気, オッズ</div>
-                <div class="metric-box__value">${escapeHtml(fmt(horse._norm.popularity))}, ${escapeHtml(fmtOdds(horse._norm.tansho_odds))}</div>
+                <div class="metric-box__label">人気 (オッズ)</div>
+                <div class="metric-box__value">${escapeHtml(fmt(horse._norm.popularity))} (${escapeHtml(fmtOdds(horse._norm.tansho_odds))})</div>
               </div>
 
               <div class="metric-box">
-                <div class="metric-box__label">AI</div>
-                <div class="metric-box__value">${escapeHtml(fmt(horse._norm.pred_order))}</div>
+                <div class="metric-box__label">AI/適正</div>
+                <div class="metric-box__value">${escapeHtml(fmt(horse._norm.pred_order))}/${escapeHtml(fmt(horse._norm.course_adv_rank))}</div>
               </div>
 
-              <div class="metric-box">
-                <div class="metric-box__label">適正</div>
-                <div class="metric-box__value">${escapeHtml(fmt(horse._norm.course_adv_rank))}</div>
-              </div>
 
             <div class="horse-card__aside">
               <button type="button" class="horse-toggle" data-card-id="${id}">${isOpen ? '詳細を閉じる' : '詳細を見る'}</button>
