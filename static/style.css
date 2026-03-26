@@ -561,9 +561,9 @@ select {
 .horse-sub { color: var(--muted); font-size: 13px; margin-top: 3px; }
 .horse-blood { color: var(--muted); font-size: 12px; margin-top: 4px; }
 .horse-summary-metrics {
-  display: grid;
+  display: flex;
   gap: 8px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .metric-box {
   padding: 10px 12px;
