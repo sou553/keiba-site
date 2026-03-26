@@ -1387,269 +1387,176 @@ body { font-size: 15px; }
   .summary-main-horse { font-size: 20px; }
 }
 
-/* ===== past detail spacing patch ===== */
-.page.page--past-detail {
-  padding-top: 14px;
-  padding-bottom: 28px;
+/* ===== past_detail complete patch ===== */
+.race-overview .overview-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+  gap:10px;
+  margin-top:8px;
 }
-
-.past-page {
-  gap: 20px;
+.overview-card{
+  background:#fff;
+  border:1px solid #e2dac8;
+  border-radius:14px;
+  padding:12px 12px 10px;
 }
-
-#past-hero,
-#past-race-overview,
-#past-summary,
-.compare-toolbar,
-#past-bottom-panels > .sheet,
-.past-page > .sheet {
-  scroll-margin-top: 88px;
+.overview-card span{
+  display:block;
+  font-size:12px;
+  color:#746d5f;
+  margin-bottom:6px;
+  line-height:1.4;
 }
-
-#past-hero {
-  padding: 20px 18px;
+.overview-card strong{
+  display:block;
+  font-size:20px;
+  color:#253a7a;
+  line-height:1.1;
+  font-weight:800;
 }
-
-#past-tabs {
-  margin-top: 2px;
-  margin-bottom: 2px;
-  gap: 12px;
+.compare-toolbar__grid--dense{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:10px 12px;
+  margin-top:10px;
 }
-
-#past-race-overview,
-#past-summary,
-.compare-toolbar,
-.past-page > .sheet {
-  padding: 20px 18px;
+.filter-check,
+.filter-field{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-height:42px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+  font-size:13px;
+  font-weight:800;
 }
-
-#past-race-overview .section-title-row,
-#past-summary .section-title-row,
-.compare-toolbar .section-title-row,
-.past-page > .sheet .section-title-row {
-  margin-bottom: 16px;
+.filter-check input{
+  margin:0;
 }
-
-.overview-grid {
-  gap: 12px;
-  margin-top: 12px;
+.filter-field{
+  flex-direction:column;
+  align-items:flex-start;
 }
-
-.overview-card {
-  padding: 14px 14px 12px;
+.filter-field span{
+  font-size:12px;
+  color:var(--muted);
 }
-
-.overview-card span {
-  margin-bottom: 8px;
+.filter-field input{
+  width:100%;
+  min-height:38px;
 }
-
-.summary-grid {
-  gap: 14px;
+.compare-toolbar__search--wide{
+  grid-column:1 / -1;
 }
-
-.summary-card {
-  padding: 16px;
+.compare-toolbar__sort{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid #ece5d7;
 }
-
-.compare-toolbar__grid,
-.compare-toolbar__grid--dense {
-  gap: 12px 16px;
-  margin-top: 12px;
+.past-horse-card__main{
+  flex:1;
+  min-width:0;
+  text-align:left;
 }
-
-.compare-toolbar__sort {
-  gap: 10px;
-  margin-top: 14px;
-  padding-top: 14px;
+.past-horse-card__title-row{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:6px;
 }
-
-#past-meta {
-  margin-top: 4px;
+.past-horse-card__submeta{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.45;
+  margin-top:3px;
 }
-
-.past-list {
-  gap: 16px;
+.past-horse-card__blood{
+  font-size:12px;
+  color:#7a7263;
+  line-height:1.35;
+  margin-top:2px;
 }
-
-.past-horse-card {
-  border-radius: 18px;
+.past-horse-card__brief{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
 }
-
-.past-horse-card__summary {
-  padding: 18px 18px;
-  gap: 16px;
+.past-horse-card__brief-line{
+  font-size:12.5px;
+  color:#4d473d;
+  line-height:1.45;
+  word-break:break-word;
 }
-
-.past-horse-card__title-row {
-  margin-bottom: 10px;
+.bottom-panels{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+  margin-top:0;
+  margin-bottom:24px;
 }
-
-.past-horse-card__blood {
-  margin-top: 4px;
+.bottom-panel__list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
 }
-
-.past-horse-card__brief {
-  gap: 6px;
+.bottom-panel__item{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:flex-start;
+  padding:8px 0;
+  border-top:1px solid #f0eadf;
+  font-size:13px;
 }
-
-.past-horse-card__brief-line {
-  line-height: 1.55;
+.bottom-panel__item:first-child{
+  border-top:none;
+  padding-top:0;
 }
-
-.past-horse-card .tag-list {
-  gap: 8px;
-  align-self: flex-start;
+.bottom-panel__item strong{
+  color:#203a7c;
+  line-height:1.4;
 }
-
-.past-horse-card .tag {
-  min-height: 28px;
-  padding: 0 11px;
+.bottom-panel__item span{
+  color:#6f685d;
+  text-align:right;
+  white-space:nowrap;
 }
-
-.past-horse-card__detail {
-  padding: 0 18px 18px;
-  margin-top: 10px;
+.tag--accent{
+  background:#fff6db;
+  border-color:#ead38f;
+  color:#9a6f00;
 }
-
-.past-horse-card.is-open .past-horse-card__detail {
-  gap: 14px;
-  padding-top: 18px;
+.netkeiba-run-item__result{
+  background:#eef2fb;
+  border-color:#d8e0f7;
+  color:var(--blue-dark);
 }
-
-.netkeiba-run-item {
-  padding: 14px 14px;
-  gap: 14px;
+.netkeiba-run-item__result.is-good{
+  background:#fff4ce;
+  border-color:#e6d16f;
+  color:#907313;
 }
-
-.netkeiba-run-item__race {
-  margin-bottom: 6px;
+.past-horse-card.is-open{
+  box-shadow:0 4px 18px rgba(65, 88, 140, .08);
 }
-
-.netkeiba-run-item__sub,
-.netkeiba-run-item__meta {
-  line-height: 1.55;
+.past-horse-card__summary:hover{
+  background:rgba(245,248,255,.55);
 }
-
-.netkeiba-run-item__meta + .netkeiba-run-item__meta {
-  margin-top: 4px;
-}
-
-.horse-run-actions {
-  gap: 12px;
-  margin-top: 4px;
-  padding-top: 2px;
-}
-
-.bottom-panels {
-  gap: 16px;
-  margin-top: 2px;
-}
-
-.bottom-panel__list {
-  gap: 10px;
-}
-
-.bottom-panel__item {
-  padding: 10px 0;
-}
-
-@media (max-width: 900px) {
-  .page.page--past-detail {
-    padding-top: 12px;
-    padding-bottom: 22px;
+@media (max-width: 640px){
+  .overview-card strong{
+    font-size:18px;
   }
-
-  .past-page {
-    gap: 18px;
+  .past-horse-card__brief-line{
+    font-size:12px;
   }
-
-  #past-hero,
-  #past-race-overview,
-  #past-summary,
-  .compare-toolbar,
-  .past-page > .sheet {
-    padding: 18px 16px;
+  .bottom-panels{
+    grid-template-columns:1fr;
   }
-
-  .past-horse-card__summary {
-    padding: 17px 16px;
-  }
-
-  .past-horse-card__detail {
-    padding: 0 16px 16px;
-  }
-
-  .past-horse-card.is-open .past-horse-card__detail {
-    padding-top: 16px;
-  }
-}
-
-@media (max-width: 640px) {
-  .page.page--past-detail {
-    padding-top: 10px;
-    padding-bottom: 18px;
-  }
-
-  .past-page {
-    gap: 16px;
-  }
-
-  #past-tabs {
-    gap: 10px;
-  }
-
-  #past-hero,
-  #past-race-overview,
-  #past-summary,
-  .compare-toolbar,
-  .past-page > .sheet {
-    padding: 16px 14px;
-  }
-
-  .section-title-row {
-    margin-bottom: 14px;
-  }
-
-  .overview-grid {
-    gap: 10px;
-  }
-
-  .summary-grid {
-    gap: 12px;
-  }
-
-  .past-list {
-    gap: 14px;
-  }
-
-  .past-horse-card__summary {
-    padding: 16px 14px;
-    gap: 12px;
-  }
-
-  .past-horse-card .tag-list {
-    margin-top: 2px;
-  }
-
-  .past-horse-card__detail {
-    padding: 0 14px 14px;
-  }
-
-  .past-horse-card.is-open .past-horse-card__detail {
-    gap: 12px;
-    padding-top: 14px;
-  }
-
-  .netkeiba-run-item {
-    padding: 12px 12px;
-    gap: 10px;
-  }
-}
-
-
-.past-horse-card__submeta {
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: 3px;
-  line-height: 1.45;
 }
