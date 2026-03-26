@@ -1578,6 +1578,11 @@
                   <h3 class="horse-name">${escapeHtml(horse.horse_name)}</h3>
                 </div>
               </div>
+              <div class="tag-list" style="margin-top:8px;">
+                <span class="badge badge--plain">性齢 ${escapeHtml(formatSexAgeLong(horse.sex_age))}</span>
+                <span class="badge badge--plain">斤量 ${escapeHtml(fmtNum(horse.burden_weight, 1))}</span>
+                <span class="badge badge--plain">騎手 ${escapeHtml(fmt(horse.jockey))}</span>
+              </div>
               <div class="tag-list" style="margin-top:10px;">${marks.join('')}</div>
             </div>
 
