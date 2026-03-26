@@ -10,6 +10,13 @@
     sameDistance: false,
     boardOnly: false,
     fastOnly: false,
+    frontOnly: false,
+    closerOnly: false,
+    distanceUpOnly: false,
+    distanceDownOnly: false,
+    jockeyChangeOnly: false,
+    layoffOnly: false,
+    sortKey: 'umaban',
     expanded: new Set(),
     visibleRuns: {},
   };
@@ -264,6 +271,32 @@
     return [horseSexAgeText(h), horseWeightText(h), horseJockeyText(h)].join(' / ');
   }
 
+
+  function isDistanceUp(run) {
+    const rd = raceDistance();
+    const d = parseDistance(run?.distance_m ?? run?.distance ?? run?.distance_text);
+    return rd != null && d != null && rd > d;
+  }
+
+  function isDistanceDown(run) {
+    const rd = raceDistance();
+    const d = parseDistance(run?.distance_m ?? run?.distance ?? run?.distance_text);
+    return rd != null && d != null && rd < d;
+  }
+
+  function sortLabel(key) {
+    const map = {
+      umaban: '馬番順',
+      prev1_finish: '前走着順',
+      avg_finish: '近走着順',
+      avg_last3f: '上がり',
+      same_distance: '同距離',
+      same_course: '同コース',
+      popularity: '人気順',
+    };
+    return map[key] || key;
+  }
+
   function buildPrev1Brief(run) {
     const ra = getRA();
     if (!run) return '前走: データなし';
@@ -357,6 +390,12 @@
       jockeyChangeText: jockeyChangeText(h, runs),
       bloodText: bloodText(h),
       prevFinish,
+      hasDistanceUp: isDistanceUp(runs[0]),
+      hasDistanceDown: isDistanceDown(runs[0]),
+      isFrontType: /逃げ|先行/.test(styleText),
+      isCloserType: /差し|追込/.test(styleText),
+      jockeyChanged: jockeyChangeText(h, runs) === '騎手替わり',
+      isLayoff: layoffDays != null && layoffDays >= 70,
       totalRuns: runs.length,
     };
     obj.positiveMemo = buildPositiveMemo(h, obj);
@@ -372,11 +411,34 @@
     if (state.sameDistance && obj.sameDistanceCount <= 0) return false;
     if (state.boardOnly && obj.board3 <= 0) return false;
     if (state.fastOnly && !(obj.avgLast3f != null && obj.avgLast3f <= 36.0)) return false;
+    if (state.frontOnly && !obj.isFrontType) return false;
+    if (state.closerOnly && !obj.isCloserType) return false;
+    if (state.distanceUpOnly && !obj.hasDistanceUp) return false;
+    if (state.distanceDownOnly && !obj.hasDistanceDown) return false;
+    if (state.jockeyChangeOnly && !obj.jockeyChanged) return false;
+    if (state.layoffOnly && !obj.isLayoff) return false;
     return true;
   }
 
   function compareRows(a, b) {
-    return (getRA().toNum(a.horse.umaban) ?? 999) - (getRA().toNum(b.horse.umaban) ?? 999);
+    const ra = getRA();
+    switch (state.sortKey) {
+      case 'prev1_finish':
+        return (a.prevFinish ?? 999) - (b.prevFinish ?? 999);
+      case 'avg_finish':
+        return (a.avgFinish ?? 999) - (b.avgFinish ?? 999);
+      case 'avg_last3f':
+        return (a.avgLast3f ?? 999) - (b.avgLast3f ?? 999);
+      case 'same_distance':
+        return (b.sameDistanceCount ?? -1) - (a.sameDistanceCount ?? -1);
+      case 'same_course':
+        return (b.sameCourseCount ?? -1) - (a.sameCourseCount ?? -1);
+      case 'popularity':
+        return (ra.toNum(a.horse.popularity) ?? 999) - (ra.toNum(b.horse.popularity) ?? 999);
+      case 'umaban':
+      default:
+        return (ra.toNum(a.horse.umaban) ?? 999) - (ra.toNum(b.horse.umaban) ?? 999);
+    }
   }
 
   function renderLayout() {
@@ -395,12 +457,27 @@
             </div>
             <div id="limit-row" class="page-tab-strip"></div>
           </div>
-          <div class="compare-toolbar__grid">
+          <div class="compare-toolbar__grid compare-toolbar__grid--dense">
             <label class="filter-check"><input id="same-course" type="checkbox"> <span>同コース</span></label>
             <label class="filter-check"><input id="same-distance" type="checkbox"> <span>同距離</span></label>
             <label class="filter-check"><input id="board-only" type="checkbox"> <span>近3走掲示板内</span></label>
             <label class="filter-check"><input id="fast-only" type="checkbox"> <span>上がり優秀</span></label>
-            <label class="filter-field compare-toolbar__search"><span>馬名検索</span><input id="past-keyword" type="text" placeholder="馬名で検索"></label>
+            <label class="filter-check"><input id="front-only" type="checkbox"> <span>逃げ先行</span></label>
+            <label class="filter-check"><input id="closer-only" type="checkbox"> <span>差し追込</span></label>
+            <label class="filter-check"><input id="distance-up-only" type="checkbox"> <span>距離延長</span></label>
+            <label class="filter-check"><input id="distance-down-only" type="checkbox"> <span>距離短縮</span></label>
+            <label class="filter-check"><input id="jockey-change-only" type="checkbox"> <span>騎手替わり</span></label>
+            <label class="filter-check"><input id="layoff-only" type="checkbox"> <span>休み明け</span></label>
+            <label class="filter-field compare-toolbar__search compare-toolbar__search--wide"><span>馬名検索</span><input id="past-keyword" type="text" placeholder="馬名で検索"></label>
+          </div>
+          <div class="compare-toolbar__sort">
+            <button type="button" class="segmented-btn" data-sort="umaban">馬番順</button>
+            <button type="button" class="segmented-btn" data-sort="prev1_finish">前走着順</button>
+            <button type="button" class="segmented-btn" data-sort="avg_finish">近走着順</button>
+            <button type="button" class="segmented-btn" data-sort="avg_last3f">上がり</button>
+            <button type="button" class="segmented-btn" data-sort="same_distance">同距離</button>
+            <button type="button" class="segmented-btn" data-sort="same_course">同コース</button>
+            <button type="button" class="segmented-btn" data-sort="popularity">人気順</button>
           </div>
         </section>
         <section class="sheet">
@@ -446,7 +523,7 @@
     const meta = qs('#past-meta');
     const ra = getRA();
     const rows = (state.data.horses || []).map(summarizedHorse).filter(matchSummary).sort(compareRows);
-    meta.textContent = `${rows.length}頭表示 / 近走${state.limit}件`;
+    meta.textContent = `${rows.length}頭表示 / 近走${state.limit}件 / 並び替え: ${sortLabel(state.sortKey)}`;
     list.innerHTML = rows.map((obj) => {
       const h = obj.horse;
       const key = String(h.horse_id || h.umaban || h.horse_name);
@@ -493,16 +570,41 @@
       renderHero();
       renderList();
     }));
-    qs('#same-course').checked = state.sameCourse;
-    qs('#same-distance').checked = state.sameDistance;
-    qs('#board-only').checked = state.boardOnly;
-    qs('#fast-only').checked = state.fastOnly;
-    qs('#same-course').onchange = (e) => { state.sameCourse = !!e.target.checked; renderList(); };
-    qs('#same-distance').onchange = (e) => { state.sameDistance = !!e.target.checked; renderList(); };
-    qs('#board-only').onchange = (e) => { state.boardOnly = !!e.target.checked; renderList(); };
-    qs('#fast-only').onchange = (e) => { state.fastOnly = !!e.target.checked; renderList(); };
+
+    const checkboxMap = [
+      ['#same-course', 'sameCourse'],
+      ['#same-distance', 'sameDistance'],
+      ['#board-only', 'boardOnly'],
+      ['#fast-only', 'fastOnly'],
+      ['#front-only', 'frontOnly'],
+      ['#closer-only', 'closerOnly'],
+      ['#distance-up-only', 'distanceUpOnly'],
+      ['#distance-down-only', 'distanceDownOnly'],
+      ['#jockey-change-only', 'jockeyChangeOnly'],
+      ['#layoff-only', 'layoffOnly'],
+    ];
+
+    checkboxMap.forEach(([selector, key]) => {
+      const el = qs(selector);
+      if (!el) return;
+      el.checked = !!state[key];
+      el.onchange = (e) => {
+        state[key] = !!e.target.checked;
+        renderList();
+      };
+    });
+
     qs('#past-keyword').value = state.keyword;
     qs('#past-keyword').oninput = (e) => { state.keyword = e.target.value || ''; renderList(); };
+
+    qsa('[data-sort]').forEach((btn) => {
+      btn.classList.toggle('is-active', btn.dataset.sort === state.sortKey);
+      btn.onclick = () => {
+        state.sortKey = btn.dataset.sort;
+        qsa('[data-sort]').forEach((x) => x.classList.toggle('is-active', x === btn));
+        renderList();
+      };
+    });
   }
 
   async function init() {
