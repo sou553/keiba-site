@@ -1661,3 +1661,131 @@ body { font-size: 15px; }
     width:52px;
   }
 }
+
+/* ===== past_detail スマホ崩れ修正 ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.past-page,
+.past-page * {
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  /* 画面外はみ出し防止 */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* 上部タブ全体を2段構成にする */
+  .past-top-tabs,
+  .past-nav-wrap,
+  .past-header-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  /* 1段目: 出走馬一覧 / 過去走比較 / 買い目作成 */
+  .past-top-tabs__main,
+  .past-main-tabs,
+  .page-subnav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+  }
+
+  /* 2段目: 近3走 / 近5走 など */
+  .past-top-tabs__sub,
+  .past-view-tabs,
+  .past-range-tabs {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    transform: none !important;
+
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ボタン共通 */
+  .past-top-tabs button,
+  .past-top-tabs a,
+  .past-nav-wrap button,
+  .past-nav-wrap a,
+  .past-header-tabs button,
+  .past-header-tabs a,
+  .page-subnav a,
+  .past-main-tabs button,
+  .past-main-tabs a,
+  .past-view-tabs button,
+  .past-range-tabs button {
+    min-width: 0;
+    max-width: 100%;
+    white-space: nowrap;
+    writing-mode: horizontal-tb;
+    word-break: keep-all;
+    line-height: 1.2;
+    text-align: center;
+    padding: 12px 10px;
+    border-radius: 999px;
+  }
+
+  /* 1段目は均等幅 */
+  .past-top-tabs__main > *,
+  .past-main-tabs > *,
+  .page-subnav > * {
+    width: 100%;
+  }
+
+  /* 2段目は横スクロールで自然幅 */
+  .past-top-tabs__sub > *,
+  .past-view-tabs > *,
+  .past-range-tabs > * {
+    flex: 0 0 auto;
+    min-width: 84px;
+  }
+
+  /* 比較条件やソートボタンも折り返す */
+  .compare-toolbar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .compare-toolbar__left,
+  .compare-toolbar__right {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .compare-toolbar__left > *,
+  .compare-toolbar__right > * {
+    flex: 1 1 calc(50% - 8px);
+  }
+
+  /* 過去走比較テーブル周り */
+  .compare-table-wrap {
+    overflow: visible;
+  }
+
+  /* 余白を少し詰める */
+  .past-page .section,
+  .race-past-compare-page section {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
