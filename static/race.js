@@ -1593,25 +1593,14 @@
               </div>
 
               <div class="metric-box">
-                <div class="metric-box__label">単勝</div>
-                <div class="metric-box__value">${escapeHtml(fmtOdds(horse._norm.tansho_odds))}</div>
+                <div class="metric-box__label">AI</div>
+                <div class="metric-box__value">${escapeHtml(fmt(horse._norm.pred_order))}</div>
               </div>
 
               <div class="metric-box">
-                <div class="metric-box__label">AI / 適性</div>
-                <div class="metric-box__value">${escapeHtml(fmt(horse._norm.pred_order))} / ${escapeHtml(fmt(horse._norm.course_adv_rank))}</div>
+                <div class="metric-box__label">適正</div>
+                <div class="metric-box__value">${escapeHtml(fmt(horse._norm.course_adv_rank))}</div>
               </div>
-
-              <div class="metric-box">
-                <div class="metric-box__label">勝率</div>
-                <div class="metric-box__value">${escapeHtml(fmtPct01(horse._norm.p_win))}</div>
-              </div>
-
-              <div class="metric-box">
-                <div class="metric-box__label">複勝率</div>
-                <div class="metric-box__value">${escapeHtml(fmtPct01(horse._norm.p_top3))}</div>
-              </div>
-            </div>
 
             <div class="horse-card__aside">
               <button type="button" class="horse-toggle" data-card-id="${id}">${isOpen ? '詳細を閉じる' : '詳細を見る'}</button>
