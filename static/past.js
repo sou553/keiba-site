@@ -430,7 +430,7 @@
 
         <section id="past-race-overview" class="sheet race-overview"></section>
 
-        <section id="past-summary" class="sheet summary-panel"></section>
+        <!-- <section id="past-summary" class="sheet summary-panel"></section> -->
 
         <section class="sheet compare-toolbar">
           <div class="section-title-row">
