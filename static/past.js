@@ -865,7 +865,7 @@
 
       renderHero();
       renderTabs();
-      renderSummary();
+      //renderSummary();
       bind();
       renderList();
 
