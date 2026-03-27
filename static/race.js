@@ -1275,6 +1275,7 @@
       <section class="race-detail-page">
         <div id="race-status" class="page-status" hidden></div>
         <section class="race-hero card" id="race-hero"></section>
+        <nav id="race-tabs" class="page-tab-strip"></nav>
         <section class="summary-panel card" id="prediction-summary"></section>
         <section class="divergence-panel card" id="divergence-panel"></section>
         <section class="skip-panel card" id="skip-panel"></section>
@@ -1293,11 +1294,24 @@
     `;
   }
 
+  function renderTabs(analysis) {
+    const nav = qs('#race-tabs');
+    if (!nav) return;
+
+    const { race } = analysis;
+    nav.innerHTML = `
+      <a class="race-tab is-active" href="${escapeHtml(buildPageUrl('race', race))}">出走馬一覧</a>
+      <a class="race-tab" href="${escapeHtml(buildPageUrl('past', race))}">過去走比較</a>
+      <a class="race-tab" href="${escapeHtml(buildPageUrl('betting', race))}">買い目作成</a>
+    `;
+  }
+
   function renderHero(analysis) {
     const hero = qs('#race-hero');
     if (!hero) return;
     const { race, summary } = analysis;
     const title = [race.course, race.race_no ? `${race.race_no}R` : null, race.race_name || race.title].filter(Boolean).join(' ');
+
     hero.innerHTML = `
       <div class="race-hero__head">
         <div>
@@ -1316,11 +1330,6 @@
         </div>
         <a class="action-link" href="./index.html${race.race_date ? `?date=${encodeURIComponent(race.race_date)}` : ''}">一覧へ戻る</a>
       </div>
-      <nav class="page-tab-strip">
-        <a class="race-tab is-active" href="${escapeHtml(buildPageUrl('race', race))}">予想 / 出馬表</a>
-        <a class="race-tab" href="${escapeHtml(buildPageUrl('past', race))}">過去走比較</a>
-        <a class="race-tab" href="${escapeHtml(buildPageUrl('betting', race))}">買い目作成</a>
-      </nav>
     `;
     document.title = `${title || 'レース詳細'} | 予想整理サイト`;
   }
@@ -2100,6 +2109,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
       state.data = analyzeRace(prepared);
       clearStatus();
       renderHero(state.data);
+      renderTabs(state.data);
       bindHeroEvents();
       updateCourseInsightDom();
       ensureCourseInsightLoaded().catch(() => {});
