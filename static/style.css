@@ -392,7 +392,7 @@ select {
   border-radius: 12px;
 }
 .page-tab-strip { margin-top: 10px; }
-.race-tab { display: inline-flex; align-items: center; justify-content: center; min-width: 130px; font-size: 15px; }
+.race-tab { display: inline-flex; align-items: center; justify-content: center; min-width: 0; width: auto; font-size: 15px; }
 
 .summary-grid {
   display: grid;
@@ -742,7 +742,6 @@ select {
   .horse-list-panel { padding: 14px; border-radius: 16px; }
   .race-row__title { font-size: 24px; }
   .race-hero__title { font-size: 27px; }
-  .race-tab { min-width: 132px; }
   .page-tab-strip {
     position: sticky;
     top: 70px;
@@ -1358,20 +1357,6 @@ select {
 .skip-reason-list { display:grid; gap:10px; }
 .skip-reason-item { padding: 10px 12px; border-radius: 12px; background:#fffaf2; border:1px dashed #e1cfb0; }
 
-/* past detail beautify */
-.compare-toolbar__grid { display:grid; grid-template-columns: repeat(4, max-content) minmax(180px,1fr); gap: 10px 16px; align-items:end; }
-.compare-toolbar__search { min-width: 220px; }
-.past-list { display: grid; gap: 12px; }
-.past-horse-card { border:1px solid #e2d5c2; border-radius:16px; overflow:hidden; background:#fffefa; }
-.past-horse-card__summary {
-  width:100%; border:none; background:transparent; padding:14px 16px; min-height:auto;
-  display:flex; align-items:center; justify-content:space-between; gap:12px; text-align:left;
-}
-.past-horse-card__title { font-size: 15px; font-weight: 900; color: var(--blue-dark); margin-bottom: 4px; }
-.past-horse-card__meta { color: var(--muted); font-size: 12px; }
-.past-horse-card__detail { padding: 0 16px 16px; display:none; border-top:1px dashed #e6dac8; margin-top: 8px; }
-.past-horse-card.is-open .past-horse-card__detail { display:grid; gap:12px; padding-top:16px; }
-
 @media (max-width: 1100px) {
   .horse-table-head, .horse-table-row {
     grid-template-columns: minmax(220px,2fr) 100px 64px 72px 60px 60px 76px 82px minmax(150px,1.2fr) 80px;
@@ -1412,52 +1397,26 @@ select {
 }
 
 
-/* ===== past_detail memo patch ===== */
-.past-horse-card__main{flex:1;min-width:0;text-align:left;}
-.past-horse-card__title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px;}
-.past-horse-card__submeta{color:var(--muted);font-size:12px;line-height:1.45;margin-top:4px;}
-.past-horse-card__brief{display:flex;flex-direction:column;gap:4px;margin-top:8px;}
-.past-horse-card__brief-line{font-size:12.5px;color:#4d473d;line-height:1.5;word-break:break-word;}
-.past-horse-card__summary{padding:16px 18px;gap:18px;align-items:flex-start;}
-.past-horse-card__summary .tag-list{justify-content:flex-end;gap:8px;max-width:42%;}
-.past-horse-card__detail{padding:0 18px 18px;margin-top:0;display:none;border-top:1px dashed #e6dac8;}
-.past-horse-card.is-open .past-horse-card__detail{display:grid;gap:14px;padding-top:16px;}
-.past-memo-grid{display:grid;gap:12px;grid-template-columns:1fr;}
-.past-memo-grid .detail-box{background:#fffdfa;border-color:#e2d5c2;}
-.past-memo-grid .detail-kv{grid-template-columns:1fr 1fr;gap:10px 14px;}
-.past-memo-grid .detail-kv__item{padding:10px 0;}
-.past-memo-grid .detail-kv__value{line-height:1.55;}
-.horse-run-actions{display:flex;gap:10px;flex-wrap:wrap;}
-.netkeiba-run-item{gap:12px;padding:12px;background:#fffdfa;border-color:#e2d5c2;}
-.netkeiba-run-item__meta+.netkeiba-run-item__meta{margin-top:4px;}
-.tag--accent{background:#fff6db;border-color:#ead38f;color:#9a6f00;}
-.past-horse-card.is-open{box-shadow:0 4px 18px rgba(65,88,140,.08);}
-.past-horse-card__summary:hover{background:rgba(245,248,255,.45);}
-@media (max-width: 900px){
-  .past-horse-card__summary{flex-direction:column;}
-  .past-horse-card__summary .tag-list{justify-content:flex-start;max-width:none;}
-}
-@media (max-width: 720px){
-  .past-horse-card__summary{padding:14px 16px;gap:12px;}
-  .past-horse-card__detail{padding:0 16px 16px;}
-  .past-memo-grid .detail-kv{grid-template-columns:1fr;}
-  .past-horse-card__brief-line{font-size:12px;}
-}
-
-
-/* ===== past_detail compare restore + spacing patch ===== */
+/* ===== past_detail layout unify ===== */
 .compare-toolbar{
   padding:20px 22px;
 }
 .compare-toolbar .section-title-row{
   margin-bottom:14px;
 }
-.compare-toolbar__grid.compare-toolbar__grid--dense{
+.compare-toolbar__grid{
   display:grid;
+  grid-template-columns:repeat(4, max-content) minmax(180px,1fr);
+  gap:10px 16px;
+  align-items:end;
+}
+.compare-toolbar__grid.compare-toolbar__grid--dense{
   grid-template-columns:repeat(auto-fit,minmax(136px,1fr));
   gap:14px 16px;
-  align-items:end;
   margin-top:8px;
+}
+.compare-toolbar__search{
+  min-width:220px;
 }
 .compare-toolbar__search--wide{
   grid-column:1 / -1;
@@ -1473,7 +1432,7 @@ select {
 .compare-toolbar__sort .segmented-btn{
   min-height:42px;
 }
-/* ===== past_detail spacing wider ===== */
+
 .past-list{
   display:grid;
   gap:18px;
@@ -1493,19 +1452,28 @@ select {
   background:transparent;
   min-height:auto;
   text-align:left;
-
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
   gap:22px;
-
   padding:20px 22px;
+}
+
+.past-horse-card__summary:hover{
+  background:rgba(245,248,255,.45);
 }
 
 .past-horse-card__main{
   flex:1;
   min-width:0;
   text-align:left;
+}
+
+.past-horse-card__title{
+  font-size:15px;
+  font-weight:900;
+  color:var(--blue-dark);
+  margin-bottom:4px;
 }
 
 .past-horse-card__title-row{
@@ -1516,9 +1484,13 @@ select {
   margin-bottom:8px;
 }
 
+.past-horse-card__meta,
 .past-horse-card__submeta{
   color:var(--muted);
   font-size:12px;
+}
+
+.past-horse-card__submeta{
   line-height:1.5;
   margin-top:4px;
 }
@@ -1548,8 +1520,11 @@ select {
   display:none;
   margin-top:0;
   border-top:1px dashed #e6dac8;
-
   padding:0 22px 22px;
+}
+
+.past-horse-card.is-open{
+  box-shadow:0 4px 18px rgba(65,88,140,.08);
 }
 
 .past-horse-card.is-open .past-horse-card__detail{
@@ -1582,16 +1557,20 @@ select {
   line-height:1.6;
 }
 
+.tag--accent{
+  background:#fff6db;
+  border-color:#ead38f;
+  color:#9a6f00;
+}
+
 .netkeiba-run-item{
   display:grid;
   grid-template-columns:96px 1fr 54px;
   gap:14px;
   align-items:stretch;
-
   background:#fffdfa;
   border:1px solid #e2d5c2;
   border-radius:14px;
-
   padding:14px 16px;
 }
 
@@ -1620,6 +1599,15 @@ select {
 }
 
 @media (max-width: 900px){
+  .compare-toolbar__grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .compare-toolbar__search{
+    grid-column:1 / -1;
+    min-width:0;
+  }
+
   .past-list{
     gap:16px;
     padding:6px 2px 4px;
@@ -1675,6 +1663,10 @@ select {
     grid-template-columns:1fr;
   }
 
+  .past-horse-card__brief-line{
+    font-size:12px;
+  }
+
   .netkeiba-run-item{
     grid-template-columns:1fr;
     padding:12px 12px;
@@ -1683,130 +1675,6 @@ select {
 
   .netkeiba-run-item__result{
     width:52px;
-  }
-}
-
-/* ===== past_detail スマホ崩れ修正 ===== */
-.past-page,
-.past-page * {
-  min-width: 0;
-}
-
-@media (max-width: 768px) {
-  /* 画面外はみ出し防止 */
-  html, body {
-    overflow-x: visible;
-  }
-
-  /* 上部タブ全体を2段構成にする */
-  .past-top-tabs,
-  .past-nav-wrap,
-  .past-header-tabs {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-  }
-
-  /* 1段目: 出走馬一覧 / 過去走比較 / 買い目作成 */
-  .past-top-tabs__main,
-  .past-main-tabs,
-  .page-subnav {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
-    width: 100%;
-  }
-
-  /* 2段目: 近3走 / 近5走 など */
-  .past-top-tabs__sub,
-  .past-view-tabs,
-  .past-range-tabs {
-    position: static !important;
-    top: auto !important;
-    right: auto !important;
-    left: auto !important;
-    transform: none !important;
-
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 8px;
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 2px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* ボタン共通 */
-  .past-top-tabs button,
-  .past-top-tabs a,
-  .past-nav-wrap button,
-  .past-nav-wrap a,
-  .past-header-tabs button,
-  .past-header-tabs a,
-  .page-subnav a,
-  .past-main-tabs button,
-  .past-main-tabs a,
-  .past-view-tabs button,
-  .past-range-tabs button {
-    min-width: 0;
-    max-width: 100%;
-    white-space: nowrap;
-    writing-mode: horizontal-tb;
-    word-break: keep-all;
-    line-height: 1.2;
-    text-align: center;
-    padding: 12px 10px;
-    border-radius: 999px;
-  }
-
-  /* 1段目は均等幅 */
-  .past-top-tabs__main > *,
-  .past-main-tabs > *,
-  .page-subnav > * {
-    width: 100%;
-  }
-
-  /* 2段目は横スクロールで自然幅 */
-  .past-top-tabs__sub > *,
-  .past-view-tabs > *,
-  .past-range-tabs > * {
-    flex: 0 0 auto;
-    min-width: 84px;
-  }
-
-  /* 比較条件やソートボタンも折り返す */
-  .compare-toolbar {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .compare-toolbar__left,
-  .compare-toolbar__right {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .compare-toolbar__left > *,
-  .compare-toolbar__right > * {
-    flex: 1 1 calc(50% - 8px);
-  }
-
-  /* 過去走比較テーブル周り */
-  .compare-table-wrap {
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* 余白を少し詰める */
-  .past-page .section,
-  .race-past-compare-page section {
-    padding-left: 12px;
-    padding-right: 12px;
   }
 }
 
