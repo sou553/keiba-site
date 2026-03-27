@@ -496,7 +496,7 @@
           <div class="section-title-row">
             <div>
               <h2 class="section-title">比較条件</h2>
-              <div class="section-subtitle">近走件数と絞り込みを切り替えて、馬ごとの比較をしやすくした。</div>
+              <!--<div class="section-subtitle">近走件数と絞り込みを切り替えて、馬ごとの比較をしやすくした。</div>-->
             </div>
             <div id="limit-row" class="page-tab-strip"></div>
           </div>

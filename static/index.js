@@ -84,7 +84,7 @@
         <section class="index-hero card">
           <div class="index-hero__text">
             <div class="badge badge--blue">予想まとめ</div>
-            <h1>netkeiba寄せの予想トップ</h1>
+            <h1>予想トップ</h1>
             <p>人気馬の評価、穴候補、危険人気をレース単位で先に見てから、出走馬一覧・過去走比較・買い目作成へ進める形や。</p>
           </div>
           <div id="hero-stats" class="hero-stats"></div>
@@ -94,7 +94,7 @@
           <div class="section-title-row">
             <div>
               <h2 class="section-title">開催日</h2>
-              <div class="section-subtitle">横スクロール対応。新しい日付から順に表示。</div>
+              <!--<div class="section-subtitle">横スクロール対応。新しい日付から順に表示。</div>-->
             </div>
           </div>
           <div id="date-strip" class="date-strip"></div>

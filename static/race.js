@@ -1270,7 +1270,7 @@
 
   function baseLayout() {
     const root = qs('#race-app');
-    if (!root) throw new Error('#race-app が見つからへん。race_detail.html に <div id="race-app"></div> を置いてな。');
+    if (!root) throw new Error('#race-app が見つからない.race_detail.html に <div id="race-app"></div> を置いてください.');
     root.innerHTML = `
       <section class="race-detail-page">
         <div id="race-status" class="page-status" hidden></div>
@@ -1284,7 +1284,7 @@
           <div class="section-title-row">
             <div>
               <h2 class="section-title">出走馬一覧</h2>
-              <div class="section-subtitle">人気・単勝・AI順位・適性順位・確率をスマホで見やすく整理</div>
+              <!--<div class="section-subtitle">人気・単勝・AI順位・適性順位・確率をスマホで見やすく整理</div>-->
             </div>
             <div class="foot-note" id="horse-list-note"></div>
           </div>
@@ -1409,7 +1409,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
           <div class="summary-header">
             <div>
               <h2 class="summary-title">予想まとめ</h2>
-              <div class="summary-lead">本命・相手本線・穴候補・危険人気を最初に確認できる形に整理</div>
+              <!--<div class="summary-lead">本命・相手本線・穴候補・危険人気を最初に確認できる形に整理</div>-->
             </div>
             <span class="${escapeHtml(s.status === '本命寄り' ? 'badge badge--green' : s.status === '見送り寄り' ? 'badge badge--red' : 'badge badge--warn')}">${escapeHtml(s.status)}</span>
           </div>
@@ -1426,7 +1426,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
                 <span class="badge badge--green">複勝率 ${escapeHtml(fmtPct01(main._norm.p_top3))}</span>
               </div>
             </div>
-          ` : '<div class="empty-panel">本命候補データがありません。</div>'}
+          ` : '<div class="empty-panel">本命候補データがありません.</div>'}
 
           <div class="summary-picks">
             <div class="pick-box">
@@ -1440,7 +1440,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
                       <div class="pick-line__meta">AI ${escapeHtml(fmt(horse._norm.pred_order))} / 複勝率 ${escapeHtml(fmtPct01(horse._norm.p_top3))}</div>
                     </div>
                   </div>
-                `).join('') : '<div class="note-text">相手本線候補はまだ絞れてへん。</div>'}
+                `).join('') : '<div class="note-text">相手本線候補はまだ絞れてない.</div>'}
               </div>
             </div>
 
@@ -1455,7 +1455,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
                       <div class="pick-line__meta">${escapeHtml(horse._analysis.hole_label)} / ${escapeHtml(horse._analysis.hole_reason || '')}</div>
                     </div>
                   </div>
-                `).join('') : '<div class="note-text">穴候補は見つからへんかった。</div>'}
+                `).join('') : '<div class="note-text">穴候補は見つからなかった.</div>'}
               </div>
             </div>
 
@@ -1470,7 +1470,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
                       <div class="pick-line__meta">${escapeHtml(horse._analysis.danger_label)} / ${escapeHtml(horse._analysis.danger_reason || '')}</div>
                     </div>
                   </div>
-                `).join('') : '<div class="note-text">危険人気は少なめ。</div>'}
+                `).join('') : '<div class="note-text">危険人気は少なめ.</div>'}
               </div>
             </div>
 
@@ -1495,7 +1495,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
                   </div>
                   <span class="${escapeHtml(badgeClassByLabel(row.label))}">${escapeHtml(row.label || '—')}</span>
                 </div>
-              `).join('') : '<div class="note-text">人気データがないため評価できません。</div>'}
+              `).join('') : '<div class="note-text">人気データがないため評価できません.</div>'}
             </div>
           </div>
 
@@ -1509,7 +1509,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
                     <div class="reason-item__sub">現在の人気・AI・適性・確率のバランスから判定</div>
                   </div>
                 </div>
-              `).join('') : '<div class="note-text">判定理由はまだありません。</div>'}
+              `).join('') : '<div class="note-text">判定理由はまだありません.</div>'}
             </div>
           </div>
         </div>
@@ -1595,7 +1595,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
       <div class="section-title-row">
         <div>
           <h2 class="section-title">人気馬の乖離</h2>
-          <div class="section-subtitle">ここだけはシンプル判定。人気薄は差5以上、人気上位も差5以上だけ表示</div>
+          <!--<div class="section-subtitle">ここだけはシンプル判定。人気薄は差5以上、人気上位も差5以上だけ表示</div>-->
         </div>
       </div>
       <div class="divergence-grid">
