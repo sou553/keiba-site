@@ -32,6 +32,14 @@
     oddsOnly: false,
     openCards: new Set(),
     pastVisibleByCard: {},
+    courseInsight: {
+      loaded: false,
+      loading: false,
+      open: false,
+      activeTab: 'track',
+      data: null,
+      error: null,
+    },
   };
 
   function qs(selector, root = document) {
@@ -200,6 +208,248 @@
     return `${page}?${params.toString()}`;
   }
 
+
+  function getCourseJsonPath() {
+    return document.body?.dataset?.courseJson || './course_site_data_corner_style_pedigree.json';
+  }
+
+  function normalizeTurn(value) {
+    const s = String(value || '').trim();
+    if (!s) return null;
+    if (s.includes('左')) return '左回り';
+    if (s.includes('右')) return '右回り';
+    if (s.includes('直')) return '直線';
+    return s;
+  }
+
+  function surfaceDisplay(value) {
+    const s = normalizeSurface(value);
+    if (s === 'ダ') return 'ダート';
+    if (s === '芝') return '芝';
+    if (s === '障') return '障害';
+    return fmt(value, '—');
+  }
+
+  function pctText(value, digits = 1) {
+    const n = toNum(value);
+    return n === null ? '—' : `${(n * 100).toFixed(digits).replace(/\.0$/, '')}%`;
+  }
+
+  function chooseCourseInsight(courses, race) {
+    const raceCourse = String(race?.course || '').trim();
+    const raceSurface = normalizeSurface(race?.surface);
+    const raceDistance = toNum(race?.distance ?? race?.distance_m);
+    const raceTurn = normalizeTurn(race?.turn);
+    if (!raceCourse || !raceSurface || raceDistance === null) return null;
+
+    let best = null;
+    let bestScore = -1;
+    (Array.isArray(courses) ? courses : []).forEach((course) => {
+      const courseName = String(course?.course || '').trim();
+      const courseSurface = normalizeSurface(course?.surface);
+      const courseDistance = toNum(course?.distance_m);
+      const courseTurn = normalizeTurn(course?.turn);
+      let score = 0;
+      if (courseName === raceCourse) score += 10;
+      if (courseSurface === raceSurface) score += 8;
+      if (courseDistance === raceDistance) score += 8;
+      if (courseTurn && raceTurn && courseTurn === raceTurn) score += 3;
+      if (score > bestScore) {
+        best = course;
+        bestScore = score;
+      }
+    });
+
+    return bestScore >= 26 ? best : null;
+  }
+
+  function labelTopFrame(course) {
+    const stats = Array.isArray(course?.frame_zone_stats) ? course.frame_zone_stats : [];
+    if (!stats.length) return '枠傾向は標準';
+    const top = [...stats].sort((a, b) => (toNum(b.show_rate_diff) ?? -999) - (toNum(a.show_rate_diff) ?? -999))[0];
+    const diff = toNum(top?.show_rate_diff) ?? 0;
+    if (diff < 0.01) return '枠傾向は標準';
+    return `${fmt(top?.label, '枠')}やや有利`;
+  }
+
+  function labelTopStyle(course) {
+    const stats = Array.isArray(course?.style_stats) ? course.style_stats : [];
+    if (!stats.length) return '脚質傾向は標準';
+    const top = [...stats]
+      .filter((row) => (toNum(row?.starts) ?? 0) >= 10)
+      .sort((a, b) => (toNum(b.show_rate_diff) ?? -999) - (toNum(a.show_rate_diff) ?? -999))[0] || stats[0];
+    const diff = toNum(top?.show_rate_diff) ?? 0;
+    if (diff < 0.03) return '脚質傾向は標準';
+    return `${fmt(top?.label, '脚質')}有利`;
+  }
+
+  function labelPace(course) {
+    const options = [
+      { key: 'fast_pct', label: 'ハイ寄り' },
+      { key: 'average_pct', label: '平均寄り' },
+      { key: 'slow_pct', label: 'スロー寄り' },
+    ].map((row) => ({ ...row, value: toNum(course?.[row.key]) ?? 0 }));
+    const top = options.sort((a, b) => b.value - a.value)[0];
+    return top?.value >= 0.34 ? top.label : 'ペース標準';
+  }
+
+  function summarizeCourseInsight(course) {
+    if (!course) return 'タップでコース傾向を見る';
+    return [labelTopFrame(course), labelTopStyle(course), labelPace(course)].join(' / ');
+  }
+
+  function renderCourseStatBars(title, stats, maxItems = 4) {
+    const rows = (Array.isArray(stats) ? stats : []).slice(0, maxItems);
+    if (!rows.length) return '';
+    return `
+      <section class="course-insight__block">
+        <h4 class="course-insight__block-title">${escapeHtml(title)}</h4>
+        <div class="course-insight__bars">
+          ${rows.map((row) => {
+            const showRate = toNum(row?.show_rate) ?? 0;
+            const diff = toNum(row?.show_rate_diff);
+            const diffClass = diff !== null && diff > 0.015 ? 'is-plus' : diff !== null && diff < -0.015 ? 'is-minus' : '';
+            return `
+              <div class="course-insight__bar-row">
+                <div class="course-insight__bar-head">
+                  <span class="course-insight__bar-label">${escapeHtml(fmt(row?.label))}</span>
+                  <span class="course-insight__bar-value">${escapeHtml(pctText(showRate))}</span>
+                </div>
+                <div class="course-insight__bar-track">
+                  <span class="course-insight__bar-fill ${diffClass}" style="width:${Math.max(6, Math.min(100, showRate * 100))}%"></span>
+                </div>
+              </div>`;
+          }).join('')}
+        </div>
+      </section>`;
+  }
+
+  function getCourseInsightTabs(course) {
+    const pedigreeItems = [];
+    if (course?.pedigree_summary) pedigreeItems.push(course.pedigree_summary);
+    if (Array.isArray(course?.pedigree_notes)) pedigreeItems.push(...course.pedigree_notes.slice(0, 2));
+    return [
+      { key: 'track', label: '馬場別', items: Array.isArray(course?.track_condition_style_notes) ? course.track_condition_style_notes : [] },
+      { key: 'headcount', label: '頭数別', items: Array.isArray(course?.headcount_style_notes) ? course.headcount_style_notes : [] },
+      { key: 'class', label: 'クラス別', items: Array.isArray(course?.class_notes) ? course.class_notes : [] },
+      { key: 'pedigree', label: '血統', items: pedigreeItems },
+    ].filter((tab) => tab.items.length);
+  }
+
+  function buildCourseInsightPanel(course) {
+    if (!course) {
+      if (state.courseInsight.loading) {
+        return '<div class="course-insight__empty">コース傾向を読み込み中…</div>';
+      }
+      if (state.courseInsight.error) {
+        return `<div class="course-insight__empty">${escapeHtml(state.courseInsight.error)}</div>`;
+      }
+      return '<div class="course-insight__empty">コース傾向データがまだありません。</div>';
+    }
+
+    const bullets = (Array.isArray(course?.bullets) ? course.bullets : []).slice(0, 3);
+    const tabs = getCourseInsightTabs(course);
+    const activeKey = tabs.some((tab) => tab.key === state.courseInsight.activeTab) ? state.courseInsight.activeTab : (tabs[0]?.key || 'track');
+    state.courseInsight.activeTab = activeKey;
+    const active = tabs.find((tab) => tab.key === activeKey);
+
+    return `
+      <div class="course-insight__panel-inner">
+        <div class="course-insight__meta-row">
+          <div class="course-insight__meta-main">
+            <div class="course-insight__meta-title">${escapeHtml(fmt(course.course_label, 'コース傾向'))}</div>
+            <div class="course-insight__meta-sub">${escapeHtml(surfaceDisplay(course.surface))} / ${escapeHtml(fmt(course.distance_m))}m / ${escapeHtml(fmt(course.turn))} / 平均頭数 ${escapeHtml(fmtNum(course.avg_field_size, 1))}</div>
+          </div>
+          <div class="course-insight__meta-badge">${escapeHtml(labelPace(course))}</div>
+        </div>
+
+        ${bullets.length ? `
+          <ul class="course-insight__bullet-list">
+            ${bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}
+          </ul>` : ''}
+
+        <div class="course-insight__chart-grid">
+          ${renderCourseStatBars('枠別複勝率', course.frame_zone_stats, 3)}
+          ${renderCourseStatBars('脚質別複勝率', course.style_stats, 5)}
+        </div>
+
+        ${tabs.length ? `
+          <div class="course-insight__tabs">
+            ${tabs.map((tab) => `<button type="button" class="course-insight__tab ${tab.key === activeKey ? 'is-active' : ''}" data-course-tab="${escapeHtml(tab.key)}">${escapeHtml(tab.label)}</button>`).join('')}
+          </div>
+          <div class="course-insight__note-list">
+            ${active.items.slice(0, 4).map((item) => `<div class="course-insight__note-item">${escapeHtml(item)}</div>`).join('')}
+          </div>` : ''}
+      </div>`;
+  }
+
+  function updateCourseInsightDom() {
+    const summary = qs('#courseInsightSummary');
+    const panel = qs('#courseInsightPanel');
+    const arrow = qs('#courseInsightArrow');
+    const toggle = qs('#courseInsightToggle');
+    if (!summary || !panel || !arrow || !toggle) return;
+
+    const hasData = !!state.courseInsight.data;
+    summary.textContent = state.courseInsight.loading
+      ? 'コース傾向を読み込み中…'
+      : hasData
+        ? summarizeCourseInsight(state.courseInsight.data)
+        : (state.courseInsight.error || 'タップでコース傾向を見る');
+
+    panel.hidden = !state.courseInsight.open;
+    arrow.textContent = state.courseInsight.open ? '▴' : '▾';
+    toggle.setAttribute('aria-expanded', state.courseInsight.open ? 'true' : 'false');
+    if (state.courseInsight.open) {
+      panel.innerHTML = buildCourseInsightPanel(state.courseInsight.data);
+    }
+  }
+
+  async function ensureCourseInsightLoaded() {
+    if (state.courseInsight.loaded || state.courseInsight.loading) return;
+    state.courseInsight.loading = true;
+    state.courseInsight.error = null;
+    updateCourseInsightDom();
+
+    try {
+      const payload = await fetchJson(getCourseJsonPath());
+      const course = chooseCourseInsight(payload?.courses, state.data?.race || state.race || {});
+      if (!course) {
+        state.courseInsight.error = 'この条件のコース傾向データが見つかりません。';
+      } else {
+        state.courseInsight.data = course;
+        state.courseInsight.loaded = true;
+      }
+    } catch (err) {
+      state.courseInsight.error = 'コース傾向の読み込みに失敗しました。';
+    } finally {
+      state.courseInsight.loading = false;
+      updateCourseInsightDom();
+    }
+  }
+
+  function bindHeroEvents() {
+    const hero = qs('#race-hero');
+    if (!hero) return;
+    hero.addEventListener('click', async (event) => {
+      const toggle = event.target.closest('#courseInsightToggle');
+      if (toggle) {
+        state.courseInsight.open = !state.courseInsight.open;
+        updateCourseInsightDom();
+        if (state.courseInsight.open && !state.courseInsight.loaded) {
+          await ensureCourseInsightLoaded();
+        }
+        return;
+      }
+
+      const tab = event.target.closest('[data-course-tab]');
+      if (tab) {
+        state.courseInsight.activeTab = tab.dataset.courseTab || 'track';
+        updateCourseInsightDom();
+      }
+    });
+  }
+
   async function fetchJson(path) {
     const res = await fetch(path, { cache: 'no-store' });
     if (!res.ok) throw new Error(`JSON取得失敗: ${res.status} ${path}`);
@@ -286,7 +536,6 @@
     }
     return out;
   }
-
 
   function parsePassingPositions(value) {
     if (!value) return [];
@@ -1056,6 +1305,14 @@
           <h1 class="race-hero__title">${escapeHtml(title || 'レース詳細')}</h1>
           <div class="race-hero__meta">${escapeHtml(getRaceMetaText(race) || '条件情報なし')}</div>
           <div class="race-hero__note">${escapeHtml(summary.comment || '予想まとめを最上段に表示しています。')}</div>
+          <section class="course-insight" aria-label="コース傾向">
+            <button type="button" class="course-insight__toggle" id="courseInsightToggle" aria-expanded="false">
+              <span class="course-insight__label">コース傾向</span>
+              <span class="course-insight__summary" id="courseInsightSummary">タップでコース傾向を見る</span>
+              <span class="course-insight__arrow" id="courseInsightArrow">▾</span>
+            </button>
+            <div class="course-insight__panel" id="courseInsightPanel" hidden></div>
+          </section>
         </div>
         <a class="action-link" href="./index.html${race.race_date ? `?date=${encodeURIComponent(race.race_date)}` : ''}">一覧へ戻る</a>
       </div>
@@ -1843,6 +2100,9 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
       state.data = analyzeRace(prepared);
       clearStatus();
       renderHero(state.data);
+      bindHeroEvents();
+      updateCourseInsightDom();
+      ensureCourseInsightLoaded().catch(() => {});
       renderPredictionSummary(state.data);
       renderDivergence(state.data);
       renderSkipPanel(state.data);
