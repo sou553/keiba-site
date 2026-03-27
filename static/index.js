@@ -229,7 +229,7 @@
 
     return `
       <div class="race-row__summary">
-        <div class="top-pick-box">
+        <div class="top-pick-box ${topPickBoxClass(s.status)}">
           <div class="top-pick-box__label">${RA.esc(s.status || '予想まとめ')}</div>
           ${main ? `<div class="top-pick-box__name">◎ ${RA.esc(main.umaban)} ${RA.esc(main.horse_name)}</div>` : ''}
           <div class="top-pick-box__meta">
@@ -250,6 +250,12 @@
           `).join('')}
         </div>
       </div>`;
+  }
+
+  function topPickBoxClass(status) {
+    if (status === '本命寄り') return 'top-pick-box--honmei';
+    if (status === '見送り寄り') return 'top-pick-box--miokuri';
+    return 'top-pick-box--konsen';
   }
 
   function popularClass(label) {
