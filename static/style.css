@@ -1990,3 +1990,50 @@ body { font-size: 15px; }
     align-items: stretch;
   }
 }
+
+/* 開催日チップのスマホ横スクロール改善 */
+.date-strip,
+.page-tab-strip {
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 2px 8px;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
+  scroll-snap-type: x proximity;
+}
+
+.date-strip::-webkit-scrollbar,
+.page-tab-strip::-webkit-scrollbar {
+  height: 6px;
+}
+
+.date-chip,
+.race-tab {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  scroll-snap-align: start;
+}
+
+@media (max-width: 720px) {
+  .date-strip,
+  .page-tab-strip {
+    margin-inline: -2px;
+    padding-inline: 2px;
+  }
+
+  .date-chip,
+  .race-tab {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+
+  .date-chip__meta {
+    margin-left: 6px;
+    font-size: 11px;
+  }
+}

@@ -8,10 +8,46 @@
 
   function getDataRoot() { return document.body?.dataset?.dataRoot || './data'; }
   function getPage(kind) { return document.body?.dataset?.[`${kind}Page`] || PAGE_DEFAULTS[kind]; }
-  async function fetchJson(path) { const res = await fetch(path, { cache: 'no-store' }); if (!res.ok) throw new Error(`JSON取得失敗: ${res.status} ${path}`); return res.json(); }
-  function setStatus(msg, isError = false) { const el = qs('#index-status'); if (!el) return; el.hidden = false; el.textContent = msg; el.classList.toggle('is-error', !!isError); }
-  function clearStatus() { const el = qs('#index-status'); if (!el) return; el.hidden = true; el.textContent = ''; el.classList.remove('is-error'); }
-  function buildUrl(kind, raceId, date) { return `${getPage(kind)}?${new URLSearchParams({ date, race_id: raceId }).toString()}`; }
+  async function fetchJson(path) {
+    const res = await fetch(path, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`JSON取得失敗: ${res.status} ${path}`);
+    return res.json();
+  }
+  function setStatus(msg, isError = false) {
+    const el = qs('#index-status');
+    if (!el) return;
+    el.hidden = false;
+    el.textContent = msg;
+    el.classList.toggle('is-error', !!isError);
+  }
+  function clearStatus() {
+    const el = qs('#index-status');
+    if (!el) return;
+    el.hidden = true;
+    el.textContent = '';
+    el.classList.remove('is-error');
+  }
+  function buildUrl(kind, raceId, date) {
+    return `${getPage(kind)}?${new URLSearchParams({ date, race_id: raceId }).toString()}`;
+  }
+
+  function normalizeDateKey(value) {
+    return Number(String(value || '').replace(/\D/g, '')) || 0;
+  }
+
+  function sortDatesDesc(list) {
+    return [...(Array.isArray(list) ? list : [])].sort((a, b) => {
+      const diff = normalizeDateKey(b?.race_date) - normalizeDateKey(a?.race_date);
+      if (diff !== 0) return diff;
+      return (Number(b?.race_count) || 0) - (Number(a?.race_count) || 0);
+    });
+  }
+
+  function scrollActiveDateChipIntoView() {
+    const active = qs('#date-strip .date-chip.is-active');
+    if (!active) return;
+    active.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+  }
 
   function layout() {
     const root = qs('#index-app');
@@ -21,8 +57,8 @@
         <section class="index-hero card">
           <div class="index-hero__text">
             <div class="badge badge--blue">予想まとめ</div>
-            <h1>予想トップ</h1>
-            <p>人気馬の評価、穴候補、危険人気をレース単位で先に見てから、出走馬一覧・過去走比較・買い目作成へ</p>
+            <h1>netkeiba寄せの予想トップ</h1>
+            <p>人気馬の評価、穴候補、危険人気をレース単位で先に見てから、出走馬一覧・過去走比較・買い目作成へ進める形や。</p>
           </div>
           <div id="hero-stats" class="hero-stats"></div>
         </section>
@@ -51,25 +87,33 @@
   }
 
   function renderHeroStats() {
-    const el = qs('#hero-stats'); if (!el) return;
+    const el = qs('#hero-stats');
+    if (!el) return;
     const totalDates = state.dates.length;
     const totalRaces = state.races.length;
     const analyzed = Array.from(state.details.values()).length;
-    el.innerHTML = [ ['開催日数', totalDates], ['選択日レース数', totalRaces], ['詳細読込', analyzed] ].map(([label, value]) => `
+    el.innerHTML = [['開催日数', totalDates], ['選択日レース数', totalRaces], ['詳細読込', analyzed]].map(([label, value]) => `
       <div class="hero-stat"><div class="hero-stat__label">${RA.esc(label)}</div><div class="hero-stat__value">${RA.esc(value)}</div></div>
     `).join('');
   }
 
   function renderDates() {
-    const wrap = qs('#date-strip'); if (!wrap) return;
+    const wrap = qs('#date-strip');
+    if (!wrap) return;
     wrap.innerHTML = state.dates.map((d) => `
       <button type="button" class="date-chip${state.selectedDate === d.race_date ? ' is-active' : ''}" data-date="${RA.esc(d.race_date)}">${RA.esc(d.race_date)}<span class="date-chip__meta">${RA.esc(d.race_count)}R</span></button>
     `).join('');
+
     wrap.querySelectorAll('[data-date]').forEach((btn) => btn.addEventListener('click', async () => {
       state.selectedDate = btn.dataset.date;
+      renderDates();
+      requestAnimationFrame(scrollActiveDateChipIntoView);
       await loadRaces(state.selectedDate);
       renderDates();
+      requestAnimationFrame(scrollActiveDateChipIntoView);
     }));
+
+    requestAnimationFrame(scrollActiveDateChipIntoView);
   }
 
   function courseOptions(races) {
@@ -77,25 +121,35 @@
   }
 
   function raceHasOdds(data) { return (data?.horses || []).some((h) => RA.toNum(h.tansho_odds) !== null); }
-  function raceHasDivergence(data) { const a = data?._analysis; return !!(a && (a.holeCandidates.length || a.dangerPopulars.length || a.courseValueList.length || a.courseDangerList.length)); }
+  function raceHasDivergence(data) {
+    const a = data?._analysis;
+    return !!(a && (a.holeCandidates.length || a.dangerPopulars.length || a.courseValueList.length || a.courseDangerList.length));
+  }
 
   function raceMatch(detail) {
     const race = detail.race || {};
     if (state.course && String(race.course || '') !== state.course) return false;
     if (state.oddsOnly && !raceHasOdds(detail)) return false;
     if (state.divergenceOnly && !raceHasDivergence(detail)) return false;
+
     const kw = state.keyword.trim().toLowerCase();
     if (!kw) return true;
-    const hay = [race.race_name, race.course, ...(detail.horses || []).slice(0, 6).map((h) => h.horse_name)].filter(Boolean).join(' ').toLowerCase();
+
+    const hay = [race.race_name, race.course, ...(detail.horses || []).slice(0, 6).map((h) => h.horse_name)]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
     return hay.includes(kw);
   }
 
   function predictionBlock(detail) {
-    const s = detail._analysis?.summary; if (!s) return '';
+    const s = detail._analysis?.summary;
+    if (!s) return '';
     const main = s.mainHorse;
     const hole = s.holeHorses?.[0] || null;
     const danger = s.dangerHorses?.[0] || null;
     const lines = s.lineHorses?.slice(0, 2) || [];
+
     return `
       <div class="race-row__summary">
         <div class="top-pick-box">
@@ -121,16 +175,28 @@
   }
 
   function renderRaceList() {
-    const list = qs('#race-list'); const meta = qs('#race-meta'); if (!list) return;
+    const list = qs('#race-list');
+    const meta = qs('#race-meta');
+    if (!list) return;
+
     const details = Array.from(state.details.values()).filter(raceMatch);
     meta.textContent = `${state.selectedDate || '—'} / ${details.length}件表示 / 全${state.races.length}R`;
+
     if (!details.length) {
       list.innerHTML = '<div class="sheet empty-state">該当レースなし</div>';
       return;
     }
+
     list.innerHTML = details.map((detail) => {
       const race = detail.race || {};
-      const courseLine = [race.race_no ? `${race.race_no}R` : '', race.course, race.surface, race.distance ? `${race.distance}m` : '', race.headcount ? `${race.headcount}頭` : ''].filter(Boolean).join(' / ');
+      const courseLine = [
+        race.race_no ? `${race.race_no}R` : '',
+        race.course,
+        race.surface,
+        race.distance ? `${race.distance}m` : '',
+        race.headcount ? `${race.headcount}頭` : ''
+      ].filter(Boolean).join(' / ');
+
       return `
         <article class="sheet race-row">
           <div class="race-row__top">
@@ -157,8 +223,14 @@
     qs('#filter-odds')?.addEventListener('change', (e) => { state.oddsOnly = !!e.target.checked; renderRaceList(); });
     qs('#filter-divergence')?.addEventListener('change', (e) => { state.divergenceOnly = !!e.target.checked; renderRaceList(); });
     qs('#filter-reset')?.addEventListener('click', () => {
-      state.keyword = ''; state.course = ''; state.oddsOnly = false; state.divergenceOnly = false;
-      qs('#filter-keyword').value = ''; qs('#filter-course').value = ''; qs('#filter-odds').checked = false; qs('#filter-divergence').checked = false;
+      state.keyword = '';
+      state.course = '';
+      state.oddsOnly = false;
+      state.divergenceOnly = false;
+      qs('#filter-keyword').value = '';
+      qs('#filter-course').value = '';
+      qs('#filter-odds').checked = false;
+      qs('#filter-divergence').checked = false;
       renderRaceList();
     });
   }
@@ -168,7 +240,9 @@
     const data = await fetchJson(`${getDataRoot()}/${date}/races.json`);
     state.races = data.races || [];
     const select = qs('#filter-course');
-    if (select) select.innerHTML = `<option value="">すべて</option>${courseOptions(state.races).map((c) => `<option value="${RA.esc(c)}">${RA.esc(c)}</option>`).join('')}`;
+    if (select) {
+      select.innerHTML = `<option value="">すべて</option>${courseOptions(state.races).map((c) => `<option value="${RA.esc(c)}">${RA.esc(c)}</option>`).join('')}`;
+    }
     state.details = new Map();
     renderHeroStats();
     renderRaceList();
@@ -193,16 +267,18 @@
 
   async function init() {
     try {
-      layout(); bindFilters();
+      layout();
+      bindFilters();
       setStatus('開催日一覧を読み込み中…');
       const idx = await fetchJson(`${getDataRoot()}/index.json`);
-      state.dates = idx.dates || [];
+      state.dates = sortDatesDesc(idx.dates || []);
       state.selectedDate = new URLSearchParams(location.search).get('date') || state.dates[0]?.race_date || null;
       renderDates();
       renderHeroStats();
-      if (!state.selectedDate) throw new Error('開催日データが見つからない');
+      if (!state.selectedDate) throw new Error('開催日データが見つからへん');
       await loadRaces(state.selectedDate);
       renderDates();
+      requestAnimationFrame(scrollActiveDateChipIntoView);
     } catch (err) {
       console.error(err);
       setStatus(err?.message || 'index.js 初期化に失敗した', true);
