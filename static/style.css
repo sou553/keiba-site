@@ -1677,7 +1677,7 @@ body { font-size: 15px; }
 @media (max-width: 768px) {
   /* 画面外はみ出し防止 */
   html, body {
-    overflow-x: hidden;
+    overflow-x: visiable;
   }
 
   /* 上部タブ全体を2段構成にする */
@@ -1779,7 +1779,9 @@ body { font-size: 15px; }
 
   /* 過去走比較テーブル周り */
   .compare-table-wrap {
-    overflow: visible;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* 余白を少し詰める */
