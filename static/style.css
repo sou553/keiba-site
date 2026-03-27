@@ -339,7 +339,22 @@ select {
   border-radius: 14px;
   padding: 12px 14px;
 }
+.top-pick-box--honmei {
+  border-color: #cfe3ff;
+  background: #f3f8ff;
+}
+.top-pick-box--miokuri {
+  border-color: #f0d3d3;
+  background: #fff5f5;
+}
+.top-pick-box--konsen {
+  border-color: #eadfb8;
+  background: #fff9ea;
+}
 .top-pick-box__label { color: var(--blue-dark); font-size: 12px; font-weight: 900; margin-bottom: 4px; }
+.top-pick-box--honmei .top-pick-box__label { color: #2a52c0; }
+.top-pick-box--miokuri .top-pick-box__label { color: #b04444; }
+.top-pick-box--konsen .top-pick-box__label { color: #9a6a00; }
 .top-pick-box__name { font-size: 17px; font-weight: 900; margin-bottom: 4px; }
 .top-pick-box__meta { color: var(--muted); font-size: 13px; }
 .race-row__actions {
@@ -742,7 +757,7 @@ select {
   .horse-list-panel { padding: 14px; border-radius: 16px; }
   .race-row__title { font-size: 24px; }
   .race-hero__title { font-size: 27px; }
-  .race-tab { min-width: 0px; }
+  .race-tab { min-width: 132px; }
   .page-tab-strip {
     position: sticky;
     top: 70px;
@@ -2150,210 +2165,5 @@ select {
   /* ヘッダーを小さくした分だけ調整 */
   .page-tab-strip {
     top: 58px;
-  }
-}
-
-/* ===== index page align to past-style ===== */
-.index-page {
-  gap: 16px;
-}
-
-.index-hero,
-.filter-panel,
-.race-list-panel {
-  padding: 20px 22px;
-  border-radius: 18px;
-}
-
-.index-hero {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
-.index-hero__text {
-  display: grid;
-  gap: 10px;
-}
-
-.index-hero__text .badge {
-  width: max-content;
-}
-
-.index-hero__text h1 {
-  margin: 0;
-  font-size: clamp(24px, 4vw, 32px);
-  line-height: 1.16;
-}
-
-.index-hero__text p {
-  margin: 0;
-  padding: 12px 14px;
-  border-radius: 12px;
-  border: 1px solid #d6e1ff;
-  background: #f7faff;
-  color: #4b5a83;
-  font-size: 13px;
-}
-
-.hero-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  grid-template-columns: none;
-}
-
-.hero-stat {
-  min-width: 132px;
-  min-height: 40px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: 1px solid #e2d5c2;
-  background: #fffefa;
-  display: grid;
-  gap: 2px;
-  align-content: center;
-  box-shadow: none;
-}
-
-.hero-stat__label {
-  margin: 0;
-  font-size: 11px;
-}
-
-.hero-stat__value {
-  font-size: 16px;
-  line-height: 1.1;
-}
-
-.filter-panel .section-title-row,
-.race-list-panel .section-title-row {
-  margin-bottom: 14px;
-}
-
-.filter-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  align-items: end;
-}
-
-.filter-grid label {
-  min-width: 0;
-}
-
-.check-pill {
-  min-height: 44px;
-}
-
-.race-list {
-  gap: 16px;
-}
-
-.race-row {
-  padding: 18px 20px;
-  border: 1px solid #e2d5c2;
-  border-radius: 18px;
-  background: #fffefa;
-  box-shadow: none;
-}
-
-.race-row__top {
-  grid-template-columns: minmax(0, 1fr) minmax(280px, .95fr);
-  gap: 14px;
-}
-
-.race-row__title {
-  font-size: 28px;
-}
-
-.race-row__summary {
-  gap: 12px;
-}
-
-.top-pick-box {
-  border: 1px solid #d6e1ff;
-  background: #f7faff;
-  padding: 14px;
-  border-radius: 14px;
-}
-
-.race-row__actions {
-  margin-top: 0;
-  padding-top: 2px;
-}
-
-.race-row__actions .action-link {
-  min-height: 40px;
-  padding: 0 14px;
-}
-
-@media (max-width: 980px) {
-  .index-hero,
-  .filter-grid,
-  .race-row__top {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-stats {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .hero-stat {
-    min-width: 0;
-    border-radius: 14px;
-  }
-}
-
-@media (max-width: 720px) {
-  .index-hero,
-  .filter-panel,
-  .race-list-panel {
-    padding: 16px;
-    border-radius: 16px;
-  }
-
-  .index-hero__text h1 {
-    font-size: 26px;
-  }
-
-  .hero-stats {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 2px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .hero-stat {
-    flex: 0 0 auto;
-    min-width: 110px;
-    padding: 8px 12px;
-    border-radius: 999px;
-  }
-
-  .filter-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .race-row {
-    padding: 16px;
-  }
-
-  .race-row__title {
-    font-size: 22px;
-  }
-
-  .race-row__actions {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 2px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .race-row__actions .action-link {
-    flex: 0 0 auto;
   }
 }
