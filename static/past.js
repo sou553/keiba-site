@@ -576,7 +576,7 @@
       const summaryTags = [
         { text: `同距離 ${obj.sameDistanceCount}`, cls: obj.sameDistanceCount > 0 ? 'tag--plus' : '' },
         { text: `同コース ${obj.sameCourseCount}`, cls: obj.sameCourseCount > 0 ? 'tag--plus' : '' },
-        obj.hasRecentFadeLabel ? { text: '失速の消し', cls: 'tag--minus' } : null,
+        obj.hasRecentFadeLabel ? { text: '失速', cls: 'tag--minus' } : null,
         obj.styleText && obj.styleText !== '—' ? { text: obj.styleText, cls: '' } : null,
         obj.totalRuns ? { text: `全${obj.totalRuns}` } : null,
       ].filter(Boolean);

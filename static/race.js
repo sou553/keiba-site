@@ -1673,7 +1673,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
       if (horse._analysis.hole_label) marks.push(`<span class="${badgeClassByLabel(horse._analysis.hole_label)}">${escapeHtml(horse._analysis.hole_label)}</span>`);
       if (horse._analysis.danger_label) marks.push(`<span class="${badgeClassByLabel(horse._analysis.danger_label)}">${escapeHtml(horse._analysis.danger_label)}</span>`);
       if (horse._analysis.popular_label) marks.push(`<span class="${badgeClassByLabel(horse._analysis.popular_label)}">${escapeHtml(horse._analysis.popular_label)}</span>`);
-      if (horse._norm.has_recent_fade_label) marks.push(`<span class="badge badge--red">失速の消し</span>`);
+      if (horse._norm.has_recent_fade_label) marks.push(`<span class="badge badge--red">失速</span>`);
       if (horse._norm.style_est) marks.push(`<span class="badge badge--plain">${escapeHtml(horse._norm.style_est)}</span>`);
 
       return `
