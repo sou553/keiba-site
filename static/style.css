@@ -22,11 +22,14 @@
   --maxw: 1120px;
 }
 
-* { box-sizing: border-box; }
+*,
+*::before,
+*::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   color: var(--text);
+  font-size: 15px;
   background: linear-gradient(180deg, #f8f4eb 0%, #f2eee4 100%);
   font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
   line-height: 1.55;
@@ -232,9 +235,21 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 .page-tab-strip {
   display: flex;
   gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
-  padding-bottom: 2px;
+  overflow-y: hidden;
+  padding: 2px 2px 8px;
   scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
+  scroll-snap-type: x proximity;
+}
+.date-strip::-webkit-scrollbar,
+.page-tab-strip::-webkit-scrollbar {
+  height: 6px;
 }
 .date-chip,
 .race-tab {
@@ -246,6 +261,8 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
   background: #fff;
   color: var(--text);
   font-weight: 900;
+  white-space: nowrap;
+  scroll-snap-align: start;
 }
 .date-chip.is-active {
   background: linear-gradient(180deg, #4067de 0%, #2d57c7 100%);
@@ -344,11 +361,12 @@ select {
 /* race detail */
 .race-detail-page { display: grid; gap: 16px; }
 .race-hero,
-.summary-panel,
 .divergence-panel,
 .skip-panel,
 .horse-list-panel,
 .filter-toolbar { padding: 16px; }
+
+.summary-panel { padding: 18px; }
 .race-hero__head {
   display: flex;
   justify-content: space-between;
@@ -378,8 +396,8 @@ select {
 
 .summary-grid {
   display: grid;
-  gap: 14px;
-  grid-template-columns: 1.15fr .85fr;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
 }
 .summary-main {
   display: grid;
@@ -733,6 +751,23 @@ select {
     padding-bottom: 6px;
     margin-bottom: -4px;
   }
+  .date-strip,
+  .page-tab-strip {
+    margin-inline: -2px;
+    padding-inline: 2px;
+  }
+
+  .date-chip,
+  .race-tab {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+
+  .date-chip__meta {
+    margin-left: 6px;
+    font-size: 11px;
+  }
   .horse-name { font-size: 20px; }
   .horse-card__main { gap: 12px; }
   .horse-card__head { align-items: center; }
@@ -757,12 +792,12 @@ select {
   padding: 16px;
 }
 .info-banner {
-  margin-top: 10px;
-  border: 1px solid #d6e1ff;
-  background: #f6f9ff;
-  color: #475b8d;
+  margin-top: 12px;
+  padding: 12px 14px;
   border-radius: 12px;
-  padding: 10px 12px;
+  border: 1px solid #e2d8c8;
+  background: #fffaf0;
+  color: #5d503f;
   font-size: 13px;
 }
 .filter-chip-row,
@@ -992,8 +1027,8 @@ select {
 .pick-card {
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: rgba(255,255,255,.75);
-  padding: 12px;
+  background: #fff;
+  padding: 14px;
   display: grid;
   gap: 10px;
 }
@@ -1112,8 +1147,6 @@ select {
 }
 
 /* --- final logic bundle additions --- */
-.summary-panel { padding: 18px; }
-.summary-grid { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
 .summary-grid--2 { grid-template-columns: 1fr 1fr; }
 .summary-card {
   padding: 14px;
@@ -1171,10 +1204,6 @@ select {
 }
 .past-run-card__head { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom: 6px; }
 .past-run-card__meta { color: var(--muted); font-size: 13px; }
-.info-banner {
-  margin-top: 12px; padding: 12px 14px; border-radius: 12px; border:1px solid #e2d8c8; background:#fffaf0; color:#5d503f;
-}
-.pick-card { padding: 14px; border-radius: 14px; border:1px solid var(--line); background:#fff; }
 .pick-card__head { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom: 10px; }
 .pick-meta { color: var(--muted); font-size: 13px; margin-top: 4px; }
 .pick-btn-row { display:grid; gap:8px; grid-template-columns: repeat(3, 1fr); }
@@ -1193,9 +1222,6 @@ select {
 
 
 /* ===== compact restore / table-like runners ===== */
-body { font-size: 15px; }
-.site-brand__title { font-size: 18px; }
-.site-brand__sub { font-size: 11px; }
 .section-title { font-size: 18px; }
 .section-subtitle { font-size: 12px; }
 .race-hero__title { font-size: clamp(22px, 3vw, 30px); }
@@ -1230,8 +1256,6 @@ body { font-size: 15px; }
 }
 
 /* compact tuning */
-body { font-size: 15px; }
-.site-brand__title { font-size: 17px; }
 .site-brand__sub, .section-subtitle, .popular-summary-meta, .summary-row-meta, .cell-note, .netkeiba-run-item__meta, .netkeiba-run-item__sub { font-size: 12px; }
 .section-title { font-size: 16px; }
 .mini-title { font-size: 14px; }
@@ -1663,12 +1687,6 @@ body { font-size: 15px; }
 }
 
 /* ===== past_detail スマホ崩れ修正 ===== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 .past-page,
 .past-page * {
   min-width: 0;
@@ -1677,7 +1695,7 @@ body { font-size: 15px; }
 @media (max-width: 768px) {
   /* 画面外はみ出し防止 */
   html, body {
-    overflow-x: visiable;
+    overflow-x: visible;
   }
 
   /* 上部タブ全体を2段構成にする */
@@ -1990,53 +2008,6 @@ body { font-size: 15px; }
   .course-insight__meta-row {
     flex-direction: column;
     align-items: stretch;
-  }
-}
-
-/* 開催日チップのスマホ横スクロール改善 */
-.date-strip,
-.page-tab-strip {
-  flex-wrap: nowrap;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 2px 2px 8px;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  touch-action: pan-x;
-  scroll-snap-type: x proximity;
-}
-
-.date-strip::-webkit-scrollbar,
-.page-tab-strip::-webkit-scrollbar {
-  height: 6px;
-}
-
-.date-chip,
-.race-tab {
-  flex: 0 0 auto;
-  white-space: nowrap;
-  scroll-snap-align: start;
-}
-
-@media (max-width: 720px) {
-  .date-strip,
-  .page-tab-strip {
-    margin-inline: -2px;
-    padding-inline: 2px;
-  }
-
-  .date-chip,
-  .race-tab {
-    min-height: 44px;
-    padding: 0 14px;
-    font-size: 14px;
-  }
-
-  .date-chip__meta {
-    margin-left: 6px;
-    font-size: 11px;
   }
 }
 
