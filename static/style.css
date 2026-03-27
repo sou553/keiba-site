@@ -2037,3 +2037,44 @@ body { font-size: 15px; }
     font-size: 11px;
   }
 }
+
+@media (max-width: 768px) {
+  .race-row__top,
+  .horse-card__main,
+  .horse-detail-grid,
+  .summary-grid,
+  .divergence-grid,
+  .compare-card__head,
+  .compare-summary-grid,
+  .reco-grid,
+  .pick-board,
+  .filter-grid,
+  .filter-toolbar__row,
+  .betting-control-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .horse-card__aside,
+  .compare-card__right {
+    min-width: 0 !important;
+    width: 100%;
+  }
+
+  .horse-table-wrap,
+  .compare-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .horse-table {
+    min-width: 720px !important;
+  }
+
+  .horse-table-head,
+  .horse-table-row {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
