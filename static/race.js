@@ -1641,9 +1641,179 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
     `;
   }
 
+
+  function ensureIndicatorTop3Styles() {
+    if (qs('#indicator-top3-inline-style')) return;
+    const style = document.createElement('style');
+    style.id = 'indicator-top3-inline-style';
+    style.textContent = `
+      .indicator-top3-wrap {
+        margin-top: 14px;
+      }
+      .indicator-top3-title {
+        margin: 0 0 8px;
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .indicator-top3-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+      }
+      .indicator-top3-box {
+        border: 1px solid rgba(60, 60, 60, 0.12);
+        border-radius: 10px;
+        background: #f7f5ef;
+        overflow: hidden;
+      }
+      .indicator-top3-box__head {
+        padding: 8px 12px;
+        font-size: 13px;
+        font-weight: 700;
+        background: rgba(80, 62, 42, 0.08);
+        border-bottom: 1px solid rgba(60, 60, 60, 0.08);
+      }
+      .indicator-top3-list {
+        padding: 8px 10px 10px;
+        display: grid;
+        gap: 6px;
+      }
+      .indicator-top3-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        font-size: 13px;
+      }
+      .indicator-top3-badge {
+        flex: 0 0 auto;
+        min-width: 38px;
+        padding: 2px 8px;
+        border-radius: 999px;
+        border: 1px solid rgba(76, 90, 125, 0.18);
+        background: #f9fbff;
+        color: #34508a;
+        font-size: 12px;
+        line-height: 1.4;
+        text-align: center;
+        font-weight: 700;
+      }
+      .indicator-top3-name {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      @media (max-width: 640px) {
+        .indicator-top3-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 420px) {
+        .indicator-top3-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function getPlusRank(horse) {
+    return getModelRank(horse, 'plus') ?? horse?._norm?.pred_order ?? null;
+  }
+
+  function calcOverallIndicatorRank(horse, modelYears = []) {
+    const ranks = [];
+    const plusRank = getPlusRank(horse);
+    if (plusRank !== null) ranks.push(plusRank);
+    const courseRank = horse?._norm?.course_adv_rank ?? null;
+    if (courseRank !== null) ranks.push(courseRank);
+    modelYears
+      .filter((year) => String(year) !== 'plus')
+      .forEach((year) => {
+        const rank = getModelRank(horse, year);
+        if (rank !== null) ranks.push(rank);
+      });
+    if (!ranks.length) return null;
+    const meanRank = ranks.reduce((sum, value) => sum + value, 0) / ranks.length;
+    const spread = ranks.length > 1 ? stddev(ranks) : 0;
+    return round3(meanRank + spread * 0.1);
+  }
+
+  function collectIndicatorTop3(items, getter, opts = {}) {
+    const order = opts.order === 'desc' ? 'desc' : 'asc';
+    return (Array.isArray(items) ? items : [])
+      .map((horse) => ({ horse, value: toNum(getter(horse)) }))
+      .filter((row) => row.value !== null)
+      .sort((a, b) => {
+        if (a.value !== b.value) return order === 'asc' ? a.value - b.value : b.value - a.value;
+        return sortByPredThenTop3(a.horse, b.horse);
+      })
+      .slice(0, 3)
+      .map((row) => row.horse);
+  }
+
+  function buildIndicatorTop3Sections(analysis) {
+    const horses = Array.isArray(analysis?.horses) ? analysis.horses : [];
+    const modelYears = Array.isArray(analysis?.modelYears) ? analysis.modelYears.map((year) => String(year)) : [];
+    const displayYears = modelYears.filter((year) => year !== 'plus');
+
+    const sections = [
+      {
+        key: 'overall',
+        label: '総合',
+        items: collectIndicatorTop3(horses, (horse) => calcOverallIndicatorRank(horse, displayYears)),
+      },
+      {
+        key: 'plus',
+        label: 'plus',
+        items: collectIndicatorTop3(horses, (horse) => getPlusRank(horse)),
+      },
+      ...displayYears.map((year) => ({
+        key: `model-${year}`,
+        label: year,
+        items: collectIndicatorTop3(horses, (horse) => getModelRank(horse, year)),
+      })),
+      {
+        key: 'course',
+        label: '適性',
+        items: collectIndicatorTop3(horses, (horse) => horse?._norm?.course_adv_rank ?? null),
+      },
+    ];
+
+    return sections.filter((section) => section.items.length);
+  }
+
+  function renderIndicatorTop3Section(analysis) {
+    const sections = buildIndicatorTop3Sections(analysis);
+    if (!sections.length) return '';
+    const marks = ['◎', '○', '▲'];
+    return `
+      <section class="indicator-top3-wrap" aria-label="各指標TOP3">
+        <h3 class="indicator-top3-title">各指標TOP3</h3>
+        <div class="indicator-top3-grid">
+          ${sections.map((section) => `
+            <div class="indicator-top3-box">
+              <div class="indicator-top3-box__head">${escapeHtml(section.label)}</div>
+              <div class="indicator-top3-list">
+                ${section.items.map((horse, idx) => `
+                  <div class="indicator-top3-item">
+                    <span class="indicator-top3-badge">${escapeHtml(`${marks[idx] || '・'}${idx + 1}`)}</span>
+                    <div class="indicator-top3-name">${escapeHtml(fmt(horse.umaban))} ${escapeHtml(horse.horse_name)}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+    `;
+  }
+
   function renderSkipPanel(analysis) {
     const el = qs('#skip-panel');
     if (!el) return;
+    ensureIndicatorTop3Styles();
     const safe = analysis.summary.status === '本命寄り';
     el.classList.toggle('is-safe', safe);
     el.innerHTML = `
@@ -1664,6 +1834,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
           </div>
         `).join('') || '<div class="note-text">明確な見送りサインは出ていません。</div>'}
       </div>
+      ${renderIndicatorTop3Section(analysis)}
     `;
   }
 
