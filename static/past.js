@@ -2,6 +2,18 @@
   'use strict';
 
   const PAGE_DEFAULTS = { race: 'race_detail.html', past: 'past_detail.html', betting: 'betting.html' };
+  const PLACE_MAP = {
+    '01': '札幌',
+    '02': '函館',
+    '03': '福島',
+    '04': '新潟',
+    '05': '東京',
+    '06': '中山',
+    '07': '中京',
+    '08': '京都',
+    '09': '阪神',
+    '10': '小倉',
+  };
   const state = {
     data: null,
     keyword: '',
@@ -131,6 +143,38 @@
   function raceCourse() { return normalizeText(raceInfo().course); }
   function raceDate() { return state.data?.race_date || raceInfo().race_date || raceInfo().date || getQuery().date; }
 
+  function detectPlaceName(value) {
+    const s = String(value || '');
+    if (!s) return '';
+    for (const name of Object.values(PLACE_MAP)) {
+      if (s.includes(name)) return name;
+    }
+    const rid = s.replace(/\D/g, '');
+    if (rid.length >= 6) return PLACE_MAP[rid.slice(4, 6)] || '';
+    return '';
+  }
+
+  function normalizeSurface(value) {
+    const s = String(value || '').trim();
+    if (!s) return null;
+    if (s.includes('芝')) return '芝';
+    if (s.includes('ダ')) return 'ダ';
+    if (s.includes('障')) return '障';
+    return s;
+  }
+
+  function parseDistanceText(value) {
+    if (!value) return { surface: null, distance: null, text: null };
+    if (typeof value === 'number') return { surface: null, distance: value, text: String(value) };
+    const text = String(value).trim();
+    const m = text.match(/(芝|ダ|障|ダート)?\s*(\d{3,4})/);
+    return {
+      surface: m ? normalizeSurface(m[1]) : null,
+      distance: m ? Number(m[2]) : null,
+      text,
+    };
+  }
+
   function parseDistance(v) {
     if (v == null || v === '') return null;
     const direct = getRA().toNum(v);
@@ -172,10 +216,18 @@
   }
 
   function normalizeRun(run) {
+    const distanceInfo = parseDistanceText(run.distance_text ?? run.distance ?? run.distance_m);
+    const raceId = String(run.race_id || '');
+    const courseName = run.course_name || run.course || run.jyo || detectPlaceName(run.course_name || run.course || run.jyo || raceId);
+    const surface = normalizeSurface(run.surface || distanceInfo.surface);
+    const distanceM = parseDistance(run.distance_m ?? run.distance ?? run.distance_text) ?? distanceInfo.distance;
     return {
       ...run,
+      course_name: courseName || '',
       jockey: run.jockey || run.rider || run.jockey_name || '',
-      distance_m: parseDistance(run.distance_m ?? run.distance ?? run.distance_text),
+      surface,
+      distance_m: distanceM,
+      distance_text: run.distance_text || distanceInfo.text || (surface && distanceM != null ? `${surface}${distanceM}m` : ''),
     };
   }
 
@@ -193,10 +245,13 @@
     const positions = parsePassingPositions(run?.passing);
     const bestPassingPos = positions.length ? Math.min(...positions) : null;
     const fadeScore = finish != null && bestPassingPos != null ? finish - bestPassingPos : null;
+    const closeScore = finish != null && bestPassingPos != null ? bestPassingPos - finish : null;
     return {
       bestPassingPos,
       fadeScore,
       isFade: fadeScore != null && fadeScore >= 4,
+      closeScore,
+      isClose: closeScore != null && closeScore >= 4,
     };
   }
 
@@ -212,6 +267,21 @@
       hasLabel: fadeRuns.length > 0,
       strongestScore: strongest?.fade.fadeScore ?? null,
       runs: fadeRuns,
+    };
+  }
+
+  function summarizeRecentClose(runs, limit = 2) {
+    const recent = Array.isArray(runs) ? runs.slice(0, limit) : [];
+    const closeRuns = recent.map((run) => ({ run, fade: calcFadeInfo(run) })).filter((row) => row.fade.isClose);
+    const strongest = closeRuns.reduce((best, row) => {
+      if (!best || row.fade.closeScore > best.fade.closeScore) return row;
+      return best;
+    }, null);
+    return {
+      count: closeRuns.length,
+      hasLabel: closeRuns.length > 0,
+      strongestScore: strongest?.fade.closeScore ?? null,
+      runs: closeRuns,
     };
   }
 
@@ -372,6 +442,7 @@
     if (obj.recentTop3 > 0) items.push(`近3走掲示板:${obj.recentTop3}回`);
     if (h.sire) items.push(`父血統:${h.sire}`);
     if (obj.prevFinish != null && obj.prevFinish <= 3) items.push(`前走${obj.prevFinish}着`);
+    if (obj.hasRecentCloseLabel) items.push(obj.recentCloseScore != null ? `直近2走で追上歴あり(追上度${obj.recentCloseScore})` : '直近2走で追上歴あり');
     return Array.from(new Set([...splitReasons(h.reasons_pos || h.plus_reasons || h.memo_pos), ...items])).filter(Boolean).join(' / ') || '—';
   }
 
@@ -403,6 +474,7 @@
     if (l3f != null && l3f <= 35.0) tags.push({ text: '上がり優秀', cls: 'tag--accent' });
     const fade = calcFadeInfo(run);
     if (fade.isFade) tags.push({ text: `失速${fade.fadeScore}`, cls: 'tag--minus' });
+    if (fade.isClose) tags.push({ text: `追上${fade.closeScore}`, cls: 'tag--plus' });
     return tags;
   }
 
@@ -412,6 +484,7 @@
     const prevFinish = finishNum(runs[0]?.finish);
     const styleText = detectStyle(h, runs);
     const recentFade = summarizeRecentFade(runs, 2);
+    const recentClose = summarizeRecentClose(runs, 2);
     const obj = {
       horse: h,
       runs,
@@ -440,6 +513,9 @@
       recentFadeCount: recentFade.count,
       hasRecentFadeLabel: recentFade.hasLabel,
       recentFadeScore: recentFade.strongestScore,
+      recentCloseCount: recentClose.count,
+      hasRecentCloseLabel: recentClose.hasLabel,
+      recentCloseScore: recentClose.strongestScore,
     };
     obj.positiveMemo = buildPositiveMemo(h, obj);
     obj.negativeMemo = buildNegativeMemo(h, obj);
@@ -550,7 +626,7 @@
 
   function runCard(run) {
     const ra = getRA();
-    const title = [run.course || run.course_name, run.race_name].filter(Boolean).join(' ');
+    const title = [run.course_name || run.course || detectPlaceName(run.race_id), run.race_name].filter(Boolean).join(' ');
     const line1 = [run.surface || '', run.distance_m ? `${run.distance_m}m` : run.distance || '', run.going].filter(Boolean).join(' / ');
     const tags = detectRunTags(run);
     return `<article class="netkeiba-run-item"><div class="netkeiba-run-item__date">${ra.escapeHtml(run.date || '—')}</div><div class="netkeiba-run-item__main"><div class="netkeiba-run-item__race"><strong>${ra.escapeHtml(title || '過去走')}</strong></div><div class="netkeiba-run-item__sub">${ra.escapeHtml(line1)}</div><div class="netkeiba-run-item__meta">人気 ${ra.escapeHtml(ra.fmt(run.popularity))} / 単勝 ${ra.escapeHtml(ra.fmtNum(run.win_odds || run.tansho_odds, 1))} / 上がり ${ra.escapeHtml(ra.fmtNum(run.last3f, 1))} / 通過 ${ra.escapeHtml(ra.fmt(run.passing))}</div><div class="netkeiba-run-item__meta">騎手 ${ra.escapeHtml(ra.fmt(run.jockey))} / 着差 ${ra.escapeHtml(ra.fmt(run.margin))} / タイム ${ra.escapeHtml(ra.fmt(run.time))}</div>${tags.length ? `<div class="tag-list" style="margin-top:8px;">${tags.map((t) => `<span class="tag ${t.cls || ''}">${ra.escapeHtml(t.text)}</span>`).join('')}</div>` : ''}</div><div class="netkeiba-run-item__result ${finishNum(run.finish) != null && finishNum(run.finish) <= 3 ? 'is-good' : ''}">${ra.escapeHtml(ra.fmt(run.finish))}</div></article>`;
@@ -558,7 +634,7 @@
 
   function renderMemo(obj) {
     const ra = getRA();
-    return `<section class="past-memo-grid"><div class="detail-box"><h4 class="detail-box__title">予想メモ</h4><div class="detail-kv"><div class="detail-kv__item"><div class="detail-kv__label">前走要約</div><div class="detail-kv__value">${ra.escapeHtml(obj.prev1Brief.replace(/^前走:\s*/, ''))}</div></div><div class="detail-kv__item"><div class="detail-kv__label">近3走要約</div><div class="detail-kv__value">${ra.escapeHtml(obj.recent3Brief.replace(/^近3走:\s*/, ''))}</div></div><div class="detail-kv__item"><div class="detail-kv__label">プラス要素</div><div class="detail-kv__value">${ra.escapeHtml(obj.positiveMemo)}</div></div><div class="detail-kv__item"><div class="detail-kv__label">マイナス要素</div><div class="detail-kv__value">${ra.escapeHtml(obj.negativeMemo)}</div></div><div class="detail-kv__item"><div class="detail-kv__label">年齢性別 / 脚質</div><div class="detail-kv__value">${ra.escapeHtml(horseSexAgeText(obj.horse))} / ${ra.escapeHtml(obj.styleText)}</div></div><div class="detail-kv__item"><div class="detail-kv__label">騎手 / 乗り替わり</div><div class="detail-kv__value">${ra.escapeHtml(horseJockeyText(obj.horse))} / ${ra.escapeHtml(obj.jockeyChangeText)}</div></div><div class="detail-kv__item"><div class="detail-kv__label">父血統 / 母父血統</div><div class="detail-kv__value">${ra.escapeHtml(obj.bloodText)}</div></div><div class="detail-kv__item"><div class="detail-kv__label">同距離 / 同コース / 休み明け / 失速</div><div class="detail-kv__value">${ra.escapeHtml(obj.sameDistanceCount)}走 / ${ra.escapeHtml(obj.sameCourseCount)}走 / ${ra.escapeHtml(obj.layoffText)} / ${ra.escapeHtml(obj.hasRecentFadeLabel ? `直近2走内あり${obj.recentFadeScore != null ? `(${obj.recentFadeScore})` : ''}` : 'なし')}</div></div></div></div></section>`;
+    return `<section class="past-memo-grid"><div class="detail-box"><h4 class="detail-box__title">予想メモ</h4><div class="detail-kv"><div class="detail-kv__item"><div class="detail-kv__label">前走要約</div><div class="detail-kv__value">${ra.escapeHtml(obj.prev1Brief.replace(/^前走:\s*/, ''))}</div></div><div class="detail-kv__item"><div class="detail-kv__label">近3走要約</div><div class="detail-kv__value">${ra.escapeHtml(obj.recent3Brief.replace(/^近3走:\s*/, ''))}</div></div><div class="detail-kv__item"><div class="detail-kv__label">プラス要素</div><div class="detail-kv__value">${ra.escapeHtml(obj.positiveMemo)}</div></div><div class="detail-kv__item"><div class="detail-kv__label">マイナス要素</div><div class="detail-kv__value">${ra.escapeHtml(obj.negativeMemo)}</div></div><div class="detail-kv__item"><div class="detail-kv__label">年齢性別 / 脚質</div><div class="detail-kv__value">${ra.escapeHtml(horseSexAgeText(obj.horse))} / ${ra.escapeHtml(obj.styleText)}</div></div><div class="detail-kv__item"><div class="detail-kv__label">騎手 / 乗り替わり</div><div class="detail-kv__value">${ra.escapeHtml(horseJockeyText(obj.horse))} / ${ra.escapeHtml(obj.jockeyChangeText)}</div></div><div class="detail-kv__item"><div class="detail-kv__label">父血統 / 母父血統</div><div class="detail-kv__value">${ra.escapeHtml(obj.bloodText)}</div></div><div class="detail-kv__item"><div class="detail-kv__label">同距離 / 同コース / 休み明け / 失速 / 追上</div><div class="detail-kv__value">${ra.escapeHtml(obj.sameDistanceCount)}走 / ${ra.escapeHtml(obj.sameCourseCount)}走 / ${ra.escapeHtml(obj.layoffText)} / ${ra.escapeHtml(obj.hasRecentFadeLabel ? `直近2走内あり${obj.recentFadeScore != null ? `(${obj.recentFadeScore})` : ''}` : 'なし')} / ${ra.escapeHtml(obj.hasRecentCloseLabel ? `直近2走内あり${obj.recentCloseScore != null ? `(${obj.recentCloseScore})` : ''}` : 'なし')}</div></div></div></div></section>`;
   }
 
   function renderList() {
@@ -577,6 +653,7 @@
         { text: `同距離 ${obj.sameDistanceCount}`, cls: obj.sameDistanceCount > 0 ? 'tag--plus' : '' },
         { text: `同コース ${obj.sameCourseCount}`, cls: obj.sameCourseCount > 0 ? 'tag--plus' : '' },
         obj.hasRecentFadeLabel ? { text: '失速', cls: 'tag--minus' } : null,
+        obj.hasRecentCloseLabel ? { text: '追上', cls: 'tag--plus' } : null,
         obj.styleText && obj.styleText !== '—' ? { text: obj.styleText, cls: '' } : null,
         obj.totalRuns ? { text: `全${obj.totalRuns}` } : null,
       ].filter(Boolean);

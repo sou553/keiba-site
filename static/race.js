@@ -550,10 +550,13 @@
     const positions = parsePassingPositions(run?.passing);
     const bestPassingPos = positions.length ? Math.min(...positions) : null;
     const fadeScore = finish !== null && bestPassingPos !== null ? finish - bestPassingPos : null;
+    const closeScore = finish !== null && bestPassingPos !== null ? bestPassingPos - finish : null;
     return {
       best_passing_pos: bestPassingPos,
       fade_score: fadeScore,
       is_fade: fadeScore !== null && fadeScore >= 4,
+      close_score: closeScore,
+      is_close: closeScore !== null && closeScore >= 4,
     };
   }
 
@@ -571,6 +574,24 @@
       count: fadeRuns.length,
       has_label: fadeRuns.length > 0,
       strongest_score: strongest?.fade_score ?? null,
+      strongest_run: strongest || null,
+    };
+  }
+
+  function summarizeRecentClose(pastRuns, recentLimit = 2) {
+    const recent = Array.isArray(pastRuns) ? pastRuns.slice(0, recentLimit) : [];
+    const closeRuns = recent.filter((run) => run?.is_close);
+    const strongest = closeRuns.reduce((best, run) => {
+      const score = toNum(run?.close_score);
+      if (score === null) return best;
+      if (!best || score > (best.close_score ?? -999)) return run;
+      return best;
+    }, null);
+    return {
+      recent_limit: recentLimit,
+      count: closeRuns.length,
+      has_label: closeRuns.length > 0,
+      strongest_score: strongest?.close_score ?? null,
       strongest_run: strongest || null,
     };
   }
@@ -620,6 +641,8 @@
       best_passing_pos: fade.best_passing_pos,
       fade_score: fade.fade_score,
       is_fade: fade.is_fade,
+      close_score: fade.close_score,
+      is_close: fade.is_close,
     };
   }
 
@@ -730,6 +753,7 @@
     }).length;
     const last3fAvg3 = avg(pastRuns.slice(0, 3).map((run) => toNum(run.last3f)));
     const recentFade = summarizeRecentFade(pastRuns, 2);
+    const recentClose = summarizeRecentClose(pastRuns, 2);
 
     return {
       ...horse,
@@ -754,8 +778,12 @@
         recent_fade_count_2: recentFade.count,
         has_recent_fade_label: recentFade.has_label,
         recent_fade_score_max_2: recentFade.strongest_score,
+        recent_close_count_2: recentClose.count,
+        has_recent_close_label: recentClose.has_label,
+        recent_close_score_max_2: recentClose.strongest_score,
       },
       _recent_fade: recentFade,
+      _recent_close: recentClose,
     };
   }
 
@@ -1859,6 +1887,10 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
     if (horse._norm.same_course_count > 0) items.push(`同コース経験:${horse._norm.same_course_count}走`);
     if (horse._norm.same_place_count > 0) items.push(`同競馬場経験:${horse._norm.same_place_count}走`);
     if (horse._norm.recent_top3_count > 0) items.push(`近3走掲示板:${horse._norm.recent_top3_count}回`);
+    if (horse._norm.has_recent_close_label) {
+      const score = horse._norm.recent_close_score_max_2;
+      items.push(score !== null ? `直近2走で追上歴あり(追上度${fmtNum(score, 0)})` : '直近2走で追上歴あり');
+    }
     if (horse._analysis?.hole_reason) items.push(horse._analysis.hole_reason);
     return uniqueNonEmpty([...(horse._norm.reasons_pos_list || []), ...items]).join(' / ') || '—';
   }
@@ -1889,6 +1921,9 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
     const fadeTag = run.is_fade
       ? `<span class="tag tag--minus">失速${escapeHtml(fmtNum(run.fade_score, 0))}</span>`
       : '';
+    const closeTag = run.is_close
+      ? `<span class="tag tag--plus">追上${escapeHtml(fmtNum(run.close_score, 0))}</span>`
+      : '';
     return `
       <article class="netkeiba-run-item">
         <div class="netkeiba-run-item__date">${escapeHtml(fmt(run.date))}</div>
@@ -1897,7 +1932,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
           <div class="netkeiba-run-item__sub">${escapeHtml([distanceLabel, run.going, run.weather].filter(Boolean).join(' / '))}</div>
           <div class="netkeiba-run-item__meta">人気 ${escapeHtml(fmt(run.popularity))} / 単勝 ${escapeHtml(fmtNum(run.win_odds, 1))} / 上がり ${escapeHtml(fmtNum(run.last3f, 1))} / 通過 ${escapeHtml(fmt(run.passing))}</div>
           <div class="netkeiba-run-item__meta">騎手 ${escapeHtml(fmt(run.jockey))} / 着差 ${escapeHtml(fmt(run.margin))} / タイム ${escapeHtml(fmt(run.time))}</div>
-          ${fadeTag ? `<div class="tag-list" style="margin-top:8px;">${fadeTag}</div>` : ''}
+          ${(fadeTag || closeTag) ? `<div class="tag-list" style="margin-top:8px;">${fadeTag}${closeTag}</div>` : ''}
         </div>
         <div class="netkeiba-run-item__result ${run.finish !== null && run.finish <= 3 ? 'is-good' : ''}">${escapeHtml(fmt(run.finish))}</div>
       </article>`;
@@ -1940,6 +1975,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
       if (horse._analysis.danger_label) marks.push(`<span class="${badgeClassByLabel(horse._analysis.danger_label)}">${escapeHtml(horse._analysis.danger_label)}</span>`);
       if (horse._analysis.popular_label) marks.push(`<span class="${badgeClassByLabel(horse._analysis.popular_label)}">${escapeHtml(horse._analysis.popular_label)}</span>`);
       if (horse._norm.has_recent_fade_label) marks.push(`<span class="badge badge--red">失速</span>`);
+      if (horse._norm.has_recent_close_label) marks.push(`<span class="badge badge--green">追上</span>`);
       if (horse._norm.style_est) marks.push(`<span class="badge badge--plain">${escapeHtml(horse._norm.style_est)}</span>`);
 
       return `
@@ -2027,8 +2063,8 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
                     <div class="detail-kv__value">${escapeHtml(fmt(horse._norm.same_distance_count))}走 / ${escapeHtml(fmt(horse._norm.same_course_count))}走 / ${escapeHtml(fmt(horse._norm.same_place_count))}走</div>
                   </div>
                   <div class="detail-kv__item">
-                    <div class="detail-kv__label">休み明け / 近3走掲示板 / 失速</div>
-                    <div class="detail-kv__value">${escapeHtml(formatLayoff(horse._norm.layoff_days))} / ${escapeHtml(fmt(horse._norm.recent_top3_count))}回 / ${escapeHtml(horse._norm.has_recent_fade_label ? `直近2走内あり${horse._norm.recent_fade_score_max_2 !== null ? `(${fmtNum(horse._norm.recent_fade_score_max_2, 0)})` : ''}` : 'なし')}</div>
+                    <div class="detail-kv__label">休み明け / 近3走掲示板 / 失速 / 追上</div>
+                    <div class="detail-kv__value">${escapeHtml(formatLayoff(horse._norm.layoff_days))} / ${escapeHtml(fmt(horse._norm.recent_top3_count))}回 / ${escapeHtml(horse._norm.has_recent_fade_label ? `直近2走内あり${horse._norm.recent_fade_score_max_2 !== null ? `(${fmtNum(horse._norm.recent_fade_score_max_2, 0)})` : ''}` : 'なし')} / ${escapeHtml(horse._norm.has_recent_close_label ? `直近2走内あり${horse._norm.recent_close_score_max_2 !== null ? `(${fmtNum(horse._norm.recent_close_score_max_2, 0)})` : ''}` : 'なし')}</div>
                   </div>
                 </div>
               </div>
