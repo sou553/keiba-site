@@ -275,7 +275,7 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 .filter-grid {
   display: grid;
   gap: 12px;
-  grid-template-columns: minmax(220px, 1.8fr) 140px auto auto;
+  grid-template-columns: minmax(0, 1.8fr) 140px auto auto;
   align-items: end;
 }
 .filter-grid label { display: grid; gap: 6px; font-size: 13px; font-weight: 800; }
@@ -551,7 +551,7 @@ select {
 .filter-toolbar__row {
   display: grid;
   gap: 12px;
-  grid-template-columns: minmax(180px, 1.5fr) 160px 160px auto;
+  grid-template-columns: minmax(0, 1.5fr) 160px 160px auto;
   align-items: end;
 }
 .filter-toolbar__row label { display: grid; gap: 6px; font-size: 13px; font-weight: 800; }
@@ -853,7 +853,7 @@ select {
 .betting-control-grid {
   display: grid;
   gap: 12px;
-  grid-template-columns: minmax(180px, 1.4fr) 160px auto;
+  grid-template-columns: minmax(0, 1.4fr) 160px auto;
   align-items: end;
 }
 .compare-toolbar__row label,
