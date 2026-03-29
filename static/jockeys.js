@@ -498,7 +498,7 @@
         </button>
 
         <div class="jockey-card__best">最高評価: ${bestRideText}</div>
-        <div class="jockey-card__comment">${escapeHtml(summary.summary_comment)}</div>
+        <!-- <div class="jockey-card__comment">${escapeHtml(summary.summary_comment)}</div> -->
 
         <div class="jockey-card__detail" ${isOpen ? "" : "hidden"}>
           ${renderRideRows(summary.rides)}
