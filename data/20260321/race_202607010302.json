@@ -3696,5 +3696,238 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "mixed",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "16",
+          "horses": [
+            16
+          ],
+          "horse_names": [
+            "シャインフォーミー"
+          ],
+          "stake_yen": 100,
+          "score": 0.316313,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率31.6% / 複勝率77.9%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "1",
+          "horses": [
+            1
+          ],
+          "horse_names": [
+            "クロカミジョウ"
+          ],
+          "stake_yen": 100,
+          "score": 0.30034,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率30.0% / 複勝率76.3%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "1-16",
+          "horses": [
+            1,
+            16
+          ],
+          "horse_names": [
+            "シャインフォーミー",
+            "クロカミジョウ"
+          ],
+          "stake_yen": 100,
+          "score": 0.593751,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸16 → 相手1,2,8",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "8-16",
+          "horses": [
+            8,
+            16
+          ],
+          "horse_names": [
+            "シャインフォーミー",
+            "トゥレイス"
+          ],
+          "stake_yen": 100,
+          "score": 0.300899,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸16 → 相手1,2,8",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "2-16",
+          "horses": [
+            2,
+            16
+          ],
+          "horse_names": [
+            "ライトニングロッド",
+            "シャインフォーミー"
+          ],
+          "stake_yen": 100,
+          "score": 0.208217,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "1頭軸流し",
+            "CSV",
+            "自動",
+            "馬連"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "1-2",
+          "horses": [
+            1,
+            2
+          ],
+          "horse_names": [
+            "クロカミジョウ",
+            "ライトニングロッド"
+          ],
+          "stake_yen": 100,
+          "score": 0.204011,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV",
+            "保険",
+            "自動",
+            "馬連"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "2-8",
+          "horses": [
+            2,
+            8
+          ],
+          "horse_names": [
+            "ライトニングロッド",
+            "トゥレイス"
+          ],
+          "stake_yen": 100,
+          "score": 0.1249,
+          "source": "csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "1-2-16",
+          "horses": [
+            1,
+            2,
+            16
+          ],
+          "horse_names": [
+            "シャインフォーミー",
+            "クロカミジョウ",
+            "ライトニングロッド"
+          ],
+          "stake_yen": 100,
+          "score": 0.250619,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸16-1 → 相手2,8,10",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "1-8-16",
+          "horses": [
+            1,
+            8,
+            16
+          ],
+          "horse_names": [
+            "シャインフォーミー",
+            "クロカミジョウ",
+            "トゥレイス"
+          ],
+          "stake_yen": 100,
+          "score": 0.229482,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸16-1 → 相手2,8,10",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "1-10-16",
+          "horses": [
+            1,
+            10,
+            16
+          ],
+          "horse_names": [
+            "シャインフォーミー",
+            "クロカミジョウ",
+            "ヴェルジーネ"
+          ],
+          "stake_yen": 100,
+          "score": 0.125487,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸16-1 → 相手2,8,10",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

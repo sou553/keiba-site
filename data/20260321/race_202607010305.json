@@ -3884,5 +3884,197 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "mixed",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "6",
+          "horses": [
+            6
+          ],
+          "horse_names": [
+            "アラムシャピラス"
+          ],
+          "stake_yen": 100,
+          "score": 0.935198,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率93.5% / 複勝率100.0%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "11",
+          "horses": [
+            11
+          ],
+          "horse_names": [
+            "バルドル"
+          ],
+          "stake_yen": 100,
+          "score": 0.017243,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率1.7% / 複勝率47.8%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "4-6",
+          "horses": [
+            4,
+            6
+          ],
+          "horse_names": [
+            "アラムシャピラス",
+            "プラウドブルーベル"
+          ],
+          "stake_yen": 100,
+          "score": 0.233111,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸6 → 相手11,4,5",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "5-6",
+          "horses": [
+            5,
+            6
+          ],
+          "horse_names": [
+            "アラムシャピラス",
+            "サンライズコナー"
+          ],
+          "stake_yen": 100,
+          "score": 0.224217,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸6 → 相手11,4,5",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "6-11",
+          "horses": [
+            6,
+            11
+          ],
+          "horse_names": [
+            "アラムシャピラス",
+            "バルドル"
+          ],
+          "stake_yen": 100,
+          "score": 0.13288,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "1頭軸流し",
+            "CSV",
+            "自動",
+            "馬連"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "4-6-11",
+          "horses": [
+            4,
+            6,
+            11
+          ],
+          "horse_names": [
+            "アラムシャピラス",
+            "バルドル",
+            "プラウドブルーベル"
+          ],
+          "stake_yen": 100,
+          "score": 0.111475,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸6-11 → 相手4,5,9",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "5-6-11",
+          "horses": [
+            5,
+            6,
+            11
+          ],
+          "horse_names": [
+            "アラムシャピラス",
+            "バルドル",
+            "サンライズコナー"
+          ],
+          "stake_yen": 100,
+          "score": 0.107222,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸6-11 → 相手4,5,9",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "6-9-11",
+          "horses": [
+            6,
+            9,
+            11
+          ],
+          "horse_names": [
+            "アラムシャピラス",
+            "バルドル",
+            "エイシンウィスパー"
+          ],
+          "stake_yen": 100,
+          "score": 0.101435,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸6-11 → 相手4,5,9",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

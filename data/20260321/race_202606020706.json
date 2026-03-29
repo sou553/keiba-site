@@ -3584,5 +3584,196 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "auto",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "10",
+          "horses": [
+            10
+          ],
+          "horse_names": [
+            "スペルーチェ"
+          ],
+          "stake_yen": 100,
+          "score": 0.41661,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率41.7% / 複勝率86.7%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "5",
+          "horses": [
+            5
+          ],
+          "horse_names": [
+            "ジーティーシンドウ"
+          ],
+          "stake_yen": 100,
+          "score": 0.207216,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率20.7% / 複勝率65.7%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "5-10",
+          "horses": [
+            5,
+            10
+          ],
+          "horse_names": [
+            "スペルーチェ",
+            "ジーティーシンドウ"
+          ],
+          "stake_yen": 100,
+          "score": 0.569296,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸10 → 相手5,12,11",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "10-12",
+          "horses": [
+            10,
+            12
+          ],
+          "horse_names": [
+            "スペルーチェ",
+            "モルニケ"
+          ],
+          "stake_yen": 100,
+          "score": 0.435909,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸10 → 相手5,12,11",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "10-11",
+          "horses": [
+            10,
+            11
+          ],
+          "horse_names": [
+            "スペルーチェ",
+            "デイトナチャンプ"
+          ],
+          "stake_yen": 100,
+          "score": 0.290286,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸10 → 相手5,12,11",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "5-10-12",
+          "horses": [
+            5,
+            10,
+            12
+          ],
+          "horse_names": [
+            "スペルーチェ",
+            "ジーティーシンドウ",
+            "モルニケ"
+          ],
+          "stake_yen": 100,
+          "score": 0.286358,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸10-5 → 相手12,11,7",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "5-10-11",
+          "horses": [
+            5,
+            10,
+            11
+          ],
+          "horse_names": [
+            "スペルーチェ",
+            "ジーティーシンドウ",
+            "デイトナチャンプ"
+          ],
+          "stake_yen": 100,
+          "score": 0.190695,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸10-5 → 相手12,11,7",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "5-7-10",
+          "horses": [
+            5,
+            7,
+            10
+          ],
+          "horse_names": [
+            "スペルーチェ",
+            "ジーティーシンドウ",
+            "スタートレイン"
+          ],
+          "stake_yen": 100,
+          "score": 0.171675,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸10-5 → 相手12,11,7",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }
