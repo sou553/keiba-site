@@ -9186,5 +9186,238 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "mixed",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "4",
+          "horses": [
+            4
+          ],
+          "horse_names": [
+            "エデルクローネ"
+          ],
+          "stake_yen": 100,
+          "score": 0.445212,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率44.5% / 複勝率95.7%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "16",
+          "horses": [
+            16
+          ],
+          "horse_names": [
+            "ドゥマーヴェリック"
+          ],
+          "stake_yen": 100,
+          "score": 0.392995,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率39.3% / 複勝率94.5%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "4-10",
+          "horses": [
+            4,
+            10
+          ],
+          "horse_names": [
+            "エデルクローネ",
+            "ハクシンブライアン"
+          ],
+          "stake_yen": 100,
+          "score": 0.510482,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸4 → 相手16,10,8",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "4-16",
+          "horses": [
+            4,
+            16
+          ],
+          "horse_names": [
+            "エデルクローネ",
+            "ドゥマーヴェリック"
+          ],
+          "stake_yen": 100,
+          "score": 0.26006,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "1頭軸流し",
+            "CSV",
+            "自動",
+            "馬連"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "4-8",
+          "horses": [
+            4,
+            8
+          ],
+          "horse_names": [
+            "エデルクローネ",
+            "オウケンシルヴァー"
+          ],
+          "stake_yen": 100,
+          "score": 0.245406,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸4 → 相手16,10,8",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "10-16",
+          "horses": [
+            10,
+            16
+          ],
+          "horse_names": [
+            "ハクシンブライアン",
+            "ドゥマーヴェリック"
+          ],
+          "stake_yen": 100,
+          "score": 0.10872,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV",
+            "保険",
+            "自動",
+            "馬連"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "8-16",
+          "horses": [
+            8,
+            16
+          ],
+          "horse_names": [
+            "オウケンシルヴァー",
+            "ドゥマーヴェリック"
+          ],
+          "stake_yen": 100,
+          "score": 0.073512,
+          "source": "csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "4-10-16",
+          "horses": [
+            4,
+            10,
+            16
+          ],
+          "horse_names": [
+            "エデルクローネ",
+            "ドゥマーヴェリック",
+            "ハクシンブライアン"
+          ],
+          "stake_yen": 100,
+          "score": 0.482355,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸4-16 → 相手10,8,3",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "4-8-16",
+          "horses": [
+            4,
+            8,
+            16
+          ],
+          "horse_names": [
+            "エデルクローネ",
+            "ドゥマーヴェリック",
+            "オウケンシルヴァー"
+          ],
+          "stake_yen": 100,
+          "score": 0.231885,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸4-16 → 相手10,8,3",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "3-4-16",
+          "horses": [
+            3,
+            4,
+            16
+          ],
+          "horse_names": [
+            "エデルクローネ",
+            "ドゥマーヴェリック",
+            "テルケンユミクイン"
+          ],
+          "stake_yen": 100,
+          "score": 0.107086,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸4-16 → 相手10,8,3",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

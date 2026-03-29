@@ -2910,5 +2910,196 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "auto",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "9",
+          "horses": [
+            9
+          ],
+          "horse_names": [
+            "タガノアルテミス"
+          ],
+          "stake_yen": 100,
+          "score": 0.48616,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率48.6% / 複勝率89.0%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "3",
+          "horses": [
+            3
+          ],
+          "horse_names": [
+            "ヴァイヴァーイ"
+          ],
+          "stake_yen": 100,
+          "score": 0.109705,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率11.0% / 複勝率41.9%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "3-9",
+          "horses": [
+            3,
+            9
+          ],
+          "horse_names": [
+            "タガノアルテミス",
+            "ヴァイヴァーイ"
+          ],
+          "stake_yen": 100,
+          "score": 0.372646,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸9 → 相手3,11,6",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "9-11",
+          "horses": [
+            9,
+            11
+          ],
+          "horse_names": [
+            "タガノアルテミス",
+            "メジロピオラ"
+          ],
+          "stake_yen": 100,
+          "score": 0.265016,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸9 → 相手3,11,6",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "6-9",
+          "horses": [
+            6,
+            9
+          ],
+          "horse_names": [
+            "タガノアルテミス",
+            "アクシュラ"
+          ],
+          "stake_yen": 100,
+          "score": 0.258085,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸9 → 相手3,11,6",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "3-9-11",
+          "horses": [
+            3,
+            9,
+            11
+          ],
+          "horse_names": [
+            "タガノアルテミス",
+            "ヴァイヴァーイ",
+            "メジロピオラ"
+          ],
+          "stake_yen": 100,
+          "score": 0.110918,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸9-3 → 相手11,6,8",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "3-6-9",
+          "horses": [
+            3,
+            6,
+            9
+          ],
+          "horse_names": [
+            "タガノアルテミス",
+            "ヴァイヴァーイ",
+            "アクシュラ"
+          ],
+          "stake_yen": 100,
+          "score": 0.108018,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸9-3 → 相手11,6,8",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "3-8-9",
+          "horses": [
+            3,
+            8,
+            9
+          ],
+          "horse_names": [
+            "タガノアルテミス",
+            "ヴァイヴァーイ",
+            "アティラン"
+          ],
+          "stake_yen": 100,
+          "score": 0.088499,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸9-3 → 相手11,6,8",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

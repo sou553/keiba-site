@@ -10754,5 +10754,197 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "mixed",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "5",
+          "horses": [
+            5
+          ],
+          "horse_names": [
+            "ホークライト"
+          ],
+          "stake_yen": 100,
+          "score": 0.634127,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率63.4% / 複勝率97.2%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "4",
+          "horses": [
+            4
+          ],
+          "horse_names": [
+            "サムシャイン"
+          ],
+          "stake_yen": 100,
+          "score": 0.145251,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率14.5% / 複勝率67.9%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "5-16",
+          "horses": [
+            5,
+            16
+          ],
+          "horse_names": [
+            "ホークライト",
+            "ホレーショ"
+          ],
+          "stake_yen": 100,
+          "score": 0.450253,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸5 → 相手4,16,1",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "1-5",
+          "horses": [
+            1,
+            5
+          ],
+          "horse_names": [
+            "ホークライト",
+            "リラゲイル"
+          ],
+          "stake_yen": 100,
+          "score": 0.257326,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸5 → 相手4,16,1",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "4-5",
+          "horses": [
+            4,
+            5
+          ],
+          "horse_names": [
+            "サムシャイン",
+            "ホークライト"
+          ],
+          "stake_yen": 100,
+          "score": 0.11341,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "1頭軸流し",
+            "CSV",
+            "自動",
+            "馬連"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "4-5-16",
+          "horses": [
+            4,
+            5,
+            16
+          ],
+          "horse_names": [
+            "ホークライト",
+            "サムシャイン",
+            "ホレーショ"
+          ],
+          "stake_yen": 100,
+          "score": 0.305802,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸5-4 → 相手16,1,9",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "1-4-5",
+          "horses": [
+            1,
+            4,
+            5
+          ],
+          "horse_names": [
+            "ホークライト",
+            "サムシャイン",
+            "リラゲイル"
+          ],
+          "stake_yen": 100,
+          "score": 0.17477,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸5-4 → 相手16,1,9",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "4-5-9",
+          "horses": [
+            4,
+            5,
+            9
+          ],
+          "horse_names": [
+            "ホークライト",
+            "サムシャイン",
+            "メイショウカシワデ"
+          ],
+          "stake_yen": 100,
+          "score": 0.124489,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸5-4 → 相手16,1,9",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

@@ -2836,5 +2836,238 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "mixed",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "9",
+          "horses": [
+            9
+          ],
+          "horse_names": [
+            "ロードアマルフィ"
+          ],
+          "stake_yen": 100,
+          "score": 0.296682,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率29.7% / 複勝率77.8%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "11",
+          "horses": [
+            11
+          ],
+          "horse_names": [
+            "ジュウハチキン"
+          ],
+          "stake_yen": 100,
+          "score": 0.292546,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率29.3% / 複勝率77.4%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "4-9",
+          "horses": [
+            4,
+            9
+          ],
+          "horse_names": [
+            "ロードアマルフィ",
+            "ストロングボーイ"
+          ],
+          "stake_yen": 100,
+          "score": 0.527966,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸9 → 相手11,4,10",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "9-11",
+          "horses": [
+            9,
+            11
+          ],
+          "horse_names": [
+            "ロードアマルフィ",
+            "ジュウハチキン"
+          ],
+          "stake_yen": 100,
+          "score": 0.204011,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "1頭軸流し",
+            "CSV",
+            "自動",
+            "馬連"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "9-10",
+          "horses": [
+            9,
+            10
+          ],
+          "horse_names": [
+            "ロードアマルフィ",
+            "リリーサンダー"
+          ],
+          "stake_yen": 100,
+          "score": 0.201723,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸9 → 相手11,4,10",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "4-11",
+          "horses": [
+            4,
+            11
+          ],
+          "horse_names": [
+            "ストロングボーイ",
+            "ジュウハチキン"
+          ],
+          "stake_yen": 100,
+          "score": 0.174983,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV",
+            "保険",
+            "自動",
+            "馬連"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "10-11",
+          "horses": [
+            10,
+            11
+          ],
+          "horse_names": [
+            "リリーサンダー",
+            "ジュウハチキン"
+          ],
+          "stake_yen": 100,
+          "score": 0.104314,
+          "source": "csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "4-9-11",
+          "horses": [
+            4,
+            9,
+            11
+          ],
+          "horse_names": [
+            "ロードアマルフィ",
+            "ジュウハチキン",
+            "ストロングボーイ"
+          ],
+          "stake_yen": 100,
+          "score": 0.408488,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸9-11 → 相手4,10,3",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "9-10-11",
+          "horses": [
+            9,
+            10,
+            11
+          ],
+          "horse_names": [
+            "ロードアマルフィ",
+            "ジュウハチキン",
+            "リリーサンダー"
+          ],
+          "stake_yen": 100,
+          "score": 0.156074,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸9-11 → 相手4,10,3",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "3-9-11",
+          "horses": [
+            3,
+            9,
+            11
+          ],
+          "horse_names": [
+            "ロードアマルフィ",
+            "ジュウハチキン",
+            "サンライズフリード"
+          ],
+          "stake_yen": 100,
+          "score": 0.123615,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸9-11 → 相手4,10,3",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

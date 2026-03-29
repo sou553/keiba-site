@@ -1900,5 +1900,217 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "auto",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "4",
+          "horses": [
+            4
+          ],
+          "horse_names": [
+            "アルトラムス"
+          ],
+          "stake_yen": 100,
+          "score": 0.249986,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率25.0% / 複勝率69.3%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "6",
+          "horses": [
+            6
+          ],
+          "horse_names": [
+            "ウップヘリーア"
+          ],
+          "stake_yen": 100,
+          "score": 0.227337,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率22.7% / 複勝率65.7%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "4-6",
+          "horses": [
+            4,
+            6
+          ],
+          "horse_names": [
+            "アルトラムス",
+            "ウップヘリーア"
+          ],
+          "stake_yen": 100,
+          "score": 0.455373,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸4 → 相手6,3,2",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "3-4",
+          "horses": [
+            3,
+            4
+          ],
+          "horse_names": [
+            "アルトラムス",
+            "ローベルクランツ"
+          ],
+          "stake_yen": 100,
+          "score": 0.45318,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸4 → 相手6,3,2",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "3-6",
+          "horses": [
+            3,
+            6
+          ],
+          "horse_names": [
+            "ウップヘリーア",
+            "ローベルクランツ"
+          ],
+          "stake_yen": 100,
+          "score": 0.43017,
+          "source": "auto",
+          "reason": "上位拮抗の保険1点",
+          "tags": [
+            "自動",
+            "馬連",
+            "保険"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "2-4",
+          "horses": [
+            2,
+            4
+          ],
+          "horse_names": [
+            "アルトラムス",
+            "カフジエメンタール"
+          ],
+          "stake_yen": 100,
+          "score": 0.409749,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸4 → 相手6,3,2",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "3-4-6",
+          "horses": [
+            3,
+            4,
+            6
+          ],
+          "horse_names": [
+            "アルトラムス",
+            "ウップヘリーア",
+            "ローベルクランツ"
+          ],
+          "stake_yen": 100,
+          "score": 0.297947,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸4-6 → 相手3,2,5",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "2-4-6",
+          "horses": [
+            2,
+            4,
+            6
+          ],
+          "horse_names": [
+            "アルトラムス",
+            "ウップヘリーア",
+            "カフジエメンタール"
+          ],
+          "stake_yen": 100,
+          "score": 0.269393,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸4-6 → 相手3,2,5",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "4-5-6",
+          "horses": [
+            4,
+            5,
+            6
+          ],
+          "horse_names": [
+            "アルトラムス",
+            "ウップヘリーア",
+            "ブリガンティン"
+          ],
+          "stake_yen": 100,
+          "score": 0.079936,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸4-6 → 相手3,2,5",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

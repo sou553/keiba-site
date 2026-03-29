@@ -7484,5 +7484,198 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "mixed",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "7",
+          "horses": [
+            7
+          ],
+          "horse_names": [
+            "チムグクル"
+          ],
+          "stake_yen": 100,
+          "score": 0.506438,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率50.6% / 複勝率93.2%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "4",
+          "horses": [
+            4
+          ],
+          "horse_names": [
+            "フードマン"
+          ],
+          "stake_yen": 100,
+          "score": 0.164927,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率16.5% / 複勝率64.0%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "7-8",
+          "horses": [
+            7,
+            8
+          ],
+          "horse_names": [
+            "チムグクル",
+            "サダメ"
+          ],
+          "stake_yen": 100,
+          "score": 0.324118,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸7 → 相手4,11,8",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "4-7",
+          "horses": [
+            4,
+            7
+          ],
+          "horse_names": [
+            "フードマン",
+            "チムグクル"
+          ],
+          "stake_yen": 100,
+          "score": 0.11684,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "1頭軸流し",
+            "CSV",
+            "自動",
+            "馬連"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "7-11",
+          "horses": [
+            7,
+            11
+          ],
+          "horse_names": [
+            "チムグクル",
+            "ヨウシタンレイ"
+          ],
+          "stake_yen": 100,
+          "score": 0.11684,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "1頭軸流し",
+            "CSV",
+            "自動",
+            "馬連"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "4-7-11",
+          "horses": [
+            4,
+            7,
+            11
+          ],
+          "horse_names": [
+            "チムグクル",
+            "フードマン",
+            "ヨウシタンレイ"
+          ],
+          "stake_yen": 100,
+          "score": 0.380197,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸7-4 → 相手11,8,10",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "4-7-8",
+          "horses": [
+            4,
+            7,
+            8
+          ],
+          "horse_names": [
+            "チムグクル",
+            "フードマン",
+            "サダメ"
+          ],
+          "stake_yen": 100,
+          "score": 0.207555,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸7-4 → 相手11,8,10",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "4-7-10",
+          "horses": [
+            4,
+            7,
+            10
+          ],
+          "horse_names": [
+            "チムグクル",
+            "フードマン",
+            "アジュマン"
+          ],
+          "stake_yen": 100,
+          "score": 0.115771,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸7-4 → 相手11,8,10",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

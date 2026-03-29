@@ -3799,5 +3799,197 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "mixed",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "2",
+          "horses": [
+            2
+          ],
+          "horse_names": [
+            "パンキー"
+          ],
+          "stake_yen": 100,
+          "score": 0.615599,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率61.6% / 複勝率97.9%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "17",
+          "horses": [
+            17
+          ],
+          "horse_names": [
+            "メイショウローゼ"
+          ],
+          "stake_yen": 100,
+          "score": 0.228555,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率22.9% / 複勝率86.1%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "2-8",
+          "horses": [
+            2,
+            8
+          ],
+          "horse_names": [
+            "パンキー",
+            "ファイネクローネ"
+          ],
+          "stake_yen": 100,
+          "score": 0.347057,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸2 → 相手17,8,12",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "2-12",
+          "horses": [
+            2,
+            12
+          ],
+          "horse_names": [
+            "パンキー",
+            "ゼランテ"
+          ],
+          "stake_yen": 100,
+          "score": 0.273709,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸2 → 相手17,8,12",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "2-17",
+          "horses": [
+            2,
+            17
+          ],
+          "horse_names": [
+            "パンキー",
+            "メイショウローゼ"
+          ],
+          "stake_yen": 100,
+          "score": 0.150639,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "1頭軸流し",
+            "CSV",
+            "自動",
+            "馬連"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "2-8-17",
+          "horses": [
+            2,
+            8,
+            17
+          ],
+          "horse_names": [
+            "パンキー",
+            "メイショウローゼ",
+            "ファイネクローネ"
+          ],
+          "stake_yen": 100,
+          "score": 0.29868,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸2-17 → 相手8,12,10",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "2-12-17",
+          "horses": [
+            2,
+            12,
+            17
+          ],
+          "horse_names": [
+            "パンキー",
+            "メイショウローゼ",
+            "ゼランテ"
+          ],
+          "stake_yen": 100,
+          "score": 0.235556,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸2-17 → 相手8,12,10",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "2-10-17",
+          "horses": [
+            2,
+            10,
+            17
+          ],
+          "horse_names": [
+            "パンキー",
+            "メイショウローゼ",
+            "ラヴリーティアラ"
+          ],
+          "stake_yen": 100,
+          "score": 0.109254,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸2-17 → 相手8,12,10",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

@@ -11082,5 +11082,217 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "auto",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "7",
+          "horses": [
+            7
+          ],
+          "horse_names": [
+            "チェルビアット"
+          ],
+          "stake_yen": 100,
+          "score": 0.253845,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率25.4% / 複勝率67.3%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "5",
+          "horses": [
+            5
+          ],
+          "horse_names": [
+            "ウイントワイライト"
+          ],
+          "stake_yen": 100,
+          "score": 0.238278,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率23.8% / 複勝率65.0%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "5-7",
+          "horses": [
+            5,
+            7
+          ],
+          "horse_names": [
+            "チェルビアット",
+            "ウイントワイライト"
+          ],
+          "stake_yen": 100,
+          "score": 0.437949,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸7 → 相手5,12,1",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "7-12",
+          "horses": [
+            7,
+            12
+          ],
+          "horse_names": [
+            "チェルビアット",
+            "カルプスペルシュ"
+          ],
+          "stake_yen": 100,
+          "score": 0.397211,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸7 → 相手5,12,1",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "5-12",
+          "horses": [
+            5,
+            12
+          ],
+          "horse_names": [
+            "ウイントワイライト",
+            "カルプスペルシュ"
+          ],
+          "stake_yen": 100,
+          "score": 0.38366,
+          "source": "auto",
+          "reason": "上位拮抗の保険1点",
+          "tags": [
+            "自動",
+            "馬連",
+            "保険"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "1-7",
+          "horses": [
+            1,
+            7
+          ],
+          "horse_names": [
+            "チェルビアット",
+            "マピュース"
+          ],
+          "stake_yen": 100,
+          "score": 0.263366,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸7 → 相手5,12,1",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "5-7-12",
+          "horses": [
+            5,
+            7,
+            12
+          ],
+          "horse_names": [
+            "チェルビアット",
+            "ウイントワイライト",
+            "カルプスペルシュ"
+          ],
+          "stake_yen": 100,
+          "score": 0.258342,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸7-5 → 相手12,1,2",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "1-5-7",
+          "horses": [
+            1,
+            5,
+            7
+          ],
+          "horse_names": [
+            "チェルビアット",
+            "ウイントワイライト",
+            "マピュース"
+          ],
+          "stake_yen": 100,
+          "score": 0.17129,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸7-5 → 相手12,1,2",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "2-5-7",
+          "horses": [
+            2,
+            5,
+            7
+          ],
+          "horse_names": [
+            "チェルビアット",
+            "ウイントワイライト",
+            "レディマリオン"
+          ],
+          "stake_yen": 100,
+          "score": 0.082115,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸7-5 → 相手12,1,2",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

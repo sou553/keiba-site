@@ -4174,5 +4174,235 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "mixed",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "12",
+          "horses": [
+            12
+          ],
+          "horse_names": [
+            "ナムラロダン"
+          ],
+          "stake_yen": 100,
+          "score": 0.322325,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率32.2% / 複勝率80.0%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "9",
+          "horses": [
+            9
+          ],
+          "horse_names": [
+            "ハクサンテドリガワ"
+          ],
+          "stake_yen": 100,
+          "score": 0.242198,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率24.2% / 複勝率70.9%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "9-12",
+          "horses": [
+            9,
+            12
+          ],
+          "horse_names": [
+            "ナムラロダン",
+            "ハクサンテドリガワ"
+          ],
+          "stake_yen": 100,
+          "score": 0.567696,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸12 → 相手9,2,4",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "2-12",
+          "horses": [
+            2,
+            12
+          ],
+          "horse_names": [
+            "ナムラロダン",
+            "レッドレベンディス"
+          ],
+          "stake_yen": 100,
+          "score": 0.559105,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸12 → 相手9,2,4",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "4-12",
+          "horses": [
+            4,
+            12
+          ],
+          "horse_names": [
+            "ウェルカムソング",
+            "ナムラロダン"
+          ],
+          "stake_yen": 100,
+          "score": 0.208217,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "1頭軸流し",
+            "CSV",
+            "自動",
+            "馬連"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "2-4",
+          "horses": [
+            2,
+            4
+          ],
+          "horse_names": [
+            "レッドレベンディス",
+            "ウェルカムソング"
+          ],
+          "stake_yen": 100,
+          "score": 0.188118,
+          "source": "csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "4-9",
+          "horses": [
+            4,
+            9
+          ],
+          "horse_names": [
+            "ウェルカムソング",
+            "ハクサンテドリガワ"
+          ],
+          "stake_yen": 100,
+          "score": 0.188118,
+          "source": "csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "2-9-12",
+          "horses": [
+            2,
+            9,
+            12
+          ],
+          "horse_names": [
+            "ナムラロダン",
+            "ハクサンテドリガワ",
+            "レッドレベンディス"
+          ],
+          "stake_yen": 100,
+          "score": 0.396606,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸12-9 → 相手2,4,13",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "4-9-12",
+          "horses": [
+            4,
+            9,
+            12
+          ],
+          "horse_names": [
+            "ナムラロダン",
+            "ハクサンテドリガワ",
+            "ウェルカムソング"
+          ],
+          "stake_yen": 100,
+          "score": 0.20733,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸12-9 → 相手2,4,13",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "9-12-13",
+          "horses": [
+            9,
+            12,
+            13
+          ],
+          "horse_names": [
+            "ナムラロダン",
+            "ハクサンテドリガワ",
+            "マロ"
+          ],
+          "stake_yen": 100,
+          "score": 0.074368,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸12-9 → 相手2,4,13",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

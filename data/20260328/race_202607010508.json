@@ -7300,5 +7300,196 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "auto",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "10",
+          "horses": [
+            10
+          ],
+          "horse_names": [
+            "エテルニータ"
+          ],
+          "stake_yen": 100,
+          "score": 0.34147,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率34.1% / 複勝率78.3%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "8",
+          "horses": [
+            8
+          ],
+          "horse_names": [
+            "マドモアゼルアスク"
+          ],
+          "stake_yen": 100,
+          "score": 0.198007,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率19.8% / 複勝率59.5%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "8-10",
+          "horses": [
+            8,
+            10
+          ],
+          "horse_names": [
+            "エテルニータ",
+            "マドモアゼルアスク"
+          ],
+          "stake_yen": 100,
+          "score": 0.465839,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸10 → 相手8,4,15",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "4-10",
+          "horses": [
+            4,
+            10
+          ],
+          "horse_names": [
+            "エテルニータ",
+            "タマモランプ"
+          ],
+          "stake_yen": 100,
+          "score": 0.384924,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸10 → 相手8,4,15",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "10-15",
+          "horses": [
+            10,
+            15
+          ],
+          "horse_names": [
+            "エテルニータ",
+            "マイネルアレス"
+          ],
+          "stake_yen": 100,
+          "score": 0.311005,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸10 → 相手8,4,15",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "4-8-10",
+          "horses": [
+            4,
+            8,
+            10
+          ],
+          "horse_names": [
+            "エテルニータ",
+            "マドモアゼルアスク",
+            "タマモランプ"
+          ],
+          "stake_yen": 100,
+          "score": 0.228904,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸10-8 → 相手4,15,5",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "8-10-15",
+          "horses": [
+            8,
+            10,
+            15
+          ],
+          "horse_names": [
+            "エテルニータ",
+            "マドモアゼルアスク",
+            "マイネルアレス"
+          ],
+          "stake_yen": 100,
+          "score": 0.184946,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸10-8 → 相手4,15,5",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "5-8-10",
+          "horses": [
+            5,
+            8,
+            10
+          ],
+          "horse_names": [
+            "エテルニータ",
+            "マドモアゼルアスク",
+            "ホウオウタイタン"
+          ],
+          "stake_yen": 100,
+          "score": 0.139847,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸10-8 → 相手4,15,5",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

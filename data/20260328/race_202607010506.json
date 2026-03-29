@@ -8402,5 +8402,253 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "mixed",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "4",
+          "horses": [
+            4
+          ],
+          "horse_names": [
+            "サザンティスプーン"
+          ],
+          "stake_yen": 100,
+          "score": 0.305772,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率30.6% / 複勝率77.6%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "1",
+          "horses": [
+            1
+          ],
+          "horse_names": [
+            "ホウオウゴールド"
+          ],
+          "stake_yen": 100,
+          "score": 0.24934,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率24.9% / 複勝率70.9%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "1-4",
+          "horses": [
+            1,
+            4
+          ],
+          "horse_names": [
+            "サザンティスプーン",
+            "ホウオウゴールド"
+          ],
+          "stake_yen": 100,
+          "score": 0.550515,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸4 → 相手1,5,3",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "4-5",
+          "horses": [
+            4,
+            5
+          ],
+          "horse_names": [
+            "サザンティスプーン",
+            "エイシンマールス"
+          ],
+          "stake_yen": 100,
+          "score": 0.511349,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸4 → 相手1,5,3",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "3-4",
+          "horses": [
+            3,
+            4
+          ],
+          "horse_names": [
+            "サザンティスプーン",
+            "パヴィーア"
+          ],
+          "stake_yen": 100,
+          "score": 0.349841,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸4 → 相手1,5,3",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "4-9",
+          "horses": [
+            4,
+            9
+          ],
+          "horse_names": [
+            "サザンティスプーン",
+            "ダディーズグーグー"
+          ],
+          "stake_yen": 100,
+          "score": 0.204011,
+          "source": "csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "1-9",
+          "horses": [
+            1,
+            9
+          ],
+          "horse_names": [
+            "ホウオウゴールド",
+            "ダディーズグーグー"
+          ],
+          "stake_yen": 100,
+          "score": 0.188118,
+          "source": "csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "5-9",
+          "horses": [
+            5,
+            9
+          ],
+          "horse_names": [
+            "エイシンマールス",
+            "ダディーズグーグー"
+          ],
+          "stake_yen": 100,
+          "score": 0.174983,
+          "source": "csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "1-4-5",
+          "horses": [
+            1,
+            4,
+            5
+          ],
+          "horse_names": [
+            "サザンティスプーン",
+            "ホウオウゴールド",
+            "エイシンマールス"
+          ],
+          "stake_yen": 100,
+          "score": 0.362582,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸4-1 → 相手5,3,9",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "1-3-4",
+          "horses": [
+            1,
+            3,
+            4
+          ],
+          "horse_names": [
+            "サザンティスプーン",
+            "ホウオウゴールド",
+            "パヴィーア"
+          ],
+          "stake_yen": 100,
+          "score": 0.248061,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸4-1 → 相手5,3,9",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "1-4-9",
+          "horses": [
+            1,
+            4,
+            9
+          ],
+          "horse_names": [
+            "サザンティスプーン",
+            "ホウオウゴールド",
+            "ダディーズグーグー"
+          ],
+          "stake_yen": 100,
+          "score": 0.088198,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸4-1 → 相手5,3,9",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

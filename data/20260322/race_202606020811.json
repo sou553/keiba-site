@@ -11818,5 +11818,196 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "auto",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "14",
+          "horses": [
+            14
+          ],
+          "horse_names": [
+            "エコロアゼル"
+          ],
+          "stake_yen": 100,
+          "score": 0.404862,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率40.5% / 複勝率82.8%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "7",
+          "horses": [
+            7
+          ],
+          "horse_names": [
+            "エートラックス"
+          ],
+          "stake_yen": 100,
+          "score": 0.12465,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率12.5% / 複勝率42.7%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "7-14",
+          "horses": [
+            7,
+            14
+          ],
+          "horse_names": [
+            "エコロアゼル",
+            "エートラックス"
+          ],
+          "stake_yen": 100,
+          "score": 0.353527,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸14 → 相手7,10,6",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "10-14",
+          "horses": [
+            10,
+            14
+          ],
+          "horse_names": [
+            "エコロアゼル",
+            "ドラゴンウェルズ"
+          ],
+          "stake_yen": 100,
+          "score": 0.330258,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸14 → 相手7,10,6",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "6-14",
+          "horses": [
+            6,
+            14
+          ],
+          "horse_names": [
+            "エコロアゼル",
+            "ルディック"
+          ],
+          "stake_yen": 100,
+          "score": 0.24454,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸14 → 相手7,10,6",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "7-10-14",
+          "horses": [
+            7,
+            10,
+            14
+          ],
+          "horse_names": [
+            "エコロアゼル",
+            "エートラックス",
+            "ドラゴンウェルズ"
+          ],
+          "stake_yen": 100,
+          "score": 0.141003,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸14-7 → 相手10,6,12",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "6-7-14",
+          "horses": [
+            6,
+            7,
+            14
+          ],
+          "horse_names": [
+            "エコロアゼル",
+            "エートラックス",
+            "ルディック"
+          ],
+          "stake_yen": 100,
+          "score": 0.104406,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸14-7 → 相手10,6,12",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "7-12-14",
+          "horses": [
+            7,
+            12,
+            14
+          ],
+          "horse_names": [
+            "エコロアゼル",
+            "エートラックス",
+            "メイショウホウレン"
+          ],
+          "stake_yen": 100,
+          "score": 0.090418,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸14-7 → 相手10,6,12",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }
