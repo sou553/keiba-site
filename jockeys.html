@@ -1,368 +1,40 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>騎手別 当日騎乗一覧</title>
-  <link rel="stylesheet" href="./static/style.css" />
-  <style>
-    .jockeys-app {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 16px 12px 40px;
-    }
-    .jockey-page-head {
-      margin-bottom: 14px;
-    }
-    .jockey-page-head__top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-    .jockey-page-head__titlebox h1 {
-      margin: 0;
-      font-size: 1.5rem;
-      line-height: 1.3;
-    }
-    .jockey-page-head__sub {
-      margin-top: 4px;
-      color: #666;
-      font-size: 0.95rem;
-    }
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .jockey-date-strip {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 4px 0 8px;
-      scrollbar-width: thin;
-      margin-bottom: 12px;
-    }
-    .jockey-date-tab {
-      border: 1px solid #c8c1b6;
-      background: #fff;
-      border-radius: 999px;
-      padding: 8px 12px;
-      cursor: pointer;
-      white-space: nowrap;
-      font: inherit;
-    }
-    .jockey-date-tab.is-active {
-      background: #7a776d;
-      color: #fff;
-      border-color: #7a776d;
-    }
-    .jockey-toolbar {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-    .jockey-toolbar__group {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .jockey-toolbar input[type="search"],
-    .jockey-toolbar select {
-      min-height: 40px;
-      border: 1px solid #cfc8bc;
-      border-radius: 10px;
-      padding: 0 12px;
-      background: #fff;
-      font: inherit;
-    }
-    .jockey-toolbar input[type="search"] {
-      min-width: 220px;
-      flex: 1 1 260px;
-    }
-    .jockey-toolbar label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-      font-size: 0.92rem;
-    }
-    .jockey-overview {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-    .jockey-overview-card {
-      border: 1px solid #ddd4c5;
-      border-radius: 12px;
-      background: #faf7f1;
-      padding: 12px;
-    }
-    .jockey-overview-card__label {
-      font-size: 0.84rem;
-      color: #6b655b;
-      margin-bottom: 5px;
-    }
-    .jockey-overview-card__value {
-      font-size: 1.2rem;
-      font-weight: 700;
-    }
-    .status-box {
-      min-height: 24px;
-      margin-bottom: 12px;
-      color: #555;
-      font-size: 0.95rem;
-    }
-    .status-box.is-error { color: #b42318; }
-    .status-box.is-info { color: #555; }
-    .jockey-summary-list {
-      display: grid;
-      gap: 12px;
-    }
-    .jockey-card {
-      border: 1px solid #d8d0c2;
-      border-radius: 14px;
-      background: #fff;
-      overflow: hidden;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    }
-    .jockey-card__head {
-      width: 100%;
-      border: 0;
-      background: #fff;
-      text-align: left;
-      padding: 14px 14px 12px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      cursor: pointer;
-    }
-    .jockey-card__name {
-      font-size: 1.12rem;
-      font-weight: 700;
-      line-height: 1.35;
-    }
-    .jockey-card__meta,
-    .jockey-card__sub,
-    .jockey-card__comment {
-      margin-top: 4px;
-      color: #5d574f;
-      font-size: 0.93rem;
-      line-height: 1.55;
-    }
-    .jockey-card__side {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-    .jockey-card__arrow {
-      font-size: 1.05rem;
-      color: #666;
-      transition: transform .18s ease;
-    }
-    .jockey-card__head[aria-expanded="true"] .jockey-card__arrow {
-      transform: rotate(180deg);
-    }
-    .jockey-day-label {
-      display: inline-flex;
-      align-items: center;
-      min-height: 28px;
-      padding: 0 10px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      border: 1px solid transparent;
-    }
-    .jockey-day-label--strong {
-      background: #e6f4ea;
-      color: #1e6b37;
-      border-color: #b6ddc0;
-    }
-    .jockey-day-label--good {
-      background: #eef4ff;
-      color: #225ea8;
-      border-color: #c7daf8;
-    }
-    .jockey-day-label--wide {
-      background: #f9f2df;
-      color: #8a5a00;
-      border-color: #ebd8a2;
-    }
-    .jockey-day-label--value {
-      background: #f5efff;
-      color: #6f42c1;
-      border-color: #dbc8ff;
-    }
-    .jockey-day-label--neutral {
-      background: #f2f4f7;
-      color: #475467;
-      border-color: #d0d5dd;
-    }
-    .jockey-card__best {
-      padding: 0 14px 10px;
-      font-size: 0.93rem;
-      color: #333;
-    }
-    .jockey-card__comment {
-      padding: 0 14px 12px;
-      margin-top: 0;
-    }
-    .jockey-card__detail {
-      border-top: 1px solid #ece5d9;
-      background: #fbfaf8;
-      padding: 10px 14px 14px;
-    }
-    .jockey-rides {
-      display: grid;
-      gap: 8px;
-    }
-    .jockey-rides__head,
-    .jockey-rides__row {
-      display: grid;
-      grid-template-columns: 70px 46px 46px minmax(150px, 1.4fr) 58px 72px 50px 50px 72px 72px 96px 74px;
-      gap: 8px;
-      align-items: center;
-    }
-    .jockey-rides__head {
-      font-size: 0.82rem;
-      color: #666;
-      padding: 4px 8px 6px;
-      border-bottom: 1px solid #e7dfd3;
-    }
-    .jockey-rides__row {
-      background: #fff;
-      border: 1px solid #e7dfd3;
-      border-radius: 10px;
-      padding: 10px 8px;
-      font-size: 0.92rem;
-    }
-    .jockey-rides__horse {
-      font-weight: 600;
-      line-height: 1.45;
-      min-width: 0;
-    }
-    .jockey-rides__horse-sub {
-      color: #666;
-      font-size: 0.8rem;
-      margin-top: 2px;
-    }
-    .ride-pill {
-      display: inline-flex;
-      align-items: center;
-      min-height: 24px;
-      padding: 0 8px;
-      border-radius: 999px;
-      font-size: 0.77rem;
-      font-weight: 700;
-      background: #f2f4f7;
-      color: #475467;
-      border: 1px solid #d0d5dd;
-      white-space: nowrap;
-    }
-    .ride-pill--value {
-      background: #f5efff;
-      color: #6f42c1;
-      border-color: #dbc8ff;
-    }
-    .ride-pill--danger {
-      background: #fef3f2;
-      color: #b42318;
-      border-color: #f7c5bf;
-    }
-    .ride-pill--popular {
-      background: #ecfdf3;
-      color: #027a48;
-      border-color: #abefc6;
-    }
-    .ride-pill--course {
-      background: #eef4ff;
-      color: #225ea8;
-      border-color: #c7daf8;
-    }
-    .ride-link {
-      text-decoration: none;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-    .jockey-empty {
-      padding: 24px 12px;
-      text-align: center;
-      color: #666;
-      background: #faf7f1;
-      border: 1px solid #ddd4c5;
-      border-radius: 14px;
-    }
-
-    @media (max-width: 980px) {
-      .jockey-toolbar {
-        grid-template-columns: 1fr;
-      }
-      .jockey-overview {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .jockey-rides__head {
-        display: none;
-      }
-      .jockey-rides__row {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px 10px;
-      }
-      .jockey-rides__row > span,
-      .jockey-rides__row > div,
-      .jockey-rides__row > a {
-        min-width: 0;
-      }
-      .jockey-rides__row > [data-full="1"] {
-        grid-column: 1 / -1;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .jockeys-app {
-        padding: 12px 10px 32px;
-      }
-      .jockey-overview {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
-      .jockey-page-head__titlebox h1 {
-        font-size: 1.25rem;
-      }
-      .jockey-card__head {
-        padding: 12px;
-      }
-      .jockey-card__best,
-      .jockey-card__comment,
-      .jockey-card__detail {
-        padding-left: 12px;
-        padding-right: 12px;
-      }
-      .jockey-toolbar input[type="search"] {
-        min-width: 0;
-        width: 100%;
-      }
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f3ea">
+  <title>騎手一覧 | 予想整理サイト</title>
+  <meta name="description" content="開催日ごとの騎手別 当日騎乗一覧">
+  <link rel="icon" type="image/png" href="./S_firebase_mini.png">
+  <link rel="stylesheet" href="./static/style.css">
 </head>
-<body>
-  <div id="jockeys-app" class="jockeys-app">
+<body data-data-root="./data" data-index-page="index.html" data-race-page="race_detail.html" data-past-page="past_detail.html" data-betting-page="betting.html" data-jockeys-page="jockeys.html">
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-brand" href="./index.html" aria-label="トップへ戻る">
+          <span class="site-brand__icon">競</span>
+          <span class="site-brand__texts">
+            <strong class="site-brand__title">予想整理サイト</strong>
+            <span class="site-brand__sub">予想まとめ / netkeiba寄せ / スマホ重視</span>
+          </span>
+        </a>
+        <div class="site-header__actions">
+          <a class="action-link" href="./jockeys.html">騎手一覧</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page page--jockeys">
+      <div id="jockeys-app" class="jockeys-app">
     <header class="jockey-page-head">
       <div class="jockey-page-head__top">
         <div class="jockey-page-head__titlebox">
+          <div class="badge badge--blue">騎手一覧</div>
           <h1>騎手別 当日騎乗一覧</h1>
           <div class="jockey-page-head__sub">その日の全レースを騎手ごとに再集約して表示</div>
         </div>
-        <a href="./index.html" class="back-link">一覧へ戻る</a>
       </div>
 
       <section id="jockey-date-strip" class="jockey-date-strip" aria-label="開催日切替"></section>
@@ -395,7 +67,9 @@
 
     <section id="jockey-overview" class="jockey-overview" aria-label="集計サマリー"></section>
     <div id="status-box" class="status-box is-info" aria-live="polite"></div>
-    <main id="jockey-summary-list" class="jockey-summary-list"></main>
+    <section id="jockey-summary-list" class="jockey-summary-list"></section>
+      </div>
+    </main>
   </div>
 
   <script src="./static/analysis_common.js"></script>
