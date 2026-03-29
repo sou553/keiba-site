@@ -3621,5 +3621,218 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "mixed",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "8",
+          "horses": [
+            8
+          ],
+          "horse_names": [
+            "マテンロウアワー"
+          ],
+          "stake_yen": 100,
+          "score": 0.408875,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率40.9% / 複勝率92.4%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "10",
+          "horses": [
+            10
+          ],
+          "horse_names": [
+            "コスモブラック"
+          ],
+          "stake_yen": 100,
+          "score": 0.401899,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率40.2% / 複勝率92.1%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "8-13",
+          "horses": [
+            8,
+            13
+          ],
+          "horse_names": [
+            "マテンロウアワー",
+            "ノリノドラゴン"
+          ],
+          "stake_yen": 100,
+          "score": 0.240402,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸8 → 相手10,13,1",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "10-13",
+          "horses": [
+            10,
+            13
+          ],
+          "horse_names": [
+            "コスモブラック",
+            "ノリノドラゴン"
+          ],
+          "stake_yen": 100,
+          "score": 0.239773,
+          "source": "auto",
+          "reason": "上位拮抗の保険1点",
+          "tags": [
+            "自動",
+            "馬連",
+            "保険"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "1-8",
+          "horses": [
+            1,
+            8
+          ],
+          "horse_names": [
+            "マテンロウアワー",
+            "メイショウペイト"
+          ],
+          "stake_yen": 100,
+          "score": 0.180038,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸8 → 相手10,13,1",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "8-10",
+          "horses": [
+            8,
+            10
+          ],
+          "horse_names": [
+            "マテンロウアワー",
+            "コスモブラック"
+          ],
+          "stake_yen": 100,
+          "score": 0.146635,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "1頭軸流し",
+            "CSV",
+            "自動",
+            "馬連"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "8-10-13",
+          "horses": [
+            8,
+            10,
+            13
+          ],
+          "horse_names": [
+            "マテンロウアワー",
+            "コスモブラック",
+            "ノリノドラゴン"
+          ],
+          "stake_yen": 100,
+          "score": 0.221461,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸8-10 → 相手13,1,4",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "1-8-10",
+          "horses": [
+            1,
+            8,
+            10
+          ],
+          "horse_names": [
+            "マテンロウアワー",
+            "コスモブラック",
+            "メイショウペイト"
+          ],
+          "stake_yen": 100,
+          "score": 0.165853,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸8-10 → 相手13,1,4",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "4-8-10",
+          "horses": [
+            4,
+            8,
+            10
+          ],
+          "horse_names": [
+            "マテンロウアワー",
+            "コスモブラック",
+            "リントゥラウル"
+          ],
+          "stake_yen": 100,
+          "score": 0.150788,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸8-10 → 相手13,1,4",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

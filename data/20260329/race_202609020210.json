@@ -6644,5 +6644,196 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "auto",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "3",
+          "horses": [
+            3
+          ],
+          "horse_names": [
+            "ミッキーゴールド"
+          ],
+          "stake_yen": 100,
+          "score": 0.311798,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率31.2% / 複勝率75.1%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "11",
+          "horses": [
+            11
+          ],
+          "horse_names": [
+            "アロンディ"
+          ],
+          "stake_yen": 100,
+          "score": 0.200814,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率20.1% / 複勝率59.4%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "3-11",
+          "horses": [
+            3,
+            11
+          ],
+          "horse_names": [
+            "ミッキーゴールド",
+            "アロンディ"
+          ],
+          "stake_yen": 100,
+          "score": 0.446383,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸3 → 相手11,1,8",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "1-3",
+          "horses": [
+            1,
+            3
+          ],
+          "horse_names": [
+            "ミッキーゴールド",
+            "コーチェラバレー"
+          ],
+          "stake_yen": 100,
+          "score": 0.41656,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸3 → 相手11,1,8",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "3-8",
+          "horses": [
+            3,
+            8
+          ],
+          "horse_names": [
+            "ミッキーゴールド",
+            "キングスコール"
+          ],
+          "stake_yen": 100,
+          "score": 0.281614,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸3 → 相手11,1,8",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "1-3-11",
+          "horses": [
+            1,
+            3,
+            11
+          ],
+          "horse_names": [
+            "ミッキーゴールド",
+            "アロンディ",
+            "コーチェラバレー"
+          ],
+          "stake_yen": 100,
+          "score": 0.247598,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸3-11 → 相手1,8,2",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "3-8-11",
+          "horses": [
+            3,
+            8,
+            11
+          ],
+          "horse_names": [
+            "ミッキーゴールド",
+            "アロンディ",
+            "キングスコール"
+          ],
+          "stake_yen": 100,
+          "score": 0.167388,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸3-11 → 相手1,8,2",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "2-3-11",
+          "horses": [
+            2,
+            3,
+            11
+          ],
+          "horse_names": [
+            "ミッキーゴールド",
+            "アロンディ",
+            "ベトルス"
+          ],
+          "stake_yen": 100,
+          "score": 0.137998,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸3-11 → 相手1,8,2",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }

@@ -3724,5 +3724,238 @@
         }
       }
     }
-  ]
+  ],
+  "betting_recommendation": {
+    "source": "mixed",
+    "strategy": "hit_rate_first_compact",
+    "bet_types": [
+      "単勝",
+      "馬連",
+      "三連複"
+    ],
+    "tickets": {
+      "tansho": [
+        {
+          "bet_type": "単勝",
+          "numbers": "2",
+          "horses": [
+            2
+          ],
+          "horse_names": [
+            "プルメリアリノ"
+          ],
+          "stake_yen": 100,
+          "score": 0.432009,
+          "source": "auto",
+          "reason": "上位1位候補 / 勝率43.2% / 複勝率91.7%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        },
+        {
+          "bet_type": "単勝",
+          "numbers": "7",
+          "horses": [
+            7
+          ],
+          "horse_names": [
+            "コックピットサイト"
+          ],
+          "stake_yen": 100,
+          "score": 0.348117,
+          "source": "auto",
+          "reason": "上位2位候補 / 勝率34.8% / 複勝率88.0%",
+          "tags": [
+            "自動",
+            "単勝"
+          ]
+        }
+      ],
+      "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "2-6",
+          "horses": [
+            2,
+            6
+          ],
+          "horse_names": [
+            "プルメリアリノ",
+            "ビルバンテ"
+          ],
+          "stake_yen": 100,
+          "score": 0.282752,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸2 → 相手7,6,4",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "2-7",
+          "horses": [
+            2,
+            7
+          ],
+          "horse_names": [
+            "プルメリアリノ",
+            "コックピットサイト"
+          ],
+          "stake_yen": 100,
+          "score": 0.26006,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "1頭軸流し",
+            "CSV",
+            "自動",
+            "馬連"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "2-4",
+          "horses": [
+            2,
+            4
+          ],
+          "horse_names": [
+            "プルメリアリノ",
+            "マーガレットクレア"
+          ],
+          "stake_yen": 100,
+          "score": 0.147509,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸2 → 相手7,6,4",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "6-7",
+          "horses": [
+            6,
+            7
+          ],
+          "horse_names": [
+            "ビルバンテ",
+            "コックピットサイト"
+          ],
+          "stake_yen": 100,
+          "score": 0.093248,
+          "source": "auto+csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV",
+            "保険",
+            "自動",
+            "馬連"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "4-7",
+          "horses": [
+            4,
+            7
+          ],
+          "horse_names": [
+            "マーガレットクレア",
+            "コックピットサイト"
+          ],
+          "stake_yen": 100,
+          "score": 0.069022,
+          "source": "csv",
+          "reason": "CSV 推奨",
+          "tags": [
+            "CSV"
+          ]
+        }
+      ],
+      "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "2-6-7",
+          "horses": [
+            2,
+            6,
+            7
+          ],
+          "horse_names": [
+            "プルメリアリノ",
+            "コックピットサイト",
+            "ビルバンテ"
+          ],
+          "stake_yen": 100,
+          "score": 0.248733,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸2-7 → 相手6,4,8",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "2-4-7",
+          "horses": [
+            2,
+            4,
+            7
+          ],
+          "horse_names": [
+            "プルメリアリノ",
+            "コックピットサイト",
+            "マーガレットクレア"
+          ],
+          "stake_yen": 100,
+          "score": 0.129762,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸2-7 → 相手6,4,8",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "2-7-8",
+          "horses": [
+            2,
+            7,
+            8
+          ],
+          "horse_names": [
+            "プルメリアリノ",
+            "コックピットサイト",
+            "コウジハラ"
+          ],
+          "stake_yen": 100,
+          "score": 0.105892,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸2-7 → 相手6,4,8",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
+      "買い目CSVがあるレースでも自動生成を併記",
+      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
+      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+    ]
+  }
 }
