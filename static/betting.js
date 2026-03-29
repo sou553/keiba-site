@@ -164,11 +164,29 @@
     return Number(a?.pred_order || 999) - Number(b?.pred_order || 999);
   }
 
+  function fallbackSort(a, b) {
+    const aPred = Number.isFinite(Number(a?.pred_order)) ? Number(a.pred_order) : 999;
+    const bPred = Number.isFinite(Number(b?.pred_order)) ? Number(b.pred_order) : 999;
+    if (aPred !== bPred) return aPred - bPred;
+
+    const aCourse = Number.isFinite(Number(a?.course_adv_rank)) ? Number(a.course_adv_rank) : 999;
+    const bCourse = Number.isFinite(Number(b?.course_adv_rank)) ? Number(b.course_adv_rank) : 999;
+    if (aCourse !== bCourse) return aCourse - bCourse;
+
+    const aPop = Number.isFinite(Number(a?.popularity)) ? Number(a.popularity) : 999;
+    const bPop = Number.isFinite(Number(b?.popularity)) ? Number(b.popularity) : 999;
+    if (aPop !== bPop) return aPop - bPop;
+
+    const aOdds = Number.isFinite(Number(a?.tansho_odds)) ? Number(a.tansho_odds) : 999;
+    const bOdds = Number.isFinite(Number(b?.tansho_odds)) ? Number(b.tansho_odds) : 999;
+    if (aOdds !== bOdds) return aOdds - bOdds;
+
+    return Number(a?.umaban || 999) - Number(b?.umaban || 999);
+  }
+
   function buildAutoFallback() {
-    const sorted = horses().sort(hitSort);
+    const sorted = horses().sort(fallbackSort);
     const top2 = sorted.slice(0, Math.min(2, sorted.length));
-    const top4 = sorted.slice(0, Math.min(4, sorted.length));
-    const top5 = sorted.slice(0, Math.min(5, sorted.length));
 
     const tansho = top2.map((h, idx) => ({
       bet_type: '単勝',
@@ -176,55 +194,61 @@
       horses: [Number(h.umaban)],
       horse_names: [h.horse_name],
       stake_yen: 100,
-      score: Number(h.p_win || NaN),
+      score: Number(h.pred_order || NaN) * -1,
       source: 'auto',
-      reason: `的中率寄り / 上位${idx + 1}位候補 / 勝率 ${RA.fmtPct(h.p_win)} / 複勝率 ${RA.fmtPct(h.p_top3)}`,
-      tags: ['自動', '上位候補'],
+      reason: `自動生成 / 上位${idx + 1}候補 / AI ${h.pred_order ?? '-'}位 / 適性 ${h.course_adv_rank ?? '-'}位 / 人気 ${h.popularity ?? '-'}位`,
+      tags: ['自動', '単勝'],
     }));
 
     const umaren = [];
-    for (let i = 0; i < top4.length; i += 1) {
-      for (let j = i + 1; j < top4.length; j += 1) {
-        const a = top4[i], b = top4[j];
-        const nums = [Number(a.umaban), Number(b.umaban)].sort((x, y) => x - y);
+    if (sorted.length >= 2) {
+      const axis = sorted[0];
+      const partners = sorted.slice(1, 4); // 1頭軸流し3点まで
+      const partnerNums = partners.map((h) => h.umaban).join(',');
+
+      partners.forEach((h) => {
+        const nums = [Number(axis.umaban), Number(h.umaban)].sort((x, y) => x - y);
         umaren.push({
           bet_type: '馬連',
           numbers: nums.join('-'),
           horses: nums,
-          horse_names: [a.horse_name, b.horse_name],
+          horse_names: [axis.horse_name, h.horse_name],
           stake_yen: 100,
-          score: Number((a.p_top3 || 0) * (b.p_top3 || 0)),
+          score: -(Number(axis.pred_order || 999) + Number(h.pred_order || 999)),
           source: 'auto',
-          reason: `的中率寄り / 上位${top4.length}頭BOX`,
-          tags: ['自動', `${top4.length}頭BOX`],
+          reason: `自動生成 / 1頭軸流し / 軸${axis.umaban} → 相手${partnerNums}`,
+          tags: ['自動', '馬連', '1頭軸流し'],
         });
-      }
+      });
     }
 
     const trio = [];
-    for (let i = 0; i < top5.length; i += 1) {
-      for (let j = i + 1; j < top5.length; j += 1) {
-        for (let k = j + 1; k < top5.length; k += 1) {
-          const a = top5[i], b = top5[j], c = top5[k];
-          const nums = [Number(a.umaban), Number(b.umaban), Number(c.umaban)].sort((x, y) => x - y);
-          trio.push({
-            bet_type: '三連複',
-            numbers: nums.join('-'),
-            horses: nums,
-            horse_names: [a.horse_name, b.horse_name, c.horse_name],
-            stake_yen: 100,
-            score: Number((a.p_top3 || 0) * (b.p_top3 || 0) * (c.p_top3 || 0)),
-            source: 'auto',
-            reason: `的中率寄り / 上位${top5.length}頭BOX`,
-            tags: ['自動', `${top5.length}頭BOX`],
-          });
-        }
-      }
+    if (sorted.length >= 3) {
+      const axis1 = sorted[0];
+      const axis2 = sorted[1];
+      const partners = sorted.slice(2, 5); // 2頭軸流し3点まで
+      const partnerNums = partners.map((h) => h.umaban).join(',');
+
+      partners.forEach((h) => {
+        const nums = [Number(axis1.umaban), Number(axis2.umaban), Number(h.umaban)].sort((x, y) => x - y);
+        trio.push({
+          bet_type: '三連複',
+          numbers: nums.join('-'),
+          horses: nums,
+          horse_names: [axis1.horse_name, axis2.horse_name, h.horse_name],
+          stake_yen: 100,
+          score: -(Number(axis1.pred_order || 999) + Number(axis2.pred_order || 999) + Number(h.pred_order || 999)),
+          source: 'auto',
+          reason: `自動生成 / 2頭軸流し / 軸${axis1.umaban}-${axis2.umaban} → 相手${partnerNums}`,
+          tags: ['自動', '三連複', '2頭軸流し'],
+        });
+      });
     }
+
     return {
       source: 'auto',
-      strategy: 'hit_rate_first',
-      notes: ['JSON内推奨なし', '単勝2点 / 馬連4頭BOX / 三連複5頭BOX'],
+      strategy: 'ai_course_popularity_fallback',
+      notes: ['JSON内推奨なし', '単勝2点 / 馬連1頭軸流し / 三連複2頭軸流し'],
       tickets: { tansho, umaren, trio },
     };
   }
