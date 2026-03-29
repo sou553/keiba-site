@@ -40,6 +40,12 @@
     return 'mini-pill--plain';
   }
 
+  function isCsvTicket(ticket) {
+    const source = String(ticket?.source || '').toLowerCase();
+    if (source.split('+').includes('csv')) return true;
+    return Array.isArray(ticket?.tags) && ticket.tags.some((tag) => String(tag).toUpperCase() === 'CSV');
+  }
+
   function renderLayout() {
     const root = qs('#betting-app');
     root.innerHTML = `
@@ -292,13 +298,36 @@
       el.innerHTML = '<div class="section-subtitle">該当なし</div>';
       return;
     }
-    el.innerHTML = tickets.map((t) => `
-      <div class="ticket-card">
-        <div class="ticket-card__type">${RA.esc((t.tags || []).join(' / ') || t.source || '')}</div>
-        <div class="ticket-card__horses">${RA.esc(t.numbers)} ${t.horse_names?.length ? ` / ${RA.esc(t.horse_names.join(' - '))}` : ''}</div>
-        <div class="ticket-card__meta">${RA.esc(t.reason || '')}${Number.isFinite(t.score) ? ` / score ${RA.fmtNum(t.score)}` : ''} / ${RA.esc(String(t.stake_yen))}円</div>
-      </div>
-    `).join('');
+
+    const sorted = [...tickets].sort((a, b) => {
+      const aCsv = isCsvTicket(a) ? 1 : 0;
+      const bCsv = isCsvTicket(b) ? 1 : 0;
+      if (bCsv !== aCsv) return bCsv - aCsv;
+
+      const aScore = Number.isFinite(a.score) ? a.score : -999;
+      const bScore = Number.isFinite(b.score) ? b.score : -999;
+      return bScore - aScore;
+    });
+
+    el.innerHTML = sorted.map((t) => {
+      const csv = isCsvTicket(t);
+      const typeLabel = (t.tags || []).join(' / ') || t.source || '';
+      return `
+        <div class="ticket-card ${csv ? 'ticket-card--csv' : ''}">
+          <div class="ticket-card__head">
+            <div class="ticket-card__type">${RA.esc(typeLabel)}</div>
+            ${csv ? '<span class="mini-pill mini-pill--csv">CSV推奨</span>' : ''}
+          </div>
+          <div class="ticket-card__horses">${RA.esc(t.numbers)}${t.horse_names?.length ? ` / ${RA.esc(t.horse_names.join(' - '))}` : ''}</div>
+          <div class="ticket-card__meta">
+            ${csv ? 'CSV推奨を含む / ' : ''}
+            ${RA.esc(t.reason || '')}
+            ${Number.isFinite(t.score) ? ` / score ${RA.fmtNum(t.score)}` : ''}
+            / ${RA.esc(String(t.stake_yen))}円
+          </div>
+        </div>
+      `;
+    }).join('');
   }
 
   function renderRecommendations() {
@@ -312,13 +341,15 @@
       ...(rec.tickets.umaren || []),
       ...(rec.tickets.trio || []),
     ];
+    const csvCount = allTickets.filter(isCsvTicket).length;
     const total = allTickets.reduce((sum, t) => sum + (Number(t.stake_yen || 0) || 0), 0);
     qs('#bet-reco-chips').innerHTML = [
       `<span class="mini-pill mini-pill--plain">${RA.esc(rec.source || 'auto')}</span>`,
       `<span class="mini-pill mini-pill--plain">${RA.esc(rec.strategy || 'hit_rate_first')}</span>`,
+      csvCount ? `<span class="mini-pill mini-pill--csv">CSV推奨 ${csvCount}点</span>` : '',
       `<span class="mini-pill mini-pill--plain">${allTickets.length}点</span>`,
       `<span class="mini-pill mini-pill--plain">${total.toLocaleString('ja-JP')}円</span>`
-    ].join('');
+    ].filter(Boolean).join('');
 
     qs('#bet-summary-chips').innerHTML = (rec.notes || []).map((n) => `<span class="mini-pill mini-pill--plain">${RA.esc(n)}</span>`).join('');
 
@@ -355,7 +386,7 @@
 
       renderHero();
       renderTabs();
-      renderSummary();
+      //renderSummary();
       renderRecommendations();
       bindCopy();
 
