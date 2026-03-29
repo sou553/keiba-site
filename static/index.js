@@ -89,10 +89,7 @@
           <div class="index-hero__text">
             <div class="badge badge--blue">予想まとめ</div>
             <h1>予想トップ</h1>
-            <p>人気馬の評価、穴候補、危険人気をレース単位で先に見てから、出走馬一覧・過去走比較・買い目作成へ進める形や。</p>
-            <div class="index-hero__actions" style="margin-top:12px;">
-              <a class="action-link" id="hero-jockey-link" href="./jockeys.html">騎手一覧</a>
-            </div>
+            <p>出走馬一覧・過去走比較・買い目作成</p>
           </div>
           <div id="hero-stats" class="hero-stats"></div>
         </section>
@@ -314,7 +311,6 @@
             <a class="action-link action-link--primary" href="${RA.esc(buildUrl('race', race.race_id, detail.race_date))}">出走馬一覧</a>
             <a class="action-link" href="${RA.esc(buildUrl('past', race.race_id, detail.race_date))}">過去走比較</a>
             <a class="action-link" href="${RA.esc(buildUrl('betting', race.race_id, detail.race_date))}">買い目作成</a>
-            <a class="action-link" href="${RA.esc(buildJockeysUrl(detail.race_date))}">騎手一覧</a>
           </div>
         </article>`;
     }).join('');
