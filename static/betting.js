@@ -53,7 +53,6 @@
         <div id="betting-status" class="page-status" hidden></div>
         <section id="betting-hero" class="sheet race-hero"></section>
         <nav id="betting-tabs" class="page-tab-strip"></nav>
-        <!-- <section id="betting-summary" class="sheet summary-panel"></section> -->
 
         <section class="sheet betting-reco-panel">
           <div class="section-title-row">
@@ -63,43 +62,24 @@
             </div>
             <div class="summary-chip-row" id="bet-reco-chips"></div>
           </div>
+
           <div class="reco-grid">
             <section class="reco-box reco-box--highlight">
               <h3 class="reco-box__title">単勝</h3>
               <div id="reco-tansho" class="reco-list"></div>
             </section>
+
             <section class="reco-box">
               <h3 class="reco-box__title">馬連</h3>
               <div id="reco-umaren" class="reco-list"></div>
             </section>
           </div>
-          <div style="margin-top:12px;">
-            <section class="reco-box">
-              <h3 class="reco-box__title">三連複</h3>
-              <div id="reco-trio" class="reco-list"></div>
-            </section>
+
+          <div class="reco-box" style="margin-top:12px;">
+            <h3 class="reco-box__title">三連複</h3>
+            <div id="reco-trio" class="reco-list"></div>
           </div>
         </section>
-
-        <section class="sheet betting-result-panel">
-          <div class="ticket-box__head">
-            <div>
-              <h2 class="section-title" style="margin:0;">買い目テキスト</h2>
-              <div class="section-subtitle">コピー用の一覧です。</div>
-            </div>
-            <div class="summary-chip-row" id="bet-summary-chips"></div>
-          </div>
-          <div id="ticket-list" class="ticket-list"></div>
-          <textarea id="ticket-text" class="ticket-textarea" readonly></textarea>
-        </section>
-
-        <div class="betting-sticky-bar">
-          <div class="betting-sticky-bar__main">
-            <div class="compare-toolbar__meta">合計</div>
-            <div id="sticky-total" class="betting-sticky-bar__value">0点 / 0円</div>
-          </div>
-          <button id="copy-ticket" type="button" class="action-link action-link--primary ticket-copy">買い目をコピー</button>
-        </div>
       </section>`;
   }
 
@@ -292,6 +272,41 @@
     };
   }
 
+function getTicketHorseRows(ticket) {
+  const nums = Array.isArray(ticket?.horses) && ticket.horses.length
+    ? ticket.horses
+    : String(ticket?.numbers || '')
+        .split('-')
+        .map((v) => Number(v))
+        .filter((v) => Number.isFinite(v));
+
+  return nums.map((umaban, idx) => {
+    const horse = findHorseByUmaban(umaban);
+    const name = horse?.horse_name || ticket?.horse_names?.[idx] || `${umaban}番`;
+    return { umaban, name };
+  });
+}
+
+  function splitReasonParts(ticket) {
+    const parts = [];
+    if (ticket?.reason) {
+      String(ticket.reason)
+        .split('/')
+        .map((v) => v.trim())
+        .filter(Boolean)
+        .forEach((v) => parts.push(v));
+    }
+    if (Number.isFinite(ticket?.score)) parts.push(`score ${RA.fmtNum(ticket.score)}`);
+    parts.push(`${ticket?.stake_yen || 100}円`);
+    return parts;
+  }
+
+  function comboCardClass(ticket) {
+    if (ticket?.bet_type === '馬連') return 'ticket-card--umaren';
+    if (ticket?.bet_type === '三連複') return 'ticket-card--trio';
+    return 'ticket-card--tansho';
+  }
+
   function renderRecoList(target, tickets) {
     const el = qs(target);
     if (!tickets.length) {
@@ -312,18 +327,31 @@
     el.innerHTML = sorted.map((t) => {
       const csv = isCsvTicket(t);
       const typeLabel = (t.tags || []).join(' / ') || t.source || '';
+      const horseRows = getTicketHorseRows(t);
+      const reasonParts = splitReasonParts(t);
+
       return `
-        <div class="ticket-card ${csv ? 'ticket-card--csv' : ''}">
+        <div class="ticket-card ticket-card--compact ${comboCardClass(t)} ${csv ? 'ticket-card--csv' : ''}">
           <div class="ticket-card__head">
             <div class="ticket-card__type">${RA.esc(typeLabel)}</div>
             ${csv ? '<span class="mini-pill mini-pill--csv">CSV推奨</span>' : ''}
           </div>
-          <div class="ticket-card__horses">${RA.esc(t.numbers)}${t.horse_names?.length ? ` / ${RA.esc(t.horse_names.join(' - '))}` : ''}</div>
-          <div class="ticket-card__meta">
-            ${csv ? 'CSV推奨を含む / ' : ''}
-            ${RA.esc(t.reason || '')}
-            ${Number.isFinite(t.score) ? ` / score ${RA.fmtNum(t.score)}` : ''}
-            / ${RA.esc(String(t.stake_yen))}円
+
+          <div class="ticket-card__numbers">${RA.esc(t.numbers)}</div>
+
+          <div class="ticket-card__horse-tags">
+            ${horseRows.map((row) => `
+              <div class="ticket-horse-tag">
+                <span class="ticket-horse-tag__no">${RA.esc(String(row.umaban))}</span>
+                <span class="ticket-horse-tag__name">${RA.esc(row.name)}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="ticket-card__meta-chips">
+            ${reasonParts.map((part) => `
+              <span class="ticket-meta-chip">${RA.esc(part)}</span>
+            `).join('')}
           </div>
         </div>
       `;
@@ -341,8 +369,10 @@
       ...(rec.tickets.umaren || []),
       ...(rec.tickets.trio || []),
     ];
+
     const csvCount = allTickets.filter(isCsvTicket).length;
     const total = allTickets.reduce((sum, t) => sum + (Number(t.stake_yen || 0) || 0), 0);
+
     qs('#bet-reco-chips').innerHTML = [
       `<span class="mini-pill mini-pill--plain">${RA.esc(rec.source || 'auto')}</span>`,
       `<span class="mini-pill mini-pill--plain">${RA.esc(rec.strategy || 'hit_rate_first')}</span>`,
@@ -350,15 +380,6 @@
       `<span class="mini-pill mini-pill--plain">${allTickets.length}点</span>`,
       `<span class="mini-pill mini-pill--plain">${total.toLocaleString('ja-JP')}円</span>`
     ].filter(Boolean).join('');
-
-    qs('#bet-summary-chips').innerHTML = (rec.notes || []).map((n) => `<span class="mini-pill mini-pill--plain">${RA.esc(n)}</span>`).join('');
-
-    qs('#ticket-list').innerHTML = allTickets.length
-      ? allTickets.map((t) => `<div class="ticket-item"><span class="ticket-item__bet">${RA.esc(t.bet_type)} ${RA.esc(t.numbers)}</span><span class="ticket-item__yen">${RA.esc(String(t.stake_yen))}円</span></div>`).join('')
-      : '<div class="section-subtitle">表示できる買い目がありません。</div>';
-
-    qs('#ticket-text').value = allTickets.map((t) => `${t.bet_type} ${t.numbers} ${t.stake_yen}円`).join('\n');
-    qs('#sticky-total').textContent = `${allTickets.length}点 / ${total.toLocaleString('ja-JP')}円`;
   }
 
   function bindCopy() {
@@ -388,7 +409,7 @@
       renderTabs();
       //renderSummary();
       renderRecommendations();
-      bindCopy();
+      //bindCopy();
 
       document.title = `${state.data.race?.course || ''} ${state.data.race?.race_no || ''}R ${state.data.race?.race_name || state.data.race?.title || ''} | 推奨買い目`;
       qs('#betting-status').hidden = true;
