@@ -2759,3 +2759,111 @@ select {
     font-size: 15px;
   }
 }
+
+
+/* ===== jockey compact mobile fix ===== */
+.jockey-ride-cell--compact-head {
+  display: none;
+}
+
+.jockey-ride-compact-head__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.jockey-ride-compact-head__pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid #ddd4c5;
+  background: #faf7f1;
+  color: #5d574f;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+@media (max-width: 640px) {
+  .jockey-card__best {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    padding-bottom: 8px;
+  }
+
+  .jockey-card__detail {
+    padding-top: 8px;
+  }
+
+  .jockey-rides {
+    gap: 6px;
+  }
+
+  .jockey-rides__body {
+    gap: 6px;
+  }
+
+  .jockey-rides__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 10px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .jockey-ride-cell {
+    gap: 2px;
+  }
+
+  .jockey-ride-cell::before {
+    font-size: 10px;
+    line-height: 1.15;
+  }
+
+  .jockey-ride-cell__value {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .jockey-ride-cell--compact-head {
+    display: grid;
+  }
+
+  .jockey-ride-cell--course,
+  .jockey-ride-cell--race,
+  .jockey-ride-cell--umaban {
+    display: none;
+  }
+
+  .jockey-ride-cell--horse {
+    padding-bottom: 6px;
+    margin-bottom: 0;
+  }
+
+  .jockey-ride-cell--horse .jockey-rides__horse {
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .jockey-rides__horse-sub {
+    font-size: 11px;
+    margin-top: 1px;
+  }
+
+  .jockey-ride-cell--pill,
+  .jockey-ride-cell--link {
+    align-self: center;
+  }
+
+  .jockey-ride-cell--link .ride-link {
+    min-height: 30px;
+    font-size: 13px;
+  }
+
+  .ride-pill {
+    min-height: 22px;
+    padding: 0 7px;
+    font-size: 11px;
+  }
+}

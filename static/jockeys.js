@@ -539,6 +539,20 @@
     `;
   }
 
+  function renderCompactHeadCell(ride) {
+    return renderRideCell(
+      "基本",
+      `
+        <div class="jockey-ride-compact-head__items">
+          <span class="jockey-ride-compact-head__pill">${escapeHtml(ride.course || "-")}</span>
+          <span class="jockey-ride-compact-head__pill">${escapeHtml(String(ride.race_no ?? "-"))}R</span>
+          <span class="jockey-ride-compact-head__pill">${escapeHtml(String(ride.umaban ?? "-"))}番</span>
+        </div>
+      `,
+      "jockey-ride-cell--compact-head jockey-ride-cell--full"
+    );
+  }
+
   function renderRideRow(ride) {
     const label = ride.main_label;
     const labelClass = label.type === "value" ? "ride-pill--value"
@@ -549,9 +563,10 @@
 
     return `
       <article class="jockey-rides__row">
-        ${renderRideCell("会場", escapeHtml(ride.course || "-"))}
-        ${renderRideCell("R", `${escapeHtml(String(ride.race_no ?? "-"))}R`)}
-        ${renderRideCell("馬番", escapeHtml(String(ride.umaban ?? "-")))}
+        ${renderCompactHeadCell(ride)}
+        ${renderRideCell("会場", escapeHtml(ride.course || "-"), "jockey-ride-cell--course")}
+        ${renderRideCell("R", `${escapeHtml(String(ride.race_no ?? "-"))}R`, "jockey-ride-cell--race")}
+        ${renderRideCell("馬番", escapeHtml(String(ride.umaban ?? "-")), "jockey-ride-cell--umaban")}
         ${renderRideCell("馬名", `
           <div class="jockey-rides__horse">
             ${escapeHtml(ride.horse_name || "-")}
@@ -564,8 +579,8 @@
         ${renderRideCell("適性", escapeHtml(String(ride.course_adv_rank ?? "-")))}
         ${renderRideCell("勝率", escapeHtml(fmtPct(ride.p_win)))}
         ${renderRideCell("複勝率", escapeHtml(fmtPct(ride.p_top3)))}
-        ${renderRideCell("判定", `<span class="ride-pill ${labelClass}">${escapeHtml(label.text)}</span>`, "jockey-ride-cell--full jockey-ride-cell--pill")}
-        ${renderRideCell("リンク", `<a class="ride-link" href="${escapeHtml(ride.race_url)}">レースへ</a>`, "jockey-ride-cell--full jockey-ride-cell--link")}
+        ${renderRideCell("判定", `<span class="ride-pill ${labelClass}">${escapeHtml(label.text)}</span>`, "jockey-ride-cell--pill")}
+        ${renderRideCell("リンク", `<a class="ride-link" href="${escapeHtml(ride.race_url)}">レースへ</a>`, "jockey-ride-cell--link")}
       </article>
     `;
   }
