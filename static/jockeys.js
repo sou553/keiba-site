@@ -524,7 +524,17 @@
           <span>判定</span>
           <span></span>
         </div>
-        ${rides.map((ride) => renderRideRow(ride)).join("")}
+        <div class="jockey-rides__body">
+          ${rides.map((ride) => renderRideRow(ride)).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderRideCell(label, value, extraClass = "") {
+    return `
+      <div class="jockey-ride-cell${extraClass ? ` ${extraClass}` : ""}" data-label="${escapeHtml(label)}">
+        <span class="jockey-ride-cell__value">${value}</span>
       </div>
     `;
   }
@@ -538,23 +548,25 @@
       : "";
 
     return `
-      <div class="jockey-rides__row">
-        <span>${escapeHtml(ride.course || "-")}</span>
-        <span>${escapeHtml(String(ride.race_no ?? "-"))}R</span>
-        <span>${escapeHtml(String(ride.umaban ?? "-"))}</span>
-        <div class="jockey-rides__horse" data-full="1">
-          ${escapeHtml(ride.horse_name || "-")}
-          <div class="jockey-rides__horse-sub">${escapeHtml(ride.title || "")}</div>
-        </div>
-        <span>${escapeHtml(formatPopularity(ride.popularity))}</span>
-        <span>${escapeHtml(fmtOdds(ride.tansho_odds))}</span>
-        <span>${escapeHtml(String(ride.pred_order ?? "-"))}</span>
-        <span>${escapeHtml(String(ride.course_adv_rank ?? "-"))}</span>
-        <span>${escapeHtml(fmtPct(ride.p_win))}</span>
-        <span>${escapeHtml(fmtPct(ride.p_top3))}</span>
-        <span data-full="1"><span class="ride-pill ${labelClass}">${escapeHtml(label.text)}</span></span>
-        <a class="ride-link" href="${escapeHtml(ride.race_url)}">レースへ</a>
-      </div>
+      <article class="jockey-rides__row">
+        ${renderRideCell("会場", escapeHtml(ride.course || "-"))}
+        ${renderRideCell("R", `${escapeHtml(String(ride.race_no ?? "-"))}R`)}
+        ${renderRideCell("馬番", escapeHtml(String(ride.umaban ?? "-")))}
+        ${renderRideCell("馬名", `
+          <div class="jockey-rides__horse">
+            ${escapeHtml(ride.horse_name || "-")}
+            <div class="jockey-rides__horse-sub">${escapeHtml(ride.title || "")}</div>
+          </div>
+        `, "jockey-ride-cell--horse jockey-ride-cell--full")}
+        ${renderRideCell("人気", escapeHtml(formatPopularity(ride.popularity)))}
+        ${renderRideCell("単勝", escapeHtml(fmtOdds(ride.tansho_odds)))}
+        ${renderRideCell("AI", escapeHtml(String(ride.pred_order ?? "-")))}
+        ${renderRideCell("適性", escapeHtml(String(ride.course_adv_rank ?? "-")))}
+        ${renderRideCell("勝率", escapeHtml(fmtPct(ride.p_win)))}
+        ${renderRideCell("複勝率", escapeHtml(fmtPct(ride.p_top3)))}
+        ${renderRideCell("判定", `<span class="ride-pill ${labelClass}">${escapeHtml(label.text)}</span>`, "jockey-ride-cell--full jockey-ride-cell--pill")}
+        ${renderRideCell("リンク", `<a class="ride-link" href="${escapeHtml(ride.race_url)}">レースへ</a>`, "jockey-ride-cell--full jockey-ride-cell--link")}
+      </article>
     `;
   }
 

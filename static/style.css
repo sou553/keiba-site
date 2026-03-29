@@ -2535,27 +2535,51 @@ select {
   gap: 8px;
 }
 
-.jockey-rides__head,
-.jockey-rides__row {
+.jockey-rides__head {
   display: grid;
   grid-template-columns: 70px 46px 46px minmax(150px, 1.4fr) 58px 72px 50px 50px 72px 72px 96px 74px;
   gap: 8px;
   align-items: center;
-}
-
-.jockey-rides__head {
   font-size: 0.82rem;
   color: #666;
   padding: 4px 8px 6px;
   border-bottom: 1px solid #e7dfd3;
 }
 
+.jockey-rides__body {
+  display: grid;
+  gap: 8px;
+}
+
 .jockey-rides__row {
+  display: grid;
+  grid-template-columns: 70px 46px 46px minmax(150px, 1.4fr) 58px 72px 50px 50px 72px 72px 96px 74px;
+  gap: 8px;
+  align-items: stretch;
   background: #fff;
   border: 1px solid #e7dfd3;
   border-radius: 10px;
   padding: 10px 8px;
   font-size: 0.92rem;
+}
+
+.jockey-ride-cell {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.jockey-ride-cell__value {
+  min-width: 0;
+}
+
+.jockey-ride-cell--horse {
+  align-items: flex-start;
+}
+
+.jockey-ride-cell--pill,
+.jockey-ride-cell--link {
+  justify-content: flex-start;
 }
 
 .jockey-rides__horse {
@@ -2637,18 +2661,44 @@ select {
   }
 
   .jockey-rides__row {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 12px;
+    padding: 12px;
   }
 
-  .jockey-rides__row > span,
-  .jockey-rides__row > div,
-  .jockey-rides__row > a {
-    min-width: 0;
+  .jockey-ride-cell {
+    display: grid;
+    gap: 4px;
+    align-items: start;
   }
 
-  .jockey-rides__row > [data-full="1"] {
+  .jockey-ride-cell::before {
+    content: attr(data-label);
+    font-size: 11px;
+    line-height: 1.2;
+    color: var(--muted);
+    font-weight: 800;
+  }
+
+  .jockey-ride-cell--full {
     grid-column: 1 / -1;
+  }
+
+  .jockey-ride-cell--horse {
+    padding-bottom: 4px;
+    border-bottom: 1px dashed #e7dfd3;
+    margin-bottom: 2px;
+  }
+
+  .jockey-ride-cell--horse .jockey-rides__horse {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .jockey-ride-cell--link .ride-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
   }
 }
 
@@ -2657,6 +2707,16 @@ select {
     min-height: 34px;
     padding: 0 12px;
     font-size: 11px;
+  }
+
+  .jockey-card__head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .jockey-card__side {
+    justify-content: space-between;
+    width: 100%;
   }
 }
 
@@ -2684,5 +2744,18 @@ select {
   .jockey-toolbar input[type="search"] {
     min-width: 0;
     width: 100%;
+  }
+
+  .jockey-rides__row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .jockey-ride-cell {
+    gap: 3px;
+  }
+
+  .jockey-ride-cell--horse .jockey-rides__horse {
+    font-size: 15px;
   }
 }
