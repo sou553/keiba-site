@@ -4,6 +4,9 @@
   const PAGE_DEFAULTS = {
     home: "index.html",
     race: "race_detail.html",
+    past: "past_detail.html",
+    betting: "betting.html",
+    jockeys: "jockeys.html",
   };
 
   const state = {
@@ -26,6 +29,14 @@
     },
   };
 
+  function getDataRoot() {
+    return document.body?.dataset?.dataRoot || "./data";
+  }
+
+  function getPage(kind) {
+    return document.body?.dataset?.[`${kind}Page`] || PAGE_DEFAULTS[kind];
+  }
+
   const els = {};
 
   document.addEventListener("DOMContentLoaded", init);
@@ -42,7 +53,10 @@
       }
       state.selectedDate = resolveSelectedDate(state.dateEntries);
       renderDateTabs();
+      requestAnimationFrame(() => scrollActiveDateTabIntoView("auto"));
       await loadSelectedDate(state.selectedDate);
+      renderDateTabs();
+      requestAnimationFrame(() => scrollActiveDateTabIntoView("auto"));
     } catch (error) {
       console.error(error);
       setStatus(error.message || "ページの初期化に失敗しました。", "error");
@@ -104,7 +118,10 @@
       state.openJockeys.clear();
       updateQuery({ date: nextDate });
       renderDateTabs();
+      requestAnimationFrame(() => scrollActiveDateTabIntoView("smooth"));
       await loadSelectedDate(nextDate);
+      renderDateTabs();
+      requestAnimationFrame(() => scrollActiveDateTabIntoView("smooth"));
     });
 
     els.list?.addEventListener("click", (event) => {
@@ -392,6 +409,29 @@
     }).join("");
   }
 
+
+  function scrollActiveDateTabIntoView(behavior = "auto") {
+    if (!els.dateStrip) return;
+    const active = els.dateStrip.querySelector(".jockey-date-tab.is-active");
+    if (!active) return;
+
+    const margin = 12;
+    const tabLeft = active.offsetLeft;
+    const tabRight = tabLeft + active.offsetWidth;
+    const viewLeft = els.dateStrip.scrollLeft;
+    const viewRight = viewLeft + els.dateStrip.clientWidth;
+
+    let nextLeft = null;
+    if (tabLeft - margin < viewLeft) {
+      nextLeft = Math.max(0, tabLeft - margin);
+    } else if (tabRight + margin > viewRight) {
+      nextLeft = Math.max(0, tabRight - els.dateStrip.clientWidth + margin);
+    }
+
+    if (nextLeft !== null) {
+      els.dateStrip.scrollTo({ left: nextLeft, behavior });
+    }
+  }
   function renderOverview(summaries) {
     if (!els.overview) return;
     const rideCount = summaries.reduce((sum, item) => sum + (item.ride_count || 0), 0);
@@ -839,7 +879,7 @@
   }
 
   function buildRaceUrl(raceDate, raceId) {
-    const url = new URL(PAGE_DEFAULTS.race, window.location.href);
+    const url = new URL(getPage("race"), window.location.href);
     url.searchParams.set("date", raceDate || "");
     url.searchParams.set("race_id", raceId || "");
     return `${url.pathname}${url.search}`;
@@ -857,7 +897,9 @@
   }
 
   function buildDataUrl(path) {
-    return new URL(`./data/${path}`, window.location.href).toString();
+    const base = getDataRoot().replace(/\/$/, "");
+    const rel = String(path || "").replace(/^\//, "");
+    return new URL(`${base}/${rel}`, window.location.href).toString();
   }
 
   async function fetchJson(url) {
