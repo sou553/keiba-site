@@ -2128,6 +2128,10 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
         </div>
       </section>`;
   }
+  function getWakuColorClass(waku) {
+    const n = Number(waku);
+    return Number.isInteger(n) && n >= 1 && n <= 8 ? `waku-${n}` : 'waku-0';
+  }
 
   function renderHorseList() {
     const root = qs('#horse-list');
@@ -2154,7 +2158,7 @@ function metricBoxClassByAiCourse(aiRank, courseRank) {
           <div class="horse-card__main">
             <div class="horse-card__left">
               <div class="horse-card__head">
-                <div class="horse-no">${escapeHtml(fmt(horse.umaban))}</div>
+                <div class="horse-no ${getWakuColorClass(horse.waku)}">${escapeHtml(fmt(horse.umaban))}</div>
                 <div class="horse-name-line">
                   <h3 class="horse-name">${escapeHtml(horse.horse_name)}</h3>
                 </div>

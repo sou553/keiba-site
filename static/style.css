@@ -579,10 +579,70 @@ select {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: #f0f3ff;
-  border: 1px solid #d3defc;
-  color: var(--blue-dark);
   font-weight: 900;
+  border: 1px solid transparent;
+}
+.horse-no.waku-0,
+.horse-no-inline.waku-0 {
+  background: #f0f3ff;
+  border-color: #d3defc;
+  color: var(--blue-dark);
+}
+
+.horse-no.waku-1,
+.horse-no-inline.waku-1 {
+  background: #ffffff;
+  border-color: #cfcfcf;
+  color: #222;
+}
+
+.horse-no.waku-2,
+.horse-no-inline.waku-2 {
+  background: #222222;
+  border-color: #111111;
+  color: #ffffff;
+}
+
+.horse-no.waku-3,
+.horse-no-inline.waku-3 {
+  background: #d84a4a;
+  border-color: #bc3333;
+  color: #ffffff;
+}
+
+.horse-no.waku-4,
+.horse-no-inline.waku-4 {
+  background: #4a74d8;
+  border-color: #315cc2;
+  color: #ffffff;
+}
+
+.horse-no.waku-5,
+.horse-no-inline.waku-5 {
+  background: #f0cf45;
+  border-color: #d3b12a;
+  color: #3a2d00;
+}
+
+.horse-no.waku-6,
+.horse-no-inline.waku-6 {
+  background: #4caf62;
+  border-color: #3a944e;
+  color: #ffffff;
+}
+
+.horse-no.waku-7,
+.horse-no-inline.waku-7 {
+  background: #f0a13b;
+  border-color: #d88518;
+  color: #ffffff;
+}
+
+.horse-no.waku-8,
+.horse-no-inline.waku-8 {
+  background: #e67aa0;
+  border-color: #d85d89;
+  color: #ffffff;
 }
 .horse-name-line { min-width: 0; }
 .horse-name {
