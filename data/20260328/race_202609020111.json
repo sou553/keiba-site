@@ -19,13 +19,13 @@
     "odds_available": true,
     "top_ai": [
       {
-        "umaban": 4,
-        "horse_name": "アルトラムス",
-        "pred_order": 1,
-        "p_win": 0.249986,
-        "p_top3": 0.692626,
-        "tansho_odds": 2.8,
-        "popularity": 2
+        "umaban": 3,
+        "horse_name": "ローベルクランツ",
+        "pred_order": 3,
+        "p_win": 0.225442,
+        "p_top3": 0.654293,
+        "tansho_odds": 6.6,
+        "popularity": 4
       },
       {
         "umaban": 6,
@@ -37,15 +37,6 @@
         "popularity": 3
       },
       {
-        "umaban": 3,
-        "horse_name": "ローベルクランツ",
-        "pred_order": 3,
-        "p_win": 0.225442,
-        "p_top3": 0.654293,
-        "tansho_odds": 6.6,
-        "popularity": 4
-      },
-      {
         "umaban": 2,
         "horse_name": "カフジエメンタール",
         "pred_order": 4,
@@ -55,13 +46,22 @@
         "popularity": 1
       },
       {
-        "umaban": 5,
-        "horse_name": "ブリガンティン",
-        "pred_order": 5,
-        "p_win": 0.046291,
-        "p_top3": 0.175539,
-        "tansho_odds": 58.1,
-        "popularity": 6
+        "umaban": 4,
+        "horse_name": "アルトラムス",
+        "pred_order": 1,
+        "p_win": 0.249986,
+        "p_top3": 0.692626,
+        "tansho_odds": 2.8,
+        "popularity": 2
+      },
+      {
+        "umaban": 7,
+        "horse_name": "シーズザスローン",
+        "pred_order": 6,
+        "p_win": 0.030376,
+        "p_top3": 0.117213,
+        "tansho_odds": 21.6,
+        "popularity": 5
       }
     ]
   },
@@ -382,6 +382,24 @@
         "2019": {
           "score": 0.026435
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 7.0,
+        "course_rank": 2.0,
+        "popularity": 7.0,
+        "odds": 65.8,
+        "ai_points": 2.0,
+        "course_points": 8.4,
+        "pop_points": -1.0,
+        "odds_points": -2.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": -2.0,
+        "danger_penalty": 0.0,
+        "total": 5.4,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": false,
+        "danger_popular": false
       }
     },
     {
@@ -644,6 +662,24 @@
         "2019": {
           "score": 0.263749
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 4.0,
+        "course_rank": 5.0,
+        "popularity": 1.0,
+        "odds": 2.0,
+        "ai_points": 5.0,
+        "course_points": 4.8,
+        "pop_points": 3.0,
+        "odds_points": 3.0,
+        "agreement_bonus": 2.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": 17.8,
+        "strong_axis": false,
+        "semi_axis": true,
+        "himo": true,
+        "danger_popular": false
       }
     },
     {
@@ -906,6 +942,24 @@
         "2019": {
           "score": 0.154762
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 3.0,
+        "course_rank": 1.0,
+        "popularity": 4.0,
+        "odds": 6.6,
+        "ai_points": 6.0,
+        "course_points": 9.6,
+        "pop_points": 0.0,
+        "odds_points": 2.0,
+        "agreement_bonus": 4.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": 21.6,
+        "strong_axis": true,
+        "semi_axis": true,
+        "himo": true,
+        "danger_popular": false
       }
     },
     {
@@ -1112,6 +1166,24 @@
         "2019": {
           "score": 0.285275
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 1.0,
+        "course_rank": 6.0,
+        "popularity": 2.0,
+        "odds": 2.8,
+        "ai_points": 8.0,
+        "course_points": 3.5999999999999996,
+        "pop_points": 2.0,
+        "odds_points": 3.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": -2.0,
+        "danger_penalty": 0.0,
+        "total": 14.6,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": true,
+        "danger_popular": false
       }
     },
     {
@@ -1318,6 +1390,24 @@
         "2019": {
           "score": 0.044996
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 5.0,
+        "course_rank": 7.0,
+        "popularity": 6.0,
+        "odds": 58.1,
+        "ai_points": 4.0,
+        "course_points": 2.4,
+        "pop_points": 0.0,
+        "odds_points": -2.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": 4.4,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": false,
+        "danger_popular": false
       }
     },
     {
@@ -1524,6 +1614,24 @@
         "2019": {
           "score": 0.187552
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 2.0,
+        "course_rank": 4.0,
+        "popularity": 3.0,
+        "odds": 5.3,
+        "ai_points": 7.0,
+        "course_points": 6.0,
+        "pop_points": 1.0,
+        "odds_points": 2.0,
+        "agreement_bonus": 2.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": 18.0,
+        "strong_axis": false,
+        "semi_axis": true,
+        "himo": true,
+        "danger_popular": false
       }
     },
     {
@@ -1898,12 +2006,30 @@
         "2019": {
           "score": 0.037231
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 6.0,
+        "course_rank": 3.0,
+        "popularity": 5.0,
+        "odds": 21.6,
+        "ai_points": 3.0,
+        "course_points": 7.199999999999999,
+        "pop_points": 0.0,
+        "odds_points": 0.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": 10.2,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": true,
+        "danger_popular": false
       }
     }
   ],
   "betting_recommendation": {
     "source": "auto",
-    "strategy": "hit_rate_first_compact",
+    "strategy": "ai_course_pop_odds",
     "bet_types": [
       "単勝",
       "馬連",
@@ -1913,61 +2039,67 @@
       "tansho": [
         {
           "bet_type": "単勝",
-          "numbers": "4",
+          "numbers": "3",
           "horses": [
-            4
+            3
           ],
           "horse_names": [
-            "アルトラムス"
+            "ローベルクランツ"
           ],
           "stake_yen": 100,
-          "score": 0.249986,
+          "score": 21.6,
           "source": "auto",
-          "reason": "上位1位候補 / 勝率25.0% / 複勝率69.3%",
+          "reason": "単勝候補1 / AI3位 / 適性1位 / 4人気 / 単勝6.6倍 / 強軸 / 総合21.6",
           "tags": [
             "自動",
-            "単勝"
-          ]
-        },
-        {
-          "bet_type": "単勝",
-          "numbers": "6",
-          "horses": [
-            6
-          ],
-          "horse_names": [
-            "ウップヘリーア"
-          ],
-          "stake_yen": 100,
-          "score": 0.227337,
-          "source": "auto",
-          "reason": "上位2位候補 / 勝率22.7% / 複勝率65.7%",
-          "tags": [
-            "自動",
-            "単勝"
+            "単勝",
+            "強軸"
           ]
         }
       ],
       "umaren": [
         {
           "bet_type": "馬連",
-          "numbers": "4-6",
+          "numbers": "3-6",
           "horses": [
-            4,
+            3,
             6
           ],
           "horse_names": [
-            "アルトラムス",
+            "ローベルクランツ",
             "ウップヘリーア"
           ],
           "stake_yen": 100,
-          "score": 0.455373,
+          "score": 41.6,
           "source": "auto",
-          "reason": "1頭軸流し / 軸4 → 相手6,3,2",
+          "reason": "1頭軸流し / 軸3(AI3位 / 適性1位 / 4人気 / 単勝6.6倍 / 強軸 / 総合21.6) → 相手6,2,4",
           "tags": [
             "自動",
             "馬連",
-            "1頭軸流し"
+            "1頭軸流し",
+            "強軸"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "2-3",
+          "horses": [
+            2,
+            3
+          ],
+          "horse_names": [
+            "ローベルクランツ",
+            "カフジエメンタール"
+          ],
+          "stake_yen": 100,
+          "score": 41.4,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸3(AI3位 / 適性1位 / 4人気 / 単勝6.6倍 / 強軸 / 総合21.6) → 相手6,2,4",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し",
+            "強軸"
           ]
         },
         {
@@ -1978,63 +2110,45 @@
             4
           ],
           "horse_names": [
-            "アルトラムス",
-            "ローベルクランツ"
+            "ローベルクランツ",
+            "アルトラムス"
           ],
           "stake_yen": 100,
-          "score": 0.45318,
+          "score": 36.2,
           "source": "auto",
-          "reason": "1頭軸流し / 軸4 → 相手6,3,2",
+          "reason": "1頭軸流し / 軸3(AI3位 / 適性1位 / 4人気 / 単勝6.6倍 / 強軸 / 総合21.6) → 相手6,2,4",
           "tags": [
             "自動",
             "馬連",
-            "1頭軸流し"
-          ]
-        },
-        {
-          "bet_type": "馬連",
-          "numbers": "3-6",
-          "horses": [
-            3,
-            6
-          ],
-          "horse_names": [
-            "ウップヘリーア",
-            "ローベルクランツ"
-          ],
-          "stake_yen": 100,
-          "score": 0.43017,
-          "source": "auto",
-          "reason": "上位拮抗の保険1点",
-          "tags": [
-            "自動",
-            "馬連",
-            "保険"
-          ]
-        },
-        {
-          "bet_type": "馬連",
-          "numbers": "2-4",
-          "horses": [
-            2,
-            4
-          ],
-          "horse_names": [
-            "アルトラムス",
-            "カフジエメンタール"
-          ],
-          "stake_yen": 100,
-          "score": 0.409749,
-          "source": "auto",
-          "reason": "1頭軸流し / 軸4 → 相手6,3,2",
-          "tags": [
-            "自動",
-            "馬連",
-            "1頭軸流し"
+            "1頭軸流し",
+            "強軸"
           ]
         }
       ],
       "trio": [
+        {
+          "bet_type": "三連複",
+          "numbers": "2-3-6",
+          "horses": [
+            2,
+            3,
+            6
+          ],
+          "horse_names": [
+            "ローベルクランツ",
+            "ウップヘリーア",
+            "カフジエメンタール"
+          ],
+          "stake_yen": 100,
+          "score": 59.4,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸3-6 → 相手2,4,7",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
         {
           "bet_type": "三連複",
           "numbers": "3-4-6",
@@ -2044,14 +2158,14 @@
             6
           ],
           "horse_names": [
-            "アルトラムス",
+            "ローベルクランツ",
             "ウップヘリーア",
-            "ローベルクランツ"
+            "アルトラムス"
           ],
           "stake_yen": 100,
-          "score": 0.297947,
+          "score": 56.2,
           "source": "auto",
-          "reason": "2頭軸流し / 軸4-6 → 相手3,2,5",
+          "reason": "2頭軸流し / 軸3-6 → 相手2,4,7",
           "tags": [
             "自動",
             "三連複",
@@ -2060,44 +2174,21 @@
         },
         {
           "bet_type": "三連複",
-          "numbers": "2-4-6",
+          "numbers": "3-6-7",
           "horses": [
-            2,
-            4,
-            6
+            3,
+            6,
+            7
           ],
           "horse_names": [
-            "アルトラムス",
+            "ローベルクランツ",
             "ウップヘリーア",
-            "カフジエメンタール"
+            "シーズザスローン"
           ],
           "stake_yen": 100,
-          "score": 0.269393,
+          "score": 51.8,
           "source": "auto",
-          "reason": "2頭軸流し / 軸4-6 → 相手3,2,5",
-          "tags": [
-            "自動",
-            "三連複",
-            "2頭軸流し"
-          ]
-        },
-        {
-          "bet_type": "三連複",
-          "numbers": "4-5-6",
-          "horses": [
-            4,
-            5,
-            6
-          ],
-          "horse_names": [
-            "アルトラムス",
-            "ウップヘリーア",
-            "ブリガンティン"
-          ],
-          "stake_yen": 100,
-          "score": 0.079936,
-          "source": "auto",
-          "reason": "2頭軸流し / 軸4-6 → 相手3,2,5",
+          "reason": "2頭軸流し / 軸3-6 → 相手2,4,7",
           "tags": [
             "自動",
             "三連複",
@@ -2107,10 +2198,11 @@
       ]
     },
     "notes": [
-      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
-      "買い目CSVがあるレースでも自動生成を併記",
-      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
-      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+      "自動生成は p_win / p_top3 を使わず、AI順位・適性順位・人気・単勝オッズで評価",
+      "AIと適性の一致加点、ズレ減点、危険人気減点を反映",
+      "単勝は強軸レースのみ",
+      "馬連は 1頭軸流し中心、拮抗時のみ保険1点",
+      "三連複は 2頭軸流し3点 または 1頭軸流し6点"
     ]
   }
 }
