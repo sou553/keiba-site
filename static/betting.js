@@ -53,7 +53,7 @@
         <div id="betting-status" class="page-status" hidden></div>
         <section id="betting-hero" class="sheet race-hero"></section>
         <nav id="betting-tabs" class="page-tab-strip"></nav>
-        <section id="betting-summary" class="sheet summary-panel"></section>
+        <!-- <section id="betting-summary" class="sheet summary-panel"></section> -->
 
         <section class="sheet betting-reco-panel">
           <div class="section-title-row">
