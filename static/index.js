@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const PAGE_DEFAULTS = { race: 'race_detail.html', past: 'past_detail.html', betting: 'betting.html' };
+  const PAGE_DEFAULTS = { race: 'race_detail.html', past: 'past_detail.html', betting: 'betting.html', jockeys: 'jockeys.html' };
   const state = { dates: [], selectedDate: null, races: [], details: new Map(), keyword: '', course: '', oddsOnly: false, divergenceOnly: false };
   const qs = (s, r = document) => r.querySelector(s);
   const RA = window.RaceAnalysis;
@@ -33,6 +33,10 @@
 
   function buildUrl(kind, raceId, date) {
     return `${getPage(kind)}?${new URLSearchParams({ date, race_id: raceId }).toString()}`;
+  }
+
+  function buildJockeysUrl(date) {
+    return `${getPage('jockeys')}?${new URLSearchParams({ date }).toString()}`;
   }
 
   function normalizeDateKey(value) {
@@ -86,6 +90,9 @@
             <div class="badge badge--blue">予想まとめ</div>
             <h1>予想トップ</h1>
             <p>人気馬の評価、穴候補、危険人気をレース単位で先に見てから、出走馬一覧・過去走比較・買い目作成へ進める形や。</p>
+            <div class="index-hero__actions" style="margin-top:12px;">
+              <a class="action-link" id="hero-jockey-link" href="./jockeys.html">騎手一覧</a>
+            </div>
           </div>
           <div id="hero-stats" class="hero-stats"></div>
         </section>
@@ -307,6 +314,7 @@
             <a class="action-link action-link--primary" href="${RA.esc(buildUrl('race', race.race_id, detail.race_date))}">出走馬一覧</a>
             <a class="action-link" href="${RA.esc(buildUrl('past', race.race_id, detail.race_date))}">過去走比較</a>
             <a class="action-link" href="${RA.esc(buildUrl('betting', race.race_id, detail.race_date))}">買い目作成</a>
+            <a class="action-link" href="${RA.esc(buildJockeysUrl(detail.race_date))}">騎手一覧</a>
           </div>
         </article>`;
     }).join('');
