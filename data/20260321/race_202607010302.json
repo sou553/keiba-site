@@ -28,15 +28,6 @@
         "popularity": 3
       },
       {
-        "umaban": 1,
-        "horse_name": "クロカミジョウ",
-        "pred_order": 2,
-        "p_win": 0.30034,
-        "p_top3": 0.762656,
-        "tansho_odds": 2.4,
-        "popularity": 1
-      },
-      {
         "umaban": 2,
         "horse_name": "ライトニングロッド",
         "pred_order": 3,
@@ -46,22 +37,31 @@
         "popularity": 4
       },
       {
-        "umaban": 8,
-        "horse_name": "トゥレイス",
-        "pred_order": 4,
-        "p_win": 0.105209,
-        "p_top3": 0.386496,
-        "tansho_odds": 35.3,
-        "popularity": 7
+        "umaban": 4,
+        "horse_name": "スノーランス",
+        "pred_order": 6,
+        "p_win": 0.027448,
+        "p_top3": 0.110839,
+        "tansho_odds": 4.3,
+        "popularity": 2
       },
       {
-        "umaban": 10,
-        "horse_name": "ヴェルジーネ",
-        "pred_order": 5,
-        "p_win": 0.053902,
-        "p_top3": 0.211346,
-        "tansho_odds": 13.1,
-        "popularity": 5
+        "umaban": 1,
+        "horse_name": "クロカミジョウ",
+        "pred_order": 2,
+        "p_win": 0.30034,
+        "p_top3": 0.762656,
+        "tansho_odds": 2.4,
+        "popularity": 1
+      },
+      {
+        "umaban": 5,
+        "horse_name": "タマモビスケット",
+        "pred_order": 12,
+        "p_win": 0.004412,
+        "p_top3": 0.018241,
+        "tansho_odds": 26.3,
+        "popularity": 6
       }
     ]
   },
@@ -326,6 +326,24 @@
         "2019": {
           "score": 0.100646
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 2.0,
+        "course_rank": 9.0,
+        "popularity": 1.0,
+        "odds": 2.4,
+        "ai_points": 7.0,
+        "course_points": 0.0,
+        "pop_points": 3.0,
+        "odds_points": 3.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": -2.0,
+        "danger_penalty": 0.0,
+        "total": 11.0,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": true,
+        "danger_popular": false
       }
     },
     {
@@ -532,6 +550,24 @@
         "2019": {
           "score": 0.201596
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 3.0,
+        "course_rank": 4.0,
+        "popularity": 4.0,
+        "odds": 6.6,
+        "ai_points": 6.0,
+        "course_points": 6.0,
+        "pop_points": 0.0,
+        "odds_points": 2.0,
+        "agreement_bonus": 2.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": 16.0,
+        "strong_axis": false,
+        "semi_axis": true,
+        "himo": true,
+        "danger_popular": false
       }
     },
     {
@@ -681,6 +717,24 @@
         "2019": {
           "score": 0.052211
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 9.0,
+        "course_rank": 12.0,
+        "popularity": 14.0,
+        "odds": 135.9,
+        "ai_points": 0.0,
+        "course_points": 0.0,
+        "pop_points": -2.0,
+        "odds_points": -2.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": -4.0,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": false,
+        "danger_popular": false
       }
     },
     {
@@ -1083,6 +1137,24 @@
         "2019": {
           "score": 0.044053
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 6.0,
+        "course_rank": 1.0,
+        "popularity": 2.0,
+        "odds": 4.3,
+        "ai_points": 3.0,
+        "course_points": 9.6,
+        "pop_points": 2.0,
+        "odds_points": 3.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": -2.0,
+        "danger_penalty": 0.0,
+        "total": 15.6,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": true,
+        "danger_popular": false
       }
     },
     {
@@ -1345,6 +1417,24 @@
         "2019": {
           "score": 0.080741
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 12.0,
+        "course_rank": 2.0,
+        "popularity": 6.0,
+        "odds": 26.3,
+        "ai_points": 0.0,
+        "course_points": 8.4,
+        "pop_points": 0.0,
+        "odds_points": 0.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": -2.0,
+        "danger_penalty": 0.0,
+        "total": 6.4,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": true,
+        "danger_popular": false
       }
     },
     {
@@ -1551,6 +1641,24 @@
         "2019": {
           "score": 0.051601
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 7.0,
+        "course_rank": 5.0,
+        "popularity": 11.0,
+        "odds": 57.0,
+        "ai_points": 2.0,
+        "course_points": 4.8,
+        "pop_points": -2.0,
+        "odds_points": -2.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": 2.8,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": false,
+        "danger_popular": false
       }
     },
     {
@@ -1700,6 +1808,24 @@
         "2019": {
           "score": 0.041615
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 8.0,
+        "course_rank": 14.0,
+        "popularity": 10.0,
+        "odds": 53.6,
+        "ai_points": 1.0,
+        "course_points": 0.0,
+        "pop_points": -1.0,
+        "odds_points": -2.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": -2.0,
+        "danger_penalty": 0.0,
+        "total": -4.0,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": false,
+        "danger_popular": false
       }
     },
     {
@@ -1878,6 +2004,24 @@
         "2019": {
           "score": 0.074008
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 4.0,
+        "course_rank": 8.0,
+        "popularity": 7.0,
+        "odds": 35.3,
+        "ai_points": 5.0,
+        "course_points": 1.2,
+        "pop_points": -1.0,
+        "odds_points": -2.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": 3.2,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": false,
+        "danger_popular": false
       }
     },
     {
@@ -2084,6 +2228,24 @@
         "2019": {
           "score": 0.062137
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 15.0,
+        "course_rank": 13.0,
+        "popularity": 13.0,
+        "odds": 105.8,
+        "ai_points": 0.0,
+        "course_points": 0.0,
+        "pop_points": -2.0,
+        "odds_points": -2.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": -4.0,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": false,
+        "danger_popular": false
       }
     },
     {
@@ -2290,6 +2452,24 @@
         "2019": {
           "score": 0.031432
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 5.0,
+        "course_rank": 11.0,
+        "popularity": 5.0,
+        "odds": 13.1,
+        "ai_points": 4.0,
+        "course_points": 0.0,
+        "pop_points": 0.0,
+        "odds_points": 1.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": -2.0,
+        "danger_penalty": 0.0,
+        "total": 3.0,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": true,
+        "danger_popular": false
       }
     },
     {
@@ -2468,6 +2648,24 @@
         "2019": {
           "score": 0.013678
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 16.0,
+        "course_rank": 15.0,
+        "popularity": 15.0,
+        "odds": 344.0,
+        "ai_points": 0.0,
+        "course_points": 0.0,
+        "pop_points": -2.0,
+        "odds_points": -2.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": -4.0,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": false,
+        "danger_popular": false
       }
     },
     {
@@ -2730,6 +2928,24 @@
         "2019": {
           "score": 0.038334
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 10.0,
+        "course_rank": 6.0,
+        "popularity": 9.0,
+        "odds": 43.8,
+        "ai_points": 0.0,
+        "course_points": 3.5999999999999996,
+        "pop_points": -1.0,
+        "odds_points": -2.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": 0.6,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": false,
+        "danger_popular": false
       }
     },
     {
@@ -2936,6 +3152,24 @@
         "2019": {
           "score": 0.028628
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 14.0,
+        "course_rank": 16.0,
+        "popularity": 16.0,
+        "odds": 461.0,
+        "ai_points": 0.0,
+        "course_points": 0.0,
+        "pop_points": -2.0,
+        "odds_points": -2.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": -4.0,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": false,
+        "danger_popular": false
       }
     },
     {
@@ -3142,6 +3376,24 @@
         "2019": {
           "score": 0.030335
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 13.0,
+        "course_rank": 10.0,
+        "popularity": 12.0,
+        "odds": 78.6,
+        "ai_points": 0.0,
+        "course_points": 0.0,
+        "pop_points": -2.0,
+        "odds_points": -2.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": -4.0,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": false,
+        "danger_popular": false
       }
     },
     {
@@ -3432,6 +3684,24 @@
         "2019": {
           "score": 0.028609
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 11.0,
+        "course_rank": 7.0,
+        "popularity": 8.0,
+        "odds": 36.2,
+        "ai_points": 0.0,
+        "course_points": 2.4,
+        "pop_points": -1.0,
+        "odds_points": -2.0,
+        "agreement_bonus": 0.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": -0.6,
+        "strong_axis": false,
+        "semi_axis": false,
+        "himo": false,
+        "danger_popular": false
       }
     },
     {
@@ -3694,12 +3964,30 @@
         "2019": {
           "score": 0.120376
         }
+      },
+      "_bet_eval": {
+        "ai_rank": 1.0,
+        "course_rank": 3.0,
+        "popularity": 3.0,
+        "odds": 5.0,
+        "ai_points": 8.0,
+        "course_points": 7.199999999999999,
+        "pop_points": 1.0,
+        "odds_points": 2.0,
+        "agreement_bonus": 4.0,
+        "mismatch_penalty": 0.0,
+        "danger_penalty": 0.0,
+        "total": 22.2,
+        "strong_axis": true,
+        "semi_axis": true,
+        "himo": true,
+        "danger_popular": false
       }
     }
   ],
   "betting_recommendation": {
     "source": "mixed",
-    "strategy": "hit_rate_first_compact",
+    "strategy": "ai_course_pop_odds",
     "bet_types": [
       "単勝",
       "馬連",
@@ -3717,34 +4005,39 @@
             "シャインフォーミー"
           ],
           "stake_yen": 100,
-          "score": 0.316313,
+          "score": 22.2,
           "source": "auto",
-          "reason": "上位1位候補 / 勝率31.6% / 複勝率77.9%",
+          "reason": "単勝候補1 / AI1位 / 適性3位 / 3人気 / 単勝5.0倍 / 強軸 / 総合22.2",
           "tags": [
             "自動",
-            "単勝"
-          ]
-        },
-        {
-          "bet_type": "単勝",
-          "numbers": "1",
-          "horses": [
-            1
-          ],
-          "horse_names": [
-            "クロカミジョウ"
-          ],
-          "stake_yen": 100,
-          "score": 0.30034,
-          "source": "auto",
-          "reason": "上位2位候補 / 勝率30.0% / 複勝率76.3%",
-          "tags": [
-            "自動",
-            "単勝"
+            "単勝",
+            "強軸"
           ]
         }
       ],
       "umaren": [
+        {
+          "bet_type": "馬連",
+          "numbers": "4-16",
+          "horses": [
+            4,
+            16
+          ],
+          "horse_names": [
+            "シャインフォーミー",
+            "スノーランス"
+          ],
+          "stake_yen": 100,
+          "score": 37.8,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸16(AI1位 / 適性3位 / 3人気 / 単勝5.0倍 / 強軸 / 総合22.2) → 相手2,4,1",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し",
+            "強軸"
+          ]
+        },
         {
           "bet_type": "馬連",
           "numbers": "1-16",
@@ -3757,34 +4050,14 @@
             "クロカミジョウ"
           ],
           "stake_yen": 100,
-          "score": 0.593751,
+          "score": 33.2,
           "source": "auto",
-          "reason": "1頭軸流し / 軸16 → 相手1,2,8",
+          "reason": "1頭軸流し / 軸16(AI1位 / 適性3位 / 3人気 / 単勝5.0倍 / 強軸 / 総合22.2) → 相手2,4,1",
           "tags": [
             "自動",
             "馬連",
-            "1頭軸流し"
-          ]
-        },
-        {
-          "bet_type": "馬連",
-          "numbers": "8-16",
-          "horses": [
-            8,
-            16
-          ],
-          "horse_names": [
-            "シャインフォーミー",
-            "トゥレイス"
-          ],
-          "stake_yen": 100,
-          "score": 0.300899,
-          "source": "auto",
-          "reason": "1頭軸流し / 軸16 → 相手1,2,8",
-          "tags": [
-            "自動",
-            "馬連",
-            "1頭軸流し"
+            "1頭軸流し",
+            "強軸"
           ]
         },
         {
@@ -3805,6 +4078,7 @@
           "tags": [
             "1頭軸流し",
             "CSV",
+            "強軸",
             "自動",
             "馬連"
           ]
@@ -3822,13 +4096,10 @@
           ],
           "stake_yen": 100,
           "score": 0.204011,
-          "source": "auto+csv",
+          "source": "csv",
           "reason": "CSV 推奨",
           "tags": [
-            "CSV",
-            "保険",
-            "自動",
-            "馬連"
+            "CSV"
           ]
         },
         {
@@ -3854,6 +4125,29 @@
       "trio": [
         {
           "bet_type": "三連複",
+          "numbers": "2-4-16",
+          "horses": [
+            2,
+            4,
+            16
+          ],
+          "horse_names": [
+            "シャインフォーミー",
+            "ライトニングロッド",
+            "スノーランス"
+          ],
+          "stake_yen": 100,
+          "score": 55.8,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸16-2 → 相手4,1,5",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
           "numbers": "1-2-16",
           "horses": [
             1,
@@ -3862,13 +4156,13 @@
           ],
           "horse_names": [
             "シャインフォーミー",
-            "クロカミジョウ",
-            "ライトニングロッド"
+            "ライトニングロッド",
+            "クロカミジョウ"
           ],
           "stake_yen": 100,
-          "score": 0.250619,
+          "score": 51.2,
           "source": "auto",
-          "reason": "2頭軸流し / 軸16-1 → 相手2,8,10",
+          "reason": "2頭軸流し / 軸16-2 → 相手4,1,5",
           "tags": [
             "自動",
             "三連複",
@@ -3877,44 +4171,21 @@
         },
         {
           "bet_type": "三連複",
-          "numbers": "1-8-16",
+          "numbers": "2-5-16",
           "horses": [
-            1,
-            8,
+            2,
+            5,
             16
           ],
           "horse_names": [
             "シャインフォーミー",
-            "クロカミジョウ",
-            "トゥレイス"
+            "ライトニングロッド",
+            "タマモビスケット"
           ],
           "stake_yen": 100,
-          "score": 0.229482,
+          "score": 46.6,
           "source": "auto",
-          "reason": "2頭軸流し / 軸16-1 → 相手2,8,10",
-          "tags": [
-            "自動",
-            "三連複",
-            "2頭軸流し"
-          ]
-        },
-        {
-          "bet_type": "三連複",
-          "numbers": "1-10-16",
-          "horses": [
-            1,
-            10,
-            16
-          ],
-          "horse_names": [
-            "シャインフォーミー",
-            "クロカミジョウ",
-            "ヴェルジーネ"
-          ],
-          "stake_yen": 100,
-          "score": 0.125487,
-          "source": "auto",
-          "reason": "2頭軸流し / 軸16-1 → 相手2,8,10",
+          "reason": "2頭軸流し / 軸16-2 → 相手4,1,5",
           "tags": [
             "自動",
             "三連複",
@@ -3924,10 +4195,11 @@
       ]
     },
     "notes": [
-      "非買い目部分は build_pages_json.py と同じマージ・正規化ロジック",
-      "買い目CSVがあるレースでも自動生成を併記",
-      "馬連は 4頭BOX をやめて 1頭軸流し中心に圧縮",
-      "三連複は 5頭BOX をやめて 2頭軸流し3点 or 1頭軸流し6点"
+      "自動生成は p_win / p_top3 を使わず、AI順位・適性順位・人気・単勝オッズで評価",
+      "AIと適性の一致加点、ズレ減点、危険人気減点を反映",
+      "単勝は強軸レースのみ",
+      "馬連は 1頭軸流し中心、拮抗時のみ保険1点",
+      "三連複は 2頭軸流し3点 または 1頭軸流し6点"
     ]
   }
 }
