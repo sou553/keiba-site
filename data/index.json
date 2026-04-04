@@ -24,6 +24,11 @@
       "race_date": "20260404",
       "race_count": 24,
       "path": "20260404/races.json"
+    },
+    {
+      "race_date": "20260405",
+      "race_count": 24,
+      "path": "20260405/races.json"
     }
   ]
 }
