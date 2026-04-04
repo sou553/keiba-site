@@ -16,25 +16,25 @@
   "summary": {
     "horse_count": 11,
     "past_available_count": 11,
-    "odds_available": false,
+    "odds_available": true,
     "top_ai": [
-      {
-        "umaban": 6,
-        "horse_name": "ニシノケンタマン",
-        "pred_order": 3,
-        "p_win": 0.124941,
-        "p_top3": 0.459783,
-        "tansho_odds": null,
-        "popularity": null
-      },
       {
         "umaban": 7,
         "horse_name": "インテルメディオ",
         "pred_order": 5,
         "p_win": 0.048549,
         "p_top3": 0.1993,
-        "tansho_odds": null,
-        "popularity": null
+        "tansho_odds": 3.3,
+        "popularity": 1
+      },
+      {
+        "umaban": 6,
+        "horse_name": "ニシノケンタマン",
+        "pred_order": 3,
+        "p_win": 0.124941,
+        "p_top3": 0.459783,
+        "tansho_odds": 5.4,
+        "popularity": 2
       },
       {
         "umaban": 11,
@@ -42,8 +42,8 @@
         "pred_order": 4,
         "p_win": 0.083068,
         "p_top3": 0.325947,
-        "tansho_odds": null,
-        "popularity": null
+        "tansho_odds": 6,
+        "popularity": 4
       },
       {
         "umaban": 5,
@@ -51,8 +51,8 @@
         "pred_order": 6,
         "p_win": 0.044543,
         "p_top3": 0.183747,
-        "tansho_odds": null,
-        "popularity": null
+        "tansho_odds": 10.3,
+        "popularity": 5
       },
       {
         "umaban": 3,
@@ -60,8 +60,8 @@
         "pred_order": 1,
         "p_win": 0.426438,
         "p_top3": 0.865148,
-        "tansho_odds": null,
-        "popularity": null
+        "tansho_odds": 5.7,
+        "popularity": 3
       }
     ]
   },
@@ -97,8 +97,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 12.9,
+      "popularity": 7,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -123,11 +123,6 @@
       "父血統_score": 0,
       "母父血統_score": 0,
       "近走着順_score": 0.036942,
-      "status": "NG",
-      "rows": 0,
-      "odds_nonnull": 0,
-      "seconds": 5.299,
-      "error": "Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?",
       "g2_S": null,
       "g2_D": null,
       "g2_S_id": null,
@@ -839,12 +834,12 @@
       "_bet_eval": {
         "ai_rank": 2.0,
         "course_rank": 10.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 7.0,
+        "odds": 12.9,
         "ai_points": 7.0,
         "course_points": 0.0,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -1.0,
+        "odds_points": 1.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": -2.0,
         "danger_penalty": 0.0,
@@ -886,8 +881,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 23.2,
+      "popularity": 9,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -912,11 +907,6 @@
       "父血統_score": 0,
       "母父血統_score": 0,
       "近走着順_score": -0.012594,
-      "status": "NG",
-      "rows": 0,
-      "odds_nonnull": 0,
-      "seconds": 5.299,
-      "error": "Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?",
       "g2_S": null,
       "g2_D": null,
       "g2_S_id": null,
@@ -1348,16 +1338,16 @@
       "_bet_eval": {
         "ai_rank": 10.0,
         "course_rank": 6.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 9.0,
+        "odds": 23.2,
         "ai_points": 0.0,
         "course_points": 3.5999999999999996,
-        "pop_points": 0.0,
+        "pop_points": -1.0,
         "odds_points": 0.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 3.6,
+        "total": 2.6,
         "strong_axis": false,
         "semi_axis": false,
         "himo": true,
@@ -1395,8 +1385,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 5.7,
+      "popularity": 3,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -1421,11 +1411,6 @@
       "父血統_score": 0,
       "母父血統_score": 0,
       "近走着順_score": 0.031484,
-      "status": "NG",
-      "rows": 0,
-      "odds_nonnull": 0,
-      "seconds": 5.299,
-      "error": "Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?",
       "g2_S": null,
       "g2_D": null,
       "g2_S_id": null,
@@ -2081,16 +2066,16 @@
       "_bet_eval": {
         "ai_rank": 1.0,
         "course_rank": 9.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 3.0,
+        "odds": 5.7,
         "ai_points": 8.0,
         "course_points": 0.0,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": 1.0,
+        "odds_points": 2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": -2.0,
         "danger_penalty": 0.0,
-        "total": 6.0,
+        "total": 9.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": true,
@@ -2128,8 +2113,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 66,
+      "popularity": 11,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -2154,11 +2139,6 @@
       "父血統_score": 0,
       "母父血統_score": 0,
       "近走着順_score": -0.044078,
-      "status": "NG",
-      "rows": 0,
-      "odds_nonnull": 0,
-      "seconds": 5.299,
-      "error": "Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?",
       "g2_S": null,
       "g2_D": null,
       "g2_S_id": null,
@@ -2366,16 +2346,16 @@
       "_bet_eval": {
         "ai_rank": 11.0,
         "course_rank": 11.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 11.0,
+        "odds": 66.0,
         "ai_points": 0.0,
         "course_points": 0.0,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -2.0,
+        "odds_points": -2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 0.0,
+        "total": -4.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -2413,8 +2393,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 10.3,
+      "popularity": 5,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -2439,11 +2419,6 @@
       "父血統_score": 0,
       "母父血統_score": 0,
       "近走着順_score": 0.037781,
-      "status": "NG",
-      "rows": 0,
-      "odds_nonnull": 0,
-      "seconds": 5.299,
-      "error": "Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?",
       "g2_S": null,
       "g2_D": null,
       "g2_S_id": null,
@@ -2707,16 +2682,16 @@
       "_bet_eval": {
         "ai_rank": 6.0,
         "course_rank": 4.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 5.0,
+        "odds": 10.3,
         "ai_points": 3.0,
         "course_points": 6.0,
         "pop_points": 0.0,
-        "odds_points": 0.0,
+        "odds_points": 1.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 9.0,
+        "total": 10.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": true,
@@ -2754,8 +2729,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 5.4,
+      "popularity": 2,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -2780,11 +2755,6 @@
       "父血統_score": 0,
       "母父血統_score": 0,
       "近走着順_score": 0.044078,
-      "status": "NG",
-      "rows": 0,
-      "odds_nonnull": 0,
-      "seconds": 5.299,
-      "error": "Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?",
       "g2_S": null,
       "g2_D": null,
       "g2_S_id": null,
@@ -3216,16 +3186,16 @@
       "_bet_eval": {
         "ai_rank": 3.0,
         "course_rank": 3.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 2.0,
+        "odds": 5.4,
         "ai_points": 6.0,
         "course_points": 7.199999999999999,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": 2.0,
+        "odds_points": 2.0,
         "agreement_bonus": 4.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 17.2,
+        "total": 21.2,
         "strong_axis": true,
         "semi_axis": true,
         "himo": true,
@@ -3263,8 +3233,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 3.3,
+      "popularity": 1,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -3289,11 +3259,6 @@
       "父血統_score": 0,
       "母父血統_score": 0,
       "近走着順_score": 0.044078,
-      "status": "NG",
-      "rows": 0,
-      "odds_nonnull": 0,
-      "seconds": 5.299,
-      "error": "Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?",
       "g2_S": null,
       "g2_D": null,
       "g2_S_id": null,
@@ -3697,16 +3662,16 @@
       "_bet_eval": {
         "ai_rank": 5.0,
         "course_rank": 1.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 1.0,
+        "odds": 3.3,
         "ai_points": 4.0,
         "course_points": 9.6,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": 3.0,
+        "odds_points": 3.0,
         "agreement_bonus": 2.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 15.6,
+        "total": 21.6,
         "strong_axis": false,
         "semi_axis": true,
         "himo": true,
@@ -3744,8 +3709,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 12.5,
+      "popularity": 6,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -3770,11 +3735,6 @@
       "父血統_score": 0,
       "母父血統_score": 0,
       "近走着順_score": 0.014393,
-      "status": "NG",
-      "rows": 0,
-      "odds_nonnull": 0,
-      "seconds": 5.299,
-      "error": "Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?",
       "g2_S": null,
       "g2_D": null,
       "g2_S_id": null,
@@ -4262,16 +4222,16 @@
       "_bet_eval": {
         "ai_rank": 9.0,
         "course_rank": 5.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 6.0,
+        "odds": 12.5,
         "ai_points": 0.0,
         "course_points": 4.8,
         "pop_points": 0.0,
-        "odds_points": 0.0,
+        "odds_points": 1.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 4.8,
+        "total": 5.8,
         "strong_axis": false,
         "semi_axis": false,
         "himo": true,
@@ -4309,8 +4269,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 12.9,
+      "popularity": 8,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -4335,11 +4295,6 @@
       "父血統_score": 0,
       "母父血統_score": 0,
       "近走着順_score": -0.006297,
-      "status": "NG",
-      "rows": 0,
-      "odds_nonnull": 0,
-      "seconds": 5.299,
-      "error": "Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?",
       "g2_S": null,
       "g2_D": null,
       "g2_S_id": null,
@@ -4631,12 +4586,12 @@
       "_bet_eval": {
         "ai_rank": 7.0,
         "course_rank": 7.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 8.0,
+        "odds": 12.9,
         "ai_points": 2.0,
         "course_points": 2.4,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -1.0,
+        "odds_points": 1.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
@@ -4678,8 +4633,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 25.2,
+      "popularity": 10,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -4704,11 +4659,6 @@
       "父血統_score": 0,
       "母父血統_score": 0,
       "近走着順_score": 0.018891,
-      "status": "NG",
-      "rows": 0,
-      "odds_nonnull": 0,
-      "seconds": 5.299,
-      "error": "Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?",
       "g2_S": null,
       "g2_D": null,
       "g2_S_id": null,
@@ -5056,16 +5006,16 @@
       "_bet_eval": {
         "ai_rank": 8.0,
         "course_rank": 8.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 10.0,
+        "odds": 25.2,
         "ai_points": 1.0,
         "course_points": 1.2,
-        "pop_points": 0.0,
+        "pop_points": -1.0,
         "odds_points": 0.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 2.2,
+        "total": 1.2,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -5103,8 +5053,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 6,
+      "popularity": 4,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -5129,11 +5079,6 @@
       "父血統_score": 0,
       "母父血統_score": 0,
       "近走着順_score": 0.035982,
-      "status": "NG",
-      "rows": 0,
-      "odds_nonnull": 0,
-      "seconds": 5.299,
-      "error": "Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?",
       "g2_S": null,
       "g2_D": null,
       "g2_S_id": null,
@@ -5425,16 +5370,16 @@
       "_bet_eval": {
         "ai_rank": 4.0,
         "course_rank": 2.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 4.0,
+        "odds": 6.0,
         "ai_points": 5.0,
         "course_points": 8.4,
         "pop_points": 0.0,
-        "odds_points": 0.0,
+        "odds_points": 2.0,
         "agreement_bonus": 2.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 15.4,
+        "total": 17.4,
         "strong_axis": false,
         "semi_axis": true,
         "himo": true,
@@ -5451,46 +5396,7 @@
       "三連複"
     ],
     "tickets": {
-      "tansho": [
-        {
-          "bet_type": "単勝",
-          "numbers": "6",
-          "horses": [
-            6
-          ],
-          "horse_names": [
-            "ニシノケンタマン"
-          ],
-          "stake_yen": 100,
-          "score": 17.2,
-          "source": "auto",
-          "reason": "単勝候補1 / AI3位 / 適性3位 / 強軸 / 総合17.2",
-          "tags": [
-            "自動",
-            "単勝",
-            "強軸"
-          ]
-        },
-        {
-          "bet_type": "単勝",
-          "numbers": "7",
-          "horses": [
-            7
-          ],
-          "horse_names": [
-            "インテルメディオ"
-          ],
-          "stake_yen": 100,
-          "score": 15.6,
-          "source": "auto",
-          "reason": "単勝候補2 / AI5位 / 適性1位 / 準軸 / 総合15.6",
-          "tags": [
-            "自動",
-            "単勝",
-            "準軸"
-          ]
-        }
-      ],
+      "tansho": [],
       "umaren": [
         {
           "bet_type": "馬連",
@@ -5504,9 +5410,9 @@
             "インテルメディオ"
           ],
           "stake_yen": 100,
-          "score": 34.8,
+          "score": 44.8,
           "source": "auto",
-          "reason": "1頭軸流し / 軸6(AI3位 / 適性3位 / 強軸 / 総合17.2) → 相手7,11,5,3",
+          "reason": "1頭軸流し / 軸6(AI3位 / 適性3位 / 2人気 / 単勝5.4倍 / 強軸 / 総合21.2) → 相手7,11,5,3",
           "tags": [
             "自動",
             "馬連",
@@ -5526,9 +5432,9 @@
             "ノアヴィヴァーチェ"
           ],
           "stake_yen": 100,
-          "score": 34.6,
+          "score": 40.6,
           "source": "auto",
-          "reason": "1頭軸流し / 軸6(AI3位 / 適性3位 / 強軸 / 総合17.2) → 相手7,11,5,3",
+          "reason": "1頭軸流し / 軸6(AI3位 / 適性3位 / 2人気 / 単勝5.4倍 / 強軸 / 総合21.2) → 相手7,11,5,3",
           "tags": [
             "自動",
             "馬連",
@@ -5548,7 +5454,7 @@
             "ノアヴィヴァーチェ"
           ],
           "stake_yen": 100,
-          "score": 32.0,
+          "score": 40.0,
           "source": "auto",
           "reason": "上位拮抗の保険1点",
           "tags": [
@@ -5569,9 +5475,9 @@
             "ロードソルスティス"
           ],
           "stake_yen": 100,
-          "score": 26.2,
+          "score": 31.2,
           "source": "auto",
-          "reason": "1頭軸流し / 軸6(AI3位 / 適性3位 / 強軸 / 総合17.2) → 相手7,11,5,3",
+          "reason": "1頭軸流し / 軸6(AI3位 / 適性3位 / 2人気 / 単勝5.4倍 / 強軸 / 総合21.2) → 相手7,11,5,3",
           "tags": [
             "自動",
             "馬連",
@@ -5591,9 +5497,9 @@
             "ファルコンミノル"
           ],
           "stake_yen": 100,
-          "score": 23.2,
+          "score": 30.2,
           "source": "auto",
-          "reason": "1頭軸流し / 軸6(AI3位 / 適性3位 / 強軸 / 総合17.2) → 相手7,11,5,3",
+          "reason": "1頭軸流し / 軸6(AI3位 / 適性3位 / 2人気 / 単勝5.4倍 / 強軸 / 総合21.2) → 相手7,11,5,3",
           "tags": [
             "自動",
             "馬連",
@@ -5612,18 +5518,18 @@
             11
           ],
           "horse_names": [
-            "ニシノケンタマン",
             "インテルメディオ",
+            "ニシノケンタマン",
             "ノアヴィヴァーチェ"
           ],
           "stake_yen": 100,
-          "score": 50.2,
+          "score": 62.2,
           "source": "auto",
-          "reason": "2頭軸流し / 軸6-7 → 相手11,5,3",
+          "reason": "1頭軸流し / 軸7 → 相手6,11,5,3",
           "tags": [
             "自動",
             "三連複",
-            "2頭軸流し"
+            "1頭軸流し"
           ]
         },
         {
@@ -5635,18 +5541,18 @@
             7
           ],
           "horse_names": [
-            "ニシノケンタマン",
             "インテルメディオ",
+            "ニシノケンタマン",
             "ロードソルスティス"
           ],
           "stake_yen": 100,
-          "score": 43.8,
+          "score": 54.8,
           "source": "auto",
-          "reason": "2頭軸流し / 軸6-7 → 相手11,5,3",
+          "reason": "1頭軸流し / 軸7 → 相手6,11,5,3",
           "tags": [
             "自動",
             "三連複",
-            "2頭軸流し"
+            "1頭軸流し"
           ]
         },
         {
@@ -5658,18 +5564,87 @@
             7
           ],
           "horse_names": [
-            "ニシノケンタマン",
             "インテルメディオ",
+            "ニシノケンタマン",
             "ファルコンミノル"
           ],
           "stake_yen": 100,
-          "score": 40.8,
+          "score": 53.8,
           "source": "auto",
-          "reason": "2頭軸流し / 軸6-7 → 相手11,5,3",
+          "reason": "1頭軸流し / 軸7 → 相手6,11,5,3",
           "tags": [
             "自動",
             "三連複",
-            "2頭軸流し"
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "5-7-11",
+          "horses": [
+            5,
+            7,
+            11
+          ],
+          "horse_names": [
+            "インテルメディオ",
+            "ノアヴィヴァーチェ",
+            "ロードソルスティス"
+          ],
+          "stake_yen": 100,
+          "score": 50.0,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸7 → 相手6,11,5,3",
+          "tags": [
+            "自動",
+            "三連複",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "3-7-11",
+          "horses": [
+            3,
+            7,
+            11
+          ],
+          "horse_names": [
+            "インテルメディオ",
+            "ノアヴィヴァーチェ",
+            "ファルコンミノル"
+          ],
+          "stake_yen": 100,
+          "score": 49.0,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸7 → 相手6,11,5,3",
+          "tags": [
+            "自動",
+            "三連複",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "3-5-7",
+          "horses": [
+            3,
+            5,
+            7
+          ],
+          "horse_names": [
+            "インテルメディオ",
+            "ロードソルスティス",
+            "ファルコンミノル"
+          ],
+          "stake_yen": 100,
+          "score": 40.6,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸7 → 相手6,11,5,3",
+          "tags": [
+            "自動",
+            "三連複",
+            "1頭軸流し"
           ]
         }
       ]
