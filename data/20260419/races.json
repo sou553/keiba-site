@@ -19,35 +19,26 @@
           "pred_order": 2,
           "p_win": 0.264698,
           "p_top3": 0.694004,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.3,
+          "popularity": 2
         },
         {
-          "umaban": 9,
-          "horse_name": "ライヒスアドラー",
-          "pred_order": 7,
-          "p_win": 0.032912,
-          "p_top3": 0.123982,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 1,
+          "horse_name": "カヴァレリッツォ",
+          "pred_order": 4,
+          "p_win": 0.08833,
+          "p_top3": 0.311502,
+          "tansho_odds": 6.5,
+          "popularity": 3
         },
         {
-          "umaban": 7,
-          "horse_name": "ロードフィレール",
-          "pred_order": 6,
-          "p_win": 0.033972,
-          "p_top3": 0.127828,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 6,
-          "horse_name": "フォルテアンジェロ",
-          "pred_order": 9,
-          "p_win": 0.021203,
-          "p_top3": 0.080882,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 4,
+          "horse_name": "ロブチェン",
+          "pred_order": 10,
+          "p_win": 0.016882,
+          "p_top3": 0.064691,
+          "tansho_odds": 5.6,
+          "popularity": 1
         },
         {
           "umaban": 15,
@@ -55,8 +46,17 @@
           "pred_order": 15,
           "p_win": 0.004168,
           "p_top3": 0.016178,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7.5,
+          "popularity": 4
+        },
+        {
+          "umaban": 9,
+          "horse_name": "ライヒスアドラー",
+          "pred_order": 7,
+          "p_win": 0.032912,
+          "p_top3": 0.123982,
+          "tansho_odds": 23.2,
+          "popularity": 11
         }
       ],
       "detail_path": "20260419/race_202606030811.json"
