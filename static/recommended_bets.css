@@ -7,6 +7,8 @@
   --recommend-accent: #8a5a2b;
   --recommend-blue: #244b7a;
   --recommend-red: #9d2f2f;
+  --recommend-green: #2f6b4f;
+  --recommend-cream: #fff7e8;
 }
 
 .recommend-page {
@@ -148,7 +150,8 @@
   font-size: 20px;
 }
 
-.recommend-copy-all {
+.recommend-copy-all,
+.recommend-copy-small {
   min-height: 36px;
   padding: 0 12px;
   border: 1px solid #c6b7a3;
@@ -157,6 +160,14 @@
   color: var(--recommend-ink);
   font-weight: 800;
   cursor: pointer;
+  font-family: inherit;
+}
+
+.recommend-copy-small {
+  min-height: 30px;
+  padding: 0 10px;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .recommend-summary-grid {
@@ -292,10 +303,20 @@
 }
 
 .recommend-race-meta,
-.recommend-race-id {
+.recommend-race-id,
+.recommend-race-bet-summary {
   margin-top: 5px;
   color: var(--recommend-muted);
   font-size: 12px;
+}
+
+.recommend-race-bet-summary {
+  display: inline-flex;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #fff7e8;
+  color: #6b553a;
+  font-weight: 800;
 }
 
 .recommend-race-total {
@@ -355,6 +376,10 @@
   font-size: 12px;
 }
 
+.recommend-bet-badge--red {
+  background: var(--recommend-red);
+}
+
 .recommend-ticket-list {
   display: grid;
 }
@@ -402,6 +427,208 @@
   background: #f5f1ea;
   font-size: 13px;
   font-weight: 900;
+}
+
+.recommend-ticket-group--formation {
+  background: #fffdf8;
+}
+
+.recommend-formation-list {
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+}
+
+.recommend-formation-card {
+  border: 1px solid #e5ddcf;
+  border-radius: 14px;
+  background: #fff;
+  padding: 12px;
+}
+
+.recommend-formation-card--trifecta {
+  border-color: #ead2d2;
+  background: #fffdfb;
+}
+
+.recommend-formation-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.recommend-formation-title {
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.recommend-formation-sub {
+  margin-top: 3px;
+  color: var(--recommend-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.recommend-formation-badges,
+.recommend-reason-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+}
+
+.recommend-plan-badge,
+.recommend-reason-badges span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid #e1d7c9;
+  background: #fffaf2;
+  color: #6b553a;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.recommend-reason-badges span {
+  background: #f7fbf8;
+  border-color: #d9e8dd;
+  color: #365d45;
+}
+
+.recommend-reason-badges b {
+  color: #1f3b2b;
+}
+
+.recommend-formation-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.recommend-formation-grid--trio {
+  grid-template-columns: minmax(90px, 0.55fr) minmax(0, 1.45fr);
+}
+
+.recommend-formation-grid--trifecta {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.recommend-formation-grid--single {
+  grid-template-columns: 1fr;
+}
+
+.recommend-formation-slot {
+  padding: 10px;
+  border: 1px solid #e8dfd2;
+  border-radius: 12px;
+  background: #fffaf2;
+}
+
+.recommend-formation-slot--axis,
+.recommend-formation-slot--first {
+  border-color: #c8d7e8;
+  background: #f4f8fd;
+}
+
+.recommend-formation-slot__label {
+  margin-bottom: 7px;
+  color: var(--recommend-muted);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.recommend-num-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.recommend-num-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  min-height: 34px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: #2d2720;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.recommend-formation-slot--axis .recommend-num-pill,
+.recommend-formation-slot--first .recommend-num-pill {
+  background: var(--recommend-blue);
+}
+
+.recommend-num-empty {
+  color: var(--recommend-muted);
+  font-size: 13px;
+}
+
+.recommend-formation-note {
+  margin-top: 9px;
+  color: var(--recommend-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.recommend-details {
+  margin-top: 10px;
+  border-top: 1px dashed #e0d5c5;
+  padding-top: 8px;
+}
+
+.recommend-details summary {
+  cursor: pointer;
+  color: var(--recommend-blue);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.recommend-detail-body {
+  margin-top: 8px;
+}
+
+.recommend-detail-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.recommend-detail-ticket {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 9px;
+  background: #f7f3ed;
+  font-size: 13px;
+}
+
+.recommend-detail-ticket span {
+  font-weight: 900;
+}
+
+.recommend-detail-ticket b {
+  white-space: nowrap;
+}
+
+.recommend-detail-reason {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 10px;
+  background: #fff7e8;
+  color: #6b553a;
+  font-size: 12px;
+  line-height: 1.55;
 }
 
 .recommend-race-actions {
@@ -495,6 +722,14 @@
     justify-self: start;
   }
 
+  .recommend-formation-grid--trifecta {
+    grid-template-columns: 1fr;
+  }
+
+  .recommend-detail-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .recommend-race-actions a,
   .recommend-race-actions button {
     flex: 1 1 calc(50% - 8px);
@@ -503,7 +738,9 @@
 
 @media (max-width: 430px) {
   .recommend-summary-grid,
-  .recommend-toolbar {
+  .recommend-toolbar,
+  .recommend-formation-grid--trio,
+  .recommend-detail-list {
     grid-template-columns: 1fr;
   }
 
@@ -517,6 +754,16 @@
 
   .recommend-ticket-numbers {
     font-size: 17px;
+  }
+
+  .recommend-formation-title {
+    font-size: 16px;
+  }
+
+  .recommend-num-pill {
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 16px;
   }
 
   .recommend-race-actions a,

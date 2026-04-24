@@ -5,7 +5,6 @@
   const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
   const app = qs('#recommended-bets-app');
-  const statusEl = qs('#recommend-status');
 
   const state = {
     data: null,
@@ -60,10 +59,15 @@
     return `${n.toLocaleString('ja-JP')}円`;
   }
 
-  function pct(value) {
+  function toNum(value) {
     if (value === null || value === undefined || value === '') return null;
     const n = Number(value);
-    if (!Number.isFinite(n)) return null;
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function pct(value) {
+    const n = toNum(value);
+    if (n === null) return null;
     return `${(n * 100).toFixed(1)}%`;
   }
 
@@ -84,6 +88,7 @@
   }
 
   function setStatus(message, isError = false) {
+    const statusEl = qs('#recommend-status');
     if (!statusEl) return;
     statusEl.hidden = !message;
     statusEl.textContent = message || '';
@@ -166,6 +171,8 @@
             ticket.strategy_name,
             ticket.reason,
             ticket.A1_name,
+            ticket.top1_umaban,
+            ticket.longshot_umaban,
           ]),
         ].filter(Boolean).join(' ').toLowerCase();
 
@@ -321,6 +328,9 @@
     ].filter(Boolean).join(' / ');
 
     const grouped = groupTicketsByBetType(race.tickets || []);
+    const groupSummary = Object.entries(grouped)
+      .map(([betType, tickets]) => `${betType}${tickets.length}点`)
+      .join(' / ');
 
     return `
       <article class="recommend-race-card">
@@ -332,6 +342,7 @@
             </div>
             <div class="recommend-race-meta">${escapeHtml(condition || race.race_id)}</div>
             <div class="recommend-race-id">${escapeHtml(race.race_id)}</div>
+            ${groupSummary ? `<div class="recommend-race-bet-summary">${escapeHtml(groupSummary)}</div>` : ''}
           </div>
           <div class="recommend-race-total">
             <span>${escapeHtml(race.tickets.length)}点</span>
@@ -340,7 +351,7 @@
         </header>
 
         <div class="recommend-ticket-groups">
-          ${Object.entries(grouped).map(([betType, tickets]) => renderTicketGroup(betType, tickets)).join('')}
+          ${Object.entries(grouped).map(([betType, tickets]) => renderTicketGroup(race, betType, tickets)).join('')}
         </div>
 
         <footer class="recommend-race-actions">
@@ -362,11 +373,70 @@
     return grouped;
   }
 
+  function groupTicketsByFormation(tickets) {
+    const groups = new Map();
+    tickets.forEach((ticket) => {
+      const key = [
+        ticket.strategy_group || '通常',
+        ticket.strategy_name || '',
+        ticket.reason || '',
+        ticket.top1_umaban || '',
+        ticket.longshot_umaban || '',
+      ].join('__');
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(ticket);
+    });
+    return Array.from(groups.values());
+  }
+
   function sumStake(tickets) {
     return (tickets || []).reduce((sum, ticket) => sum + Number(ticket.stake_yen || 0), 0);
   }
 
-  function renderTicketGroup(betType, tickets) {
+  function sortTickets(tickets) {
+    return [...(tickets || [])].sort((a, b) => {
+      const ai = toNum(a.ticket_index);
+      const bi = toNum(b.ticket_index);
+      if (ai !== null && bi !== null && ai !== bi) return ai - bi;
+      return String(a.numbers || '').localeCompare(String(b.numbers || ''), 'ja');
+    });
+  }
+
+  function normalizeUmaban(value) {
+    const n = toNum(value);
+    if (n === null) return null;
+    return String(Math.trunc(n));
+  }
+
+  function parseTicketNumbers(ticket) {
+    return String(ticket?.numbers ?? '')
+      .split(/[^0-9]+/)
+      .map((value) => value.trim())
+      .filter(Boolean)
+      .map((value) => String(Number(value)));
+  }
+
+  function uniqueNums(values) {
+    return Array.from(new Set(values.filter(Boolean))).sort((a, b) => Number(a) - Number(b));
+  }
+
+  function combinations(n, r) {
+    if (n < r || r < 0) return 0;
+    if (r === 0 || n === r) return 1;
+    let ans = 1;
+    for (let i = 1; i <= r; i += 1) {
+      ans = ans * (n - r + i) / i;
+    }
+    return Math.round(ans);
+  }
+
+  function renderTicketGroup(race, betType, tickets) {
+    if (betType === '三連複') return renderTrioGroup(race, betType, tickets);
+    if (betType === '三連単') return renderTrifectaGroup(race, betType, tickets);
+    return renderRegularTicketGroup(race, betType, tickets);
+  }
+
+  function renderRegularTicketGroup(race, betType, tickets) {
     return `
       <section class="recommend-ticket-group">
         <div class="recommend-ticket-group__head">
@@ -374,9 +444,262 @@
           <span>${escapeHtml(tickets.length)}点 / ${escapeHtml(fmtYen(sumStake(tickets)))}</span>
         </div>
         <div class="recommend-ticket-list">
-          ${tickets.map(renderTicketRow).join('')}
+          ${sortTickets(tickets).map(renderTicketRow).join('')}
         </div>
       </section>
+    `;
+  }
+
+  function analyzeTrioFormation(tickets) {
+    const sorted = sortTickets(tickets);
+    const partsList = sorted.map(parseTicketNumbers).filter((parts) => parts.length >= 3);
+    const allNums = uniqueNums(partsList.flat());
+    const top1 = normalizeUmaban(sorted.find((ticket) => ticket.top1_umaban)?.top1_umaban);
+
+    let axis = null;
+    if (top1 && partsList.every((parts) => parts.includes(top1))) axis = top1;
+
+    if (!axis && partsList.length) {
+      const intersection = partsList.reduce((acc, parts) => acc.filter((num) => parts.includes(num)), partsList[0]);
+      const inter = uniqueNums(intersection);
+      if (inter.length === 1) axis = inter[0];
+    }
+
+    if (axis) {
+      const partners = uniqueNums(allNums.filter((num) => num !== axis));
+      const fullCount = combinations(partners.length, 2);
+      return {
+        type: 'axis',
+        label: fullCount === sorted.length ? '1頭軸流し' : '1頭軸流し（変則）',
+        axis,
+        partners,
+        box: null,
+        detailTickets: sorted,
+      };
+    }
+
+    const boxCount = combinations(allNums.length, 3);
+    if (boxCount === sorted.length && allNums.length >= 3) {
+      return {
+        type: 'box',
+        label: 'BOX',
+        axis: null,
+        partners: [],
+        box: allNums,
+        detailTickets: sorted,
+      };
+    }
+
+    return {
+      type: 'list',
+      label: '買い目一覧',
+      axis: null,
+      partners: [],
+      box: allNums,
+      detailTickets: sorted,
+    };
+  }
+
+  function analyzeTrifectaFormation(tickets) {
+    const sorted = sortTickets(tickets);
+    const partsList = sorted.map(parseTicketNumbers).filter((parts) => parts.length >= 3);
+    const first = uniqueNums(partsList.map((parts) => parts[0]));
+    const second = uniqueNums(partsList.map((parts) => parts[1]));
+    const third = uniqueNums(partsList.map((parts) => parts[2]));
+    const top1 = normalizeUmaban(sorted.find((ticket) => ticket.top1_umaban)?.top1_umaban);
+
+    let label = 'フォーメーション';
+    if (first.length === 1) label = '1着固定フォーメーション';
+    if (top1 && first.length === 1 && first[0] === top1) label = '1着軸固定';
+
+    return {
+      type: 'formation',
+      label,
+      first,
+      second,
+      third,
+      detailTickets: sorted,
+    };
+  }
+
+  function firstTicket(tickets) {
+    return sortTickets(tickets)[0] || {};
+  }
+
+  function renderTrioGroup(race, betType, tickets) {
+    const groups = groupTicketsByFormation(tickets);
+    return `
+      <section class="recommend-ticket-group recommend-ticket-group--formation">
+        <div class="recommend-ticket-group__head">
+          <span class="recommend-bet-badge">${escapeHtml(betType)}</span>
+          <span>${escapeHtml(tickets.length)}点 / ${escapeHtml(fmtYen(sumStake(tickets)))}</span>
+        </div>
+        <div class="recommend-formation-list">
+          ${groups.map((group, index) => renderTrioFormationCard(race, betType, group, index)).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderTrioFormationCard(race, betType, tickets, index) {
+    const plan = analyzeTrioFormation(tickets);
+    const ticket = firstTicket(tickets);
+    const title = `${betType} ${plan.label}`;
+    const groupId = `${race.race_id}__${betType}__${index}`;
+
+    return `
+      <article class="recommend-formation-card">
+        <div class="recommend-formation-head">
+          <div>
+            <div class="recommend-formation-title">${escapeHtml(title)}</div>
+            <div class="recommend-formation-sub">${escapeHtml(tickets.length)}点 / ${escapeHtml(fmtYen(sumStake(tickets)))} / 各${escapeHtml(fmtYen(firstTicket(tickets).stake_yen || 0))}</div>
+          </div>
+          <button type="button" class="recommend-copy-small" data-copy-group="${escapeHtml(groupId)}">コピー</button>
+        </div>
+
+        ${renderStrategyBadges(ticket)}
+
+        ${plan.type === 'axis' ? `
+          <div class="recommend-formation-grid recommend-formation-grid--trio">
+            ${renderFormationSlot('軸', [plan.axis], 'axis')}
+            ${renderFormationSlot('相手', plan.partners, 'partners')}
+          </div>
+        ` : ''}
+
+        ${plan.type === 'box' ? `
+          <div class="recommend-formation-grid recommend-formation-grid--single">
+            ${renderFormationSlot('BOX', plan.box, 'box')}
+          </div>
+        ` : ''}
+
+        ${plan.type === 'list' ? `
+          <div class="recommend-formation-note">共通軸を判定できないため、詳細買い目で確認してください。</div>
+        ` : ''}
+
+        ${renderReasonBadges(ticket)}
+        ${renderTicketDetails(betType, tickets, ticket.reason)}
+      </article>
+    `;
+  }
+
+  function renderTrifectaGroup(race, betType, tickets) {
+    const groups = groupTicketsByFormation(tickets);
+    return `
+      <section class="recommend-ticket-group recommend-ticket-group--formation">
+        <div class="recommend-ticket-group__head">
+          <span class="recommend-bet-badge recommend-bet-badge--red">${escapeHtml(betType)}</span>
+          <span>${escapeHtml(tickets.length)}点 / ${escapeHtml(fmtYen(sumStake(tickets)))}</span>
+        </div>
+        <div class="recommend-formation-list">
+          ${groups.map((group, index) => renderTrifectaFormationCard(race, betType, group, index)).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderTrifectaFormationCard(race, betType, tickets, index) {
+    const plan = analyzeTrifectaFormation(tickets);
+    const ticket = firstTicket(tickets);
+    const groupId = `${race.race_id}__${betType}__${index}`;
+
+    return `
+      <article class="recommend-formation-card recommend-formation-card--trifecta">
+        <div class="recommend-formation-head">
+          <div>
+            <div class="recommend-formation-title">${escapeHtml(betType)} ${escapeHtml(plan.label)}</div>
+            <div class="recommend-formation-sub">${escapeHtml(tickets.length)}点 / ${escapeHtml(fmtYen(sumStake(tickets)))} / 各${escapeHtml(fmtYen(firstTicket(tickets).stake_yen || 0))}</div>
+          </div>
+          <button type="button" class="recommend-copy-small" data-copy-group="${escapeHtml(groupId)}">コピー</button>
+        </div>
+
+        ${renderStrategyBadges(ticket)}
+
+        <div class="recommend-formation-grid recommend-formation-grid--trifecta">
+          ${renderFormationSlot('1着', plan.first, 'first')}
+          ${renderFormationSlot('2着', plan.second, 'second')}
+          ${renderFormationSlot('3着', plan.third, 'third')}
+        </div>
+        <div class="recommend-formation-note">同一馬の重複組み合わせは詳細買い目側で除外済みです。</div>
+
+        ${renderReasonBadges(ticket)}
+        ${renderTicketDetails(betType, tickets, ticket.reason)}
+      </article>
+    `;
+  }
+
+  function renderFormationSlot(label, nums, role) {
+    const list = Array.isArray(nums) ? nums : [];
+    return `
+      <div class="recommend-formation-slot recommend-formation-slot--${escapeHtml(role)}">
+        <div class="recommend-formation-slot__label">${escapeHtml(label)}</div>
+        <div class="recommend-num-list">
+          ${list.length
+            ? list.map((num) => `<span class="recommend-num-pill">${escapeHtml(num)}</span>`).join('')
+            : '<span class="recommend-num-empty">-</span>'}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderStrategyBadges(ticket) {
+    const values = [ticket.strategy_group, ticket.strategy_name].filter(Boolean);
+    if (!values.length) return '';
+    return `
+      <div class="recommend-formation-badges">
+        ${values.map((value) => `<span class="recommend-plan-badge">${escapeHtml(value)}</span>`).join('')}
+      </div>
+    `;
+  }
+
+  function renderReasonBadges(ticket) {
+    const badges = [];
+    const pTop3 = pct(ticket.top1_p_top3);
+    const pUmaren = pct(ticket.p_umaren);
+    const a1Prob = pct(ticket.A1_prob);
+    const partnerProb = pct(ticket.B_partner_prob);
+    const top1 = normalizeUmaban(ticket.top1_umaban);
+    const longshot = normalizeUmaban(ticket.longshot_umaban);
+
+    if (top1) badges.push(['軸', top1]);
+    if (longshot) badges.push(['穴', longshot]);
+    if (pTop3) badges.push(['軸複', pTop3]);
+    if (pUmaren) badges.push(['馬連P', pUmaren]);
+    if (a1Prob) badges.push(['軸P', a1Prob]);
+    if (partnerProb) badges.push(['相手P', partnerProb]);
+    if (ticket.top1_rank_course) badges.push(['適性', `${ticket.top1_rank_course}位`]);
+
+    const reasonText = String(ticket.reason || '');
+    const agree = reasonText.match(/agree=([0-9.]+)/i)?.[1];
+    const gap = reasonText.match(/gap=([-0-9.]+)/i)?.[1];
+    if (agree) badges.push(['一致', agree]);
+    if (gap) badges.push(['gap', String(Number(gap).toFixed(3))]);
+
+    if (!badges.length) return '';
+    return `
+      <div class="recommend-reason-badges">
+        ${badges.map(([label, value]) => `<span><b>${escapeHtml(label)}</b>${escapeHtml(value)}</span>`).join('')}
+      </div>
+    `;
+  }
+
+  function renderTicketDetails(betType, tickets, reason) {
+    const details = sortTickets(tickets);
+    const hasReason = !!reason;
+    return `
+      <details class="recommend-details">
+        <summary>詳細買い目${hasReason ? '・生成理由' : ''}を見る</summary>
+        <div class="recommend-detail-body">
+          <div class="recommend-detail-list">
+            ${details.map((ticket) => `
+              <div class="recommend-detail-ticket">
+                <span>${escapeHtml(formatNumbers(ticket.numbers, betType))}</span>
+                <b>${escapeHtml(fmtYen(ticket.stake_yen || 0))}</b>
+              </div>
+            `).join('')}
+          </div>
+          ${hasReason ? `<div class="recommend-detail-reason">${escapeHtml(reason)}</div>` : ''}
+        </div>
+      </details>
     `;
   }
 
@@ -387,13 +710,20 @@
     return `
       <div class="recommend-ticket-row">
         <div class="recommend-ticket-main">
-          <div class="recommend-ticket-numbers">${escapeHtml(ticket.numbers)}</div>
+          <div class="recommend-ticket-numbers">${escapeHtml(formatNumbers(ticket.numbers, ticket.bet_type))}</div>
           <div class="recommend-ticket-sub">${escapeHtml(sub)}</div>
           ${reason}
         </div>
         <div class="recommend-ticket-stake">${escapeHtml(fmtYen(ticket.stake_yen || 0))}</div>
       </div>
     `;
+  }
+
+  function formatNumbers(numbers, betType) {
+    const parts = String(numbers || '').split(/[^0-9]+/).filter(Boolean);
+    if (!parts.length) return numbers || '';
+    if (betType === '三連単') return parts.join('→');
+    return parts.join('-');
   }
 
   function buildTicketSubText(ticket) {
@@ -413,8 +743,8 @@
     if (partnerProb) probs.push(`相手P ${partnerProb}`);
     if (top1Top3) probs.push(`軸複 ${top1Top3}`);
 
-    if (ticket.top1_umaban) parts.push(`軸 ${ticket.top1_umaban}`);
-    if (ticket.longshot_umaban) parts.push(`穴 ${ticket.longshot_umaban}`);
+    if (ticket.top1_umaban) parts.push(`軸 ${normalizeUmaban(ticket.top1_umaban)}`);
+    if (ticket.longshot_umaban) parts.push(`穴 ${normalizeUmaban(ticket.longshot_umaban)}`);
 
     if (probs.length) parts.push(probs.join(' / '));
 
@@ -424,16 +754,52 @@
     return parts.length ? parts.join(' / ') : '通常';
   }
 
+  function copyTextForTicketGroup(betType, tickets) {
+    if (betType === '三連複') {
+      return groupTicketsByFormation(tickets).map((group) => {
+        const plan = analyzeTrioFormation(group);
+        const unit = firstTicket(group).stake_yen || 0;
+        const lines = [`【三連複 ${plan.label}】`];
+        if (plan.type === 'axis') {
+          lines.push(`軸: ${plan.axis}`);
+          lines.push(`相手: ${plan.partners.join(',')}`);
+        } else if (plan.type === 'box') {
+          lines.push(`BOX: ${plan.box.join(',')}`);
+        } else {
+          lines.push(...sortTickets(group).map((ticket) => formatNumbers(ticket.numbers, betType)));
+        }
+        lines.push(`${group.length}点 / 各${unit}円 / 計${sumStake(group)}円`);
+        return lines.join('\n');
+      }).join('\n');
+    }
+
+    if (betType === '三連単') {
+      return groupTicketsByFormation(tickets).map((group) => {
+        const plan = analyzeTrifectaFormation(group);
+        const unit = firstTicket(group).stake_yen || 0;
+        return [
+          `【三連単 ${plan.label}】`,
+          `1着: ${plan.first.join(',')}`,
+          `2着: ${plan.second.join(',')}`,
+          `3着: ${plan.third.join(',')}`,
+          `${group.length}点 / 各${unit}円 / 計${sumStake(group)}円`,
+        ].join('\n');
+      }).join('\n');
+    }
+
+    return [
+      `【${betType}】`,
+      ...sortTickets(tickets).map((ticket) => `${formatNumbers(ticket.numbers, betType)} ${ticket.stake_yen || 0}円`),
+    ].join('\n');
+  }
+
   function buildCopyTextForRace(race) {
     const title = race.title || `${race.course || ''}${race.race_no || ''}R`;
     const lines = [`${race.course || ''} ${race.race_no || ''}R ${title}`.trim()];
     const grouped = groupTicketsByBetType(race.tickets || []);
 
     Object.entries(grouped).forEach(([betType, tickets]) => {
-      lines.push(`【${betType}】`);
-      tickets.forEach((ticket) => {
-        lines.push(`${ticket.numbers} ${ticket.stake_yen || 0}円`);
-      });
+      lines.push(copyTextForTicketGroup(betType, tickets));
     });
 
     return lines.join('\n');
@@ -441,6 +807,18 @@
 
   function buildCopyTextAll() {
     return getFilteredRaces().map(buildCopyTextForRace).join('\n\n');
+  }
+
+  function findTicketGroupById(groupId) {
+    const [raceId, betType, indexText] = String(groupId || '').split('__');
+    const index = Number(indexText);
+    const race = getFilteredRaces().find((item) => String(item.race_id) === String(raceId));
+    if (!race) return null;
+    const tickets = (race.tickets || []).filter((ticket) => ticket.bet_type === betType);
+    const groups = groupTicketsByFormation(tickets);
+    const group = groups[index];
+    if (!group) return null;
+    return { race, betType, tickets: group };
   }
 
   async function copyText(text) {
@@ -489,14 +867,21 @@
     qsa('[data-copy-race]').forEach((button) => {
       button.addEventListener('click', () => {
         const raceId = button.dataset.copyRace;
-        const race = getFilteredRaces().find((item) => item.race_id === raceId);
+        const race = getFilteredRaces().find((item) => String(item.race_id) === String(raceId));
         if (race) copyText(buildCopyTextForRace(race));
+      });
+    });
+
+    qsa('[data-copy-group]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const found = findTicketGroupById(button.dataset.copyGroup);
+        if (found) copyText(copyTextForTicketGroup(found.betType, found.tickets));
       });
     });
   }
 
   function render() {
-    if (!state.data) return;
+    if (!state.data || !app) return;
 
     app.innerHTML = `
       <header class="recommend-hero">
