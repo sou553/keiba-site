@@ -1,0 +1,526 @@
+:root {
+  --recommend-bg: #f6f3ea;
+  --recommend-paper: #fffdf7;
+  --recommend-line: #ded6c8;
+  --recommend-ink: #2b2722;
+  --recommend-muted: #756b5d;
+  --recommend-accent: #8a5a2b;
+  --recommend-blue: #244b7a;
+  --recommend-red: #9d2f2f;
+}
+
+.recommend-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 12px 32px;
+  color: var(--recommend-ink);
+}
+
+.recommend-hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 8px 0 12px;
+  padding: 16px;
+  border: 1px solid var(--recommend-line);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fffdf8 0%, #f4eadc 100%);
+  box-shadow: 0 10px 24px rgba(77, 55, 26, 0.08);
+}
+
+.recommend-kicker {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--recommend-accent);
+}
+
+.recommend-hero h1 {
+  margin: 4px 0 6px;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.recommend-hero p {
+  margin: 0;
+  color: var(--recommend-muted);
+  font-size: 13px;
+}
+
+.recommend-hero__nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.recommend-nav-link,
+.recommend-hero__nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--recommend-line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--recommend-ink);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.recommend-date-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0 10px;
+  margin-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.recommend-date-pill {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--recommend-line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--recommend-ink);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.recommend-date-pill small {
+  color: var(--recommend-muted);
+  font-weight: 700;
+}
+
+.recommend-date-pill.is-active {
+  background: #2d2720;
+  border-color: #2d2720;
+  color: #fff;
+}
+
+.recommend-date-pill.is-active small {
+  color: #e7ddcf;
+}
+
+.recommend-status {
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid var(--recommend-line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--recommend-muted);
+}
+
+.recommend-status.is-error {
+  border-color: #e7b5b5;
+  background: #fff6f6;
+  color: #9d2f2f;
+}
+
+.recommend-summary,
+.recommend-toolbar,
+.recommend-race-card,
+.recommend-empty {
+  margin: 12px 0;
+  padding: 14px;
+  border: 1px solid var(--recommend-line);
+  border-radius: 16px;
+  background: var(--recommend-paper);
+}
+
+.recommend-summary__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.recommend-summary h2 {
+  margin: 4px 0 0;
+  font-size: 20px;
+}
+
+.recommend-copy-all {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid #c6b7a3;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--recommend-ink);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.recommend-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.recommend-summary-card {
+  padding: 12px;
+  border: 1px solid #e5ddcf;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.recommend-summary-card span {
+  display: block;
+  color: var(--recommend-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.recommend-summary-card strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 19px;
+}
+
+.recommend-breakdown {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.recommend-mini {
+  padding: 10px;
+  border: 1px solid #e5ddcf;
+  border-radius: 14px;
+  background: #fffaf2;
+}
+
+.recommend-mini__title {
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--recommend-accent);
+}
+
+.recommend-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.recommend-chip {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  padding: 5px 8px;
+  border: 1px solid #e0d5c5;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 12px;
+  color: var(--recommend-muted);
+}
+
+.recommend-chip b {
+  color: var(--recommend-ink);
+}
+
+.recommend-toolbar {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.recommend-field label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--recommend-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.recommend-field input,
+.recommend-field select {
+  width: 100%;
+  min-height: 38px;
+  padding: 0 10px;
+  border: 1px solid #d5cbbb;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--recommend-ink);
+  font-size: 14px;
+}
+
+.recommend-races {
+  display: grid;
+  gap: 12px;
+}
+
+.recommend-race-card {
+  overflow: hidden;
+}
+
+.recommend-race-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e7dfd2;
+}
+
+.recommend-race-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 18px;
+}
+
+.recommend-race-no {
+  display: inline-flex;
+  min-width: 42px;
+  justify-content: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #2d2720;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.recommend-race-meta,
+.recommend-race-id {
+  margin-top: 5px;
+  color: var(--recommend-muted);
+  font-size: 12px;
+}
+
+.recommend-race-total {
+  min-width: 92px;
+  padding: 9px 10px;
+  border: 1px solid #e0d5c5;
+  border-radius: 14px;
+  background: #fff;
+  text-align: right;
+}
+
+.recommend-race-total span {
+  display: block;
+  color: var(--recommend-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.recommend-race-total strong {
+  display: block;
+  margin-top: 3px;
+  font-size: 16px;
+}
+
+.recommend-ticket-groups {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.recommend-ticket-group {
+  border: 1px solid #e5ddcf;
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.recommend-ticket-group__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  padding: 9px 10px;
+  background: #f4eadc;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.recommend-bet-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--recommend-blue);
+  color: #fff;
+  font-size: 12px;
+}
+
+.recommend-ticket-list {
+  display: grid;
+}
+
+.recommend-ticket-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px;
+  gap: 10px;
+  padding: 10px;
+  border-top: 1px solid #eee7dc;
+}
+
+.recommend-ticket-row:first-child {
+  border-top: 0;
+}
+
+.recommend-ticket-numbers {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.recommend-ticket-sub {
+  margin-top: 3px;
+  color: var(--recommend-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.recommend-ticket-reason {
+  margin-top: 6px;
+  padding: 7px 8px;
+  border-radius: 10px;
+  background: #fff7e8;
+  color: #6b553a;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.recommend-ticket-stake {
+  align-self: start;
+  justify-self: end;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #f5f1ea;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.recommend-race-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e7dfd2;
+}
+
+.recommend-race-actions a,
+.recommend-race-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid #cfc2b0;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--recommend-ink);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.recommend-race-actions button {
+  font-family: inherit;
+}
+
+.recommend-empty {
+  color: var(--recommend-muted);
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .recommend-page {
+    padding: 8px 8px 24px;
+  }
+
+  .recommend-hero {
+    display: block;
+    padding: 13px;
+    border-radius: 14px;
+  }
+
+  .recommend-hero h1 {
+    font-size: 21px;
+  }
+
+  .recommend-hero__nav {
+    margin-top: 10px;
+  }
+
+  .recommend-summary__head {
+    align-items: flex-start;
+  }
+
+  .recommend-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .recommend-breakdown {
+    grid-template-columns: 1fr;
+  }
+
+  .recommend-toolbar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .recommend-field:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .recommend-race-head {
+    display: block;
+  }
+
+  .recommend-race-total {
+    margin-top: 10px;
+    text-align: left;
+  }
+
+  .recommend-ticket-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .recommend-ticket-stake {
+    justify-self: start;
+  }
+
+  .recommend-race-actions a,
+  .recommend-race-actions button {
+    flex: 1 1 calc(50% - 8px);
+  }
+}
+
+@media (max-width: 430px) {
+  .recommend-summary-grid,
+  .recommend-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .recommend-field:first-child {
+    grid-column: auto;
+  }
+
+  .recommend-race-title {
+    font-size: 16px;
+  }
+
+  .recommend-ticket-numbers {
+    font-size: 17px;
+  }
+
+  .recommend-race-actions a,
+  .recommend-race-actions button {
+    flex-basis: 100%;
+  }
+}
