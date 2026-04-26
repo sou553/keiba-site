@@ -19,17 +19,8 @@
           "pred_order": 1,
           "p_win": 0.547846,
           "p_top3": 0.947862,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 10,
-          "horse_name": "トゥレイス",
-          "pred_order": 4,
-          "p_win": 0.054904,
-          "p_top3": 0.291104,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3,
+          "popularity": 2
         },
         {
           "umaban": 12,
@@ -37,17 +28,17 @@
           "pred_order": 2,
           "p_win": 0.21262,
           "p_top3": 0.754338,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 2.2,
+          "popularity": 1
         },
         {
-          "umaban": 8,
-          "horse_name": "フレンドリーエール",
-          "pred_order": 15,
-          "p_win": 0.003822,
-          "p_top3": 0.021573,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 10,
+          "horse_name": "トゥレイス",
+          "pred_order": 4,
+          "p_win": 0.054904,
+          "p_top3": 0.291104,
+          "tansho_odds": 76.1,
+          "popularity": 11
         },
         {
           "umaban": 15,
@@ -55,8 +46,17 @@
           "pred_order": 3,
           "p_win": 0.065779,
           "p_top3": 0.343351,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 8.2,
+          "popularity": 3
+        },
+        {
+          "umaban": 7,
+          "horse_name": "ドリームガッサン",
+          "pred_order": 9,
+          "p_win": 0.012242,
+          "p_top3": 0.06847,
+          "tansho_odds": 14.1,
+          "popularity": 5
         }
       ],
       "detail_path": "20260426/race_202603010601.json"
@@ -78,17 +78,8 @@
           "pred_order": 1,
           "p_win": 0.451346,
           "p_top3": 0.916181,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 11,
-          "horse_name": "モズヴイ",
-          "pred_order": 4,
-          "p_win": 0.072868,
-          "p_top3": 0.335066,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.9,
+          "popularity": 2
         },
         {
           "umaban": 15,
@@ -96,8 +87,17 @@
           "pred_order": 2,
           "p_win": 0.259957,
           "p_top3": 0.795671,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.2,
+          "popularity": 1
+        },
+        {
+          "umaban": 11,
+          "horse_name": "モズヴイ",
+          "pred_order": 4,
+          "p_win": 0.072868,
+          "p_top3": 0.335066,
+          "tansho_odds": 5.9,
+          "popularity": 4
         },
         {
           "umaban": 4,
@@ -105,8 +105,8 @@
           "pred_order": 3,
           "p_win": 0.140694,
           "p_top3": 0.583827,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5,
+          "popularity": 3
         },
         {
           "umaban": 12,
@@ -114,8 +114,8 @@
           "pred_order": 6,
           "p_win": 0.020073,
           "p_top3": 0.09813,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 11.2,
+          "popularity": 6
         }
       ],
       "detail_path": "20260426/race_202603010602.json"
@@ -137,8 +137,8 @@
           "pred_order": 1,
           "p_win": 0.617256,
           "p_top3": 0.960412,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 1.5,
+          "popularity": 1
         },
         {
           "umaban": 6,
@@ -146,8 +146,8 @@
           "pred_order": 2,
           "p_win": 0.091578,
           "p_top3": 0.457119,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7.6,
+          "popularity": 3
         },
         {
           "umaban": 2,
@@ -155,8 +155,8 @@
           "pred_order": 5,
           "p_win": 0.043531,
           "p_top3": 0.239861,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7,
+          "popularity": 2
         },
         {
           "umaban": 7,
@@ -164,8 +164,8 @@
           "pred_order": 11,
           "p_win": 0.006068,
           "p_top3": 0.035394,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 17.6,
+          "popularity": 5
         },
         {
           "umaban": 15,
@@ -173,8 +173,8 @@
           "pred_order": 4,
           "p_win": 0.058856,
           "p_top3": 0.315432,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 18.2,
+          "popularity": 6
         }
       ],
       "detail_path": "20260426/race_202603010603.json"
@@ -191,40 +191,22 @@
       "headcount": 16,
       "top_ai": [
         {
-          "umaban": 7,
-          "horse_name": "カレンデュラ",
-          "pred_order": 1,
-          "p_win": 0.299883,
-          "p_top3": 0.732402,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
           "umaban": 4,
           "horse_name": "ブルーエ",
           "pred_order": 3,
           "p_win": 0.16523,
           "p_top3": 0.517329,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 2.5,
+          "popularity": 1
         },
         {
-          "umaban": 5,
-          "horse_name": "レオダーム",
-          "pred_order": 8,
-          "p_win": 0.026078,
-          "p_top3": 0.098458,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 3,
-          "horse_name": "ビアーレ",
-          "pred_order": 13,
-          "p_win": 0.009367,
-          "p_top3": 0.035988,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 7,
+          "horse_name": "カレンデュラ",
+          "pred_order": 1,
+          "p_win": 0.299883,
+          "p_top3": 0.732402,
+          "tansho_odds": 4.4,
+          "popularity": 2
         },
         {
           "umaban": 14,
@@ -232,8 +214,26 @@
           "pred_order": 2,
           "p_win": 0.244614,
           "p_top3": 0.662147,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5,
+          "popularity": 3
+        },
+        {
+          "umaban": 6,
+          "horse_name": "アールグレイ",
+          "pred_order": 4,
+          "p_win": 0.058508,
+          "p_top3": 0.212972,
+          "tansho_odds": 6.9,
+          "popularity": 4
+        },
+        {
+          "umaban": 11,
+          "horse_name": "サトノアンナ",
+          "pred_order": 11,
+          "p_win": 0.020702,
+          "p_top3": 0.078609,
+          "tansho_odds": 19.6,
+          "popularity": 5
         }
       ],
       "detail_path": "20260426/race_202603010604.json"
@@ -255,8 +255,8 @@
           "pred_order": 1,
           "p_win": 0.627278,
           "p_top3": 0.985346,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5.6,
+          "popularity": 3
         },
         {
           "umaban": 8,
@@ -264,8 +264,8 @@
           "pred_order": 2,
           "p_win": 0.203991,
           "p_top3": 0.871959,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7.2,
+          "popularity": 5
         },
         {
           "umaban": 9,
@@ -273,8 +273,8 @@
           "pred_order": 4,
           "p_win": 0.016747,
           "p_top3": 0.125414,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5.5,
+          "popularity": 2
         },
         {
           "umaban": 7,
@@ -282,8 +282,8 @@
           "pred_order": 8,
           "p_win": 0.003642,
           "p_top3": 0.027683,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 21.7,
+          "popularity": 9
         },
         {
           "umaban": 14,
@@ -291,8 +291,8 @@
           "pred_order": 3,
           "p_win": 0.112376,
           "p_top3": 0.716706,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.5,
+          "popularity": 4
         }
       ],
       "detail_path": "20260426/race_202603010605.json"
@@ -314,8 +314,8 @@
           "pred_order": 1,
           "p_win": 0.647796,
           "p_top3": 0.973056,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3,
+          "popularity": 1
         },
         {
           "umaban": 7,
@@ -323,26 +323,8 @@
           "pred_order": 5,
           "p_win": 0.030282,
           "p_top3": 0.192349,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 6,
-          "horse_name": "キロノヴァ",
-          "pred_order": 7,
-          "p_win": 0.018377,
-          "p_top3": 0.11893,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 13,
-          "horse_name": "フララナキラ",
-          "pred_order": 4,
-          "p_win": 0.047452,
-          "p_top3": 0.292529,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 20.7,
+          "popularity": 10
         },
         {
           "umaban": 5,
@@ -350,8 +332,26 @@
           "pred_order": 2,
           "p_win": 0.132058,
           "p_top3": 0.642135,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5.9,
+          "popularity": 2
+        },
+        {
+          "umaban": 13,
+          "horse_name": "フララナキラ",
+          "pred_order": 4,
+          "p_win": 0.047452,
+          "p_top3": 0.292529,
+          "tansho_odds": 8.7,
+          "popularity": 4
+        },
+        {
+          "umaban": 6,
+          "horse_name": "キロノヴァ",
+          "pred_order": 7,
+          "p_win": 0.018377,
+          "p_top3": 0.11893,
+          "tansho_odds": 12.6,
+          "popularity": 6
         }
       ],
       "detail_path": "20260426/race_202603010606.json"
@@ -373,8 +373,8 @@
           "pred_order": 1,
           "p_win": 0.394849,
           "p_top3": 0.824642,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.2,
+          "popularity": 1
         },
         {
           "umaban": 10,
@@ -382,17 +382,8 @@
           "pred_order": 4,
           "p_win": 0.092405,
           "p_top3": 0.334825,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 7,
-          "horse_name": "バレンシア",
-          "pred_order": 3,
-          "p_win": 0.130648,
-          "p_top3": 0.446457,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 11.8,
+          "popularity": 4
         },
         {
           "umaban": 4,
@@ -400,8 +391,17 @@
           "pred_order": 6,
           "p_win": 0.030861,
           "p_top3": 0.120929,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 15.3,
+          "popularity": 6
+        },
+        {
+          "umaban": 7,
+          "horse_name": "バレンシア",
+          "pred_order": 3,
+          "p_win": 0.130648,
+          "p_top3": 0.446457,
+          "tansho_odds": 21.4,
+          "popularity": 12
         },
         {
           "umaban": 5,
@@ -409,8 +409,8 @@
           "pred_order": 2,
           "p_win": 0.159758,
           "p_top3": 0.518815,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7.1,
+          "popularity": 3
         }
       ],
       "detail_path": "20260426/race_202603010607.json"
@@ -432,8 +432,8 @@
           "pred_order": 3,
           "p_win": 0.119377,
           "p_top3": 0.404931,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 8.2,
+          "popularity": 4
         },
         {
           "umaban": 2,
@@ -441,8 +441,8 @@
           "pred_order": 1,
           "p_win": 0.354018,
           "p_top3": 0.786889,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7.3,
+          "popularity": 3
         },
         {
           "umaban": 4,
@@ -450,8 +450,17 @@
           "pred_order": 6,
           "p_win": 0.040703,
           "p_top3": 0.153071,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 4.2,
+          "popularity": 2
+        },
+        {
+          "umaban": 1,
+          "horse_name": "ダノンゴーイチ",
+          "pred_order": 2,
+          "p_win": 0.186236,
+          "p_top3": 0.564484,
+          "tansho_odds": 2.9,
+          "popularity": 1
         },
         {
           "umaban": 14,
@@ -459,17 +468,8 @@
           "pred_order": 8,
           "p_win": 0.031819,
           "p_top3": 0.120868,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 11,
-          "horse_name": "ヴァリアントマーチ",
-          "pred_order": 12,
-          "p_win": 0.003694,
-          "p_top3": 0.014459,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 13.2,
+          "popularity": 5
         }
       ],
       "detail_path": "20260426/race_202603010608.json"
@@ -491,8 +491,8 @@
           "pred_order": 2,
           "p_win": 0.253203,
           "p_top3": 0.671184,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5.4,
+          "popularity": 1
         },
         {
           "umaban": 6,
@@ -500,8 +500,8 @@
           "pred_order": 4,
           "p_win": 0.101179,
           "p_top3": 0.344724,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.8,
+          "popularity": 5
         },
         {
           "umaban": 10,
@@ -509,8 +509,8 @@
           "pred_order": 3,
           "p_win": 0.182022,
           "p_top3": 0.54858,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 9.1,
+          "popularity": 7
         },
         {
           "umaban": 13,
@@ -518,17 +518,17 @@
           "pred_order": 6,
           "p_win": 0.045562,
           "p_top3": 0.166254,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.7,
+          "popularity": 4
         },
         {
-          "umaban": 1,
-          "horse_name": "ピティロディア",
-          "pred_order": 10,
-          "p_win": 0.008973,
-          "p_top3": 0.034048,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 11,
+          "horse_name": "ミッドセンチュリー",
+          "pred_order": 8,
+          "p_win": 0.026816,
+          "p_top3": 0.099887,
+          "tansho_odds": 6.6,
+          "popularity": 2
         }
       ],
       "detail_path": "20260426/race_202603010609.json"
@@ -550,8 +550,8 @@
           "pred_order": 1,
           "p_win": 0.48002,
           "p_top3": 0.896224,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.8,
+          "popularity": 1
         },
         {
           "umaban": 13,
@@ -559,26 +559,8 @@
           "pred_order": 6,
           "p_win": 0.0359,
           "p_top3": 0.15715,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 8,
-          "horse_name": "マーウォルス",
-          "pred_order": 3,
-          "p_win": 0.136634,
-          "p_top3": 0.509521,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 2,
-          "horse_name": "グランキングオー",
-          "pred_order": 11,
-          "p_win": 0.014341,
-          "p_top3": 0.06441,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 17.9,
+          "popularity": 10
         },
         {
           "umaban": 14,
@@ -586,8 +568,26 @@
           "pred_order": 7,
           "p_win": 0.02935,
           "p_top3": 0.129514,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 8.3,
+          "popularity": 2
+        },
+        {
+          "umaban": 8,
+          "horse_name": "マーウォルス",
+          "pred_order": 3,
+          "p_win": 0.136634,
+          "p_top3": 0.509521,
+          "tansho_odds": 11.8,
+          "popularity": 8
+        },
+        {
+          "umaban": 1,
+          "horse_name": "ギマール",
+          "pred_order": 2,
+          "p_win": 0.137114,
+          "p_top3": 0.510808,
+          "tansho_odds": 8.4,
+          "popularity": 3
         }
       ],
       "detail_path": "20260426/race_202603010610.json"
@@ -609,17 +609,8 @@
           "pred_order": 3,
           "p_win": 0.108281,
           "p_top3": 0.335889,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 8,
-          "horse_name": "イツモニコニコ",
-          "pred_order": 5,
-          "p_win": 0.093569,
-          "p_top3": 0.295961,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 8.3,
+          "popularity": 5
         },
         {
           "umaban": 14,
@@ -627,8 +618,17 @@
           "pred_order": 4,
           "p_win": 0.098641,
           "p_top3": 0.309944,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.3,
+          "popularity": 1
+        },
+        {
+          "umaban": 8,
+          "horse_name": "イツモニコニコ",
+          "pred_order": 5,
+          "p_win": 0.093569,
+          "p_top3": 0.295961,
+          "tansho_odds": 7.3,
+          "popularity": 3
         },
         {
           "umaban": 5,
@@ -636,8 +636,8 @@
           "pred_order": 1,
           "p_win": 0.249795,
           "p_top3": 0.622154,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.8,
+          "popularity": 2
         },
         {
           "umaban": 11,
@@ -645,8 +645,8 @@
           "pred_order": 11,
           "p_win": 0.017467,
           "p_top3": 0.060391,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 8,
+          "popularity": 4
         }
       ],
       "detail_path": "20260426/race_202603010611.json"
@@ -663,22 +663,22 @@
       "headcount": 16,
       "top_ai": [
         {
-          "umaban": 4,
-          "horse_name": "ダイヤモンド",
-          "pred_order": 2,
-          "p_win": 0.200368,
-          "p_top3": 0.552374,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
           "umaban": 2,
           "horse_name": "ケイアイマウンガ",
           "pred_order": 3,
           "p_win": 0.190294,
           "p_top3": 0.533314,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 4.4,
+          "popularity": 1
+        },
+        {
+          "umaban": 4,
+          "horse_name": "ダイヤモンド",
+          "pred_order": 2,
+          "p_win": 0.200368,
+          "p_top3": 0.552374,
+          "tansho_odds": 7.6,
+          "popularity": 4
         },
         {
           "umaban": 10,
@@ -686,8 +686,8 @@
           "pred_order": 4,
           "p_win": 0.110294,
           "p_top3": 0.348422,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 9.6,
+          "popularity": 7
         },
         {
           "umaban": 16,
@@ -695,17 +695,17 @@
           "pred_order": 1,
           "p_win": 0.203312,
           "p_top3": 0.557778,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.2,
+          "popularity": 2
         },
         {
-          "umaban": 13,
-          "horse_name": "レジェンダリーデイ",
-          "pred_order": 7,
-          "p_win": 0.048253,
-          "p_top3": 0.16466,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 5,
+          "horse_name": "レイアポポ",
+          "pred_order": 5,
+          "p_win": 0.074448,
+          "p_top3": 0.246306,
+          "tansho_odds": 8.7,
+          "popularity": 6
         }
       ],
       "detail_path": "20260426/race_202603010612.json"
@@ -727,8 +727,8 @@
           "pred_order": 1,
           "p_win": 0.348394,
           "p_top3": 0.797165,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7.4,
+          "popularity": 4
         },
         {
           "umaban": 12,
@@ -740,31 +740,31 @@
           "popularity": null
         },
         {
-          "umaban": 10,
-          "horse_name": "ラヴィプランドール",
-          "pred_order": 6,
-          "p_win": 0.05042,
-          "p_top3": 0.19606,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
           "umaban": 9,
           "horse_name": "オテンバプリンセス",
           "pred_order": 15,
           "p_win": 0.002162,
           "p_top3": 0.008854,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.9,
+          "popularity": 2
         },
         {
-          "umaban": 16,
-          "horse_name": "カーボフリオ",
-          "pred_order": 14,
-          "p_win": 0.002435,
-          "p_top3": 0.00997,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 10,
+          "horse_name": "ラヴィプランドール",
+          "pred_order": 6,
+          "p_win": 0.05042,
+          "p_top3": 0.19606,
+          "tansho_odds": 12.8,
+          "popularity": 6
+        },
+        {
+          "umaban": 7,
+          "horse_name": "ベルオーシャン",
+          "pred_order": 2,
+          "p_win": 0.266305,
+          "p_top3": 0.713038,
+          "tansho_odds": 3.6,
+          "popularity": 1
         }
       ],
       "detail_path": "20260426/race_202605020201.json"
@@ -786,8 +786,8 @@
           "pred_order": 1,
           "p_win": 0.503879,
           "p_top3": 0.919776,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 2.4,
+          "popularity": 1
         },
         {
           "umaban": 11,
@@ -795,17 +795,17 @@
           "pred_order": 5,
           "p_win": 0.037437,
           "p_top3": 0.177505,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7,
+          "popularity": 3
         },
         {
-          "umaban": 3,
-          "horse_name": "スピニンググローブ",
-          "pred_order": 3,
-          "p_win": 0.087997,
-          "p_top3": 0.388441,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 12,
+          "horse_name": "サトノフェンサー",
+          "pred_order": 4,
+          "p_win": 0.054318,
+          "p_top3": 0.251953,
+          "tansho_odds": 2.7,
+          "popularity": 2
         },
         {
           "umaban": 5,
@@ -813,17 +813,17 @@
           "pred_order": 6,
           "p_win": 0.034873,
           "p_top3": 0.165873,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 11.2,
+          "popularity": 5
         },
         {
-          "umaban": 7,
-          "horse_name": "ホウオウパーソンズ",
-          "pred_order": 7,
-          "p_win": 0.023366,
-          "p_top3": 0.112689,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 3,
+          "horse_name": "スピニンググローブ",
+          "pred_order": 3,
+          "p_win": 0.087997,
+          "p_top3": 0.388441,
+          "tansho_odds": 75.8,
+          "popularity": 9
         }
       ],
       "detail_path": "20260426/race_202605020202.json"
@@ -845,17 +845,8 @@
           "pred_order": 3,
           "p_win": 0.110505,
           "p_top3": 0.497901,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 8,
-          "horse_name": "ジャガーライズ",
-          "pred_order": 6,
-          "p_win": 0.019799,
-          "p_top3": 0.104401,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.1,
+          "popularity": 3
         },
         {
           "umaban": 16,
@@ -863,17 +854,17 @@
           "pred_order": 1,
           "p_win": 0.569898,
           "p_top3": 0.946351,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 2.4,
+          "popularity": 1
         },
         {
-          "umaban": 10,
-          "horse_name": "マジンタクシー",
-          "pred_order": 15,
-          "p_win": 0.001444,
-          "p_top3": 0.00779,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 8,
+          "horse_name": "ジャガーライズ",
+          "pred_order": 6,
+          "p_win": 0.019799,
+          "p_top3": 0.104401,
+          "tansho_odds": 8.1,
+          "popularity": 4
         },
         {
           "umaban": 15,
@@ -881,8 +872,17 @@
           "pred_order": 2,
           "p_win": 0.120672,
           "p_top3": 0.530551,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5,
+          "popularity": 2
+        },
+        {
+          "umaban": 14,
+          "horse_name": "アヴァランチ",
+          "pred_order": 4,
+          "p_win": 0.068415,
+          "p_top3": 0.335338,
+          "tansho_odds": 9,
+          "popularity": 5
         }
       ],
       "detail_path": "20260426/race_202605020203.json"
@@ -904,8 +904,8 @@
           "pred_order": 2,
           "p_win": 0.305475,
           "p_top3": 0.822213,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 2.1,
+          "popularity": 1
         },
         {
           "umaban": 1,
@@ -913,17 +913,8 @@
           "pred_order": 1,
           "p_win": 0.396255,
           "p_top3": 0.882081,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 10,
-          "horse_name": "カゲムシャ",
-          "pred_order": 5,
-          "p_win": 0.051121,
-          "p_top3": 0.231146,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 2.9,
+          "popularity": 2
         },
         {
           "umaban": 3,
@@ -931,8 +922,8 @@
           "pred_order": 6,
           "p_win": 0.017027,
           "p_top3": 0.079838,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 17,
+          "popularity": 5
         },
         {
           "umaban": 2,
@@ -940,8 +931,17 @@
           "pred_order": 4,
           "p_win": 0.054291,
           "p_top3": 0.244594,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5.1,
+          "popularity": 3
+        },
+        {
+          "umaban": 10,
+          "horse_name": "カゲムシャ",
+          "pred_order": 5,
+          "p_win": 0.051121,
+          "p_top3": 0.231146,
+          "tansho_odds": 39.4,
+          "popularity": 7
         }
       ],
       "detail_path": "20260426/race_202605020204.json"
@@ -963,8 +963,8 @@
           "pred_order": 1,
           "p_win": 0.37628,
           "p_top3": 0.800268,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5.2,
+          "popularity": 2
         },
         {
           "umaban": 14,
@@ -972,8 +972,8 @@
           "pred_order": 3,
           "p_win": 0.093231,
           "p_top3": 0.327488,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 2.6,
+          "popularity": 1
         },
         {
           "umaban": 6,
@@ -981,8 +981,8 @@
           "pred_order": 4,
           "p_win": 0.08829,
           "p_top3": 0.312274,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 8.2,
+          "popularity": 4
         },
         {
           "umaban": 16,
@@ -990,17 +990,17 @@
           "pred_order": 8,
           "p_win": 0.024936,
           "p_top3": 0.095388,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 13.7,
+          "popularity": 5
         },
         {
-          "umaban": 11,
-          "horse_name": "ウインドオブヘヴン",
-          "pred_order": 15,
-          "p_win": 0.004153,
-          "p_top3": 0.016244,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 17,
+          "horse_name": "アナザーフェイス",
+          "pred_order": 11,
+          "p_win": 0.015412,
+          "p_top3": 0.059572,
+          "tansho_odds": 6.3,
+          "popularity": 3
         }
       ],
       "detail_path": "20260426/race_202605020205.json"
@@ -1022,17 +1022,8 @@
           "pred_order": 1,
           "p_win": 0.353586,
           "p_top3": 0.847479,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 4,
-          "horse_name": "マツリダイコ",
-          "pred_order": 5,
-          "p_win": 0.045999,
-          "p_top3": 0.203607,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 1.8,
+          "popularity": 1
         },
         {
           "umaban": 2,
@@ -1040,8 +1031,17 @@
           "pred_order": 2,
           "p_win": 0.339375,
           "p_top3": 0.837486,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 4.1,
+          "popularity": 2
+        },
+        {
+          "umaban": 4,
+          "horse_name": "マツリダイコ",
+          "pred_order": 5,
+          "p_win": 0.045999,
+          "p_top3": 0.203607,
+          "tansho_odds": 4.1,
+          "popularity": 3
         },
         {
           "umaban": 7,
@@ -1049,8 +1049,8 @@
           "pred_order": 3,
           "p_win": 0.105734,
           "p_top3": 0.434684,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 13.4,
+          "popularity": 4
         },
         {
           "umaban": 3,
@@ -1058,8 +1058,8 @@
           "pred_order": 7,
           "p_win": 0.032881,
           "p_top3": 0.14762,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 18.2,
+          "popularity": 5
         }
       ],
       "detail_path": "20260426/race_202605020206.json"
@@ -1081,8 +1081,8 @@
           "pred_order": 1,
           "p_win": 0.405216,
           "p_top3": 0.886346,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 2.5,
+          "popularity": 1
         },
         {
           "umaban": 15,
@@ -1090,8 +1090,8 @@
           "pred_order": 3,
           "p_win": 0.219704,
           "p_top3": 0.72363,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7.6,
+          "popularity": 4
         },
         {
           "umaban": 9,
@@ -1099,26 +1099,26 @@
           "pred_order": 2,
           "p_win": 0.229295,
           "p_top3": 0.737718,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.2,
+          "popularity": 2
         },
         {
-          "umaban": 10,
-          "horse_name": "ユーウェイン",
-          "pred_order": 8,
-          "p_win": 0.010974,
-          "p_top3": 0.050081,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 3,
+          "horse_name": "サトノシャムロック",
+          "pred_order": 11,
+          "p_win": 0.006724,
+          "p_top3": 0.030815,
+          "tansho_odds": 10.9,
+          "popularity": 5
         },
         {
-          "umaban": 1,
-          "horse_name": "サムワンライクユー",
-          "pred_order": 6,
-          "p_win": 0.014253,
-          "p_top3": 0.064827,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 12,
+          "horse_name": "ノアヴィヴァーチェ",
+          "pred_order": 4,
+          "p_win": 0.057277,
+          "p_top3": 0.24849,
+          "tansho_odds": 6.2,
+          "popularity": 3
         }
       ],
       "detail_path": "20260426/race_202605020207.json"
@@ -1140,17 +1140,8 @@
           "pred_order": 2,
           "p_win": 0.306561,
           "p_top3": 0.80453,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 1,
-          "horse_name": "キャッスルレイク",
-          "pred_order": 4,
-          "p_win": 0.074422,
-          "p_top3": 0.312131,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.5,
+          "popularity": 1
         },
         {
           "umaban": 2,
@@ -1158,8 +1149,17 @@
           "pred_order": 1,
           "p_win": 0.371822,
           "p_top3": 0.853798,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 4.8,
+          "popularity": 2
+        },
+        {
+          "umaban": 1,
+          "horse_name": "キャッスルレイク",
+          "pred_order": 4,
+          "p_win": 0.074422,
+          "p_top3": 0.312131,
+          "tansho_odds": 5.8,
+          "popularity": 3
         },
         {
           "umaban": 11,
@@ -1167,8 +1167,8 @@
           "pred_order": 6,
           "p_win": 0.026205,
           "p_top3": 0.116106,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 8.6,
+          "popularity": 6
         },
         {
           "umaban": 10,
@@ -1176,8 +1176,8 @@
           "pred_order": 3,
           "p_win": 0.126179,
           "p_top3": 0.492915,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7.1,
+          "popularity": 4
         }
       ],
       "detail_path": "20260426/race_202605020208.json"
@@ -1199,8 +1199,8 @@
           "pred_order": 1,
           "p_win": 0.531438,
           "p_top3": 0.932385,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.7,
+          "popularity": 1
         },
         {
           "umaban": 11,
@@ -1208,8 +1208,8 @@
           "pred_order": 4,
           "p_win": 0.074887,
           "p_top3": 0.346005,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 8.5,
+          "popularity": 4
         },
         {
           "umaban": 7,
@@ -1217,8 +1217,8 @@
           "pred_order": 2,
           "p_win": 0.163199,
           "p_top3": 0.623395,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 9.7,
+          "popularity": 5
         },
         {
           "umaban": 13,
@@ -1226,8 +1226,8 @@
           "pred_order": 6,
           "p_win": 0.020584,
           "p_top3": 0.102605,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 8,
+          "popularity": 3
         },
         {
           "umaban": 6,
@@ -1235,8 +1235,8 @@
           "pred_order": 3,
           "p_win": 0.080208,
           "p_top3": 0.367386,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 20.3,
+          "popularity": 9
         }
       ],
       "detail_path": "20260426/race_202605020209.json"
@@ -1267,26 +1267,8 @@
           "pred_order": 6,
           "p_win": 0.023956,
           "p_top3": 0.135526,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 7,
-          "horse_name": "オウギノカナメ",
-          "pred_order": 8,
-          "p_win": 0.010191,
-          "p_top3": 0.058573,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 5,
-          "horse_name": "ヴィヴァン",
-          "pred_order": 4,
-          "p_win": 0.048121,
-          "p_top3": 0.264014,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.9,
+          "popularity": 3
         },
         {
           "umaban": 3,
@@ -1294,8 +1276,26 @@
           "pred_order": 1,
           "p_win": 0.555182,
           "p_top3": 0.951525,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.6,
+          "popularity": 1
+        },
+        {
+          "umaban": 7,
+          "horse_name": "オウギノカナメ",
+          "pred_order": 8,
+          "p_win": 0.010191,
+          "p_top3": 0.058573,
+          "tansho_odds": 10.9,
+          "popularity": 4
+        },
+        {
+          "umaban": 5,
+          "horse_name": "ヴィヴァン",
+          "pred_order": 4,
+          "p_win": 0.048121,
+          "p_top3": 0.264014,
+          "tansho_odds": 14.6,
+          "popularity": 6
         }
       ],
       "detail_path": "20260426/race_202605020210.json"
@@ -1317,17 +1317,8 @@
           "pred_order": 4,
           "p_win": 0.077911,
           "p_top3": 0.284803,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 3,
-          "horse_name": "サムシングスイート",
-          "pred_order": 2,
-          "p_win": 0.191552,
-          "p_top3": 0.581781,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7,
+          "popularity": 3
         },
         {
           "umaban": 7,
@@ -1335,8 +1326,26 @@
           "pred_order": 6,
           "p_win": 0.060681,
           "p_top3": 0.226753,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 8.9,
+          "popularity": 5
+        },
+        {
+          "umaban": 3,
+          "horse_name": "サムシングスイート",
+          "pred_order": 2,
+          "p_win": 0.191552,
+          "p_top3": 0.581781,
+          "tansho_odds": 23.2,
+          "popularity": 9
+        },
+        {
+          "umaban": 5,
+          "horse_name": "ラフターラインズ",
+          "pred_order": 1,
+          "p_win": 0.373015,
+          "p_top3": 0.806628,
+          "tansho_odds": 2.6,
+          "popularity": 1
         },
         {
           "umaban": 2,
@@ -1344,17 +1353,8 @@
           "pred_order": 7,
           "p_win": 0.037758,
           "p_top3": 0.145,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 6,
-          "horse_name": "ペンダント",
-          "pred_order": 9,
-          "p_win": 0.018133,
-          "p_top3": 0.071167,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5.1,
+          "popularity": 2
         }
       ],
       "detail_path": "20260426/race_202605020211.json"
@@ -1376,8 +1376,8 @@
           "pred_order": 2,
           "p_win": 0.335918,
           "p_top3": 0.832824,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 1.4,
+          "popularity": 1
         },
         {
           "umaban": 10,
@@ -1385,8 +1385,8 @@
           "pred_order": 3,
           "p_win": 0.134601,
           "p_top3": 0.52316,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 19.6,
+          "popularity": 5
         },
         {
           "umaban": 14,
@@ -1394,8 +1394,8 @@
           "pred_order": 5,
           "p_win": 0.031128,
           "p_top3": 0.138103,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 12.7,
+          "popularity": 3
         },
         {
           "umaban": 9,
@@ -1403,17 +1403,17 @@
           "pred_order": 4,
           "p_win": 0.071049,
           "p_top3": 0.301305,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 15,
+          "popularity": 4
         },
         {
-          "umaban": 16,
-          "horse_name": "プライベートアイズ",
-          "pred_order": 6,
-          "p_win": 0.022265,
-          "p_top3": 0.09969,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 11,
+          "horse_name": "ベラジオワールド",
+          "pred_order": 1,
+          "p_win": 0.346511,
+          "p_top3": 0.840545,
+          "tansho_odds": 11.7,
+          "popularity": 2
         }
       ],
       "detail_path": "20260426/race_202605020212.json"
@@ -1435,8 +1435,8 @@
           "pred_order": 4,
           "p_win": 0.07702,
           "p_top3": 0.246519,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.8,
+          "popularity": 1
         },
         {
           "umaban": 7,
@@ -1444,8 +1444,8 @@
           "pred_order": 1,
           "p_win": 0.238665,
           "p_top3": 0.600611,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 4.9,
+          "popularity": 3
         },
         {
           "umaban": 2,
@@ -1453,17 +1453,8 @@
           "pred_order": 5,
           "p_win": 0.063544,
           "p_top3": 0.206744,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 12,
-          "horse_name": "ゼンノトヨタマヒメ",
-          "pred_order": 16,
-          "p_win": 0.004188,
-          "p_top3": 0.014543,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 4,
+          "popularity": 2
         },
         {
           "umaban": 4,
@@ -1471,8 +1462,17 @@
           "pred_order": 2,
           "p_win": 0.18245,
           "p_top3": 0.502806,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 14.6,
+          "popularity": 6
+        },
+        {
+          "umaban": 12,
+          "horse_name": "ゼンノトヨタマヒメ",
+          "pred_order": 16,
+          "p_win": 0.004188,
+          "p_top3": 0.014543,
+          "tansho_odds": 26.1,
+          "popularity": 8
         }
       ],
       "detail_path": "20260426/race_202608030201.json"
@@ -1489,22 +1489,22 @@
       "headcount": 15,
       "top_ai": [
         {
-          "umaban": 6,
-          "horse_name": "レッドフロイデ",
-          "pred_order": 2,
-          "p_win": 0.166886,
-          "p_top3": 0.688847,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
           "umaban": 12,
           "horse_name": "グリーンゴー",
           "pred_order": 1,
           "p_win": 0.566838,
           "p_top3": 0.956708,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 1.9,
+          "popularity": 1
+        },
+        {
+          "umaban": 6,
+          "horse_name": "レッドフロイデ",
+          "pred_order": 2,
+          "p_win": 0.166886,
+          "p_top3": 0.688847,
+          "tansho_odds": 5,
+          "popularity": 3
         },
         {
           "umaban": 14,
@@ -1512,8 +1512,17 @@
           "pred_order": 3,
           "p_win": 0.116601,
           "p_top3": 0.553895,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.2,
+          "popularity": 2
+        },
+        {
+          "umaban": 15,
+          "horse_name": "ゼランテ",
+          "pred_order": 4,
+          "p_win": 0.081775,
+          "p_top3": 0.416379,
+          "tansho_odds": 14.2,
+          "popularity": 4
         },
         {
           "umaban": 8,
@@ -1521,17 +1530,8 @@
           "pred_order": 8,
           "p_win": 0.007619,
           "p_top3": 0.043128,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 4,
-          "horse_name": "ラヴィレット",
-          "pred_order": 6,
-          "p_win": 0.009527,
-          "p_top3": 0.05381,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 129.1,
+          "popularity": 10
         }
       ],
       "detail_path": "20260426/race_202608030202.json"
@@ -1553,8 +1553,8 @@
           "pred_order": 1,
           "p_win": 0.408155,
           "p_top3": 0.847269,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.8,
+          "popularity": 2
         },
         {
           "umaban": 16,
@@ -1562,8 +1562,8 @@
           "pred_order": 4,
           "p_win": 0.103481,
           "p_top3": 0.38452,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.6,
+          "popularity": 1
         },
         {
           "umaban": 1,
@@ -1571,17 +1571,8 @@
           "pred_order": 3,
           "p_win": 0.109825,
           "p_top3": 0.4042,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 17,
-          "horse_name": "アッセクシー",
-          "pred_order": 14,
-          "p_win": 0.005225,
-          "p_top3": 0.021937,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.2,
+          "popularity": 4
         },
         {
           "umaban": 4,
@@ -1589,8 +1580,17 @@
           "pred_order": 2,
           "p_win": 0.19638,
           "p_top3": 0.615753,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 4.5,
+          "popularity": 3
+        },
+        {
+          "umaban": 17,
+          "horse_name": "アッセクシー",
+          "pred_order": 14,
+          "p_win": 0.005225,
+          "p_top3": 0.021937,
+          "tansho_odds": 148.7,
+          "popularity": 14
         }
       ],
       "detail_path": "20260426/race_202608030203.json"
@@ -1607,22 +1607,22 @@
       "headcount": 14,
       "top_ai": [
         {
-          "umaban": 4,
-          "horse_name": "アナザーエース",
-          "pred_order": 3,
-          "p_win": 0.101491,
-          "p_top3": 0.390577,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
           "umaban": 3,
           "horse_name": "フジフォンテ",
           "pred_order": 1,
           "p_win": 0.399268,
           "p_top3": 0.851472,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.4,
+          "popularity": 1
+        },
+        {
+          "umaban": 4,
+          "horse_name": "アナザーエース",
+          "pred_order": 3,
+          "p_win": 0.101491,
+          "p_top3": 0.390577,
+          "tansho_odds": 3.6,
+          "popularity": 2
         },
         {
           "umaban": 5,
@@ -1630,8 +1630,8 @@
           "pred_order": 5,
           "p_win": 0.060325,
           "p_top3": 0.245229,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.5,
+          "popularity": 4
         },
         {
           "umaban": 12,
@@ -1639,8 +1639,8 @@
           "pred_order": 2,
           "p_win": 0.245791,
           "p_top3": 0.710394,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.4,
+          "popularity": 3
         },
         {
           "umaban": 9,
@@ -1648,8 +1648,8 @@
           "pred_order": 4,
           "p_win": 0.067112,
           "p_top3": 0.270521,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 12.7,
+          "popularity": 7
         }
       ],
       "detail_path": "20260426/race_202608030204.json"
@@ -1666,22 +1666,22 @@
       "headcount": 12,
       "top_ai": [
         {
-          "umaban": 11,
-          "horse_name": "オンザムービー",
-          "pred_order": 1,
-          "p_win": 0.221737,
-          "p_top3": 0.604182,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
           "umaban": 7,
           "horse_name": "バックドラフト",
           "pred_order": 2,
           "p_win": 0.198736,
           "p_top3": 0.563127,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 2.6,
+          "popularity": 1
+        },
+        {
+          "umaban": 11,
+          "horse_name": "オンザムービー",
+          "pred_order": 1,
+          "p_win": 0.221737,
+          "p_top3": 0.604182,
+          "tansho_odds": 10,
+          "popularity": 4
         },
         {
           "umaban": 8,
@@ -1689,8 +1689,8 @@
           "pred_order": 4,
           "p_win": 0.158897,
           "p_top3": 0.480216,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5.1,
+          "popularity": 3
         },
         {
           "umaban": 9,
@@ -1698,8 +1698,8 @@
           "pred_order": 3,
           "p_win": 0.192141,
           "p_top3": 0.55047,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 4.3,
+          "popularity": 2
         },
         {
           "umaban": 2,
@@ -1707,8 +1707,8 @@
           "pred_order": 5,
           "p_win": 0.061519,
           "p_top3": 0.212283,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 13.3,
+          "popularity": 5
         }
       ],
       "detail_path": "20260426/race_202608030205.json"
@@ -1725,31 +1725,22 @@
       "headcount": 11,
       "top_ai": [
         {
-          "umaban": 5,
-          "horse_name": "カナタコナタ",
-          "pred_order": 4,
-          "p_win": 0.081686,
-          "p_top3": 0.339122,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
           "umaban": 2,
           "horse_name": "フェスティヴドレス",
           "pred_order": 1,
           "p_win": 0.445895,
           "p_top3": 0.890198,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 2.8,
+          "popularity": 1
         },
         {
-          "umaban": 1,
-          "horse_name": "セイウンバジリスク",
-          "pred_order": 6,
-          "p_win": 0.019152,
-          "p_top3": 0.085901,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 5,
+          "horse_name": "カナタコナタ",
+          "pred_order": 4,
+          "p_win": 0.081686,
+          "p_top3": 0.339122,
+          "tansho_odds": 6.5,
+          "popularity": 4
         },
         {
           "umaban": 9,
@@ -1757,8 +1748,8 @@
           "pred_order": 3,
           "p_win": 0.121024,
           "p_top3": 0.473022,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7.5,
+          "popularity": 5
         },
         {
           "umaban": 10,
@@ -1766,8 +1757,17 @@
           "pred_order": 5,
           "p_win": 0.072029,
           "p_top3": 0.303024,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.5,
+          "popularity": 2
+        },
+        {
+          "umaban": 1,
+          "horse_name": "セイウンバジリスク",
+          "pred_order": 6,
+          "p_win": 0.019152,
+          "p_top3": 0.085901,
+          "tansho_odds": 26.4,
+          "popularity": 7
         }
       ],
       "detail_path": "20260426/race_202608030206.json"
@@ -1789,8 +1789,8 @@
           "pred_order": 2,
           "p_win": 0.314685,
           "p_top3": 0.86222,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5.6,
+          "popularity": 1
         },
         {
           "umaban": 11,
@@ -1798,8 +1798,8 @@
           "pred_order": 3,
           "p_win": 0.077757,
           "p_top3": 0.399052,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 11.9,
+          "popularity": 9
         },
         {
           "umaban": 1,
@@ -1807,17 +1807,8 @@
           "pred_order": 5,
           "p_win": 0.019654,
           "p_top3": 0.107496,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 14,
-          "horse_name": "ルージュスティーズ",
-          "pred_order": 4,
-          "p_win": 0.055477,
-          "p_top3": 0.292281,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 11.5,
+          "popularity": 7
         },
         {
           "umaban": 3,
@@ -1825,8 +1816,17 @@
           "pred_order": 1,
           "p_win": 0.45767,
           "p_top3": 0.927772,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.7,
+          "popularity": 2
+        },
+        {
+          "umaban": 14,
+          "horse_name": "ルージュスティーズ",
+          "pred_order": 4,
+          "p_win": 0.055477,
+          "p_top3": 0.292281,
+          "tansho_odds": 11.8,
+          "popularity": 8
         }
       ],
       "detail_path": "20260426/race_202608030207.json"
@@ -1848,8 +1848,8 @@
           "pred_order": 1,
           "p_win": 0.374715,
           "p_top3": 0.815314,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7.2,
+          "popularity": 2
         },
         {
           "umaban": 13,
@@ -1857,8 +1857,8 @@
           "pred_order": 4,
           "p_win": 0.102,
           "p_top3": 0.365994,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 8.5,
+          "popularity": 4
         },
         {
           "umaban": 11,
@@ -1866,8 +1866,17 @@
           "pred_order": 2,
           "p_win": 0.175863,
           "p_top3": 0.55876,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.5,
+          "popularity": 1
+        },
+        {
+          "umaban": 4,
+          "horse_name": "サマーナイト",
+          "pred_order": 9,
+          "p_win": 0.017115,
+          "p_top3": 0.0682,
+          "tansho_odds": 8.2,
+          "popularity": 3
         },
         {
           "umaban": 6,
@@ -1875,17 +1884,8 @@
           "pred_order": 11,
           "p_win": 0.013241,
           "p_top3": 0.052978,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 10,
-          "horse_name": "ホウオウバローロ",
-          "pred_order": 3,
-          "p_win": 0.161672,
-          "p_top3": 0.527234,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 20.4,
+          "popularity": 9
         }
       ],
       "detail_path": "20260426/race_202608030208.json"
@@ -1907,8 +1907,8 @@
           "pred_order": 1,
           "p_win": 0.361488,
           "p_top3": 0.836733,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.1,
+          "popularity": 2
         },
         {
           "umaban": 8,
@@ -1916,8 +1916,8 @@
           "pred_order": 2,
           "p_win": 0.30187,
           "p_top3": 0.787689,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 2.7,
+          "popularity": 1
         },
         {
           "umaban": 4,
@@ -1925,8 +1925,8 @@
           "pred_order": 4,
           "p_win": 0.08196,
           "p_top3": 0.330841,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 11,
+          "popularity": 5
         },
         {
           "umaban": 5,
@@ -1934,8 +1934,8 @@
           "pred_order": 3,
           "p_win": 0.099927,
           "p_top3": 0.393874,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 11.5,
+          "popularity": 6
         },
         {
           "umaban": 1,
@@ -1943,8 +1943,8 @@
           "pred_order": 5,
           "p_win": 0.060116,
           "p_top3": 0.249283,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 9.8,
+          "popularity": 4
         }
       ],
       "detail_path": "20260426/race_202608030209.json"
@@ -1966,17 +1966,8 @@
           "pred_order": 3,
           "p_win": 0.088337,
           "p_top3": 0.384559,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 18,
-          "horse_name": "ショウナンラピダス",
-          "pred_order": 4,
-          "p_win": 0.036583,
-          "p_top3": 0.170596,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 8.1,
+          "popularity": 3
         },
         {
           "umaban": 11,
@@ -1984,17 +1975,8 @@
           "pred_order": 1,
           "p_win": 0.476057,
           "p_top3": 0.908204,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
-          "umaban": 4,
-          "horse_name": "レディーミコノス",
-          "pred_order": 7,
-          "p_win": 0.03414,
-          "p_top3": 0.159663,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 5.6,
+          "popularity": 2
         },
         {
           "umaban": 17,
@@ -2002,8 +1984,26 @@
           "pred_order": 2,
           "p_win": 0.226018,
           "p_top3": 0.72087,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 2.9,
+          "popularity": 1
+        },
+        {
+          "umaban": 18,
+          "horse_name": "ショウナンラピダス",
+          "pred_order": 4,
+          "p_win": 0.036583,
+          "p_top3": 0.170596,
+          "tansho_odds": 22.7,
+          "popularity": 11
+        },
+        {
+          "umaban": 4,
+          "horse_name": "レディーミコノス",
+          "pred_order": 7,
+          "p_win": 0.03414,
+          "p_top3": 0.159663,
+          "tansho_odds": 12.8,
+          "popularity": 4
         }
       ],
       "detail_path": "20260426/race_202608030210.json"
@@ -2020,22 +2020,22 @@
       "headcount": 18,
       "top_ai": [
         {
-          "umaban": 7,
-          "horse_name": "ベラジオボンド",
-          "pred_order": 1,
-          "p_win": 0.377183,
-          "p_top3": 0.823454,
-          "tansho_odds": null,
-          "popularity": null
-        },
-        {
           "umaban": 9,
           "horse_name": "アドマイヤズーム",
           "pred_order": 4,
           "p_win": 0.063057,
           "p_top3": 0.244599,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 3.7,
+          "popularity": 1
+        },
+        {
+          "umaban": 7,
+          "horse_name": "ベラジオボンド",
+          "pred_order": 1,
+          "p_win": 0.377183,
+          "p_top3": 0.823454,
+          "tansho_odds": 11.2,
+          "popularity": 5
         },
         {
           "umaban": 12,
@@ -2043,26 +2043,26 @@
           "pred_order": 3,
           "p_win": 0.115755,
           "p_top3": 0.417903,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 15.1,
+          "popularity": 7
         },
         {
-          "umaban": 6,
-          "horse_name": "ブエナオンダ",
-          "pred_order": 8,
-          "p_win": 0.022189,
-          "p_top3": 0.090218,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 2,
+          "horse_name": "オフトレイル",
+          "pred_order": 5,
+          "p_win": 0.058336,
+          "p_top3": 0.227599,
+          "tansho_odds": 4.3,
+          "popularity": 2
         },
         {
-          "umaban": 18,
-          "horse_name": "ランスオブカオス",
-          "pred_order": 6,
-          "p_win": 0.022758,
-          "p_top3": 0.092476,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 10,
+          "horse_name": "ウォーターリヒト",
+          "pred_order": 2,
+          "p_win": 0.236943,
+          "p_top3": 0.678536,
+          "tansho_odds": 5.5,
+          "popularity": 3
         }
       ],
       "detail_path": "20260426/race_202608030211.json"
@@ -2084,8 +2084,8 @@
           "pred_order": 1,
           "p_win": 0.224938,
           "p_top3": 0.630357,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 6.7,
+          "popularity": 3
         },
         {
           "umaban": 6,
@@ -2093,8 +2093,8 @@
           "pred_order": 5,
           "p_win": 0.04411,
           "p_top3": 0.161224,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 7.9,
+          "popularity": 5
         },
         {
           "umaban": 10,
@@ -2102,8 +2102,8 @@
           "pred_order": 4,
           "p_win": 0.19155,
           "p_top3": 0.5692,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 10.9,
+          "popularity": 6
         },
         {
           "umaban": 14,
@@ -2111,17 +2111,17 @@
           "pred_order": 6,
           "p_win": 0.041841,
           "p_top3": 0.153317,
-          "tansho_odds": null,
-          "popularity": null
+          "tansho_odds": 15.9,
+          "popularity": 8
         },
         {
-          "umaban": 12,
-          "horse_name": "ゼンエスポワール",
-          "pred_order": 2,
-          "p_win": 0.221476,
-          "p_top3": 0.62452,
-          "tansho_odds": null,
-          "popularity": null
+          "umaban": 3,
+          "horse_name": "アークドール",
+          "pred_order": 3,
+          "p_win": 0.206561,
+          "p_top3": 0.598072,
+          "tansho_odds": 4.2,
+          "popularity": 1
         }
       ],
       "detail_path": "20260426/race_202608030212.json"
