@@ -1,0 +1,65 @@
+{
+  "race_date": "20260503",
+  "race_count": 1,
+  "races": [
+    {
+      "race_id": "202608030411",
+      "race_no": 11,
+      "race_name": "天皇賞(春)",
+      "course": "京都",
+      "course_name": "京都 芝3200m 右回り 外回り",
+      "distance": 3200,
+      "surface": "芝",
+      "going": null,
+      "headcount": 15,
+      "top_ai": [
+        {
+          "umaban": 7,
+          "horse_name": "クロワデュノール",
+          "pred_order": 1,
+          "p_win": 0.305571,
+          "p_top3": 0.737421,
+          "tansho_odds": 3,
+          "popularity": 2
+        },
+        {
+          "umaban": 3,
+          "horse_name": "アドマイヤテラ",
+          "pred_order": 3,
+          "p_win": 0.124433,
+          "p_top3": 0.413966,
+          "tansho_odds": 2.9,
+          "popularity": 1
+        },
+        {
+          "umaban": 12,
+          "horse_name": "ヘデントール",
+          "pred_order": 2,
+          "p_win": 0.237914,
+          "p_top3": 0.650414,
+          "tansho_odds": 4.8,
+          "popularity": 3
+        },
+        {
+          "umaban": 4,
+          "horse_name": "アクアヴァーナル",
+          "pred_order": 4,
+          "p_win": 0.086758,
+          "p_top3": 0.304039,
+          "tansho_odds": 13.1,
+          "popularity": 4
+        },
+        {
+          "umaban": 8,
+          "horse_name": "シンエンペラー",
+          "pred_order": 9,
+          "p_win": 0.018712,
+          "p_top3": 0.071004,
+          "tansho_odds": 13.7,
+          "popularity": 5
+        }
+      ],
+      "detail_path": "20260503/race_202608030411.json"
+    }
+  ]
+}
