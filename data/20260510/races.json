@@ -1,0 +1,65 @@
+{
+  "race_date": "20260510",
+  "race_count": 1,
+  "races": [
+    {
+      "race_id": "202605020611",
+      "race_no": 11,
+      "race_name": "NHKマイルC",
+      "course": "東京",
+      "course_name": "東京 芝1600m 左回り",
+      "distance": 1600,
+      "surface": "芝",
+      "going": null,
+      "headcount": 18,
+      "top_ai": [
+        {
+          "umaban": 7,
+          "horse_name": "ダイヤモンドノット",
+          "pred_order": 3,
+          "p_win": 0.124964,
+          "p_top3": 0.498917,
+          "tansho_odds": 3.6,
+          "popularity": 1
+        },
+        {
+          "umaban": 16,
+          "horse_name": "アスクイキゴミ",
+          "pred_order": 2,
+          "p_win": 0.196241,
+          "p_top3": 0.666257,
+          "tansho_odds": 13.4,
+          "popularity": 6
+        },
+        {
+          "umaban": 17,
+          "horse_name": "ロデオドライブ",
+          "pred_order": 1,
+          "p_win": 0.47619,
+          "p_top3": 0.905986,
+          "tansho_odds": 6.3,
+          "popularity": 2
+        },
+        {
+          "umaban": 11,
+          "horse_name": "アドマイヤクワッズ",
+          "pred_order": 11,
+          "p_win": 0.007429,
+          "p_top3": 0.034953,
+          "tansho_odds": 8.7,
+          "popularity": 5
+        },
+        {
+          "umaban": 10,
+          "horse_name": "エコロアルバ",
+          "pred_order": 5,
+          "p_win": 0.046852,
+          "p_top3": 0.210593,
+          "tansho_odds": 7.3,
+          "popularity": 4
+        }
+      ],
+      "detail_path": "20260510/race_202605020611.json"
+    }
+  ]
+}
