@@ -22,46 +22,46 @@
         "umaban": 7,
         "horse_name": "ダイヤモンドノット",
         "pred_order": 3,
-        "p_win": 0.124964,
-        "p_top3": 0.498917,
-        "tansho_odds": 3.6,
+        "p_win": 0.13078,
+        "p_top3": 0.516057,
+        "tansho_odds": 4.7,
         "popularity": 1
       },
       {
         "umaban": 16,
         "horse_name": "アスクイキゴミ",
         "pred_order": 2,
-        "p_win": 0.196241,
-        "p_top3": 0.666257,
-        "tansho_odds": 13.4,
-        "popularity": 6
+        "p_win": 0.191102,
+        "p_top3": 0.656937,
+        "tansho_odds": 10.8,
+        "popularity": 5
       },
       {
         "umaban": 17,
         "horse_name": "ロデオドライブ",
         "pred_order": 1,
-        "p_win": 0.47619,
-        "p_top3": 0.905986,
-        "tansho_odds": 6.3,
+        "p_win": 0.477659,
+        "p_top3": 0.906562,
+        "tansho_odds": 5.9,
+        "popularity": 3
+      },
+      {
+        "umaban": 10,
+        "horse_name": "エコロアルバ",
+        "pred_order": 4,
+        "p_win": 0.048942,
+        "p_top3": 0.219337,
+        "tansho_odds": 4.8,
         "popularity": 2
       },
       {
         "umaban": 11,
         "horse_name": "アドマイヤクワッズ",
         "pred_order": 11,
-        "p_win": 0.007429,
-        "p_top3": 0.034953,
-        "tansho_odds": 8.7,
-        "popularity": 5
-      },
-      {
-        "umaban": 10,
-        "horse_name": "エコロアルバ",
-        "pred_order": 5,
-        "p_win": 0.046852,
-        "p_top3": 0.210593,
-        "tansho_odds": 7.3,
-        "popularity": 4
+        "p_win": 0.008487,
+        "p_top3": 0.03988,
+        "tansho_odds": 12.1,
+        "popularity": 6
       }
     ]
   },
@@ -81,12 +81,12 @@
       "horse_id": "2023106916",
       "waku": 1,
       "umaban": 1,
-      "score": -9.523921,
-      "p_win": 0.003371,
-      "p2_exact2": 0.005062,
-      "p3_exact3": 0.007496,
-      "p_top3": 0.015928,
-      "pred_order": 14,
+      "score": -10.1889,
+      "p_win": 0.003598,
+      "p2_exact2": 0.005411,
+      "p3_exact3": 0.007986,
+      "p_top3": 0.016995,
+      "pred_order": 13,
       "rank": null,
       "waku_prev": 1,
       "horse_name": "リゾートアイランド",
@@ -97,8 +97,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 65.8,
-      "popularity": 16,
+      "tansho_odds": 98.3,
+      "popularity": 18,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -196,12 +196,12 @@
       "dam_dam_id": "000a014475",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -0.891863,
-      "_pwin_softmax_2008": 0.037819,
+      "_score_2008": -0.950277,
+      "_pwin_softmax_2008": 0.037401,
       "_score_2015": -1.409373,
-      "_pwin_softmax_2015": 0.026806,
-      "_score_2019": -2.10891,
-      "_pwin_softmax_2019": 0.026399,
+      "_pwin_softmax_2015": 0.026281,
+      "_score_2019": -1.975189,
+      "_pwin_softmax_2019": 0.029216,
       "past_runs": [
         {
           "n": 1,
@@ -244,7 +244,7 @@
           "horse_no": 4,
           "win_odds": 2.3,
           "popularity": 1,
-          "finish": 1,
+          "finish": "1",
           "jockey": "津村明秀",
           "burden_weight": 57,
           "distance": "芝1600",
@@ -272,7 +272,7 @@
           "horse_no": 8,
           "win_odds": 10.5,
           "popularity": 3,
-          "finish": 2,
+          "finish": "2",
           "jockey": "マーカン",
           "burden_weight": 56,
           "distance": "芝1600",
@@ -328,7 +328,7 @@
           "horse_no": 6,
           "win_odds": 3.9,
           "popularity": 2,
-          "finish": 5,
+          "finish": "5",
           "jockey": "荻野極",
           "burden_weight": 56,
           "distance": "芝1800",
@@ -346,20 +346,20 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.037819
+          "score": 0.037401
         },
         "2015": {
-          "score": 0.026806
+          "score": 0.026281
         },
         "2019": {
-          "score": 0.026399
+          "score": 0.029216
         }
       },
       "_bet_eval": {
-        "ai_rank": 14.0,
+        "ai_rank": 13.0,
         "course_rank": 3.0,
-        "popularity": 16.0,
-        "odds": 65.8,
+        "popularity": 18.0,
+        "odds": 98.3,
         "ai_points": 0.0,
         "course_points": 7.199999999999999,
         "pop_points": -2.0,
@@ -389,11 +389,11 @@
       "horse_id": "2023110065",
       "waku": 1,
       "umaban": 2,
-      "score": -11.562435,
-      "p_win": 0.000439,
-      "p2_exact2": 0.00066,
-      "p3_exact3": 0.000981,
-      "p_top3": 0.002081,
+      "score": -12.511,
+      "p_win": 0.000353,
+      "p2_exact2": 0.000532,
+      "p3_exact3": 0.000788,
+      "p_top3": 0.001672,
       "pred_order": 18,
       "rank": null,
       "waku_prev": 1,
@@ -405,7 +405,7 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 86.6,
+      "tansho_odds": 85.3,
       "popularity": 17,
       "horse_weight": null,
       "trainer": null,
@@ -419,7 +419,7 @@
       "waku_course": 1,
       "style": "先行",
       "course_adv_score": 31.549865,
-      "reasons_pos": "父血統:American Pharoah 東京芝mile(1400-1899) top3率補正値 0.314 (19走) / 枠:1枠 / 距離替わり:同距離/近距離 / 近走着順:2",
+      "reasons_pos": "父血統:American Pharoah 東京芝mile(1400-1899) top3率補正値 0.314 (19走) / 枠:1枠 / 距離替わり:同距離/近距離 / 近走着順:2.0",
       "reasons_neg": null,
       "枠_score": 0.053793,
       "脚質_score": 0.024975,
@@ -504,12 +504,12 @@
       "dam_dam_id": "000a0248fa",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -1.541098,
-      "_pwin_softmax_2008": 0.019758,
+      "_score_2008": -1.599512,
+      "_pwin_softmax_2008": 0.01954,
       "_score_2015": -2.410771,
-      "_pwin_softmax_2015": 0.009847,
-      "_score_2019": -3.357663,
-      "_pwin_softmax_2019": 0.007573,
+      "_pwin_softmax_2015": 0.009655,
+      "_score_2019": -3.208352,
+      "_pwin_softmax_2019": 0.008513,
       "past_runs": [
         {
           "n": 1,
@@ -552,7 +552,7 @@
           "horse_no": 7,
           "win_odds": 28.5,
           "popularity": 8,
-          "finish": 8,
+          "finish": "8",
           "jockey": "横山武史",
           "burden_weight": 57,
           "distance": "ダ1600",
@@ -580,7 +580,7 @@
           "horse_no": 11,
           "win_odds": 27.1,
           "popularity": 9,
-          "finish": 12,
+          "finish": "12",
           "jockey": "川田将雅",
           "burden_weight": 57,
           "distance": "芝1400",
@@ -636,7 +636,7 @@
           "horse_no": 4,
           "win_odds": 42.5,
           "popularity": 6,
-          "finish": 6,
+          "finish": "6",
           "jockey": "丸山元気",
           "burden_weight": 56,
           "distance": "芝1600",
@@ -677,7 +677,7 @@
           "horse_weight": 482,
           "horse_weight_diff": 2,
           "winner": null,
-          "prize_10k": 647.8
+          "prize_10k": "647.8"
         },
         {
           "n": 7,
@@ -692,7 +692,7 @@
           "horse_no": 1,
           "win_odds": 5.9,
           "popularity": 3,
-          "finish": 3,
+          "finish": "3",
           "jockey": "佐々木大",
           "burden_weight": 55,
           "distance": "芝1200",
@@ -705,7 +705,7 @@
           "horse_weight": 480,
           "horse_weight_diff": -6,
           "winner": null,
-          "prize_10k": 404.2
+          "prize_10k": "404.2"
         },
         {
           "n": 8,
@@ -720,7 +720,7 @@
           "horse_no": 4,
           "win_odds": 12.1,
           "popularity": 6,
-          "finish": 9,
+          "finish": "9",
           "jockey": "菅原明良",
           "burden_weight": 55,
           "distance": "芝1400",
@@ -748,7 +748,7 @@
           "horse_no": 1,
           "win_odds": 19.1,
           "popularity": 5,
-          "finish": 1,
+          "finish": "1",
           "jockey": "坂井瑠星",
           "burden_weight": 55,
           "distance": "芝1200",
@@ -761,7 +761,7 @@
           "horse_weight": 488,
           "horse_weight_diff": 8,
           "winner": null,
-          "prize_10k": 560
+          "prize_10k": "560.0"
         },
         {
           "n": 10,
@@ -776,7 +776,7 @@
           "horse_no": 9,
           "win_odds": 20,
           "popularity": 7,
-          "finish": 5,
+          "finish": "5",
           "jockey": "田山旺佑",
           "burden_weight": 52,
           "distance": "芝1400",
@@ -794,20 +794,20 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.019758
+          "score": 0.01954
         },
         "2015": {
-          "score": 0.009847
+          "score": 0.009655
         },
         "2019": {
-          "score": 0.007573
+          "score": 0.008513
         }
       },
       "_bet_eval": {
         "ai_rank": 18.0,
         "course_rank": 4.0,
         "popularity": 17.0,
-        "odds": 86.6,
+        "odds": 85.3,
         "ai_points": 0.0,
         "course_points": 6.0,
         "pop_points": -2.0,
@@ -837,11 +837,11 @@
       "horse_id": "2023107288",
       "waku": 2,
       "umaban": 3,
-      "score": -7.715105,
-      "p_win": 0.020572,
-      "p2_exact2": 0.030529,
-      "p3_exact3": 0.044306,
-      "p_top3": 0.095407,
+      "score": -8.486526,
+      "p_win": 0.019741,
+      "p2_exact2": 0.029364,
+      "p3_exact3": 0.042516,
+      "p_top3": 0.091621,
       "pred_order": 7,
       "rank": null,
       "waku_prev": 2,
@@ -853,8 +853,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 34.6,
-      "popularity": 11,
+      "tansho_odds": 44.3,
+      "popularity": 14,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -867,7 +867,7 @@
       "waku_course": 2,
       "style": "先行",
       "course_adv_score": 14.93937,
-      "reasons_pos": "近走着順:1 / 距離替わり:同距離/近距離 / 脚質:先行 / 父血統:サトノダイヤモンド 東京芝mile(1400-1899) top3率補正値 0.238 (82走)",
+      "reasons_pos": "近走着順:1.0 / 距離替わり:同距離/近距離 / 脚質:先行 / 父血統:サトノダイヤモンド 東京芝mile(1400-1899) top3率補正値 0.238 (82走)",
       "reasons_neg": "枠:2枠",
       "枠_score": -0.033769,
       "脚質_score": 0.024975,
@@ -952,12 +952,12 @@
       "dam_dam_id": "000a0120b4",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -0.659761,
-      "_pwin_softmax_2008": 0.047699,
+      "_score_2008": -0.718176,
+      "_pwin_softmax_2008": 0.047172,
       "_score_2015": -0.852136,
-      "_pwin_softmax_2015": 0.046798,
-      "_score_2019": -1.35955,
-      "_pwin_softmax_2019": 0.05585,
+      "_pwin_softmax_2015": 0.045882,
+      "_score_2019": -1.327502,
+      "_pwin_softmax_2019": 0.055834,
       "past_runs": [
         {
           "n": 1,
@@ -1000,7 +1000,7 @@
           "horse_no": 6,
           "win_odds": 3.6,
           "popularity": 2,
-          "finish": 5,
+          "finish": "5",
           "jockey": "ルメール",
           "burden_weight": 56,
           "distance": "芝1800",
@@ -1028,7 +1028,7 @@
           "horse_no": 3,
           "win_odds": 2.2,
           "popularity": 1,
-          "finish": 1,
+          "finish": "1",
           "jockey": "ルメール",
           "burden_weight": 55,
           "distance": "芝1800",
@@ -1046,20 +1046,20 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.047699
+          "score": 0.047172
         },
         "2015": {
-          "score": 0.046798
+          "score": 0.045882
         },
         "2019": {
-          "score": 0.05585
+          "score": 0.055834
         }
       },
       "_bet_eval": {
         "ai_rank": 7.0,
         "course_rank": 9.0,
-        "popularity": 11.0,
-        "odds": 34.6,
+        "popularity": 14.0,
+        "odds": 44.3,
         "ai_points": 2.0,
         "course_points": 0.0,
         "pop_points": -2.0,
@@ -1089,11 +1089,11 @@
       "horse_id": "2023107153",
       "waku": 2,
       "umaban": 4,
-      "score": -8.3675,
-      "p_win": 0.010714,
-      "p2_exact2": 0.016009,
-      "p3_exact3": 0.023509,
-      "p_top3": 0.050232,
+      "score": -9.042773,
+      "p_win": 0.011319,
+      "p2_exact2": 0.016934,
+      "p3_exact3": 0.024771,
+      "p_top3": 0.053024,
       "pred_order": 9,
       "rank": null,
       "waku_prev": 2,
@@ -1105,8 +1105,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 6.7,
-      "popularity": 3,
+      "tansho_odds": 7.7,
+      "popularity": 4,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -1204,12 +1204,12 @@
       "dam_dam_id": "000a011fff",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -0.166276,
-      "_pwin_softmax_2008": 0.078132,
+      "_score_2008": -0.22469,
+      "_pwin_softmax_2008": 0.077268,
       "_score_2015": -0.472011,
-      "_pwin_softmax_2015": 0.068441,
-      "_score_2019": -1.162255,
-      "_pwin_softmax_2019": 0.068032,
+      "_pwin_softmax_2015": 0.067102,
+      "_score_2019": -1.10605,
+      "_pwin_softmax_2019": 0.069675,
       "past_runs": [
         {
           "n": 1,
@@ -1252,7 +1252,7 @@
           "horse_no": 8,
           "win_odds": 3.6,
           "popularity": 2,
-          "finish": 1,
+          "finish": "1",
           "jockey": "C.デム",
           "burden_weight": 56,
           "distance": "芝1600",
@@ -1280,7 +1280,7 @@
           "horse_no": 7,
           "win_odds": 2.6,
           "popularity": 2,
-          "finish": 2,
+          "finish": "2",
           "jockey": "C.デム",
           "burden_weight": 56,
           "distance": "芝1600",
@@ -1326,32 +1326,32 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.078132
+          "score": 0.077268
         },
         "2015": {
-          "score": 0.068441
+          "score": 0.067102
         },
         "2019": {
-          "score": 0.068032
+          "score": 0.069675
         }
       },
       "_bet_eval": {
         "ai_rank": 9.0,
         "course_rank": 14.0,
-        "popularity": 3.0,
-        "odds": 6.7,
+        "popularity": 4.0,
+        "odds": 7.7,
         "ai_points": 0.0,
         "course_points": 0.0,
-        "pop_points": 1.0,
+        "pop_points": 0.0,
         "odds_points": 2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": -2.0,
-        "danger_penalty": -4.0,
-        "total": -3.0,
+        "danger_penalty": 0.0,
+        "total": 0.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
-        "danger_popular": true
+        "danger_popular": false
       }
     },
     {
@@ -1369,12 +1369,12 @@
       "horse_id": "2023107187",
       "waku": 3,
       "umaban": 5,
-      "score": -9.429201,
-      "p_win": 0.003706,
-      "p2_exact2": 0.005563,
-      "p3_exact3": 0.008235,
-      "p_top3": 0.017504,
-      "pred_order": 13,
+      "score": -10.21956,
+      "p_win": 0.003489,
+      "p2_exact2": 0.005248,
+      "p3_exact3": 0.007746,
+      "p_top3": 0.016483,
+      "pred_order": 14,
       "rank": null,
       "waku_prev": 3,
       "horse_name": "ギリーズボール",
@@ -1385,8 +1385,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 46.8,
-      "popularity": 15,
+      "tansho_odds": 28.6,
+      "popularity": 11,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -1399,7 +1399,7 @@
       "waku_course": 3,
       "style": "差し",
       "course_adv_score": 11.029452,
-      "reasons_pos": "父血統:エピファネイア 東京芝mile(1400-1899) top3率補正値 0.302 (590走) / 母父血統:フジキセキ 東京芝mile(1400-1899) top3率補正値 0.306 (272走) / 近走着順:1 / 距離替わり:同距離/近距離",
+      "reasons_pos": "父血統:エピファネイア 東京芝mile(1400-1899) top3率補正値 0.302 (590走) / 母父血統:フジキセキ 東京芝mile(1400-1899) top3率補正値 0.306 (272走) / 近走着順:1.0 / 距離替わり:同距離/近距離",
       "reasons_neg": "枠:3枠 / 脚質:差し",
       "枠_score": -0.036874,
       "脚質_score": -0.05025,
@@ -1484,12 +1484,12 @@
       "dam_dam_id": "000a011531",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -1.079361,
-      "_pwin_softmax_2008": 0.031353,
+      "_score_2008": -1.137776,
+      "_pwin_softmax_2008": 0.031006,
       "_score_2015": -1.562668,
-      "_pwin_softmax_2015": 0.022996,
-      "_score_2019": -2.289151,
-      "_pwin_softmax_2019": 0.022045,
+      "_pwin_softmax_2015": 0.022546,
+      "_score_2019": -2.217714,
+      "_pwin_softmax_2019": 0.022924,
       "past_runs": [
         {
           "n": 1,
@@ -1532,7 +1532,7 @@
           "horse_no": 12,
           "win_odds": 4.2,
           "popularity": 2,
-          "finish": 13,
+          "finish": "13",
           "jockey": "ルメール",
           "burden_weight": 55,
           "distance": "芝1600",
@@ -1560,7 +1560,7 @@
           "horse_no": 8,
           "win_odds": 1.6,
           "popularity": 1,
-          "finish": 1,
+          "finish": "1",
           "jockey": "ルメール",
           "burden_weight": 55,
           "distance": "芝1600",
@@ -1578,28 +1578,28 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.031353
+          "score": 0.031006
         },
         "2015": {
-          "score": 0.022996
+          "score": 0.022546
         },
         "2019": {
-          "score": 0.022045
+          "score": 0.022924
         }
       },
       "_bet_eval": {
-        "ai_rank": 13.0,
+        "ai_rank": 14.0,
         "course_rank": 12.0,
-        "popularity": 15.0,
-        "odds": 46.8,
+        "popularity": 11.0,
+        "odds": 28.6,
         "ai_points": 0.0,
         "course_points": 0.0,
         "pop_points": -2.0,
-        "odds_points": -2.0,
+        "odds_points": 0.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": -4.0,
+        "total": -2.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -1621,12 +1621,12 @@
       "horse_id": "2023104885",
       "waku": 3,
       "umaban": 6,
-      "score": -9.919599,
-      "p_win": 0.002269,
-      "p2_exact2": 0.00341,
-      "p3_exact3": 0.005056,
-      "p_top3": 0.010735,
-      "pred_order": 15,
+      "score": -10.732734,
+      "p_win": 0.002089,
+      "p2_exact2": 0.003144,
+      "p3_exact3": 0.004648,
+      "p_top3": 0.009881,
+      "pred_order": 16,
       "rank": null,
       "waku_prev": 3,
       "horse_name": "ジーネキング",
@@ -1637,8 +1637,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 41.7,
-      "popularity": 14,
+      "tansho_odds": 49,
+      "popularity": 15,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -1651,7 +1651,7 @@
       "waku_course": 3,
       "style": "差し",
       "course_adv_score": -0.661833,
-      "reasons_pos": "距離替わり:同距離/近距離 / 近走着順:3 / 年齢性別:牡3歳 / 母父血統:Into Mischief 東京芝mile(1400-1899) top3率補正値 0.250 (9走)",
+      "reasons_pos": "距離替わり:同距離/近距離 / 近走着順:3.0 / 年齢性別:牡3歳 / 母父血統:Into Mischief 東京芝mile(1400-1899) top3率補正値 0.250 (9走)",
       "reasons_neg": "枠:3枠 / 脚質:差し",
       "枠_score": -0.036874,
       "脚質_score": -0.05025,
@@ -1737,11 +1737,11 @@
       "_status": "ok",
       "_note": null,
       "_score_2008": -1.52335,
-      "_pwin_softmax_2008": 0.020112,
+      "_pwin_softmax_2008": 0.021086,
       "_score_2015": -1.733103,
-      "_pwin_softmax_2015": 0.019392,
-      "_score_2019": -2.213808,
-      "_pwin_softmax_2019": 0.02377,
+      "_pwin_softmax_2015": 0.019013,
+      "_score_2019": -2.05768,
+      "_pwin_softmax_2019": 0.026902,
       "past_runs": [
         {
           "n": 1,
@@ -1784,7 +1784,7 @@
           "horse_no": 7,
           "win_odds": 73.5,
           "popularity": 12,
-          "finish": 12,
+          "finish": "12",
           "jockey": "横山和生",
           "burden_weight": 57,
           "distance": "芝1800",
@@ -1812,7 +1812,7 @@
           "horse_no": 10,
           "win_odds": 27.3,
           "popularity": 7,
-          "finish": 10,
+          "finish": "10",
           "jockey": "斎藤新",
           "burden_weight": 57,
           "distance": "芝2000",
@@ -1868,7 +1868,7 @@
           "horse_no": 1,
           "win_odds": 31.1,
           "popularity": 10,
-          "finish": 2,
+          "finish": "2",
           "jockey": "斎藤新",
           "burden_weight": 55,
           "distance": "芝1800",
@@ -1909,7 +1909,7 @@
           "horse_weight": 474,
           "horse_weight_diff": -2,
           "winner": null,
-          "prize_10k": 560
+          "prize_10k": "560.0"
         },
         {
           "n": 7,
@@ -1924,7 +1924,7 @@
           "horse_no": 6,
           "win_odds": 4.4,
           "popularity": 2,
-          "finish": 2,
+          "finish": "2",
           "jockey": "戸崎圭太",
           "burden_weight": 55,
           "distance": "芝1800",
@@ -1937,7 +1937,7 @@
           "horse_weight": 476,
           "horse_weight_diff": -2,
           "winner": null,
-          "prize_10k": 220
+          "prize_10k": "220.0"
         },
         {
           "n": 8,
@@ -1952,7 +1952,7 @@
           "horse_no": 13,
           "win_odds": 5.4,
           "popularity": 3,
-          "finish": 3,
+          "finish": "3",
           "jockey": "大野拓弥",
           "burden_weight": 55,
           "distance": "芝1800",
@@ -1965,25 +1965,25 @@
           "horse_weight": 478,
           "horse_weight_diff": 0,
           "winner": null,
-          "prize_10k": 190
+          "prize_10k": "190.0"
         }
       ],
       "model_scores": {
         "2008": {
-          "score": 0.020112
+          "score": 0.021086
         },
         "2015": {
-          "score": 0.019392
+          "score": 0.019013
         },
         "2019": {
-          "score": 0.02377
+          "score": 0.026902
         }
       },
       "_bet_eval": {
-        "ai_rank": 15.0,
+        "ai_rank": 16.0,
         "course_rank": 18.0,
-        "popularity": 14.0,
-        "odds": 41.7,
+        "popularity": 15.0,
+        "odds": 49.0,
         "ai_points": 0.0,
         "course_points": 0.0,
         "pop_points": -2.0,
@@ -2013,11 +2013,11 @@
       "horse_id": "2023105685",
       "waku": 4,
       "umaban": 7,
-      "score": -5.91101,
-      "p_win": 0.124964,
-      "p2_exact2": 0.170228,
-      "p3_exact3": 0.203726,
-      "p_top3": 0.498917,
+      "score": -6.595715,
+      "p_win": 0.13078,
+      "p2_exact2": 0.177487,
+      "p3_exact3": 0.207791,
+      "p_top3": 0.516057,
       "pred_order": 3,
       "rank": null,
       "waku_prev": 4,
@@ -2029,7 +2029,7 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 3.6,
+      "tansho_odds": 4.7,
       "popularity": 1,
       "horse_weight": null,
       "trainer": null,
@@ -2043,7 +2043,7 @@
       "waku_course": 4,
       "style": "先行",
       "course_adv_score": 34.600145,
-      "reasons_pos": "母父血統:ディープインパクト 東京芝mile(1400-1899) top3率補正値 0.353 (2232走) / 父血統:ブリックスアンドモルタル 東京芝mile(1400-1899) top3率補正値 0.296 (106走) / 近走着順:1 / 距離替わり:同距離/近距離",
+      "reasons_pos": "母父血統:ディープインパクト 東京芝mile(1400-1899) top3率補正値 0.353 (2232走) / 父血統:ブリックスアンドモルタル 東京芝mile(1400-1899) top3率補正値 0.296 (106走) / 近走着順:1.0 / 距離替わり:同距離/近距離",
       "reasons_neg": null,
       "枠_score": 0.027126,
       "脚質_score": 0.024975,
@@ -2128,12 +2128,12 @@
       "dam_dam_id": "2004103059",
       "_status": "ok",
       "_note": null,
-      "_score_2008": 0.163068,
-      "_pwin_softmax_2008": 0.108608,
-      "_score_2015": 0.464343,
-      "_pwin_softmax_2015": 0.17457,
-      "_score_2019": -0.104084,
-      "_pwin_softmax_2019": 0.196006,
+      "_score_2008": 0.104653,
+      "_pwin_softmax_2008": 0.107407,
+      "_score_2015": 0.55092,
+      "_pwin_softmax_2015": 0.186632,
+      "_score_2019": -0.121842,
+      "_pwin_softmax_2019": 0.186428,
       "past_runs": [
         {
           "n": 1,
@@ -2176,7 +2176,7 @@
           "horse_no": 10,
           "win_odds": 8.3,
           "popularity": 5,
-          "finish": 2,
+          "finish": "2",
           "jockey": "ルメール",
           "burden_weight": 56,
           "distance": "芝1600",
@@ -2204,7 +2204,7 @@
           "horse_no": 10,
           "win_odds": 1.8,
           "popularity": 1,
-          "finish": 1,
+          "finish": "1",
           "jockey": "ルメール",
           "burden_weight": 56,
           "distance": "芝1400",
@@ -2260,7 +2260,7 @@
           "horse_no": 5,
           "win_odds": 4.4,
           "popularity": 3,
-          "finish": 1,
+          "finish": "1",
           "jockey": "川田将雅",
           "burden_weight": 55,
           "distance": "芝1400",
@@ -2301,7 +2301,7 @@
           "horse_weight": 462,
           "horse_weight_diff": 0,
           "winner": null,
-          "prize_10k": 84
+          "prize_10k": "84.0"
         },
         {
           "n": 7,
@@ -2316,7 +2316,7 @@
           "horse_no": 6,
           "win_odds": 2.6,
           "popularity": 1,
-          "finish": 3,
+          "finish": "3",
           "jockey": "川田将雅",
           "burden_weight": 55,
           "distance": "芝1200",
@@ -2329,25 +2329,25 @@
           "horse_weight": 462,
           "horse_weight_diff": 0,
           "winner": null,
-          "prize_10k": 190
+          "prize_10k": "190.0"
         }
       ],
       "model_scores": {
         "2008": {
-          "score": 0.108608
+          "score": 0.107407
         },
         "2015": {
-          "score": 0.17457
+          "score": 0.186632
         },
         "2019": {
-          "score": 0.196006
+          "score": 0.186428
         }
       },
       "_bet_eval": {
         "ai_rank": 3.0,
         "course_rank": 1.0,
         "popularity": 1.0,
-        "odds": 3.6,
+        "odds": 4.7,
         "ai_points": 6.0,
         "course_points": 9.6,
         "pop_points": 3.0,
@@ -2377,11 +2377,11 @@
       "horse_id": "2023107199",
       "waku": 4,
       "umaban": 8,
-      "score": -8.536374,
-      "p_win": 0.009049,
-      "p2_exact2": 0.013536,
-      "p3_exact3": 0.019917,
-      "p_top3": 0.042503,
+      "score": -9.159546,
+      "p_win": 0.010071,
+      "p2_exact2": 0.015081,
+      "p3_exact3": 0.022092,
+      "p_top3": 0.047244,
       "pred_order": 10,
       "rank": null,
       "waku_prev": 4,
@@ -2393,8 +2393,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 22.2,
-      "popularity": 9,
+      "tansho_odds": 25.5,
+      "popularity": 10,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -2407,7 +2407,7 @@
       "waku_course": 4,
       "style": "差し",
       "course_adv_score": 14.831743,
-      "reasons_pos": "距離替わり:同距離/近距離 / 近走着順:2 / 母父血統:キングカメハメハ 東京芝mile(1400-1899) top3率補正値 0.270 (959走) / 枠:4枠",
+      "reasons_pos": "距離替わり:同距離/近距離 / 近走着順:2.0 / 母父血統:キングカメハメハ 東京芝mile(1400-1899) top3率補正値 0.270 (959走) / 枠:4枠",
       "reasons_neg": "脚質:差し",
       "枠_score": 0.027126,
       "脚質_score": -0.05025,
@@ -2492,12 +2492,12 @@
       "dam_dam_id": "2003102993",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -0.753357,
-      "_pwin_softmax_2008": 0.043438,
+      "_score_2008": -0.811771,
+      "_pwin_softmax_2008": 0.042957,
       "_score_2015": -0.850108,
-      "_pwin_softmax_2015": 0.046893,
-      "_score_2019": -1.598601,
-      "_pwin_softmax_2019": 0.043975,
+      "_pwin_softmax_2015": 0.045976,
+      "_score_2019": -1.442472,
+      "_pwin_softmax_2019": 0.04977,
       "past_runs": [
         {
           "n": 1,
@@ -2540,7 +2540,7 @@
           "horse_no": 9,
           "win_odds": 10.9,
           "popularity": 6,
-          "finish": 7,
+          "finish": "7",
           "jockey": "松山弘平",
           "burden_weight": 57,
           "distance": "芝1800",
@@ -2568,7 +2568,7 @@
           "horse_no": 5,
           "win_odds": 9,
           "popularity": 4,
-          "finish": 8,
+          "finish": "8",
           "jockey": "松山弘平",
           "burden_weight": 56,
           "distance": "芝1800",
@@ -2624,7 +2624,7 @@
           "horse_no": 4,
           "win_odds": 6.8,
           "popularity": 3,
-          "finish": 2,
+          "finish": "2",
           "jockey": "松山弘平",
           "burden_weight": 55,
           "distance": "芝1800",
@@ -2642,20 +2642,20 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.043438
+          "score": 0.042957
         },
         "2015": {
-          "score": 0.046893
+          "score": 0.045976
         },
         "2019": {
-          "score": 0.043975
+          "score": 0.04977
         }
       },
       "_bet_eval": {
         "ai_rank": 10.0,
         "course_rank": 10.0,
-        "popularity": 9.0,
-        "odds": 22.2,
+        "popularity": 10.0,
+        "odds": 25.5,
         "ai_points": 0.0,
         "course_points": 0.0,
         "pop_points": -1.0,
@@ -2685,12 +2685,12 @@
       "horse_id": "2023107053",
       "waku": 5,
       "umaban": 9,
-      "score": -9.936567,
-      "p_win": 0.002231,
-      "p2_exact2": 0.003353,
-      "p3_exact3": 0.004971,
-      "p_top3": 0.010555,
-      "pred_order": 16,
+      "score": -10.4617,
+      "p_win": 0.002739,
+      "p2_exact2": 0.004122,
+      "p3_exact3": 0.006088,
+      "p_top3": 0.012949,
+      "pred_order": 15,
       "rank": null,
       "waku_prev": 5,
       "horse_name": "サンダーストラック",
@@ -2701,8 +2701,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 33,
-      "popularity": 10,
+      "tansho_odds": 19.5,
+      "popularity": 8,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -2800,12 +2800,12 @@
       "dam_dam_id": "000a01a96a",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -0.693524,
-      "_pwin_softmax_2008": 0.046116,
+      "_score_2008": -0.701293,
+      "_pwin_softmax_2008": 0.047975,
       "_score_2015": -0.645787,
-      "_pwin_softmax_2015": 0.057524,
-      "_score_2019": -1.252435,
-      "_pwin_softmax_2019": 0.062165,
+      "_pwin_softmax_2015": 0.056398,
+      "_score_2019": -1.208888,
+      "_pwin_softmax_2019": 0.062866,
       "past_runs": [
         {
           "n": 1,
@@ -2848,7 +2848,7 @@
           "horse_no": 3,
           "win_odds": 19.5,
           "popularity": 9,
-          "finish": 1,
+          "finish": "1",
           "jockey": "ハマーハ",
           "burden_weight": 57,
           "distance": "芝1600",
@@ -2876,7 +2876,7 @@
           "horse_no": 3,
           "win_odds": 5.3,
           "popularity": 3,
-          "finish": 5,
+          "finish": "5",
           "jockey": "ルメール",
           "burden_weight": 56,
           "distance": "芝2000",
@@ -2922,28 +2922,28 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.046116
+          "score": 0.047975
         },
         "2015": {
-          "score": 0.057524
+          "score": 0.056398
         },
         "2019": {
-          "score": 0.062165
+          "score": 0.062866
         }
       },
       "_bet_eval": {
-        "ai_rank": 16.0,
+        "ai_rank": 15.0,
         "course_rank": 11.0,
-        "popularity": 10.0,
-        "odds": 33.0,
+        "popularity": 8.0,
+        "odds": 19.5,
         "ai_points": 0.0,
         "course_points": 0.0,
         "pop_points": -1.0,
-        "odds_points": -2.0,
+        "odds_points": 1.0,
         "agreement_bonus": 0.0,
-        "mismatch_penalty": -2.0,
+        "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": -5.0,
+        "total": 0.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -2965,12 +2965,12 @@
       "horse_id": "2023103184",
       "waku": 5,
       "umaban": 10,
-      "score": -6.892038,
-      "p_win": 0.046852,
-      "p2_exact2": 0.068211,
-      "p3_exact3": 0.095531,
-      "p_top3": 0.210593,
-      "pred_order": 5,
+      "score": -7.578602,
+      "p_win": 0.048942,
+      "p2_exact2": 0.071266,
+      "p3_exact3": 0.099129,
+      "p_top3": 0.219337,
+      "pred_order": 4,
       "rank": null,
       "waku_prev": 5,
       "horse_name": "エコロアルバ",
@@ -2981,8 +2981,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 7.3,
-      "popularity": 4,
+      "tansho_odds": 4.8,
+      "popularity": 2,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -2995,7 +2995,7 @@
       "waku_course": 5,
       "style": "差し",
       "course_adv_score": 7.614137,
-      "reasons_pos": "距離替わり:同距離/近距離 / 同コース経験:1走 / 近走着順:4 / 年齢性別:牡3歳",
+      "reasons_pos": "距離替わり:同距離/近距離 / 同コース経験:1走 / 近走着順:4.0 / 年齢性別:牡3歳",
       "reasons_neg": "枠:5枠 / 脚質:差し",
       "枠_score": -0.032874,
       "脚質_score": -0.05025,
@@ -3081,11 +3081,11 @@
       "_status": "ok",
       "_note": null,
       "_score_2008": -0.911068,
-      "_pwin_softmax_2008": 0.0371,
+      "_pwin_softmax_2008": 0.038896,
       "_score_2015": -1.145463,
-      "_pwin_softmax_2015": 0.034901,
-      "_score_2019": -1.739723,
-      "_pwin_softmax_2019": 0.038187,
+      "_pwin_softmax_2015": 0.034218,
+      "_score_2019": -1.687801,
+      "_pwin_softmax_2019": 0.038943,
       "past_runs": [
         {
           "n": 1,
@@ -3128,7 +3128,7 @@
           "horse_no": 6,
           "win_odds": 3.6,
           "popularity": 2,
-          "finish": 1,
+          "finish": "1",
           "jockey": "坂井瑠星",
           "burden_weight": 56,
           "distance": "芝1600",
@@ -3156,7 +3156,7 @@
           "horse_no": 6,
           "win_odds": 3.2,
           "popularity": 1,
-          "finish": 1,
+          "finish": "1",
           "jockey": "キング",
           "burden_weight": 55,
           "distance": "芝1400",
@@ -3174,28 +3174,28 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.0371
+          "score": 0.038896
         },
         "2015": {
-          "score": 0.034901
+          "score": 0.034218
         },
         "2019": {
-          "score": 0.038187
+          "score": 0.038943
         }
       },
       "_bet_eval": {
-        "ai_rank": 5.0,
+        "ai_rank": 4.0,
         "course_rank": 15.0,
-        "popularity": 4.0,
-        "odds": 7.3,
-        "ai_points": 4.0,
+        "popularity": 2.0,
+        "odds": 4.8,
+        "ai_points": 5.0,
         "course_points": 0.0,
-        "pop_points": 0.0,
-        "odds_points": 2.0,
+        "pop_points": 2.0,
+        "odds_points": 3.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": -2.0,
         "danger_penalty": 0.0,
-        "total": 4.0,
+        "total": 8.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": true,
@@ -3217,11 +3217,11 @@
       "horse_id": "2023105311",
       "waku": 6,
       "umaban": 11,
-      "score": -8.733674,
-      "p_win": 0.007429,
-      "p2_exact2": 0.011125,
-      "p3_exact3": 0.016399,
-      "p_top3": 0.034953,
+      "score": -9.330717,
+      "p_win": 0.008487,
+      "p2_exact2": 0.012722,
+      "p3_exact3": 0.018671,
+      "p_top3": 0.03988,
       "pred_order": 11,
       "rank": null,
       "waku_prev": 6,
@@ -3233,8 +3233,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 8.7,
-      "popularity": 5,
+      "tansho_odds": 12.1,
+      "popularity": 6,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -3332,12 +3332,12 @@
       "dam_dam_id": "000a013890",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -0.058706,
-      "_pwin_softmax_2008": 0.087006,
+      "_score_2008": -0.057441,
+      "_pwin_softmax_2008": 0.091334,
       "_score_2015": -0.47544,
-      "_pwin_softmax_2015": 0.068207,
-      "_score_2019": -1.209167,
-      "_pwin_softmax_2019": 0.064914,
+      "_pwin_softmax_2015": 0.066872,
+      "_score_2019": -1.140849,
+      "_pwin_softmax_2019": 0.067292,
       "past_runs": [
         {
           "n": 1,
@@ -3380,7 +3380,7 @@
           "horse_no": 6,
           "win_odds": 2.2,
           "popularity": 1,
-          "finish": 3,
+          "finish": "3",
           "jockey": "坂井瑠星",
           "burden_weight": 57,
           "distance": "芝2000",
@@ -3408,7 +3408,7 @@
           "horse_no": 12,
           "win_odds": 3.1,
           "popularity": 1,
-          "finish": 3,
+          "finish": "3",
           "jockey": "坂井瑠星",
           "burden_weight": 56,
           "distance": "芝1600",
@@ -3464,7 +3464,7 @@
           "horse_no": 7,
           "win_odds": 3.4,
           "popularity": 1,
-          "finish": 1,
+          "finish": "1",
           "jockey": "坂井瑠星",
           "burden_weight": 56,
           "distance": "芝1600",
@@ -3482,28 +3482,28 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.087006
+          "score": 0.091334
         },
         "2015": {
-          "score": 0.068207
+          "score": 0.066872
         },
         "2019": {
-          "score": 0.064914
+          "score": 0.067292
         }
       },
       "_bet_eval": {
         "ai_rank": 11.0,
         "course_rank": 7.0,
-        "popularity": 5.0,
-        "odds": 8.7,
+        "popularity": 6.0,
+        "odds": 12.1,
         "ai_points": 0.0,
         "course_points": 2.4,
         "pop_points": 0.0,
-        "odds_points": 2.0,
+        "odds_points": 1.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 4.4,
+        "total": 3.4,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -3525,11 +3525,11 @@
       "horse_id": "2023103752",
       "waku": 6,
       "umaban": 12,
-      "score": -8.855295,
-      "p_win": 0.006578,
-      "p2_exact2": 0.009857,
-      "p3_exact3": 0.014544,
-      "p_top3": 0.030979,
+      "score": -9.452338,
+      "p_win": 0.007515,
+      "p2_exact2": 0.011273,
+      "p3_exact3": 0.016562,
+      "p_top3": 0.03535,
       "pred_order": 12,
       "rank": null,
       "waku_prev": 6,
@@ -3541,8 +3541,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 20.7,
-      "popularity": 7,
+      "tansho_odds": 20.9,
+      "popularity": 9,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -3640,12 +3640,12 @@
       "dam_dam_id": "2009106431",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -1.261031,
-      "_pwin_softmax_2008": 0.026145,
-      "_score_2015": -1.647636,
-      "_pwin_softmax_2015": 0.021123,
-      "_score_2019": -2.468474,
-      "_pwin_softmax_2019": 0.018426,
+      "_score_2008": -1.319446,
+      "_pwin_softmax_2008": 0.025855,
+      "_score_2015": -1.623442,
+      "_pwin_softmax_2015": 0.021216,
+      "_score_2019": -2.397037,
+      "_pwin_softmax_2019": 0.019161,
       "past_runs": [
         {
           "n": 1,
@@ -3688,7 +3688,7 @@
           "horse_no": 12,
           "win_odds": 3.5,
           "popularity": 1,
-          "finish": 7,
+          "finish": "7",
           "jockey": "川田将雅",
           "burden_weight": 56,
           "distance": "芝2000",
@@ -3716,7 +3716,7 @@
           "horse_no": 5,
           "win_odds": 2.3,
           "popularity": 1,
-          "finish": 1,
+          "finish": "1",
           "jockey": "川田将雅",
           "burden_weight": 56,
           "distance": "芝1800",
@@ -3772,7 +3772,7 @@
           "horse_no": 6,
           "win_odds": 5.4,
           "popularity": 3,
-          "finish": 2,
+          "finish": "2",
           "jockey": "藤岡佑介",
           "burden_weight": 55,
           "distance": "芝1600",
@@ -3790,20 +3790,20 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.026145
+          "score": 0.025855
         },
         "2015": {
-          "score": 0.021123
+          "score": 0.021216
         },
         "2019": {
-          "score": 0.018426
+          "score": 0.019161
         }
       },
       "_bet_eval": {
         "ai_rank": 12.0,
         "course_rank": 6.0,
-        "popularity": 7.0,
-        "odds": 20.7,
+        "popularity": 9.0,
+        "odds": 20.9,
         "ai_points": 0.0,
         "course_points": 3.5999999999999996,
         "pop_points": -1.0,
@@ -3833,11 +3833,11 @@
       "horse_id": "2023100797",
       "waku": 7,
       "umaban": 13,
-      "score": -10.508229,
-      "p_win": 0.00126,
-      "p2_exact2": 0.001894,
-      "p3_exact3": 0.002812,
-      "p_top3": 0.005965,
+      "score": -11.170801,
+      "p_win": 0.001348,
+      "p2_exact2": 0.00203,
+      "p3_exact3": 0.003003,
+      "p_top3": 0.006381,
       "pred_order": 17,
       "rank": null,
       "waku_prev": 7,
@@ -3849,8 +3849,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 130.6,
-      "popularity": 18,
+      "tansho_odds": 77.9,
+      "popularity": 16,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -3948,12 +3948,12 @@
       "dam_dam_id": "2000105134",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -1.693517,
-      "_pwin_softmax_2008": 0.016965,
+      "_score_2008": -1.751932,
+      "_pwin_softmax_2008": 0.016777,
       "_score_2015": -1.832708,
-      "_pwin_softmax_2015": 0.017554,
-      "_score_2019": -2.501384,
-      "_pwin_softmax_2019": 0.017829,
+      "_pwin_softmax_2015": 0.01721,
+      "_score_2019": -2.451198,
+      "_pwin_softmax_2019": 0.01815,
       "past_runs": [
         {
           "n": 1,
@@ -3996,7 +3996,7 @@
           "horse_no": 1,
           "win_odds": 13.8,
           "popularity": 7,
-          "finish": 2,
+          "finish": "2",
           "jockey": "三浦皇成",
           "burden_weight": 55,
           "distance": "芝1400",
@@ -4024,7 +4024,7 @@
           "horse_no": 3,
           "win_odds": 3.6,
           "popularity": 3,
-          "finish": 6,
+          "finish": "6",
           "jockey": "中井裕二",
           "burden_weight": 56,
           "distance": "芝1200",
@@ -4080,7 +4080,7 @@
           "horse_no": 9,
           "win_odds": 5.1,
           "popularity": 3,
-          "finish": 1,
+          "finish": "1",
           "jockey": "三浦皇成",
           "burden_weight": 55,
           "distance": "芝1400",
@@ -4121,25 +4121,25 @@
           "horse_weight": 418,
           "horse_weight_diff": 0,
           "winner": null,
-          "prize_10k": 750
+          "prize_10k": "750.0"
         }
       ],
       "model_scores": {
         "2008": {
-          "score": 0.016965
+          "score": 0.016777
         },
         "2015": {
-          "score": 0.017554
+          "score": 0.01721
         },
         "2019": {
-          "score": 0.017829
+          "score": 0.01815
         }
       },
       "_bet_eval": {
         "ai_rank": 17.0,
         "course_rank": 17.0,
-        "popularity": 18.0,
-        "odds": 130.6,
+        "popularity": 16.0,
+        "odds": 77.9,
         "ai_points": 0.0,
         "course_points": 0.0,
         "pop_points": -2.0,
@@ -4169,11 +4169,11 @@
       "horse_id": "2023107241",
       "waku": 7,
       "umaban": 14,
-      "score": -7.535226,
-      "p_win": 0.024626,
-      "p2_exact2": 0.036441,
-      "p3_exact3": 0.052617,
-      "p_top3": 0.113684,
+      "score": -8.301457,
+      "p_win": 0.023755,
+      "p2_exact2": 0.035234,
+      "p3_exact3": 0.050758,
+      "p_top3": 0.109747,
       "pred_order": 6,
       "rank": null,
       "waku_prev": 7,
@@ -4185,8 +4185,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 21.1,
-      "popularity": 8,
+      "tansho_odds": 18.5,
+      "popularity": 7,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -4199,7 +4199,7 @@
       "waku_course": 7,
       "style": "追込",
       "course_adv_score": 4.569552,
-      "reasons_pos": "父血統:キズナ 東京芝mile(1400-1899) top3率補正値 0.325 (365走) / 距離替わり:同距離/近距離 / 近走着順:3 / 年齢性別:牡3歳",
+      "reasons_pos": "父血統:キズナ 東京芝mile(1400-1899) top3率補正値 0.325 (365走) / 距離替わり:同距離/近距離 / 近走着順:3.0 / 年齢性別:牡3歳",
       "reasons_neg": "脚質:追込",
       "枠_score": -0.012874,
       "脚質_score": -0.130281,
@@ -4284,12 +4284,12 @@
       "dam_dam_id": "000a0129ca",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -0.662977,
-      "_pwin_softmax_2008": 0.047546,
+      "_score_2008": -0.721392,
+      "_pwin_softmax_2008": 0.04702,
       "_score_2015": -1.157525,
-      "_pwin_softmax_2015": 0.034483,
-      "_score_2019": -1.624314,
-      "_pwin_softmax_2019": 0.042859,
+      "_pwin_softmax_2015": 0.033808,
+      "_score_2019": -1.602138,
+      "_pwin_softmax_2019": 0.042426,
       "past_runs": [
         {
           "n": 1,
@@ -4332,7 +4332,7 @@
           "horse_no": 6,
           "win_odds": 1.6,
           "popularity": 1,
-          "finish": 2,
+          "finish": "2",
           "jockey": "北村友一",
           "burden_weight": 57,
           "distance": "芝1600",
@@ -4360,7 +4360,7 @@
           "horse_no": 11,
           "win_odds": 5,
           "popularity": 2,
-          "finish": 4,
+          "finish": "4",
           "jockey": "北村友一",
           "burden_weight": 57,
           "distance": "芝1600",
@@ -4416,7 +4416,7 @@
           "horse_no": 12,
           "win_odds": 4.7,
           "popularity": 3,
-          "finish": 1,
+          "finish": "1",
           "jockey": "北村友一",
           "burden_weight": 56,
           "distance": "芝1600",
@@ -4434,28 +4434,28 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.047546
+          "score": 0.04702
         },
         "2015": {
-          "score": 0.034483
+          "score": 0.033808
         },
         "2019": {
-          "score": 0.042859
+          "score": 0.042426
         }
       },
       "_bet_eval": {
         "ai_rank": 6.0,
         "course_rank": 16.0,
-        "popularity": 8.0,
-        "odds": 21.1,
+        "popularity": 7.0,
+        "odds": 18.5,
         "ai_points": 3.0,
         "course_points": 0.0,
         "pop_points": -1.0,
-        "odds_points": 0.0,
+        "odds_points": 1.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": -2.0,
         "danger_penalty": 0.0,
-        "total": 0.0,
+        "total": 1.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": true,
@@ -4477,11 +4477,11 @@
       "horse_id": "2023103268",
       "waku": 7,
       "umaban": 15,
-      "score": -8.007967,
-      "p_win": 0.015349,
-      "p2_exact2": 0.022862,
-      "p3_exact3": 0.03339,
-      "p_top3": 0.071601,
+      "score": -8.771268,
+      "p_win": 0.014849,
+      "p2_exact2": 0.022163,
+      "p3_exact3": 0.032283,
+      "p_top3": 0.069295,
       "pred_order": 8,
       "rank": null,
       "waku_prev": 7,
@@ -4493,7 +4493,7 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 35,
+      "tansho_odds": 31.2,
       "popularity": 12,
       "horse_weight": null,
       "trainer": null,
@@ -4507,7 +4507,7 @@
       "waku_course": 7,
       "style": "先行",
       "course_adv_score": 9.34459,
-      "reasons_pos": "近走着順:1 / 距離替わり:同距離/近距離 / 脚質:先行 / 年齢性別:牡3歳",
+      "reasons_pos": "近走着順:1.0 / 距離替わり:同距離/近距離 / 脚質:先行 / 年齢性別:牡3歳",
       "reasons_neg": null,
       "枠_score": -0.012874,
       "脚質_score": 0.024975,
@@ -4592,12 +4592,12 @@
       "dam_dam_id": "2001103090",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -0.877162,
-      "_pwin_softmax_2008": 0.038379,
+      "_score_2008": -0.935577,
+      "_pwin_softmax_2008": 0.037955,
       "_score_2015": -0.979247,
-      "_pwin_softmax_2015": 0.041212,
-      "_score_2019": -1.809935,
-      "_pwin_softmax_2019": 0.035598,
+      "_pwin_softmax_2015": 0.040406,
+      "_score_2019": -1.773388,
+      "_pwin_softmax_2019": 0.035748,
       "past_runs": [
         {
           "n": 1,
@@ -4640,7 +4640,7 @@
           "horse_no": 13,
           "win_odds": 2.8,
           "popularity": 1,
-          "finish": 1,
+          "finish": "1",
           "jockey": "田口貫太",
           "burden_weight": 57,
           "distance": "芝1600",
@@ -4668,7 +4668,7 @@
           "horse_no": 1,
           "win_odds": 9.5,
           "popularity": 4,
-          "finish": 2,
+          "finish": "2",
           "jockey": "田口貫太",
           "burden_weight": 57,
           "distance": "芝1600",
@@ -4724,7 +4724,7 @@
           "horse_no": 9,
           "win_odds": 55.7,
           "popularity": 7,
-          "finish": 4,
+          "finish": "4",
           "jockey": "田口貫太",
           "burden_weight": 56,
           "distance": "芝1800",
@@ -4770,20 +4770,20 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.038379
+          "score": 0.037955
         },
         "2015": {
-          "score": 0.041212
+          "score": 0.040406
         },
         "2019": {
-          "score": 0.035598
+          "score": 0.035748
         }
       },
       "_bet_eval": {
         "ai_rank": 8.0,
         "course_rank": 13.0,
         "popularity": 12.0,
-        "odds": 35.0,
+        "odds": 31.2,
         "ai_points": 1.0,
         "course_points": 0.0,
         "pop_points": -2.0,
@@ -4813,11 +4813,11 @@
       "horse_id": "2023105267",
       "waku": 8,
       "umaban": 16,
-      "score": -5.459691,
-      "p_win": 0.196241,
-      "p2_exact2": 0.247435,
-      "p3_exact3": 0.222581,
-      "p_top3": 0.666257,
+      "score": -6.21642,
+      "p_win": 0.191102,
+      "p2_exact2": 0.242958,
+      "p3_exact3": 0.222877,
+      "p_top3": 0.656937,
       "pred_order": 2,
       "rank": null,
       "waku_prev": 8,
@@ -4829,8 +4829,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 13.4,
-      "popularity": 6,
+      "tansho_odds": 10.8,
+      "popularity": 5,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -4843,7 +4843,7 @@
       "waku_course": 8,
       "style": "先行",
       "course_adv_score": 34.177055,
-      "reasons_pos": "父血統:ロードカナロア 東京芝mile(1400-1899) top3率補正値 0.323 (927走) / 近走着順:1 / 距離替わり:同距離/近距離 / 同コース経験:1走",
+      "reasons_pos": "父血統:ロードカナロア 東京芝mile(1400-1899) top3率補正値 0.323 (927走) / 近走着順:1.0 / 距離替わり:同距離/近距離 / 同コース経験:1走",
       "reasons_neg": null,
       "枠_score": 0.023793,
       "脚質_score": 0.024975,
@@ -4928,12 +4928,12 @@
       "dam_dam_id": "000a013360",
       "_status": "ok",
       "_note": null,
-      "_score_2008": 0.015508,
-      "_pwin_softmax_2008": 0.093708,
+      "_score_2008": -0.042906,
+      "_pwin_softmax_2008": 0.092672,
       "_score_2015": -0.420805,
-      "_pwin_softmax_2015": 0.072037,
-      "_score_2019": -1.075439,
-      "_pwin_softmax_2019": 0.074202,
+      "_pwin_softmax_2015": 0.070627,
+      "_score_2019": -1.063721,
+      "_pwin_softmax_2019": 0.072687,
       "past_runs": [
         {
           "n": 1,
@@ -4976,7 +4976,7 @@
           "horse_no": 15,
           "win_odds": 5.8,
           "popularity": 3,
-          "finish": 1,
+          "finish": "1",
           "jockey": "西村淳也",
           "burden_weight": 57,
           "distance": "芝1600",
@@ -4994,20 +4994,20 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.093708
+          "score": 0.092672
         },
         "2015": {
-          "score": 0.072037
+          "score": 0.070627
         },
         "2019": {
-          "score": 0.074202
+          "score": 0.072687
         }
       },
       "_bet_eval": {
         "ai_rank": 2.0,
         "course_rank": 2.0,
-        "popularity": 6.0,
-        "odds": 13.4,
+        "popularity": 5.0,
+        "odds": 10.8,
         "ai_points": 7.0,
         "course_points": 8.4,
         "pop_points": 0.0,
@@ -5016,7 +5016,7 @@
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
         "total": 20.4,
-        "strong_axis": false,
+        "strong_axis": true,
         "semi_axis": true,
         "himo": true,
         "danger_popular": false
@@ -5037,11 +5037,11 @@
       "horse_id": "2023107166",
       "waku": 8,
       "umaban": 17,
-      "score": -4.573216,
-      "p_win": 0.47619,
-      "p2_exact2": 0.283779,
-      "p3_exact3": 0.146017,
-      "p_top3": 0.905986,
+      "score": -5.300333,
+      "p_win": 0.477659,
+      "p2_exact2": 0.283319,
+      "p3_exact3": 0.145585,
+      "p_top3": 0.906562,
       "pred_order": 1,
       "rank": null,
       "waku_prev": 8,
@@ -5053,8 +5053,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": 6.3,
-      "popularity": 2,
+      "tansho_odds": 5.9,
+      "popularity": 3,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -5067,7 +5067,7 @@
       "waku_course": 8,
       "style": "先行",
       "course_adv_score": 31.23432,
-      "reasons_pos": "父血統:サートゥルナーリア 東京芝mile(1400-1899) top3率補正値 0.379 (44走) / 距離替わり:同距離/近距離 / 近走着順:2 / 脚質:先行",
+      "reasons_pos": "父血統:サートゥルナーリア 東京芝mile(1400-1899) top3率補正値 0.379 (44走) / 距離替わり:同距離/近距離 / 近走着順:2.0 / 脚質:先行",
       "reasons_neg": null,
       "枠_score": 0.023793,
       "脚質_score": 0.024975,
@@ -5152,12 +5152,12 @@
       "dam_dam_id": "1990104480",
       "_status": "ok",
       "_note": null,
-      "_score_2008": 0.547298,
-      "_pwin_softmax_2008": 0.15949,
-      "_score_2015": 0.308733,
-      "_pwin_softmax_2015": 0.149414,
-      "_score_2019": -0.407476,
-      "_pwin_softmax_2019": 0.144713,
+      "_score_2008": 0.488884,
+      "_pwin_softmax_2008": 0.157725,
+      "_score_2015": 0.332927,
+      "_pwin_softmax_2015": 0.150076,
+      "_score_2019": -0.45018,
+      "_pwin_softmax_2019": 0.134251,
       "past_runs": [
         {
           "n": 1,
@@ -5200,7 +5200,7 @@
           "horse_no": 10,
           "win_odds": 2.8,
           "popularity": 2,
-          "finish": 1,
+          "finish": "1",
           "jockey": "津村明秀",
           "burden_weight": 57,
           "distance": "芝1600",
@@ -5228,7 +5228,7 @@
           "horse_no": 16,
           "win_odds": 8.4,
           "popularity": 5,
-          "finish": 1,
+          "finish": "1",
           "jockey": "北村宏司",
           "burden_weight": 56,
           "distance": "芝1600",
@@ -5246,28 +5246,28 @@
       ],
       "model_scores": {
         "2008": {
-          "score": 0.15949
+          "score": 0.157725
         },
         "2015": {
-          "score": 0.149414
+          "score": 0.150076
         },
         "2019": {
-          "score": 0.144713
+          "score": 0.134251
         }
       },
       "_bet_eval": {
         "ai_rank": 1.0,
         "course_rank": 5.0,
-        "popularity": 2.0,
-        "odds": 6.3,
+        "popularity": 3.0,
+        "odds": 5.9,
         "ai_points": 8.0,
         "course_points": 4.8,
-        "pop_points": 2.0,
+        "pop_points": 1.0,
         "odds_points": 2.0,
         "agreement_bonus": 2.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 18.8,
+        "total": 17.8,
         "strong_axis": false,
         "semi_axis": true,
         "himo": true,
@@ -5289,12 +5289,12 @@
       "horse_id": "2023103418",
       "waku": 8,
       "umaban": 18,
-      "score": -6.864484,
-      "p_win": 0.048161,
-      "p2_exact2": 0.070047,
-      "p3_exact3": 0.097912,
-      "p_top3": 0.21612,
-      "pred_order": 4,
+      "score": -7.727624,
+      "p_win": 0.042166,
+      "p2_exact2": 0.061713,
+      "p3_exact3": 0.086706,
+      "p_top3": 0.190584,
+      "pred_order": 5,
       "rank": null,
       "waku_prev": 8,
       "horse_name": "フクチャンショウ",
@@ -5319,7 +5319,7 @@
       "waku_course": 8,
       "style": "差し",
       "course_adv_score": 15.032723,
-      "reasons_pos": "父血統:イスラボニータ 東京芝mile(1400-1899) top3率補正値 0.270 (203走) / 距離替わり:同距離/近距離 / 近走着順:3 / 年齢性別:牡3歳",
+      "reasons_pos": "父血統:イスラボニータ 東京芝mile(1400-1899) top3率補正値 0.270 (203走) / 距離替わり:同距離/近距離 / 近走着順:3.0 / 年齢性別:牡3歳",
       "reasons_neg": "脚質:差し",
       "枠_score": 0.023793,
       "脚質_score": -0.05025,
@@ -5404,12 +5404,12 @@
       "dam_dam_id": "000a014f5e",
       "_status": "ok",
       "_note": null,
-      "_score_2008": -0.419983,
-      "_pwin_softmax_2008": 0.060624,
+      "_score_2008": -0.478398,
+      "_pwin_softmax_2008": 0.059954,
       "_score_2015": -0.222914,
-      "_pwin_softmax_2015": 0.087801,
-      "_score_2019": -1.331185,
-      "_pwin_softmax_2019": 0.057457,
+      "_pwin_softmax_2015": 0.086082,
+      "_score_2019": -1.268711,
+      "_pwin_softmax_2019": 0.059215,
       "past_runs": [
         {
           "n": 1,
@@ -5452,7 +5452,7 @@
           "horse_no": 9,
           "win_odds": 4.6,
           "popularity": 2,
-          "finish": 3,
+          "finish": "3",
           "jockey": "戸崎圭太",
           "burden_weight": 57,
           "distance": "芝1400",
@@ -5480,7 +5480,7 @@
           "horse_no": 12,
           "win_odds": 19.7,
           "popularity": 8,
-          "finish": 2,
+          "finish": "2",
           "jockey": "戸崎圭太",
           "burden_weight": 56,
           "distance": "芝1400",
@@ -5536,7 +5536,7 @@
           "horse_no": 4,
           "win_odds": 14.9,
           "popularity": 5,
-          "finish": 2,
+          "finish": "2",
           "jockey": "戸崎圭太",
           "burden_weight": 55,
           "distance": "芝1200",
@@ -5577,33 +5577,33 @@
           "horse_weight": 430,
           "horse_weight_diff": 0,
           "winner": null,
-          "prize_10k": 75
+          "prize_10k": "75.0"
         }
       ],
       "model_scores": {
         "2008": {
-          "score": 0.060624
+          "score": 0.059954
         },
         "2015": {
-          "score": 0.087801
+          "score": 0.086082
         },
         "2019": {
-          "score": 0.057457
+          "score": 0.059215
         }
       },
       "_bet_eval": {
-        "ai_rank": 4.0,
+        "ai_rank": 5.0,
         "course_rank": 8.0,
         "popularity": 13.0,
         "odds": 39.6,
-        "ai_points": 5.0,
+        "ai_points": 4.0,
         "course_points": 1.2,
         "pop_points": -2.0,
         "odds_points": -2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 2.2,
+        "total": 1.2,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -5633,7 +5633,7 @@
           "stake_yen": 100,
           "score": 25.6,
           "source": "auto",
-          "reason": "単勝候補1 / AI3位 / 適性1位 / 1人気 / 単勝3.6倍 / 強軸 / 総合25.6",
+          "reason": "単勝候補1 / AI3位 / 適性1位 / 1人気 / 単勝4.7倍 / 強軸 / 総合25.6",
           "tags": [
             "自動",
             "単勝",
@@ -5656,7 +5656,7 @@
           "stake_yen": 100,
           "score": 48.0,
           "source": "auto",
-          "reason": "1頭軸流し / 軸7(AI3位 / 適性1位 / 1人気 / 単勝3.6倍 / 強軸 / 総合25.6) → 相手16,17,10",
+          "reason": "1頭軸流し / 軸7(AI3位 / 適性1位 / 1人気 / 単勝4.7倍 / 強軸 / 総合25.6) → 相手16,17,10",
           "tags": [
             "自動",
             "馬連",
@@ -5676,9 +5676,9 @@
             "ロデオドライブ"
           ],
           "stake_yen": 100,
-          "score": 46.4,
+          "score": 45.4,
           "source": "auto",
-          "reason": "1頭軸流し / 軸7(AI3位 / 適性1位 / 1人気 / 単勝3.6倍 / 強軸 / 総合25.6) → 相手16,17,10",
+          "reason": "1頭軸流し / 軸7(AI3位 / 適性1位 / 1人気 / 単勝4.7倍 / 強軸 / 総合25.6) → 相手16,17,10",
           "tags": [
             "自動",
             "馬連",
@@ -5698,9 +5698,9 @@
             "エコロアルバ"
           ],
           "stake_yen": 100,
-          "score": 29.6,
+          "score": 33.6,
           "source": "auto",
-          "reason": "1頭軸流し / 軸7(AI3位 / 適性1位 / 1人気 / 単勝3.6倍 / 強軸 / 総合25.6) → 相手16,17,10",
+          "reason": "1頭軸流し / 軸7(AI3位 / 適性1位 / 1人気 / 単勝4.7倍 / 強軸 / 総合25.6) → 相手16,17,10",
           "tags": [
             "自動",
             "馬連",
@@ -5724,9 +5724,9 @@
             "ロデオドライブ"
           ],
           "stake_yen": 100,
-          "score": 66.8,
+          "score": 65.8,
           "source": "auto",
-          "reason": "2頭軸流し / 軸7-16 → 相手17,10,12",
+          "reason": "2頭軸流し / 軸7-16 → 相手17,10,14",
           "tags": [
             "自動",
             "三連複",
@@ -5747,9 +5747,9 @@
             "エコロアルバ"
           ],
           "stake_yen": 100,
-          "score": 52.0,
+          "score": 56.0,
           "source": "auto",
-          "reason": "2頭軸流し / 軸7-16 → 相手17,10,12",
+          "reason": "2頭軸流し / 軸7-16 → 相手17,10,14",
           "tags": [
             "自動",
             "三連複",
@@ -5758,21 +5758,21 @@
         },
         {
           "bet_type": "三連複",
-          "numbers": "7-12-16",
+          "numbers": "7-14-16",
           "horses": [
             7,
-            12,
+            14,
             16
           ],
           "horse_names": [
             "ダイヤモンドノット",
             "アスクイキゴミ",
-            "アンドゥーリル"
+            "バルセシート"
           ],
           "stake_yen": 100,
-          "score": 48.6,
+          "score": 49.0,
           "source": "auto",
-          "reason": "2頭軸流し / 軸7-16 → 相手17,10,12",
+          "reason": "2頭軸流し / 軸7-16 → 相手17,10,14",
           "tags": [
             "自動",
             "三連複",
