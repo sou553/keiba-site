@@ -39,6 +39,22 @@
     return text.replaceAll('-', '/');
   }
 
+
+  function dateSortKey(item) {
+    const ymd = normalizeDateParam(item?.race_date || item?.date || item);
+    return Number(String(ymd || '').replace(/\D/g, '')) || 0;
+  }
+
+  function sortDateEntriesDesc(items) {
+    return [...(Array.isArray(items) ? items : [])].sort((a, b) => {
+      const diff = dateSortKey(b) - dateSortKey(a);
+      if (diff !== 0) return diff;
+      const ac = Number(a?.race_count ?? a?.count ?? 0);
+      const bc = Number(b?.race_count ?? b?.count ?? 0);
+      return bc - ac;
+    });
+  }
+
   function escapeHtml(value) {
     return String(value ?? '').replace(/[&<>"']/g, (ch) => ({
       '&': '&amp;',
@@ -119,13 +135,41 @@
     const explicit = normalizeDateParam(params.get('date') || params.get('race_date'));
     if (explicit) return explicit;
 
-    const dates = Array.isArray(index?.dates) ? index.dates : [];
+    const dates = sortDateEntriesDesc(index?.dates || []);
     if (dates.length) {
-      const first = dates[0];
-      return normalizeDateParam(first.race_date || first.date || first);
+      const latest = dates[0];
+      return normalizeDateParam(latest.race_date || latest.date || latest);
     }
 
     return '20260425';
+  }
+
+
+  function getExplicitDateParam() {
+    const params = new URLSearchParams(location.search);
+    return normalizeDateParam(params.get('date') || params.get('race_date'));
+  }
+
+  async function loadLatestAvailableRecommendedBets(index) {
+    const explicit = getExplicitDateParam();
+    if (explicit) {
+      return { date: explicit, data: await loadRecommendedBets(explicit) };
+    }
+
+    const dates = sortDateEntriesDesc(index?.dates || []);
+    for (const item of dates) {
+      const ymd = normalizeDateParam(item.race_date || item.date || item);
+      if (!ymd) continue;
+      try {
+        const data = await loadRecommendedBets(ymd);
+        return { date: data?.date_ymd || ymd, data };
+      } catch (_) {
+        // recommended_bets.json がない日付は飛ばして次の新しい日付を試す
+      }
+    }
+
+    const fallback = pickInitialDate(index);
+    return { date: fallback, data: await loadRecommendedBets(fallback) };
   }
 
   async function loadRecommendedBets(dateYmd) {
@@ -184,7 +228,7 @@
   }
 
   function renderDateStrip() {
-    const dates = Array.isArray(state.index?.dates) ? state.index.dates : [];
+    const dates = sortDateEntriesDesc(state.index?.dates || []);
     if (!dates.length) return '';
 
     return `
@@ -211,7 +255,7 @@
     const byGroup = summary.by_strategy_group || {};
 
     return `
-      <section class="recommend-summary">
+      <section class="recommend-summary recommend-summary--compact">
         <div class="recommend-summary__head">
           <div>
             <div class="recommend-kicker">SUMMARY</div>
@@ -220,26 +264,13 @@
           <button class="recommend-copy-all" type="button" data-copy-all>全買い目コピー</button>
         </div>
 
-        <div class="recommend-summary-grid">
-          <div class="recommend-summary-card">
-            <span>対象レース</span>
-            <strong>${escapeHtml(summary.race_count ?? 0)}</strong>
-          </div>
-          <div class="recommend-summary-card">
-            <span>買い目数</span>
-            <strong>${escapeHtml(summary.ticket_count ?? 0)}</strong>
-          </div>
-          <div class="recommend-summary-card">
-            <span>合計金額</span>
-            <strong>${escapeHtml(fmtYen(summary.total_stake_yen ?? 0))}</strong>
-          </div>
-          <div class="recommend-summary-card">
-            <span>生成時刻</span>
-            <strong>${escapeHtml(fmt(state.data?.generated_at))}</strong>
-          </div>
+        <div class="recommend-summary-grid recommend-summary-grid--compact">
+          <div class="recommend-summary-card"><span>対象</span><strong>${escapeHtml(summary.race_count ?? 0)}R</strong></div>
+          <div class="recommend-summary-card"><span>買い目</span><strong>${escapeHtml(summary.ticket_count ?? 0)}点</strong></div>
+          <div class="recommend-summary-card"><span>合計</span><strong>${escapeHtml(fmtYen(summary.total_stake_yen ?? 0))}</strong></div>
         </div>
 
-        <div class="recommend-breakdown">
+        <div class="recommend-breakdown recommend-breakdown--compact">
           ${renderMiniBreakdown('券種', byBet)}
           ${renderMiniBreakdown('会場', byCourse)}
           ${renderMiniBreakdown('戦略', byGroup)}
@@ -310,56 +341,67 @@
       return `<section class="recommend-empty">条件に合う推奨買い目がありません。</section>`;
     }
 
+    const grouped = groupRacesByCourse(races);
     return `
-      <section class="recommend-races">
-        ${races.map(renderRaceCard).join('')}
+      <section class="recommend-races recommend-races--selector">
+        ${grouped.map(({ course, races: courseRaces }) => `
+          <section class="recommend-course-column">
+            <h3 class="recommend-course-title">${escapeHtml(course)}競馬場</h3>
+            <div class="recommend-course-list">
+              ${courseRaces.map(renderCompactRaceRow).join('')}
+            </div>
+          </section>
+        `).join('')}
       </section>
     `;
   }
 
-  function renderRaceCard(race) {
+  function groupRacesByCourse(races) {
+    const courses = [...new Set((races || []).map((race) => race.course || 'その他'))];
+    return courses.map((course) => ({
+      course,
+      races: races
+        .filter((race) => (race.course || 'その他') === course)
+        .sort((a, b) => (toNum(a.race_no) ?? 99) - (toNum(b.race_no) ?? 99)),
+    }));
+  }
+
+  function renderCompactRaceRow(race) {
     const raceTitle = race.title || `${race.course || ''} ${race.race_no || ''}R`;
+    const grouped = groupTicketsByBetType(race.tickets || []);
+    const groupSummary = Object.entries(grouped)
+      .map(([betType, tickets]) => `${betType}${tickets.length}`)
+      .join(' / ');
     const condition = [
-      race.course,
       race.surface && race.distance_m ? `${race.surface}${race.distance_m}m` : null,
       race.track_condition,
       race.field_size ? `${race.field_size}頭` : null,
-      race.start_time ? `${race.start_time}発走` : null,
     ].filter(Boolean).join(' / ');
 
-    const grouped = groupTicketsByBetType(race.tickets || []);
-    const groupSummary = Object.entries(grouped)
-      .map(([betType, tickets]) => `${betType}${tickets.length}点`)
-      .join(' / ');
-
     return `
-      <article class="recommend-race-card">
-        <header class="recommend-race-head">
-          <div>
-            <div class="recommend-race-title">
-              <span class="recommend-race-no">${escapeHtml(race.race_no ? `${race.race_no}R` : '')}</span>
-              <strong>${escapeHtml(raceTitle)}</strong>
-            </div>
-            <div class="recommend-race-meta">${escapeHtml(condition || race.race_id)}</div>
-            <div class="recommend-race-id">${escapeHtml(race.race_id)}</div>
-            ${groupSummary ? `<div class="recommend-race-bet-summary">${escapeHtml(groupSummary)}</div>` : ''}
-          </div>
-          <div class="recommend-race-total">
-            <span>${escapeHtml(race.tickets.length)}点</span>
-            <strong>${escapeHtml(fmtYen(sumStake(race.tickets)))}</strong>
-          </div>
-        </header>
+      <details class="recommend-race-row">
+        <summary class="recommend-race-row__summary">
+          <span class="recommend-race-row__no">${escapeHtml(race.race_no ? `${race.race_no}R` : '--R')}</span>
+          <span class="recommend-race-row__main">
+            <strong>${escapeHtml(raceTitle)}</strong>
+            <small>${escapeHtml(condition || race.race_id || '')}</small>
+          </span>
+          <span class="recommend-race-row__bets">${escapeHtml(race.tickets.length)}点</span>
+          <span class="recommend-race-row__yen">${escapeHtml(fmtYen(sumStake(race.tickets)))}</span>
+        </summary>
 
-        <div class="recommend-ticket-groups">
-          ${Object.entries(grouped).map(([betType, tickets]) => renderTicketGroup(race, betType, tickets)).join('')}
+        <div class="recommend-race-row__body">
+          ${groupSummary ? `<div class="recommend-race-row__chip">${escapeHtml(groupSummary)}</div>` : ''}
+          <div class="recommend-ticket-groups recommend-ticket-groups--compact">
+            ${Object.entries(grouped).map(([betType, tickets]) => renderTicketGroup(race, betType, tickets)).join('')}
+          </div>
+          <footer class="recommend-race-actions">
+            <a href="${escapeHtml(buildRaceUrl(race))}">出走馬一覧</a>
+            <a href="${escapeHtml(buildBettingUrl(race))}">買い目作成</a>
+            <button type="button" data-copy-race="${escapeHtml(race.race_id)}">このレースをコピー</button>
+          </footer>
         </div>
-
-        <footer class="recommend-race-actions">
-          <a href="${escapeHtml(buildRaceUrl(race))}">出走馬一覧</a>
-          <a href="${escapeHtml(buildBettingUrl(race))}">買い目作成</a>
-          <button type="button" data-copy-race="${escapeHtml(race.race_id)}">このレースをコピー</button>
-        </footer>
-      </article>
+      </details>
     `;
   }
 
@@ -884,11 +926,11 @@
     if (!state.data || !app) return;
 
     app.innerHTML = `
-      <header class="recommend-hero">
+      <header class="recommend-hero recommend-hero--compact">
         <div>
           <div class="recommend-kicker">BUYLIST</div>
           <h1>推奨買い目一覧</h1>
-          <p>CSVから出力した、その日の買い目をレース別・券種別に確認できます。</p>
+          <p>開催日ごとの推奨買い目を、レース選択と同じ密度で確認できます。</p>
         </div>
         <nav class="recommend-hero__nav">
           <a class="recommend-nav-link" href="./index.html">トップ</a>
@@ -910,8 +952,9 @@
     try {
       setStatus('推奨買い目を読み込み中...');
       const index = await loadIndex();
-      state.date = pickInitialDate(index);
-      state.data = await loadRecommendedBets(state.date);
+      const loaded = await loadLatestAvailableRecommendedBets(index);
+      state.date = loaded.date;
+      state.data = loaded.data;
       if (state.data?.date_ymd) state.date = state.data.date_ymd;
       render();
     } catch (error) {

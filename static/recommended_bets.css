@@ -771,3 +771,446 @@
     flex-basis: 100%;
   }
 }
+
+/* --- compact recommended bets: race selector style --- */
+.recommend-page {
+  max-width: 1120px;
+  padding: 10px 12px 24px;
+}
+
+.recommend-hero--compact,
+.recommend-hero {
+  margin: 4px 0 8px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fffdf8 0%, #f5ecdf 100%);
+}
+
+.recommend-hero h1 {
+  margin: 2px 0 3px;
+  font-size: 22px;
+}
+
+.recommend-hero p {
+  font-size: 12px;
+}
+
+.recommend-date-strip {
+  gap: 7px;
+  padding: 2px 0 7px;
+  margin: 0 0 6px;
+  scrollbar-width: thin;
+}
+
+.recommend-date-pill {
+  min-height: 34px;
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 999px;
+  box-shadow: 0 1px 0 rgba(76, 54, 22, .04);
+}
+
+.recommend-summary--compact {
+  margin: 8px 0;
+  padding: 10px 14px;
+  border-radius: 15px;
+}
+
+.recommend-summary--compact .recommend-summary__head {
+  margin-bottom: 8px;
+}
+
+.recommend-summary--compact h2 {
+  font-size: 18px;
+  margin: 2px 0 0;
+}
+
+.recommend-summary-grid--compact {
+  grid-template-columns: .65fr .65fr .9fr;
+  gap: 8px;
+}
+
+.recommend-summary-grid--compact .recommend-summary-card {
+  padding: 8px 10px;
+  border-radius: 12px;
+}
+
+.recommend-summary-grid--compact .recommend-summary-card span {
+  font-size: 11px;
+}
+
+.recommend-summary-grid--compact .recommend-summary-card strong {
+  margin-top: 2px;
+  font-size: 17px;
+}
+
+.recommend-breakdown--compact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.recommend-breakdown--compact .recommend-mini {
+  padding: 8px 9px;
+  border-radius: 12px;
+}
+
+.recommend-breakdown--compact .recommend-mini__title {
+  margin-bottom: 5px;
+  font-size: 11px;
+}
+
+.recommend-breakdown--compact .recommend-chip {
+  padding: 3px 7px;
+  font-size: 11px;
+  min-height: 23px;
+}
+
+.recommend-copy-all,
+.recommend-copy-small {
+  min-height: 32px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.recommend-toolbar {
+  margin: 8px 0;
+  padding: 10px 14px;
+  border-radius: 15px;
+  grid-template-columns: minmax(160px, 1.2fr) .7fr .7fr .7fr;
+  gap: 8px;
+}
+
+.recommend-field label {
+  margin-bottom: 3px;
+  font-size: 11px;
+}
+
+.recommend-field input,
+.recommend-field select {
+  min-height: 34px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.recommend-races--selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 8px;
+  align-items: start;
+  margin-top: 8px;
+}
+
+.recommend-course-column {
+  border: 1px solid var(--recommend-line);
+  border-radius: 15px;
+  background: rgba(255, 253, 247, .82);
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(77, 55, 26, .05);
+}
+
+.recommend-course-title {
+  margin: 0 0 7px;
+  padding: 2px 4px 7px;
+  border-bottom: 1px solid #e8dfd3;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.recommend-course-list {
+  display: grid;
+  gap: 5px;
+}
+
+.recommend-race-row {
+  border: 1px solid #e5ddcf;
+  border-radius: 10px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.recommend-race-row[open] {
+  box-shadow: 0 5px 14px rgba(77, 55, 26, .08);
+}
+
+.recommend-race-row__summary {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 44px 70px;
+  gap: 7px;
+  align-items: center;
+  min-height: 38px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.recommend-race-row__summary::-webkit-details-marker {
+  display: none;
+}
+
+.recommend-race-row__no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  border-radius: 999px;
+  background: #2d2720;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.recommend-race-row__main {
+  min-width: 0;
+  display: grid;
+  gap: 1px;
+}
+
+.recommend-race-row__main strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.recommend-race-row__main small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--recommend-muted);
+  font-size: 10px;
+}
+
+.recommend-race-row__bets,
+.recommend-race-row__yen {
+  justify-self: end;
+  color: var(--recommend-muted);
+  font-size: 11px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.recommend-race-row__yen {
+  color: var(--recommend-ink);
+}
+
+.recommend-race-row__body {
+  padding: 8px;
+  border-top: 1px solid #eee7dc;
+  background: #fffdf8;
+}
+
+.recommend-race-row__chip {
+  display: inline-flex;
+  margin-bottom: 8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #fff7e8;
+  color: #6b553a;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.recommend-ticket-groups--compact {
+  gap: 8px;
+  margin-top: 0;
+}
+
+.recommend-race-row .recommend-ticket-group {
+  border-radius: 11px;
+}
+
+.recommend-race-row .recommend-ticket-group__head {
+  padding: 7px 8px;
+  font-size: 12px;
+}
+
+.recommend-race-row .recommend-ticket-row {
+  grid-template-columns: minmax(0, 1fr) 58px;
+  padding: 8px;
+}
+
+.recommend-race-row .recommend-ticket-numbers {
+  font-size: 15px;
+}
+
+.recommend-race-row .recommend-ticket-sub,
+.recommend-race-row .recommend-ticket-reason {
+  font-size: 11px;
+}
+
+.recommend-race-row .recommend-ticket-stake {
+  font-size: 11px;
+}
+
+.recommend-race-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.recommend-race-actions a,
+.recommend-race-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0 9px;
+  border: 1px solid #d8cdbd;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--recommend-ink);
+  font-size: 11px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+@media (max-width: 760px) {
+  .recommend-page {
+    padding: 7px 6px 18px;
+  }
+
+  .recommend-hero,
+  .recommend-summary,
+  .recommend-toolbar {
+    border-radius: 13px;
+  }
+
+  .recommend-hero {
+    padding: 10px 12px;
+  }
+
+  .recommend-hero h1 {
+    font-size: 18px;
+  }
+
+  .recommend-hero p,
+  .recommend-summary .recommend-kicker,
+  .recommend-breakdown--compact,
+  .recommend-field label,
+  .recommend-race-row__main small,
+  .recommend-race-actions a[href*="race_detail"] {
+    display: none;
+  }
+
+  .recommend-date-pill {
+    min-height: 30px;
+    padding: 5px 9px;
+    font-size: 12px;
+  }
+
+  .recommend-summary--compact {
+    padding: 8px 10px;
+  }
+
+  .recommend-summary--compact .recommend-summary__head {
+    margin-bottom: 6px;
+  }
+
+  .recommend-summary--compact h2 {
+    font-size: 16px;
+  }
+
+  .recommend-summary-grid--compact {
+    grid-template-columns: .6fr .6fr .9fr;
+    gap: 6px;
+  }
+
+  .recommend-summary-grid--compact .recommend-summary-card {
+    padding: 6px 8px;
+  }
+
+  .recommend-summary-grid--compact .recommend-summary-card strong {
+    font-size: 14px;
+  }
+
+  .recommend-copy-all {
+    min-height: 30px;
+    padding: 0 8px;
+    font-size: 11px;
+  }
+
+  .recommend-toolbar {
+    grid-template-columns: 1.35fr .8fr .8fr .8fr;
+    gap: 6px;
+    padding: 7px 8px;
+  }
+
+  .recommend-field input,
+  .recommend-field select {
+    min-height: 30px;
+    padding: 0 7px;
+    font-size: 11px;
+    border-radius: 8px;
+  }
+
+  .recommend-races--selector {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .recommend-course-column {
+    padding: 5px;
+    border-radius: 10px;
+  }
+
+  .recommend-course-title {
+    margin-bottom: 5px;
+    padding-bottom: 4px;
+    font-size: 11px;
+  }
+
+  .recommend-course-list {
+    gap: 4px;
+  }
+
+  .recommend-race-row__summary {
+    grid-template-columns: 30px minmax(0, 1fr) 32px;
+    gap: 4px;
+    min-height: 32px;
+    padding: 4px 5px;
+  }
+
+  .recommend-race-row__no {
+    min-height: 20px;
+    font-size: 10px;
+  }
+
+  .recommend-race-row__main strong {
+    font-size: 11px;
+  }
+
+  .recommend-race-row__bets {
+    font-size: 10px;
+  }
+
+  .recommend-race-row__yen {
+    display: none;
+  }
+
+  .recommend-race-row__body {
+    padding: 6px;
+  }
+
+  .recommend-race-row .recommend-ticket-group__head {
+    padding: 6px;
+    font-size: 11px;
+  }
+
+  .recommend-race-row .recommend-ticket-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 6px;
+  }
+
+  .recommend-race-row .recommend-ticket-numbers {
+    font-size: 13px;
+  }
+
+  .recommend-race-row .recommend-ticket-stake {
+    justify-self: start;
+  }
+}
