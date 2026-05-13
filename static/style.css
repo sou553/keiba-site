@@ -3449,3 +3449,558 @@ img, svg { max-width: 100%; height: auto; }
   .index-race-card__actions a,
   .race-row-card__actions a { min-height: 32px; font-size: 11px; }
 }
+
+
+/* =========================================================
+   v2 見た目修正: ChatGPT風カードUIを抑えた競馬紙面寄せデザイン
+   - 既存JS/HTML構造は変更せず、見た目だけを上書き
+   - 丸すぎるカード、淡いグラデーション、大きい余白を削減
+   - netkeiba/競馬新聞に近い「表・帯・罫線」中心の表示へ
+   ========================================================= */
+:root {
+  --bg: #eee7d9;
+  --bg-2: #e6dccb;
+  --paper: #fffdf8;
+  --paper-2: #fffaf0;
+  --line: #c9bda9;
+  --line-strong: #9d8a70;
+  --text: #241d14;
+  --muted: #655a4d;
+  --blue: #175a9f;
+  --blue-dark: #123f70;
+  --blue-soft: #eef4fb;
+  --green: #126443;
+  --green-soft: #edf6f1;
+  --red: #b84336;
+  --red-soft: #fff1ef;
+  --orange: #9b650e;
+  --orange-soft: #fff6e5;
+  --gold: #8a6229;
+  --shadow: none;
+  --shadow-soft: none;
+  --radius: 8px;
+  --radius-sm: 5px;
+}
+
+html { background: var(--bg); }
+body {
+  background: #eee7d9;
+  color: var(--text);
+  line-height: 1.48;
+  letter-spacing: 0;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: #0b5f3e;
+  z-index: 1000;
+  pointer-events: none;
+}
+a { color: #124f8a; }
+a:hover { color: #0a3965; }
+
+/* 共通ヘッダー: アプリ風の丸いヘッダーから、競馬サイトの帯に変更 */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  background: #fffdf7;
+  border-top: 4px solid #0b5f3e;
+  border-bottom: 1px solid #b9aa91;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.site-header__inner {
+  min-height: 48px;
+  max-width: var(--maxw);
+  padding: 7px 14px;
+}
+.site-brand { gap: 9px; }
+.site-brand__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  background: #0b5f3e;
+  color: #fff;
+  border: 1px solid #06452c;
+  box-shadow: none;
+  font-size: 18px;
+}
+.site-brand__title {
+  font-size: 17px;
+  letter-spacing: .02em;
+  color: #20170f;
+}
+.site-brand__sub {
+  font-size: 11px;
+  color: #786955;
+  letter-spacing: 0;
+}
+.site-header__actions { gap: 6px; }
+
+/* 丸いピルを減らして、タブ・ボタンを紙面UIへ */
+button,
+.btn-link,
+.action-link,
+.link-button,
+.nav-button,
+.race-card__actions a,
+.index-race-card__actions a,
+.recommend-race-actions a,
+.recommend-race-actions button {
+  min-height: 34px;
+  padding: 0 11px;
+  border-radius: 4px;
+  border: 1px solid #b7a78d;
+  background: #fff9ed;
+  color: #2b2116;
+  box-shadow: none;
+  font-weight: 700;
+}
+button:hover,
+.btn-link:hover,
+.action-link:hover,
+.link-button:hover,
+.nav-button:hover,
+.race-card__actions a:hover,
+.index-race-card__actions a:hover {
+  background: #f4ead8;
+  text-decoration: none;
+}
+.action-link--primary,
+.race-tab.is-active,
+.date-chip.is-active,
+.page-tab.is-active,
+.recommend-date-pill.is-active {
+  background: #0b5f3e !important;
+  background-image: none !important;
+  border-color: #06462d !important;
+  color: #fff !important;
+}
+
+/* 全体カード: ChatGPT風の丸カード/グラデーション/影を抑制 */
+.card,
+.panel,
+.sheet,
+.index-hero,
+.race-hero,
+.jockey-page-head,
+.recommend-hero,
+.recommend-card,
+.recommend-summary,
+.recommend-toolbar,
+.recommend-race-card,
+.recommend-status,
+.top-pick-box,
+.summary-card,
+.summary-mini-panel,
+.divergence-box,
+.compare-summary-panel,
+.past-horse-card,
+.past-run-card,
+.horse-card,
+.horse-detail,
+.horse-detail-card,
+.ticket-card,
+.bet-ticket,
+.bet-card,
+.betting-ticket {
+  background: #fffdf8 !important;
+  background-image: none !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+.page { padding-top: 12px; }
+.sheet,
+.card,
+.panel { padding: 13px; }
+
+/* 見出し: 大きなヒーローより、紙面の見出し帯に寄せる */
+.index-hero,
+.race-hero,
+.jockey-page-head,
+.recommend-hero {
+  border-top: 3px solid #0b5f3e !important;
+  padding: 12px 14px !important;
+}
+.index-hero__text h1,
+.race-hero h1,
+.jockey-page-head h1,
+.recommend-hero h1,
+.section-title {
+  color: #21180f;
+  letter-spacing: 0;
+}
+.index-hero__text h1,
+.race-hero h1,
+.jockey-page-head h1,
+.recommend-hero h1 {
+  font-size: clamp(20px, 3.2vw, 27px) !important;
+  line-height: 1.22;
+  margin-bottom: 4px;
+}
+.section-title-row {
+  margin-bottom: 9px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #ded2bf;
+}
+.section-title,
+.summary-title,
+.nk-section-title,
+.compare-section-title {
+  position: relative;
+  padding-left: 10px;
+  font-size: 17px !important;
+  line-height: 1.3;
+}
+.section-title::before,
+.summary-title::before,
+.nk-section-title::before,
+.compare-section-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .18em;
+  bottom: .18em;
+  width: 4px;
+  background: #0b5f3e;
+  border-radius: 0;
+}
+.section-subtitle,
+.index-hero__text p,
+.recommend-hero p {
+  color: #6d604f;
+  font-size: 12px;
+}
+
+/* 日付・ページタブ: 丸いチップから四角い開催タブへ */
+.date-strip,
+.page-tab-strip,
+.recommend-date-strip,
+.jockey-date-strip {
+  gap: 5px;
+  padding: 0 0 7px;
+}
+.date-chip,
+.race-tab,
+.page-tab,
+.recommend-date-pill,
+.jockey-date-tab {
+  min-height: 33px;
+  padding: 0 10px;
+  border-radius: 4px !important;
+  border: 1px solid #b8a88d !important;
+  background: #fff8ea !important;
+  color: #2a2118 !important;
+  box-shadow: none !important;
+  font-size: 12px;
+  font-weight: 800;
+}
+.date-chip__meta { font-size: 10px; color: inherit; opacity: .8; }
+
+/* 入力欄・ツールバー: 余白を詰めて業務画面寄せ */
+input[type="search"],
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  min-height: 34px;
+  border-radius: 4px;
+  border: 1px solid #b9aa92;
+  background: #fffef8;
+  box-shadow: none;
+}
+.toolbar,
+.filter-bar,
+.index-toolbar,
+.jockey-toolbar,
+.compare-toolbar,
+.betting-toolbar,
+.recommend-toolbar {
+  background: #f8f1e5 !important;
+  border: 1px solid #c9bda9 !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+}
+
+/* タグ・バッジ: 丸いAI風ピルを廃止 */
+.tag,
+.badge,
+.mini-pill,
+.summary-chip,
+.recommend-badge,
+.recommend-strategy,
+.recommend-bet-type,
+.recommend-num-pill {
+  border-radius: 4px !important;
+  min-height: 22px;
+  padding: 2px 7px;
+  box-shadow: none !important;
+  font-weight: 800;
+}
+.tag,
+.badge,
+.mini-pill,
+.summary-chip { font-size: 11px; }
+.badge--blue,
+.tag--blue,
+.mini-pill--trust { background: #eef4fb !important; border-color: #a9c2d9 !important; color: #174c7a !important; }
+.badge--green,
+.tag--plus,
+.mini-pill--value { background: #edf6f1 !important; border-color: #afd1bf !important; color: #0c5a38 !important; }
+.badge--red,
+.tag--minus,
+.mini-pill--danger { background: #fff0ed !important; border-color: #e0a69e !important; color: #a33027 !important; }
+.badge--warn,
+.tag--warn,
+.mini-pill--warn { background: #fff4dd !important; border-color: #dfc080 !important; color: #82560d !important; }
+
+/* トップのレース一覧: カード感を弱め、出馬表前の一覧らしく */
+.race-card-list,
+.index-race-list { gap: 8px; }
+.race-card,
+.index-race-card,
+.race-row-card {
+  border-left: 5px solid #0b5f3e !important;
+  border-radius: 6px !important;
+  overflow: hidden;
+}
+.race-card__head,
+.index-race-card__head,
+.race-row-card__head,
+.past-run-card__head,
+.horse-card__head {
+  background: #f4ead8 !important;
+  background-image: none !important;
+  border-bottom: 1px solid #cfc0aa !important;
+  padding: 8px 10px;
+}
+.race-card__body,
+.index-race-card__body,
+.race-row-card__body { padding: 10px 11px; }
+.race-card__title,
+.index-race-card__title,
+.race-row-card__title {
+  font-size: 17px;
+  color: #1f170f;
+}
+.race-card__meta,
+.index-race-card__meta,
+.race-card-metrics { font-size: 12px; }
+.race-card__actions,
+.index-race-card__actions { border-top: 1px solid #e3d6c3; padding-top: 8px; margin-top: 8px; }
+
+/* 予想まとめ: レース新聞の印欄に近い密度へ */
+.summary-panel,
+.divergence-panel { padding: 13px !important; }
+.summary-grid,
+.summary-grid--2,
+.divergence-grid,
+.top-pick-grid { gap: 9px !important; }
+.summary-honmei,
+.summary-main,
+.summary-card,
+.top-pick-box {
+  background: #fffaf0 !important;
+  border: 1px solid #cdbfaa !important;
+  border-radius: 6px !important;
+}
+.summary-honmei__mark,
+.mark-badge,
+.rank-badge,
+.result-rank {
+  border-radius: 4px !important;
+  background: #0b5f3e !important;
+  color: #fff !important;
+  border: 1px solid #06462d !important;
+}
+.summary-honmei__name,
+.summary-main-horse,
+.race-card-mainpick,
+.top-pick-box__name {
+  color: #1c160e !important;
+  font-size: 19px !important;
+}
+.top-pick-box--honmei,
+.top-pick-box.is-main,
+.summary-box--main { border-left: 5px solid #175a9f !important; }
+.top-pick-box--miokuri,
+.top-pick-box.is-danger,
+.summary-box--danger { border-left: 5px solid #b84336 !important; }
+.top-pick-box--konsen,
+.top-pick-box.is-mixed,
+.summary-box--mixed { border-left: 5px solid #9b650e !important; }
+.divergence-line,
+.popular-summary-item,
+.summary-list-row {
+  border-top: 1px solid #e1d3c0 !important;
+  padding-top: 7px;
+}
+
+/* テーブル: 競馬サイト寄りの罫線・濃い見出し */
+.table-wrap,
+.horse-table-wrap,
+.compare-table-wrap,
+.data-table-wrap {
+  border: 1px solid #bdaE96;
+  border-radius: 6px;
+  background: #fffdf8;
+  box-shadow: none;
+}
+table,
+.horse-table,
+.recommend-table {
+  border-collapse: collapse;
+  background: #fffdf8;
+}
+th,
+.horse-table thead th,
+.recommend-table th {
+  background: #efe3d0 !important;
+  color: #241d14 !important;
+  border-bottom: 1px solid #aa987e !important;
+  border-right: 1px solid #d6c9b6 !important;
+  font-weight: 900;
+}
+td,
+.horse-table tbody td,
+.recommend-table td {
+  border-bottom: 1px solid #e5d9c8 !important;
+  border-right: 1px solid #eee4d7;
+}
+.horse-table tbody tr:nth-child(even) td,
+.recommend-table tbody tr:nth-child(even) td { background: #fffaf1; }
+.horse-table tbody tr:hover td,
+.recommend-table tbody tr:hover td { background: #f4f9f2 !important; }
+.horse-table__name,
+.horse-name,
+.horse-title,
+.horse-card__name,
+.past-horse-name {
+  color: #123f70 !important;
+  font-size: 15px;
+}
+
+/* スマホの出走馬行: カードではなく小さな出走表ブロックに */
+.horse-table-head,
+.horse-table-row {
+  border-radius: 0 !important;
+}
+.horse-table-body {
+  border-radius: 0 0 6px 6px !important;
+}
+.horse-table-row {
+  background: #fffdf8 !important;
+  border-top: 1px solid #e1d3c0 !important;
+}
+.horse-table-row.is-danger { background: #fff4f0 !important; }
+.horse-table-row.is-hole { background: #f3fbf3 !important; }
+.horse-table-row .cell {
+  border-right: 1px solid #eadfce !important;
+}
+
+/* 過去走比較: データ確認画面らしく */
+.past-horse-card__summary,
+.past-run-card__head {
+  background: #f4ead8 !important;
+  border-bottom: 1px solid #cdbfa9 !important;
+}
+.past-run-card__main,
+.past-horse-card__body { background: #fffdf8; }
+
+/* コース傾向: 目立たせすぎず、細い情報帯へ */
+.course-insight {
+  border-radius: 6px !important;
+  border: 1px solid #c9bda9 !important;
+  background: #fffaf0 !important;
+  box-shadow: none !important;
+}
+.course-insight__toggle {
+  border-radius: 0 !important;
+  background: #f4ead8 !important;
+  border: 0 !important;
+}
+.course-insight__label {
+  background: #0b5f3e !important;
+  color: #fff !important;
+  border-radius: 3px !important;
+}
+
+/* 買い目ページ: 広告カード風を避け、伝票風に */
+.ticket-card,
+.bet-ticket,
+.bet-card,
+.betting-ticket,
+.recommend-ticket-row {
+  background: #fffdf8 !important;
+  border-left: 4px solid #0b5f3e !important;
+  border-radius: 5px !important;
+}
+.recommend-ticket-numbers,
+.recommend-formation-title {
+  color: #1f170f !important;
+}
+
+@media (max-width: 760px) {
+  body { font-size: 13px; }
+  .site-header__inner { min-height: 46px; padding: 6px 9px; }
+  .site-brand__icon { width: 30px; height: 30px; font-size: 16px; }
+  .site-brand__title { font-size: 15px; }
+  .site-brand__sub { font-size: 10px; }
+  .page { padding: 8px 7px 22px; }
+  .sheet,
+  .card,
+  .panel { padding: 10px; border-radius: 6px !important; }
+  .index-hero,
+  .race-hero,
+  .jockey-page-head,
+  .recommend-hero { padding: 10px !important; }
+  .index-hero__text h1,
+  .race-hero h1,
+  .jockey-page-head h1,
+  .recommend-hero h1 { font-size: 18px !important; }
+  .date-chip,
+  .race-tab,
+  .page-tab,
+  .recommend-date-pill,
+  .jockey-date-tab {
+    min-height: 31px;
+    padding: 0 9px;
+    font-size: 11px;
+  }
+  .race-card__head,
+  .index-race-card__head,
+  .race-row-card__head { padding: 7px 9px; }
+  .race-card__body,
+  .index-race-card__body,
+  .race-row-card__body { padding: 9px; }
+  .race-card__title,
+  .index-race-card__title,
+  .race-row-card__title { font-size: 15px; }
+  .summary-honmei__name,
+  .summary-main-horse,
+  .race-card-mainpick,
+  .top-pick-box__name { font-size: 17px !important; }
+  .tag,
+  .badge,
+  .mini-pill,
+  .summary-chip { font-size: 10px; min-height: 20px; padding: 1px 6px; }
+  .horse-table__name,
+  .horse-name,
+  .horse-title,
+  .horse-card__name,
+  .past-horse-name { font-size: 14px; }
+  th, td { font-size: 11.5px; }
+}
+
+@media (max-width: 480px) {
+  .site-header__inner { gap: 6px; }
+  .site-header__actions { padding-bottom: 0; }
+  .action-link { min-height: 29px; font-size: 10.5px; }
+  .page { padding-left: 6px; padding-right: 6px; }
+  .horse-table-row { border: 1px solid #d4c6b2 !important; margin-bottom: 7px; }
+  .horse-table-row .cell { min-height: 46px; }
+}
