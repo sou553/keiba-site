@@ -120,12 +120,10 @@
     if (explicit) return explicit;
 
     const dates = Array.isArray(index?.dates) ? index.dates : [];
-    const normalizedDates = dates
-      .map((item) => normalizeDateParam(item.race_date || item.date || item))
-      .filter((ymd) => /^\d{8}$/.test(String(ymd || '')))
-      .sort((a, b) => String(b).localeCompare(String(a)));
-
-    if (normalizedDates.length) return normalizedDates[0];
+    if (dates.length) {
+      const first = dates[0];
+      return normalizeDateParam(first.race_date || first.date || first);
+    }
 
     return '20260425';
   }
@@ -234,6 +232,10 @@
           <div class="recommend-summary-card">
             <span>合計金額</span>
             <strong>${escapeHtml(fmtYen(summary.total_stake_yen ?? 0))}</strong>
+          </div>
+          <div class="recommend-summary-card">
+            <span>生成時刻</span>
+            <strong>${escapeHtml(fmt(state.data?.generated_at))}</strong>
           </div>
         </div>
 
