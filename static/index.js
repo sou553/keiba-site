@@ -83,53 +83,30 @@
     if (!root) return;
 
     root.innerHTML = `
-      <div class="index-page">
+      <div class="index-page index-page--compact">
         <div id="index-status" class="page-status" hidden></div>
-        <section class="index-hero card">
-          <div class="index-hero__text">
-            <div class="badge badge--blue">予想まとめ</div>
-            <h1>予想トップ</h1>
-            <p>出走馬一覧・過去走比較・買い目作成</p>
-          </div>
-          <div id="hero-stats" class="hero-stats"></div>
-        </section>
 
-        <section class="card filter-panel">
-          <div class="section-title-row">
-            <div>
-              <h2 class="section-title">開催日</h2>
-              <!--<div class="section-subtitle">横スクロール対応。新しい日付から順に表示。</div>-->
-            </div>
+        <section class="card filter-panel race-select-head">
+          <div class="date-strip-head">
+            <div id="date-strip" class="date-strip date-strip--compact"></div>
           </div>
-          <div id="date-strip" class="date-strip"></div>
-        </section>
-
-        <section class="card filter-panel">
-          <div class="section-title-row">
-            <div>
-              <h2 class="section-title">絞り込み</h2>
-              <div class="section-subtitle">競馬場、キーワード、単勝あり、人気乖離ありで絞れる。</div>
-            </div>
-          </div>
-          <div class="filter-grid">
-            <label>キーワード<input id="filter-keyword" type="text" placeholder="レース名・馬名・競馬場"></label>
+          <div class="race-select-filters">
+            <label>キーワード<input id="filter-keyword" type="text" placeholder="レース名・馬名"></label>
             <label>競馬場<select id="filter-course"><option value="">すべて</option></select></label>
-            <label class="check-pill"><input id="filter-odds" type="checkbox"> 単勝オッズあり</label>
-            <label class="check-pill"><input id="filter-divergence" type="checkbox"> 人気乖離あり</label>
-          </div>
-          <div style="margin-top:12px; display:flex; justify-content:flex-end;">
-            <button id="filter-reset" type="button">絞り込み解除</button>
+            <label class="check-pill"><input id="filter-odds" type="checkbox"> 単勝あり</label>
+            <label class="check-pill"><input id="filter-divergence" type="checkbox"> 乖離あり</label>
+            <button id="filter-reset" type="button">解除</button>
           </div>
         </section>
 
-        <section class="card race-list-panel">
-          <div class="section-title-row">
+        <section class="card race-list-panel race-list-panel--selector">
+          <div class="section-title-row race-selector-title-row">
             <div>
-              <h2 class="section-title">レース一覧</h2>
+              <h2 class="section-title">レース選択</h2>
               <div id="race-meta" class="section-subtitle"></div>
             </div>
           </div>
-          <div id="race-list" class="race-list"></div>
+          <div id="race-list" class="race-list race-list--selector"></div>
         </section>
       </div>`;
   }
@@ -284,36 +261,43 @@
       return;
     }
 
-    list.innerHTML = details.map((detail) => {
-      const race = detail.race || {};
-      const courseLine = [
-        race.race_no ? `${race.race_no}R` : '',
-        race.course,
-        race.surface,
-        race.distance ? `${race.distance}m` : '',
-        race.headcount ? `${race.headcount}頭` : ''
-      ].filter(Boolean).join(' / ');
+    const courses = [...new Set(details.map((d) => d.race?.course || 'その他'))];
+    const byCourse = courses.map((course) => {
+      const races = details
+        .filter((d) => (d.race?.course || 'その他') === course)
+        .sort((a, b) => (RA.toNum(a.race?.race_no) ?? 99) - (RA.toNum(b.race?.race_no) ?? 99));
+      return { course, races };
+    });
 
-      return `
-        <article class="sheet race-row">
-          <div class="race-row__top">
-            <div class="race-row__title-block">
-              <div class="race-row__date">${RA.esc(detail.race_date || '')}</div>
-              <h3 class="race-row__title">${RA.esc(race.race_no ? `${race.race_no}R ` : '')}${RA.esc(race.race_name || '')}</h3>
-              <div class="race-row__meta">${RA.esc(courseLine)}</div>
-              <div class="race-row__state">
-                <span class="tag tag--blue">race_id ${RA.esc(race.race_id || '')}</span>
-              </div>
+    list.innerHTML = `
+      <div class="race-selector-grid" style="--course-count:${Math.max(1, byCourse.length)}">
+        ${byCourse.map(({ course, races }) => `
+          <section class="race-selector-course">
+            <h3 class="race-selector-course__title">${RA.esc(course)}競馬場</h3>
+            <div class="race-selector-course__list">
+              ${races.map((detail) => {
+                const race = detail.race || {};
+                const raceNo = race.race_no ? `${String(race.race_no).padStart(2, '0')}R` : '--R';
+                const title = race.race_name || race.title || '';
+                const href = buildUrl('race', race.race_id, detail.race_date);
+                const pastHref = buildUrl('past', race.race_id, detail.race_date);
+                const bettingHref = buildUrl('betting', race.race_id, detail.race_date);
+                return `
+                  <div class="race-selector-row">
+                    <a class="race-selector-main" href="${RA.esc(href)}">
+                      <span class="race-selector-no">${RA.esc(raceNo)}</span>
+                      <span class="race-selector-name">${RA.esc(title)}</span>
+                    </a>
+                    <div class="race-selector-links" aria-label="関連ページ">
+                      <a href="${RA.esc(pastHref)}" title="過去走比較">過</a>
+                      <a href="${RA.esc(bettingHref)}" title="買い目作成">買</a>
+                    </div>
+                  </div>`;
+              }).join('')}
             </div>
-            ${predictionBlock(detail)}
-          </div>
-          <div class="race-row__actions">
-            <a class="action-link action-link--primary" href="${RA.esc(buildUrl('race', race.race_id, detail.race_date))}">出走馬一覧</a>
-            <a class="action-link" href="${RA.esc(buildUrl('past', race.race_id, detail.race_date))}">過去走比較</a>
-            <a class="action-link" href="${RA.esc(buildUrl('betting', race.race_id, detail.race_date))}">買い目作成</a>
-          </div>
-        </article>`;
-    }).join('');
+          </section>
+        `).join('')}
+      </div>`;
   }
 
   function bindFilters() {
