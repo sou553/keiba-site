@@ -16,7 +16,7 @@
   "summary": {
     "horse_count": 16,
     "past_available_count": 16,
-    "odds_available": false,
+    "odds_available": true,
     "top_ai": [
       {
         "umaban": 16,
@@ -24,8 +24,8 @@
         "pred_order": 1,
         "p_win": 0.301093,
         "p_top3": 0.72032,
-        "tansho_odds": null,
-        "popularity": null
+        "tansho_odds": 9.6,
+        "popularity": 7
       },
       {
         "umaban": 12,
@@ -33,8 +33,8 @@
         "pred_order": 2,
         "p_win": 0.163034,
         "p_top3": 0.49677,
-        "tansho_odds": null,
-        "popularity": null
+        "tansho_odds": 6.9,
+        "popularity": 3
       },
       {
         "umaban": 15,
@@ -42,8 +42,8 @@
         "pred_order": 4,
         "p_win": 0.121357,
         "p_top3": 0.394186,
-        "tansho_odds": null,
-        "popularity": null
+        "tansho_odds": 7.9,
+        "popularity": 5
       },
       {
         "umaban": 8,
@@ -51,17 +51,17 @@
         "pred_order": 5,
         "p_win": 0.085722,
         "p_top3": 0.292319,
-        "tansho_odds": null,
-        "popularity": null
+        "tansho_odds": 6.5,
+        "popularity": 2
       },
       {
-        "umaban": 10,
-        "horse_name": "マグネシアブリック",
-        "pred_order": 6,
-        "p_win": 0.068436,
-        "p_top3": 0.238505,
-        "tansho_odds": null,
-        "popularity": null
+        "umaban": 4,
+        "horse_name": "ベルタソ",
+        "pred_order": 3,
+        "p_win": 0.162375,
+        "p_top3": 0.495292,
+        "tansho_odds": 6.1,
+        "popularity": 1
       }
     ]
   },
@@ -97,8 +97,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 34.9,
+      "popularity": 12,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -918,16 +918,16 @@
       "_bet_eval": {
         "ai_rank": 7.0,
         "course_rank": 11.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 12.0,
+        "odds": 34.9,
         "ai_points": 2.0,
         "course_points": 0.0,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -2.0,
+        "odds_points": -2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 2.0,
+        "total": -2.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -965,8 +965,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 9.4,
+      "popularity": 6,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -1534,16 +1534,16 @@
       "_bet_eval": {
         "ai_rank": 9.0,
         "course_rank": 15.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 6.0,
+        "odds": 9.4,
         "ai_points": 0.0,
         "course_points": 0.0,
         "pop_points": 0.0,
-        "odds_points": 0.0,
+        "odds_points": 2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": -2.0,
         "danger_penalty": 0.0,
-        "total": -2.0,
+        "total": 0.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -1581,8 +1581,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 238.6,
+      "popularity": 15,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -2038,16 +2038,16 @@
       "_bet_eval": {
         "ai_rank": 15.0,
         "course_rank": 14.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 15.0,
+        "odds": 238.6,
         "ai_points": 0.0,
         "course_points": 0.0,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -2.0,
+        "odds_points": -2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 0.0,
+        "total": -4.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -2085,8 +2085,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 6.1,
+      "popularity": 1,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -2850,16 +2850,16 @@
       "_bet_eval": {
         "ai_rank": 3.0,
         "course_rank": 9.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 1.0,
+        "odds": 6.1,
         "ai_points": 6.0,
         "course_points": 0.0,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": 3.0,
+        "odds_points": 2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": -2.0,
         "danger_penalty": 0.0,
-        "total": 4.0,
+        "total": 9.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": true,
@@ -2897,8 +2897,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 14.8,
+      "popularity": 9,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -3718,12 +3718,12 @@
       "_bet_eval": {
         "ai_rank": 11.0,
         "course_rank": 12.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 9.0,
+        "odds": 14.8,
         "ai_points": 0.0,
         "course_points": 0.0,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -1.0,
+        "odds_points": 1.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
@@ -3765,8 +3765,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 17.7,
+      "popularity": 10,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -4334,12 +4334,12 @@
       "_bet_eval": {
         "ai_rank": 13.0,
         "course_rank": 16.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 10.0,
+        "odds": 17.7,
         "ai_points": 0.0,
         "course_points": 0.0,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -1.0,
+        "odds_points": 1.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
@@ -4381,8 +4381,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 45.4,
+      "popularity": 13,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -4782,19 +4782,19 @@
       "_bet_eval": {
         "ai_rank": 12.0,
         "course_rank": 6.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 13.0,
+        "odds": 45.4,
         "ai_points": 0.0,
         "course_points": 3.5999999999999996,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -2.0,
+        "odds_points": -2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": -2.0,
         "danger_penalty": 0.0,
-        "total": 1.6,
+        "total": -2.4,
         "strong_axis": false,
         "semi_axis": false,
-        "himo": true,
+        "himo": false,
         "danger_popular": false
       }
     },
@@ -4829,8 +4829,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 6.5,
+      "popularity": 2,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -5510,16 +5510,16 @@
       "_bet_eval": {
         "ai_rank": 5.0,
         "course_rank": 4.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 2.0,
+        "odds": 6.5,
         "ai_points": 4.0,
         "course_points": 6.0,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": 2.0,
+        "odds_points": 2.0,
         "agreement_bonus": 2.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 12.0,
+        "total": 16.0,
         "strong_axis": false,
         "semi_axis": true,
         "himo": true,
@@ -5557,8 +5557,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 28.2,
+      "popularity": 11,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -5986,16 +5986,16 @@
       "_bet_eval": {
         "ai_rank": 8.0,
         "course_rank": 8.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 11.0,
+        "odds": 28.2,
         "ai_points": 1.0,
         "course_points": 1.2,
-        "pop_points": 0.0,
+        "pop_points": -2.0,
         "odds_points": 0.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 2.2,
+        "total": 0.2,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -6033,8 +6033,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 7.1,
+      "popularity": 4,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -6406,16 +6406,16 @@
       "_bet_eval": {
         "ai_rank": 6.0,
         "course_rank": 7.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 4.0,
+        "odds": 7.1,
         "ai_points": 3.0,
         "course_points": 2.4,
         "pop_points": 0.0,
-        "odds_points": 0.0,
+        "odds_points": 2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 5.4,
+        "total": 7.4,
         "strong_axis": false,
         "semi_axis": false,
         "himo": true,
@@ -6453,8 +6453,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 55,
+      "popularity": 14,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -6854,16 +6854,16 @@
       "_bet_eval": {
         "ai_rank": 14.0,
         "course_rank": 13.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 14.0,
+        "odds": 55.0,
         "ai_points": 0.0,
         "course_points": 0.0,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -2.0,
+        "odds_points": -2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 0.0,
+        "total": -4.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -6901,8 +6901,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 6.9,
+      "popularity": 3,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -7218,16 +7218,16 @@
       "_bet_eval": {
         "ai_rank": 2.0,
         "course_rank": 3.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 3.0,
+        "odds": 6.9,
         "ai_points": 7.0,
         "course_points": 7.199999999999999,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": 1.0,
+        "odds_points": 2.0,
         "agreement_bonus": 4.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 18.2,
+        "total": 21.2,
         "strong_axis": true,
         "semi_axis": true,
         "himo": true,
@@ -7265,8 +7265,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 13.5,
+      "popularity": 8,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -7806,12 +7806,12 @@
       "_bet_eval": {
         "ai_rank": 10.0,
         "course_rank": 10.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 8.0,
+        "odds": 13.5,
         "ai_points": 0.0,
         "course_points": 0.0,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -1.0,
+        "odds_points": 1.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
@@ -7853,8 +7853,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 262.1,
+      "popularity": 16,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -8870,19 +8870,19 @@
       "_bet_eval": {
         "ai_rank": 16.0,
         "course_rank": 5.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 16.0,
+        "odds": 262.1,
         "ai_points": 0.0,
         "course_points": 4.8,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -2.0,
+        "odds_points": -2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": -2.0,
         "danger_penalty": 0.0,
-        "total": 2.8,
+        "total": -1.2,
         "strong_axis": false,
         "semi_axis": false,
-        "himo": true,
+        "himo": false,
         "danger_popular": false
       }
     },
@@ -8917,8 +8917,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 7.9,
+      "popularity": 5,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -9346,16 +9346,16 @@
       "_bet_eval": {
         "ai_rank": 4.0,
         "course_rank": 1.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 5.0,
+        "odds": 7.9,
         "ai_points": 5.0,
         "course_points": 9.6,
         "pop_points": 0.0,
-        "odds_points": 0.0,
+        "odds_points": 2.0,
         "agreement_bonus": 2.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 16.6,
+        "total": 18.6,
         "strong_axis": false,
         "semi_axis": true,
         "himo": true,
@@ -9393,8 +9393,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 9.6,
+      "popularity": 7,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -10214,17 +10214,17 @@
       "_bet_eval": {
         "ai_rank": 1.0,
         "course_rank": 2.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 7.0,
+        "odds": 9.6,
         "ai_points": 8.0,
         "course_points": 8.4,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -1.0,
+        "odds_points": 2.0,
         "agreement_bonus": 4.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 20.4,
-        "strong_axis": true,
+        "total": 21.4,
+        "strong_axis": false,
         "semi_axis": true,
         "himo": true,
         "danger_popular": false
@@ -10240,46 +10240,7 @@
       "三連複"
     ],
     "tickets": {
-      "tansho": [
-        {
-          "bet_type": "単勝",
-          "numbers": "16",
-          "horses": [
-            16
-          ],
-          "horse_names": [
-            "ミエノブラボー"
-          ],
-          "stake_yen": 100,
-          "score": 20.4,
-          "source": "auto",
-          "reason": "単勝候補1 / AI1位 / 適性2位 / 強軸 / 総合20.4",
-          "tags": [
-            "自動",
-            "単勝",
-            "強軸"
-          ]
-        },
-        {
-          "bet_type": "単勝",
-          "numbers": "12",
-          "horses": [
-            12
-          ],
-          "horse_names": [
-            "ウインマスカレード"
-          ],
-          "stake_yen": 100,
-          "score": 18.2,
-          "source": "auto",
-          "reason": "単勝候補2 / AI2位 / 適性3位 / 強軸 / 総合18.2",
-          "tags": [
-            "自動",
-            "単勝",
-            "強軸"
-          ]
-        }
-      ],
+      "tansho": [],
       "umaren": [
         {
           "bet_type": "馬連",
@@ -10289,35 +10250,13 @@
             16
           ],
           "horse_names": [
-            "ミエノブラボー",
-            "ウインマスカレード"
+            "ウインマスカレード",
+            "ミエノブラボー"
           ],
           "stake_yen": 100,
-          "score": 40.6,
+          "score": 44.6,
           "source": "auto",
-          "reason": "1頭軸流し / 軸16(AI1位 / 適性2位 / 強軸 / 総合20.4) → 相手12,15,8,10",
-          "tags": [
-            "自動",
-            "馬連",
-            "1頭軸流し",
-            "強軸"
-          ]
-        },
-        {
-          "bet_type": "馬連",
-          "numbers": "15-16",
-          "horses": [
-            15,
-            16
-          ],
-          "horse_names": [
-            "ミエノブラボー",
-            "ダノンゴーイチ"
-          ],
-          "stake_yen": 100,
-          "score": 39.0,
-          "source": "auto",
-          "reason": "1頭軸流し / 軸16(AI1位 / 適性2位 / 強軸 / 総合20.4) → 相手12,15,8,10",
+          "reason": "1頭軸流し / 軸12(AI2位 / 適性3位 / 3人気 / 単勝6.9倍 / 強軸 / 総合21.2) → 相手16,15,8,4",
           "tags": [
             "自動",
             "馬連",
@@ -10337,7 +10276,29 @@
             "ダノンゴーイチ"
           ],
           "stake_yen": 100,
-          "score": 36.8,
+          "score": 41.8,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸12(AI2位 / 適性3位 / 3人気 / 単勝6.9倍 / 強軸 / 総合21.2) → 相手16,15,8,4",
+          "tags": [
+            "自動",
+            "馬連",
+            "1頭軸流し",
+            "強軸"
+          ]
+        },
+        {
+          "bet_type": "馬連",
+          "numbers": "15-16",
+          "horses": [
+            15,
+            16
+          ],
+          "horse_names": [
+            "ミエノブラボー",
+            "ダノンゴーイチ"
+          ],
+          "stake_yen": 100,
+          "score": 41.0,
           "source": "auto",
           "reason": "上位拮抗の保険1点",
           "tags": [
@@ -10348,19 +10309,19 @@
         },
         {
           "bet_type": "馬連",
-          "numbers": "8-16",
+          "numbers": "8-12",
           "horses": [
             8,
-            16
+            12
           ],
           "horse_names": [
-            "ミエノブラボー",
+            "ウインマスカレード",
             "ブラックティンカー"
           ],
           "stake_yen": 100,
-          "score": 34.4,
+          "score": 39.2,
           "source": "auto",
-          "reason": "1頭軸流し / 軸16(AI1位 / 適性2位 / 強軸 / 総合20.4) → 相手12,15,8,10",
+          "reason": "1頭軸流し / 軸12(AI2位 / 適性3位 / 3人気 / 単勝6.9倍 / 強軸 / 総合21.2) → 相手16,15,8,4",
           "tags": [
             "自動",
             "馬連",
@@ -10370,19 +10331,19 @@
         },
         {
           "bet_type": "馬連",
-          "numbers": "10-16",
+          "numbers": "4-12",
           "horses": [
-            10,
-            16
+            4,
+            12
           ],
           "horse_names": [
-            "ミエノブラボー",
-            "マグネシアブリック"
+            "ウインマスカレード",
+            "ベルタソ"
           ],
           "stake_yen": 100,
-          "score": 25.8,
+          "score": 30.2,
           "source": "auto",
-          "reason": "1頭軸流し / 軸16(AI1位 / 適性2位 / 強軸 / 総合20.4) → 相手12,15,8,10",
+          "reason": "1頭軸流し / 軸12(AI2位 / 適性3位 / 3人気 / 単勝6.9倍 / 強軸 / 総合21.2) → 相手16,15,8,4",
           "tags": [
             "自動",
             "馬連",
@@ -10406,13 +10367,13 @@
             "ダノンゴーイチ"
           ],
           "stake_yen": 100,
-          "score": 57.2,
+          "score": 63.2,
           "source": "auto",
-          "reason": "2頭軸流し / 軸16-12 → 相手15,8,10",
+          "reason": "1頭軸流し / 軸16 → 相手12,15,8,4",
           "tags": [
             "自動",
             "三連複",
-            "2頭軸流し"
+            "1頭軸流し"
           ]
         },
         {
@@ -10429,36 +10390,105 @@
             "ブラックティンカー"
           ],
           "stake_yen": 100,
-          "score": 52.6,
+          "score": 60.6,
           "source": "auto",
-          "reason": "2頭軸流し / 軸16-12 → 相手15,8,10",
+          "reason": "1頭軸流し / 軸16 → 相手12,15,8,4",
           "tags": [
             "自動",
             "三連複",
-            "2頭軸流し"
+            "1頭軸流し"
           ]
         },
         {
           "bet_type": "三連複",
-          "numbers": "10-12-16",
+          "numbers": "8-15-16",
           "horses": [
-            10,
+            8,
+            15,
+            16
+          ],
+          "horse_names": [
+            "ミエノブラボー",
+            "ダノンゴーイチ",
+            "ブラックティンカー"
+          ],
+          "stake_yen": 100,
+          "score": 57.0,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸16 → 相手12,15,8,4",
+          "tags": [
+            "自動",
+            "三連複",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "4-12-16",
+          "horses": [
+            4,
             12,
             16
           ],
           "horse_names": [
             "ミエノブラボー",
             "ウインマスカレード",
-            "マグネシアブリック"
+            "ベルタソ"
           ],
           "stake_yen": 100,
-          "score": 46.0,
+          "score": 53.6,
           "source": "auto",
-          "reason": "2頭軸流し / 軸16-12 → 相手15,8,10",
+          "reason": "1頭軸流し / 軸16 → 相手12,15,8,4",
           "tags": [
             "自動",
             "三連複",
-            "2頭軸流し"
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "4-15-16",
+          "horses": [
+            4,
+            15,
+            16
+          ],
+          "horse_names": [
+            "ミエノブラボー",
+            "ダノンゴーイチ",
+            "ベルタソ"
+          ],
+          "stake_yen": 100,
+          "score": 50.0,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸16 → 相手12,15,8,4",
+          "tags": [
+            "自動",
+            "三連複",
+            "1頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "4-8-16",
+          "horses": [
+            4,
+            8,
+            16
+          ],
+          "horse_names": [
+            "ミエノブラボー",
+            "ブラックティンカー",
+            "ベルタソ"
+          ],
+          "stake_yen": 100,
+          "score": 47.4,
+          "source": "auto",
+          "reason": "1頭軸流し / 軸16 → 相手12,15,8,4",
+          "tags": [
+            "自動",
+            "三連複",
+            "1頭軸流し"
           ]
         }
       ]

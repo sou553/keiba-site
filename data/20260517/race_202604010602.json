@@ -16,7 +16,7 @@
   "summary": {
     "horse_count": 9,
     "past_available_count": 9,
-    "odds_available": false,
+    "odds_available": true,
     "top_ai": [
       {
         "umaban": 6,
@@ -24,8 +24,8 @@
         "pred_order": 1,
         "p_win": 0.460596,
         "p_top3": 0.907646,
-        "tansho_odds": null,
-        "popularity": null
+        "tansho_odds": 1.9,
+        "popularity": 1
       },
       {
         "umaban": 7,
@@ -33,8 +33,8 @@
         "pred_order": 2,
         "p_win": 0.249485,
         "p_top3": 0.761234,
-        "tansho_odds": null,
-        "popularity": null
+        "tansho_odds": 2.9,
+        "popularity": 2
       },
       {
         "umaban": 9,
@@ -42,17 +42,8 @@
         "pred_order": 3,
         "p_win": 0.084056,
         "p_top3": 0.372832,
-        "tansho_odds": null,
-        "popularity": null
-      },
-      {
-        "umaban": 2,
-        "horse_name": "パイザナンバー",
-        "pred_order": 5,
-        "p_win": 0.052765,
-        "p_top3": 0.24381,
-        "tansho_odds": null,
-        "popularity": null
+        "tansho_odds": 22.8,
+        "popularity": 5
       },
       {
         "umaban": 3,
@@ -60,8 +51,17 @@
         "pred_order": 4,
         "p_win": 0.057521,
         "p_top3": 0.264232,
-        "tansho_odds": null,
-        "popularity": null
+        "tansho_odds": 18.1,
+        "popularity": 4
+      },
+      {
+        "umaban": 2,
+        "horse_name": "パイザナンバー",
+        "pred_order": 5,
+        "p_win": 0.052765,
+        "p_top3": 0.24381,
+        "tansho_odds": 28.8,
+        "popularity": 6
       }
     ]
   },
@@ -97,8 +97,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 4.8,
+      "popularity": 3,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -526,16 +526,16 @@
       "_bet_eval": {
         "ai_rank": 6.0,
         "course_rank": 7.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 3.0,
+        "odds": 4.8,
         "ai_points": 3.0,
         "course_points": 2.4,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": 1.0,
+        "odds_points": 3.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 5.4,
+        "total": 9.4,
         "strong_axis": false,
         "semi_axis": false,
         "himo": true,
@@ -573,8 +573,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 28.8,
+      "popularity": 6,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -750,8 +750,8 @@
       "_bet_eval": {
         "ai_rank": 5.0,
         "course_rank": 4.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 6.0,
+        "odds": 28.8,
         "ai_points": 4.0,
         "course_points": 6.0,
         "pop_points": 0.0,
@@ -797,8 +797,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 18.1,
+      "popularity": 4,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -946,16 +946,16 @@
       "_bet_eval": {
         "ai_rank": 4.0,
         "course_rank": 5.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 4.0,
+        "odds": 18.1,
         "ai_points": 5.0,
         "course_points": 4.8,
         "pop_points": 0.0,
-        "odds_points": 0.0,
+        "odds_points": 1.0,
         "agreement_bonus": 2.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 11.8,
+        "total": 12.8,
         "strong_axis": false,
         "semi_axis": true,
         "himo": true,
@@ -993,8 +993,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 209.8,
+      "popularity": 9,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -1366,16 +1366,16 @@
       "_bet_eval": {
         "ai_rank": 9.0,
         "course_rank": 8.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 9.0,
+        "odds": 209.8,
         "ai_points": 0.0,
         "course_points": 1.2,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -1.0,
+        "odds_points": -2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 1.2,
+        "total": -1.8,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -1413,8 +1413,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 127.1,
+      "popularity": 8,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -1618,19 +1618,19 @@
       "_bet_eval": {
         "ai_rank": 8.0,
         "course_rank": 6.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 8.0,
+        "odds": 127.1,
         "ai_points": 1.0,
         "course_points": 3.5999999999999996,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -1.0,
+        "odds_points": -2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 4.6,
+        "total": 1.6,
         "strong_axis": false,
         "semi_axis": false,
-        "himo": true,
+        "himo": false,
         "danger_popular": false
       }
     },
@@ -1665,8 +1665,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 1.9,
+      "popularity": 1,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -1898,16 +1898,16 @@
       "_bet_eval": {
         "ai_rank": 1.0,
         "course_rank": 1.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 1.0,
+        "odds": 1.9,
         "ai_points": 8.0,
         "course_points": 9.6,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": 3.0,
+        "odds_points": 3.0,
         "agreement_bonus": 4.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 21.6,
+        "total": 27.6,
         "strong_axis": true,
         "semi_axis": true,
         "himo": true,
@@ -1945,8 +1945,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 2.9,
+      "popularity": 2,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -2318,16 +2318,16 @@
       "_bet_eval": {
         "ai_rank": 2.0,
         "course_rank": 2.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 2.0,
+        "odds": 2.9,
         "ai_points": 7.0,
         "course_points": 8.4,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": 2.0,
+        "odds_points": 3.0,
         "agreement_bonus": 4.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 19.4,
+        "total": 24.4,
         "strong_axis": true,
         "semi_axis": true,
         "himo": true,
@@ -2365,8 +2365,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 59,
+      "popularity": 7,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -2542,16 +2542,16 @@
       "_bet_eval": {
         "ai_rank": 7.0,
         "course_rank": 9.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 7.0,
+        "odds": 59.0,
         "ai_points": 2.0,
         "course_points": 0.0,
-        "pop_points": 0.0,
-        "odds_points": 0.0,
+        "pop_points": -1.0,
+        "odds_points": -2.0,
         "agreement_bonus": 0.0,
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
-        "total": 2.0,
+        "total": -1.0,
         "strong_axis": false,
         "semi_axis": false,
         "himo": false,
@@ -2589,8 +2589,8 @@
       "margin": null,
       "passing": null,
       "last3f": null,
-      "tansho_odds": null,
-      "popularity": null,
+      "tansho_odds": 22.8,
+      "popularity": 5,
       "horse_weight": null,
       "trainer": null,
       "owner": null,
@@ -2794,8 +2794,8 @@
       "_bet_eval": {
         "ai_rank": 3.0,
         "course_rank": 3.0,
-        "popularity": null,
-        "odds": null,
+        "popularity": 5.0,
+        "odds": 22.8,
         "ai_points": 6.0,
         "course_points": 7.199999999999999,
         "pop_points": 0.0,
@@ -2804,7 +2804,7 @@
         "mismatch_penalty": 0.0,
         "danger_penalty": 0.0,
         "total": 17.2,
-        "strong_axis": true,
+        "strong_axis": false,
         "semi_axis": true,
         "himo": true,
         "danger_popular": false
@@ -2831,28 +2831,9 @@
             "エタンセル"
           ],
           "stake_yen": 100,
-          "score": 21.6,
+          "score": 27.6,
           "source": "auto",
-          "reason": "単勝候補1 / AI1位 / 適性1位 / 強軸 / 総合21.6",
-          "tags": [
-            "自動",
-            "単勝",
-            "強軸"
-          ]
-        },
-        {
-          "bet_type": "単勝",
-          "numbers": "7",
-          "horses": [
-            7
-          ],
-          "horse_names": [
-            "アデルフィー"
-          ],
-          "stake_yen": 100,
-          "score": 19.4,
-          "source": "auto",
-          "reason": "単勝候補2 / AI2位 / 適性2位 / 強軸 / 総合19.4",
+          "reason": "単勝候補1 / AI1位 / 適性1位 / 1人気 / 単勝1.9倍 / 強軸 / 総合27.6",
           "tags": [
             "自動",
             "単勝",
@@ -2873,52 +2854,9 @@
             "カフジマリボー"
           ],
           "stake_yen": 100,
-          "score": 40.8,
+          "score": 46.8,
           "source": "auto",
-          "reason": "1頭軸流し / 軸6(AI1位 / 適性1位 / 強軸 / 総合21.6) → 相手7,9,2,3",
-          "tags": [
-            "自動",
-            "馬連",
-            "1頭軸流し",
-            "強軸"
-          ]
-        },
-        {
-          "bet_type": "馬連",
-          "numbers": "7-9",
-          "horses": [
-            7,
-            9
-          ],
-          "horse_names": [
-            "アデルフィー",
-            "カフジマリボー"
-          ],
-          "stake_yen": 100,
-          "score": 38.6,
-          "source": "auto",
-          "reason": "上位拮抗の保険1点",
-          "tags": [
-            "自動",
-            "馬連",
-            "保険"
-          ]
-        },
-        {
-          "bet_type": "馬連",
-          "numbers": "2-6",
-          "horses": [
-            2,
-            6
-          ],
-          "horse_names": [
-            "エタンセル",
-            "パイザナンバー"
-          ],
-          "stake_yen": 100,
-          "score": 35.6,
-          "source": "auto",
-          "reason": "1頭軸流し / 軸6(AI1位 / 適性1位 / 強軸 / 総合21.6) → 相手7,9,2,3",
+          "reason": "1頭軸流し / 軸6(AI1位 / 適性1位 / 1人気 / 単勝1.9倍 / 強軸 / 総合27.6) → 相手7,9,3",
           "tags": [
             "自動",
             "馬連",
@@ -3026,32 +2964,9 @@
             "カフジマリボー"
           ],
           "stake_yen": 100,
-          "score": 60.2,
+          "score": 71.2,
           "source": "auto",
-          "reason": "2頭軸流し / 軸6-7 → 相手9,2,3",
-          "tags": [
-            "自動",
-            "三連複",
-            "2頭軸流し"
-          ]
-        },
-        {
-          "bet_type": "三連複",
-          "numbers": "2-6-7",
-          "horses": [
-            2,
-            6,
-            7
-          ],
-          "horse_names": [
-            "エタンセル",
-            "アデルフィー",
-            "パイザナンバー"
-          ],
-          "stake_yen": 100,
-          "score": 55.0,
-          "source": "auto",
-          "reason": "2頭軸流し / 軸6-7 → 相手9,2,3",
+          "reason": "2頭軸流し / 軸6-7 → 相手9,3,2",
           "tags": [
             "自動",
             "三連複",
@@ -3072,9 +2987,32 @@
             "クロームクロス"
           ],
           "stake_yen": 100,
-          "score": 54.8,
+          "score": 66.8,
           "source": "auto",
-          "reason": "2頭軸流し / 軸6-7 → 相手9,2,3",
+          "reason": "2頭軸流し / 軸6-7 → 相手9,3,2",
+          "tags": [
+            "自動",
+            "三連複",
+            "2頭軸流し"
+          ]
+        },
+        {
+          "bet_type": "三連複",
+          "numbers": "2-6-7",
+          "horses": [
+            2,
+            6,
+            7
+          ],
+          "horse_names": [
+            "エタンセル",
+            "アデルフィー",
+            "パイザナンバー"
+          ],
+          "stake_yen": 100,
+          "score": 66.0,
+          "source": "auto",
+          "reason": "2頭軸流し / 軸6-7 → 相手9,3,2",
           "tags": [
             "自動",
             "三連複",
