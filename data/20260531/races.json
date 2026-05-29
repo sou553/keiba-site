@@ -1,0 +1,65 @@
+{
+  "race_date": "20260531",
+  "race_count": 1,
+  "races": [
+    {
+      "race_id": "202605021211",
+      "race_no": 11,
+      "race_name": "日本ダービー",
+      "course": "東京",
+      "course_name": "東京 芝2400m 左回り",
+      "distance": 2400,
+      "surface": "芝",
+      "going": null,
+      "headcount": 18,
+      "top_ai": [
+        {
+          "umaban": 9,
+          "horse_name": "アウダーシア",
+          "pred_order": 1,
+          "p_win": 0.435086,
+          "p_top3": 0.877655,
+          "tansho_odds": 12.1,
+          "popularity": 5
+        },
+        {
+          "umaban": 6,
+          "horse_name": "コンジェスタス",
+          "pred_order": 4,
+          "p_win": 0.075406,
+          "p_top3": 0.312108,
+          "tansho_odds": 14.4,
+          "popularity": 6
+        },
+        {
+          "umaban": 11,
+          "horse_name": "リアライズシリウス",
+          "pred_order": 6,
+          "p_win": 0.026891,
+          "p_top3": 0.11811,
+          "tansho_odds": 5.5,
+          "popularity": 2
+        },
+        {
+          "umaban": 14,
+          "horse_name": "ゴーイントゥスカイ",
+          "pred_order": 8,
+          "p_win": 0.02282,
+          "p_top3": 0.100679,
+          "tansho_odds": 8.6,
+          "popularity": 3
+        },
+        {
+          "umaban": 17,
+          "horse_name": "ロブチェン",
+          "pred_order": 5,
+          "p_win": 0.047886,
+          "p_top3": 0.205275,
+          "tansho_odds": 3,
+          "popularity": 1
+        }
+      ],
+      "detail_path": "20260531/race_202605021211.json"
+    }
+  ]
+}
