@@ -1,0 +1,65 @@
+{
+  "race_date": "20260607",
+  "race_count": 1,
+  "races": [
+    {
+      "race_id": "202605030211",
+      "race_no": 11,
+      "race_name": "安田記念",
+      "course": "東京",
+      "course_name": "東京 芝1600m 左回り",
+      "distance": 1600,
+      "surface": "芝",
+      "going": null,
+      "headcount": 17,
+      "top_ai": [
+        {
+          "umaban": 14,
+          "horse_name": "ガイアフォース",
+          "pred_order": 4,
+          "p_win": 0.109249,
+          "p_top3": 0.338645,
+          "tansho_odds": 1,
+          "popularity": 1
+        },
+        {
+          "umaban": 11,
+          "horse_name": "ワールズエンド",
+          "pred_order": 3,
+          "p_win": 0.140257,
+          "p_top3": 0.416323,
+          "tansho_odds": 999.9,
+          "popularity": 12
+        },
+        {
+          "umaban": 6,
+          "horse_name": "ステレンボッシュ",
+          "pred_order": 2,
+          "p_win": 0.179795,
+          "p_top3": 0.502665,
+          "tansho_odds": 999.9,
+          "popularity": 8
+        },
+        {
+          "umaban": 10,
+          "horse_name": "ルクソールカフェ",
+          "pred_order": 8,
+          "p_win": 0.056463,
+          "p_top3": 0.186984,
+          "tansho_odds": 999.9,
+          "popularity": 11
+        },
+        {
+          "umaban": 17,
+          "horse_name": "トロヴァトーレ",
+          "pred_order": 1,
+          "p_win": 0.215797,
+          "p_top3": 0.569467,
+          "tansho_odds": 999.9,
+          "popularity": 17
+        }
+      ],
+      "detail_path": "20260607/race_202605030211.json"
+    }
+  ]
+}
