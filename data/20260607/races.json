@@ -1,7 +1,597 @@
 {
   "race_date": "20260607",
-  "race_count": 1,
+  "race_count": 24,
   "races": [
+    {
+      "race_id": "202605030201",
+      "race_no": 1,
+      "race_name": "3歳未勝利",
+      "course": "東京",
+      "course_name": "東京 ダート1400m 左回り",
+      "distance": 1400,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 9,
+          "horse_name": "ルクリーシア",
+          "pred_order": 3,
+          "p_win": 0.201041,
+          "p_top3": 0.58294,
+          "tansho_odds": 7.1,
+          "popularity": 5
+        },
+        {
+          "umaban": 11,
+          "horse_name": "テンハートビート",
+          "pred_order": 2,
+          "p_win": 0.220765,
+          "p_top3": 0.617846,
+          "tansho_odds": 6.2,
+          "popularity": 3
+        },
+        {
+          "umaban": 5,
+          "horse_name": "カーボフリオ",
+          "pred_order": 5,
+          "p_win": 0.071061,
+          "p_top3": 0.250209,
+          "tansho_odds": 4.7,
+          "popularity": 1
+        },
+        {
+          "umaban": 7,
+          "horse_name": "エリースノー",
+          "pred_order": 1,
+          "p_win": 0.271902,
+          "p_top3": 0.693183,
+          "tansho_odds": 5.9,
+          "popularity": 2
+        },
+        {
+          "umaban": 12,
+          "horse_name": "ロンバスブレス",
+          "pred_order": 7,
+          "p_win": 0.026022,
+          "p_top3": 0.096469,
+          "tansho_odds": 6.9,
+          "popularity": 4
+        }
+      ],
+      "detail_path": "20260607/race_202605030201.json"
+    },
+    {
+      "race_id": "202605030202",
+      "race_no": 2,
+      "race_name": "3歳未勝利",
+      "course": "東京",
+      "course_name": "東京 ダート2100m 左回り",
+      "distance": 2100,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 9,
+          "horse_name": "ブルーフレア",
+          "pred_order": 2,
+          "p_win": 0.336468,
+          "p_top3": 0.856722,
+          "tansho_odds": 3.8,
+          "popularity": 2
+        },
+        {
+          "umaban": 7,
+          "horse_name": "ネイティヴプライド",
+          "pred_order": 4,
+          "p_win": 0.035914,
+          "p_top3": 0.173154,
+          "tansho_odds": 13.3,
+          "popularity": 5
+        },
+        {
+          "umaban": 15,
+          "horse_name": "ブラックパロット",
+          "pred_order": 5,
+          "p_win": 0.025904,
+          "p_top3": 0.126181,
+          "tansho_odds": 10.8,
+          "popularity": 4
+        },
+        {
+          "umaban": 11,
+          "horse_name": "ワンダーブリッツ",
+          "pred_order": 1,
+          "p_win": 0.39313,
+          "p_top3": 0.888836,
+          "tansho_odds": 3.3,
+          "popularity": 1
+        },
+        {
+          "umaban": 1,
+          "horse_name": "クリムゾンリーフ",
+          "pred_order": 3,
+          "p_win": 0.122447,
+          "p_top3": 0.530238,
+          "tansho_odds": 5,
+          "popularity": 3
+        }
+      ],
+      "detail_path": "20260607/race_202605030202.json"
+    },
+    {
+      "race_id": "202605030203",
+      "race_no": 3,
+      "race_name": "3歳未勝利",
+      "course": "東京",
+      "course_name": "東京 ダート1600m 左回り",
+      "distance": 1600,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 7,
+          "horse_name": "ウインビギニング",
+          "pred_order": 1,
+          "p_win": 0.739102,
+          "p_top3": 0.990878,
+          "tansho_odds": 1.6,
+          "popularity": 1
+        },
+        {
+          "umaban": 16,
+          "horse_name": "エターナルホープ",
+          "pred_order": 2,
+          "p_win": 0.107356,
+          "p_top3": 0.692218,
+          "tansho_odds": 4.1,
+          "popularity": 2
+        },
+        {
+          "umaban": 6,
+          "horse_name": "クワッドマリニン",
+          "pred_order": 5,
+          "p_win": 0.024414,
+          "p_top3": 0.213864,
+          "tansho_odds": 29.7,
+          "popularity": 6
+        },
+        {
+          "umaban": 11,
+          "horse_name": "ウェスケンジントン",
+          "pred_order": 4,
+          "p_win": 0.024928,
+          "p_top3": 0.218135,
+          "tansho_odds": 15,
+          "popularity": 4
+        },
+        {
+          "umaban": 1,
+          "horse_name": "レッドリファインド",
+          "pred_order": 3,
+          "p_win": 0.057608,
+          "p_top3": 0.463997,
+          "tansho_odds": 18.8,
+          "popularity": 5
+        }
+      ],
+      "detail_path": "20260607/race_202605030203.json"
+    },
+    {
+      "race_id": "202605030204",
+      "race_no": 4,
+      "race_name": "3歳未勝利",
+      "course": "東京",
+      "course_name": "東京 芝1600m 左回り",
+      "distance": 1600,
+      "surface": "芝",
+      "going": null,
+      "headcount": 18,
+      "top_ai": [
+        {
+          "umaban": 16,
+          "horse_name": "バンオンタイム",
+          "pred_order": 2,
+          "p_win": 0.234266,
+          "p_top3": 0.664455,
+          "tansho_odds": 3.7,
+          "popularity": 1
+        },
+        {
+          "umaban": 15,
+          "horse_name": "クールフィデル",
+          "pred_order": 3,
+          "p_win": 0.172487,
+          "p_top3": 0.550821,
+          "tansho_odds": 5.2,
+          "popularity": 3
+        },
+        {
+          "umaban": 10,
+          "horse_name": "ワイズファミリア",
+          "pred_order": 1,
+          "p_win": 0.332328,
+          "p_top3": 0.780701,
+          "tansho_odds": 4.7,
+          "popularity": 2
+        },
+        {
+          "umaban": 5,
+          "horse_name": "ニシノトップダノン",
+          "pred_order": 5,
+          "p_win": 0.046215,
+          "p_top3": 0.176661,
+          "tansho_odds": 11.6,
+          "popularity": 5
+        },
+        {
+          "umaban": 17,
+          "horse_name": "ルモンテ",
+          "pred_order": 6,
+          "p_win": 0.038872,
+          "p_top3": 0.149832,
+          "tansho_odds": 11.8,
+          "popularity": 6
+        }
+      ],
+      "detail_path": "20260607/race_202605030204.json"
+    },
+    {
+      "race_id": "202605030205",
+      "race_no": 5,
+      "race_name": "2歳新馬",
+      "course": "東京",
+      "course_name": "東京 芝1800m 左回り",
+      "distance": 1800,
+      "surface": "芝",
+      "going": null,
+      "headcount": 10,
+      "top_ai": [
+        {
+          "umaban": 10,
+          "horse_name": "マテンロウアルカナ",
+          "pred_order": 3,
+          "p_win": 0.090356,
+          "p_top3": 0.298738,
+          "tansho_odds": 8,
+          "popularity": 4
+        },
+        {
+          "umaban": 8,
+          "horse_name": "ヴィラーニ",
+          "pred_order": 6,
+          "p_win": 0.070462,
+          "p_top3": 0.238928,
+          "tansho_odds": 4,
+          "popularity": 2
+        },
+        {
+          "umaban": 2,
+          "horse_name": "ジョドレルバンク",
+          "pred_order": 1,
+          "p_win": 0.292954,
+          "p_top3": 0.69756,
+          "tansho_odds": 3.9,
+          "popularity": 1
+        },
+        {
+          "umaban": 7,
+          "horse_name": "シアルナーレ",
+          "pred_order": 2,
+          "p_win": 0.185487,
+          "p_top3": 0.531485,
+          "tansho_odds": 4,
+          "popularity": 3
+        },
+        {
+          "umaban": 1,
+          "horse_name": "セイルトゥグローリ",
+          "pred_order": 5,
+          "p_win": 0.078497,
+          "p_top3": 0.263517,
+          "tansho_odds": 8.3,
+          "popularity": 6
+        }
+      ],
+      "detail_path": "20260607/race_202605030205.json"
+    },
+    {
+      "race_id": "202605030206",
+      "race_no": 6,
+      "race_name": "3歳未勝利",
+      "course": "東京",
+      "course_name": "東京 ダート1300m 左回り",
+      "distance": 1300,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 9,
+          "horse_name": "ヴィスクレス",
+          "pred_order": 2,
+          "p_win": 0.318469,
+          "p_top3": 0.823695,
+          "tansho_odds": 4.7,
+          "popularity": 2
+        },
+        {
+          "umaban": 4,
+          "horse_name": "フェイスリフト",
+          "pred_order": 1,
+          "p_win": 0.396767,
+          "p_top3": 0.874839,
+          "tansho_odds": 2.1,
+          "popularity": 1
+        },
+        {
+          "umaban": 8,
+          "horse_name": "コウソクルリアン",
+          "pred_order": 4,
+          "p_win": 0.070882,
+          "p_top3": 0.315437,
+          "tansho_odds": 8.2,
+          "popularity": 3
+        },
+        {
+          "umaban": 10,
+          "horse_name": "フィールマイプラン",
+          "pred_order": 3,
+          "p_win": 0.074155,
+          "p_top3": 0.328682,
+          "tansho_odds": 10,
+          "popularity": 4
+        },
+        {
+          "umaban": 12,
+          "horse_name": "チェストー",
+          "pred_order": 10,
+          "p_win": 0.008472,
+          "p_top3": 0.040346,
+          "tansho_odds": 15.2,
+          "popularity": 5
+        }
+      ],
+      "detail_path": "20260607/race_202605030206.json"
+    },
+    {
+      "race_id": "202605030207",
+      "race_no": 7,
+      "race_name": "3歳以上1勝クラス",
+      "course": "東京",
+      "course_name": "東京 ダート1400m 左回り",
+      "distance": 1400,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 4,
+          "horse_name": "タイキブリッツェン",
+          "pred_order": 2,
+          "p_win": 0.118252,
+          "p_top3": 0.434914,
+          "tansho_odds": 3.3,
+          "popularity": 1
+        },
+        {
+          "umaban": 14,
+          "horse_name": "シュヴァルツシルト",
+          "pred_order": 3,
+          "p_win": 0.090983,
+          "p_top3": 0.350504,
+          "tansho_odds": 7.9,
+          "popularity": 3
+        },
+        {
+          "umaban": 12,
+          "horse_name": "モティスフォント",
+          "pred_order": 5,
+          "p_win": 0.065585,
+          "p_top3": 0.262477,
+          "tansho_odds": 7.9,
+          "popularity": 4
+        },
+        {
+          "umaban": 9,
+          "horse_name": "フォースミラクル",
+          "pred_order": 1,
+          "p_win": 0.465706,
+          "p_top3": 0.876983,
+          "tansho_odds": 5.3,
+          "popularity": 2
+        },
+        {
+          "umaban": 8,
+          "horse_name": "ベアハンドキャッチ",
+          "pred_order": 4,
+          "p_win": 0.066307,
+          "p_top3": 0.265096,
+          "tansho_odds": 16.7,
+          "popularity": 8
+        }
+      ],
+      "detail_path": "20260607/race_202605030207.json"
+    },
+    {
+      "race_id": "202605030208",
+      "race_no": 8,
+      "race_name": "3歳以上1勝クラス",
+      "course": "東京",
+      "course_name": "東京 芝1600m 左回り",
+      "distance": 1600,
+      "surface": "芝",
+      "going": null,
+      "headcount": 17,
+      "top_ai": [
+        {
+          "umaban": 1,
+          "horse_name": "カズノダイジョウ",
+          "pred_order": 3,
+          "p_win": 0.098513,
+          "p_top3": 0.390373,
+          "tansho_odds": 13.5,
+          "popularity": 5
+        },
+        {
+          "umaban": 17,
+          "horse_name": "ゴールドシーン",
+          "pred_order": 7,
+          "p_win": 0.029215,
+          "p_top3": 0.128381,
+          "tansho_odds": 9.2,
+          "popularity": 3
+        },
+        {
+          "umaban": 12,
+          "horse_name": "ゴディアーモ",
+          "pred_order": 1,
+          "p_win": 0.496933,
+          "p_top3": 0.898338,
+          "tansho_odds": 3.3,
+          "popularity": 1
+        },
+        {
+          "umaban": 8,
+          "horse_name": "タイセイフレッサ",
+          "pred_order": 5,
+          "p_win": 0.052144,
+          "p_top3": 0.222262,
+          "tansho_odds": 4.9,
+          "popularity": 2
+        },
+        {
+          "umaban": 16,
+          "horse_name": "ソニックライン",
+          "pred_order": 2,
+          "p_win": 0.104283,
+          "p_top3": 0.408976,
+          "tansho_odds": 9.8,
+          "popularity": 4
+        }
+      ],
+      "detail_path": "20260607/race_202605030208.json"
+    },
+    {
+      "race_id": "202605030209",
+      "race_no": 9,
+      "race_name": "香港JCT",
+      "course": "東京",
+      "course_name": "東京 芝2000m 左回り",
+      "distance": 2000,
+      "surface": "芝",
+      "going": null,
+      "headcount": 8,
+      "top_ai": [
+        {
+          "umaban": 8,
+          "horse_name": "サラスヴァティー",
+          "pred_order": 1,
+          "p_win": 0.338222,
+          "p_top3": 0.807153,
+          "tansho_odds": 3.9,
+          "popularity": 2
+        },
+        {
+          "umaban": 7,
+          "horse_name": "ビーオンザカバー",
+          "pred_order": 4,
+          "p_win": 0.102401,
+          "p_top3": 0.384475,
+          "tansho_odds": 4.3,
+          "popularity": 3
+        },
+        {
+          "umaban": 6,
+          "horse_name": "ゴーラッキー",
+          "pred_order": 2,
+          "p_win": 0.285999,
+          "p_top3": 0.757016,
+          "tansho_odds": 2,
+          "popularity": 1
+        },
+        {
+          "umaban": 5,
+          "horse_name": "マイネルアレス",
+          "pred_order": 5,
+          "p_win": 0.063051,
+          "p_top3": 0.249006,
+          "tansho_odds": 19.5,
+          "popularity": 6
+        },
+        {
+          "umaban": 1,
+          "horse_name": "コンフォルツァ",
+          "pred_order": 3,
+          "p_win": 0.123912,
+          "p_top3": 0.451139,
+          "tansho_odds": 11.4,
+          "popularity": 4
+        }
+      ],
+      "detail_path": "20260607/race_202605030209.json"
+    },
+    {
+      "race_id": "202605030210",
+      "race_no": 10,
+      "race_name": "八王子特別",
+      "course": "東京",
+      "course_name": "東京 ダート1400m 左回り",
+      "distance": 1400,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 10,
+          "horse_name": "マジッククッキー",
+          "pred_order": 2,
+          "p_win": 0.361472,
+          "p_top3": 0.869828,
+          "tansho_odds": 1.3,
+          "popularity": 1
+        },
+        {
+          "umaban": 6,
+          "horse_name": "ポッドベル",
+          "pred_order": 1,
+          "p_win": 0.379375,
+          "p_top3": 0.879729,
+          "tansho_odds": 5.4,
+          "popularity": 2
+        },
+        {
+          "umaban": 3,
+          "horse_name": "エムティエスターテ",
+          "pred_order": 7,
+          "p_win": 0.022878,
+          "p_top3": 0.113535,
+          "tansho_odds": 15.5,
+          "popularity": 3
+        },
+        {
+          "umaban": 14,
+          "horse_name": "ホウオウプレミア",
+          "pred_order": 3,
+          "p_win": 0.092332,
+          "p_top3": 0.42376,
+          "tansho_odds": 21.9,
+          "popularity": 6
+        },
+        {
+          "umaban": 8,
+          "horse_name": "レイアポポ",
+          "pred_order": 9,
+          "p_win": 0.011471,
+          "p_top3": 0.057559,
+          "tansho_odds": 75.7,
+          "popularity": 9
+        }
+      ],
+      "detail_path": "20260607/race_202605030210.json"
+    },
     {
       "race_id": "202605030211",
       "race_no": 11,
@@ -14,52 +604,819 @@
       "headcount": 17,
       "top_ai": [
         {
-          "umaban": 14,
-          "horse_name": "ガイアフォース",
-          "pred_order": 4,
-          "p_win": 0.109249,
-          "p_top3": 0.338645,
-          "tansho_odds": 1,
-          "popularity": 1
-        },
-        {
           "umaban": 11,
           "horse_name": "ワールズエンド",
           "pred_order": 3,
-          "p_win": 0.140257,
-          "p_top3": 0.416323,
-          "tansho_odds": 999.9,
-          "popularity": 12
+          "p_win": 0.124437,
+          "p_top3": 0.391172,
+          "tansho_odds": 20.6,
+          "popularity": 7
+        },
+        {
+          "umaban": 14,
+          "horse_name": "ガイアフォース",
+          "pred_order": 6,
+          "p_win": 0.055115,
+          "p_top3": 0.189498,
+          "tansho_odds": 3.6,
+          "popularity": 1
         },
         {
           "umaban": 6,
           "horse_name": "ステレンボッシュ",
           "pred_order": 2,
-          "p_win": 0.179795,
-          "p_top3": 0.502665,
-          "tansho_odds": 999.9,
-          "popularity": 8
-        },
-        {
-          "umaban": 10,
-          "horse_name": "ルクソールカフェ",
-          "pred_order": 8,
-          "p_win": 0.056463,
-          "p_top3": 0.186984,
-          "tansho_odds": 999.9,
-          "popularity": 11
+          "p_win": 0.238249,
+          "p_top3": 0.622792,
+          "tansho_odds": 10.3,
+          "popularity": 5
         },
         {
           "umaban": 17,
           "horse_name": "トロヴァトーレ",
           "pred_order": 1,
-          "p_win": 0.215797,
-          "p_top3": 0.569467,
-          "tansho_odds": 999.9,
-          "popularity": 17
+          "p_win": 0.238629,
+          "p_top3": 0.623376,
+          "tansho_odds": 3.6,
+          "popularity": 2
+        },
+        {
+          "umaban": 1,
+          "horse_name": "レーベンスティール",
+          "pred_order": 4,
+          "p_win": 0.094645,
+          "p_top3": 0.309883,
+          "tansho_odds": 7.5,
+          "popularity": 3
         }
       ],
       "detail_path": "20260607/race_202605030211.json"
+    },
+    {
+      "race_id": "202605030212",
+      "race_no": 12,
+      "race_name": "小金井特別",
+      "course": "東京",
+      "course_name": "東京 ダート1600m 左回り",
+      "distance": 1600,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 16,
+          "horse_name": "ヘリオトロープ",
+          "pred_order": 2,
+          "p_win": 0.35686,
+          "p_top3": 0.861182,
+          "tansho_odds": 3.8,
+          "popularity": 2
+        },
+        {
+          "umaban": 10,
+          "horse_name": "マクリール",
+          "pred_order": 1,
+          "p_win": 0.36775,
+          "p_top3": 0.867729,
+          "tansho_odds": 2.9,
+          "popularity": 1
+        },
+        {
+          "umaban": 13,
+          "horse_name": "ベラジオワールド",
+          "pred_order": 3,
+          "p_win": 0.094371,
+          "p_top3": 0.417206,
+          "tansho_odds": 7.4,
+          "popularity": 3
+        },
+        {
+          "umaban": 1,
+          "horse_name": "テンカムテキ",
+          "pred_order": 6,
+          "p_win": 0.019532,
+          "p_top3": 0.094014,
+          "tansho_odds": 10.3,
+          "popularity": 5
+        },
+        {
+          "umaban": 8,
+          "horse_name": "セントラルヴァレー",
+          "pred_order": 5,
+          "p_win": 0.027613,
+          "p_top3": 0.13184,
+          "tansho_odds": 17.9,
+          "popularity": 8
+        }
+      ],
+      "detail_path": "20260607/race_202605030212.json"
+    },
+    {
+      "race_id": "202609030201",
+      "race_no": 1,
+      "race_name": "3歳以上障害未勝利",
+      "course": "阪神",
+      "course_name": "阪神 ダート2970m 右回り",
+      "distance": 2970,
+      "surface": "障",
+      "going": null,
+      "headcount": 14,
+      "top_ai": [
+        {
+          "umaban": 10,
+          "horse_name": "フォーディアライフ",
+          "pred_order": 2,
+          "p_win": 0.267397,
+          "p_top3": 0.748429,
+          "tansho_odds": 2.5,
+          "popularity": 1
+        },
+        {
+          "umaban": 6,
+          "horse_name": "オリンポスカズマ",
+          "pred_order": 5,
+          "p_win": 0.023531,
+          "p_top3": 0.096917,
+          "tansho_odds": 47.1,
+          "popularity": 8
+        },
+        {
+          "umaban": 2,
+          "horse_name": "アルヴィア",
+          "pred_order": 1,
+          "p_win": 0.299299,
+          "p_top3": 0.784193,
+          "tansho_odds": 3.8,
+          "popularity": 2
+        },
+        {
+          "umaban": 13,
+          "horse_name": "モズナイスバディー",
+          "pred_order": 7,
+          "p_win": 0.009413,
+          "p_top3": 0.039328,
+          "tansho_odds": 20.1,
+          "popularity": 6
+        },
+        {
+          "umaban": 3,
+          "horse_name": "セイフウサツキ",
+          "pred_order": 3,
+          "p_win": 0.229766,
+          "p_top3": 0.695728,
+          "tansho_odds": 5.4,
+          "popularity": 3
+        }
+      ],
+      "detail_path": "20260607/race_202609030201.json"
+    },
+    {
+      "race_id": "202609030202",
+      "race_no": 2,
+      "race_name": "3歳未勝利",
+      "course": "阪神",
+      "course_name": "阪神 芝1800m 右回り 外回り",
+      "distance": 1800,
+      "surface": "芝",
+      "going": null,
+      "headcount": 15,
+      "top_ai": [
+        {
+          "umaban": 10,
+          "horse_name": "サリエンテ",
+          "pred_order": 1,
+          "p_win": 0.451836,
+          "p_top3": 0.891783,
+          "tansho_odds": 4.3,
+          "popularity": 1
+        },
+        {
+          "umaban": 3,
+          "horse_name": "ウィスカーパッド",
+          "pred_order": 3,
+          "p_win": 0.158513,
+          "p_top3": 0.576006,
+          "tansho_odds": 7.3,
+          "popularity": 5
+        },
+        {
+          "umaban": 9,
+          "horse_name": "メイショウプレマ",
+          "pred_order": 2,
+          "p_win": 0.186592,
+          "p_top3": 0.636853,
+          "tansho_odds": 6.4,
+          "popularity": 4
+        },
+        {
+          "umaban": 15,
+          "horse_name": "クロスボーダー",
+          "pred_order": 6,
+          "p_win": 0.037496,
+          "p_top3": 0.164568,
+          "tansho_odds": 5.1,
+          "popularity": 2
+        },
+        {
+          "umaban": 5,
+          "horse_name": "ジーティーメティオ",
+          "pred_order": 7,
+          "p_win": 0.019384,
+          "p_top3": 0.086854,
+          "tansho_odds": 9.7,
+          "popularity": 7
+        }
+      ],
+      "detail_path": "20260607/race_202609030202.json"
+    },
+    {
+      "race_id": "202609030203",
+      "race_no": 3,
+      "race_name": "3歳未勝利",
+      "course": "阪神",
+      "course_name": "阪神 ダート1800m 右回り",
+      "distance": 1800,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 6,
+          "horse_name": "リバーソニック",
+          "pred_order": 1,
+          "p_win": 0.41001,
+          "p_top3": 0.865507,
+          "tansho_odds": 3.6,
+          "popularity": 1
+        },
+        {
+          "umaban": 2,
+          "horse_name": "ロードヴェリタス",
+          "pred_order": 3,
+          "p_win": 0.113477,
+          "p_top3": 0.436915,
+          "tansho_odds": 5.6,
+          "popularity": 4
+        },
+        {
+          "umaban": 5,
+          "horse_name": "ダイメイクマモト",
+          "pred_order": 4,
+          "p_win": 0.110663,
+          "p_top3": 0.427901,
+          "tansho_odds": 4.5,
+          "popularity": 2
+        },
+        {
+          "umaban": 12,
+          "horse_name": "ウェイヴムーン",
+          "pred_order": 5,
+          "p_win": 0.028383,
+          "p_top3": 0.122001,
+          "tansho_odds": 9,
+          "popularity": 5
+        },
+        {
+          "umaban": 4,
+          "horse_name": "ウルトラハート",
+          "pred_order": 2,
+          "p_win": 0.237633,
+          "p_top3": 0.710495,
+          "tansho_odds": 4.8,
+          "popularity": 3
+        }
+      ],
+      "detail_path": "20260607/race_202609030203.json"
+    },
+    {
+      "race_id": "202609030204",
+      "race_no": 4,
+      "race_name": "3歳未勝利",
+      "course": "阪神",
+      "course_name": "阪神 ダート1400m 右回り",
+      "distance": 1400,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 8,
+          "horse_name": "ゼルダ",
+          "pred_order": 3,
+          "p_win": 0.023723,
+          "p_top3": 0.405156,
+          "tansho_odds": 9.9,
+          "popularity": 3
+        },
+        {
+          "umaban": 12,
+          "horse_name": "メイショウナナユキ",
+          "pred_order": 2,
+          "p_win": 0.041078,
+          "p_top3": 0.603051,
+          "tansho_odds": 6.3,
+          "popularity": 2
+        },
+        {
+          "umaban": 3,
+          "horse_name": "ビッグヒーロー",
+          "pred_order": 1,
+          "p_win": 0.882055,
+          "p_top3": 0.999064,
+          "tansho_odds": 1.8,
+          "popularity": 1
+        },
+        {
+          "umaban": 16,
+          "horse_name": "ロードインヴォーグ",
+          "pred_order": 6,
+          "p_win": 0.006505,
+          "p_top3": 0.121785,
+          "tansho_odds": 16.2,
+          "popularity": 6
+        },
+        {
+          "umaban": 7,
+          "horse_name": "モズジェネラル",
+          "pred_order": 8,
+          "p_win": 0.005381,
+          "p_top3": 0.10122,
+          "tansho_odds": 11.3,
+          "popularity": 4
+        }
+      ],
+      "detail_path": "20260607/race_202609030204.json"
+    },
+    {
+      "race_id": "202609030205",
+      "race_no": 5,
+      "race_name": "2歳新馬",
+      "course": "阪神",
+      "course_name": "阪神 芝1400m 右回り",
+      "distance": 1400,
+      "surface": "芝",
+      "going": null,
+      "headcount": 11,
+      "top_ai": [
+        {
+          "umaban": 3,
+          "horse_name": "イザベル",
+          "pred_order": 5,
+          "p_win": 0.086168,
+          "p_top3": 0.263195,
+          "tansho_odds": 7.2,
+          "popularity": 4
+        },
+        {
+          "umaban": 2,
+          "horse_name": "レッドネビュラ",
+          "pred_order": 4,
+          "p_win": 0.089386,
+          "p_top3": 0.271927,
+          "tansho_odds": 7.7,
+          "popularity": 5
+        },
+        {
+          "umaban": 5,
+          "horse_name": "ビスケットサンド",
+          "pred_order": 1,
+          "p_win": 0.158884,
+          "p_top3": 0.439749,
+          "tansho_odds": 4.6,
+          "popularity": 2
+        },
+        {
+          "umaban": 9,
+          "horse_name": "レゾルーティオ",
+          "pred_order": 2,
+          "p_win": 0.121107,
+          "p_top3": 0.353487,
+          "tansho_odds": 4.3,
+          "popularity": 1
+        },
+        {
+          "umaban": 8,
+          "horse_name": "スピークロウ",
+          "pred_order": 6,
+          "p_win": 0.085673,
+          "p_top3": 0.261844,
+          "tansho_odds": 20.9,
+          "popularity": 10
+        }
+      ],
+      "detail_path": "20260607/race_202609030205.json"
+    },
+    {
+      "race_id": "202609030206",
+      "race_no": 6,
+      "race_name": "3歳未勝利",
+      "course": "阪神",
+      "course_name": "阪神 芝2000m 右回り",
+      "distance": 2000,
+      "surface": "芝",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 15,
+          "horse_name": "フレアオブセンス",
+          "pred_order": 2,
+          "p_win": 0.103876,
+          "p_top3": 0.650592,
+          "tansho_odds": 2.9,
+          "popularity": 1
+        },
+        {
+          "umaban": 11,
+          "horse_name": "ビップヴォルフ",
+          "pred_order": 3,
+          "p_win": 0.095296,
+          "p_top3": 0.618914,
+          "tansho_odds": 4.2,
+          "popularity": 3
+        },
+        {
+          "umaban": 4,
+          "horse_name": "エースフライト",
+          "pred_order": 4,
+          "p_win": 0.033713,
+          "p_top3": 0.26036,
+          "tansho_odds": 8.5,
+          "popularity": 4
+        },
+        {
+          "umaban": 5,
+          "horse_name": "ペガサスジルシ",
+          "pred_order": 1,
+          "p_win": 0.706889,
+          "p_top3": 0.987749,
+          "tansho_odds": 3,
+          "popularity": 2
+        },
+        {
+          "umaban": 10,
+          "horse_name": "レイワノキセキ",
+          "pred_order": 8,
+          "p_win": 0.004799,
+          "p_top3": 0.039005,
+          "tansho_odds": 22.4,
+          "popularity": 5
+        }
+      ],
+      "detail_path": "20260607/race_202609030206.json"
+    },
+    {
+      "race_id": "202609030207",
+      "race_no": 7,
+      "race_name": "3歳以上1勝クラス",
+      "course": "阪神",
+      "course_name": "阪神 ダート1800m 右回り",
+      "distance": 1800,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 11,
+          "horse_name": "ミルボナー",
+          "pred_order": 2,
+          "p_win": 0.08828,
+          "p_top3": 0.438958,
+          "tansho_odds": 7.8,
+          "popularity": 4
+        },
+        {
+          "umaban": 5,
+          "horse_name": "リアンドゥクール",
+          "pred_order": 4,
+          "p_win": 0.075075,
+          "p_top3": 0.3844,
+          "tansho_odds": 5.4,
+          "popularity": 3
+        },
+        {
+          "umaban": 16,
+          "horse_name": "アロマフェリス",
+          "pred_order": 1,
+          "p_win": 0.610617,
+          "p_top3": 0.958167,
+          "tansho_odds": 2.7,
+          "popularity": 1
+        },
+        {
+          "umaban": 8,
+          "horse_name": "ケイツーリーブル",
+          "pred_order": 3,
+          "p_win": 0.087494,
+          "p_top3": 0.43585,
+          "tansho_odds": 4.3,
+          "popularity": 2
+        },
+        {
+          "umaban": 2,
+          "horse_name": "グロリアス",
+          "pred_order": 7,
+          "p_win": 0.019341,
+          "p_top3": 0.109111,
+          "tansho_odds": 24.7,
+          "popularity": 7
+        }
+      ],
+      "detail_path": "20260607/race_202609030207.json"
+    },
+    {
+      "race_id": "202609030208",
+      "race_no": 8,
+      "race_name": "3歳以上1勝クラス",
+      "course": "阪神",
+      "course_name": "阪神 芝1400m 右回り",
+      "distance": 1400,
+      "surface": "芝",
+      "going": null,
+      "headcount": 18,
+      "top_ai": [
+        {
+          "umaban": 6,
+          "horse_name": "ダンデノン",
+          "pred_order": 2,
+          "p_win": 0.180178,
+          "p_top3": 0.7139,
+          "tansho_odds": 3.8,
+          "popularity": 2
+        },
+        {
+          "umaban": 1,
+          "horse_name": "ニシノサリーナ",
+          "pred_order": 5,
+          "p_win": 0.022957,
+          "p_top3": 0.126297,
+          "tansho_odds": 12,
+          "popularity": 5
+        },
+        {
+          "umaban": 14,
+          "horse_name": "ワンコールアウェイ",
+          "pred_order": 1,
+          "p_win": 0.556033,
+          "p_top3": 0.95395,
+          "tansho_odds": 3.6,
+          "popularity": 1
+        },
+        {
+          "umaban": 17,
+          "horse_name": "アスクヴォルテージ",
+          "pred_order": 7,
+          "p_win": 0.011664,
+          "p_top3": 0.065036,
+          "tansho_odds": 17.6,
+          "popularity": 6
+        },
+        {
+          "umaban": 7,
+          "horse_name": "サリュエ",
+          "pred_order": 3,
+          "p_win": 0.126626,
+          "p_top3": 0.585977,
+          "tansho_odds": 5.3,
+          "popularity": 3
+        }
+      ],
+      "detail_path": "20260607/race_202609030208.json"
+    },
+    {
+      "race_id": "202609030209",
+      "race_no": 9,
+      "race_name": "洲本特別",
+      "course": "阪神",
+      "course_name": "阪神 ダート1400m 右回り",
+      "distance": 1400,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 8,
+          "horse_name": "カナタコナタ",
+          "pred_order": 3,
+          "p_win": 0.104658,
+          "p_top3": 0.383879,
+          "tansho_odds": 4.3,
+          "popularity": 1
+        },
+        {
+          "umaban": 10,
+          "horse_name": "マイティマイティー",
+          "pred_order": 4,
+          "p_win": 0.06833,
+          "p_top3": 0.263214,
+          "tansho_odds": 4.7,
+          "popularity": 3
+        },
+        {
+          "umaban": 4,
+          "horse_name": "リサシテーション",
+          "pred_order": 1,
+          "p_win": 0.378199,
+          "p_top3": 0.823386,
+          "tansho_odds": 4.3,
+          "popularity": 2
+        },
+        {
+          "umaban": 6,
+          "horse_name": "コスモストーム",
+          "pred_order": 5,
+          "p_win": 0.055052,
+          "p_top3": 0.21556,
+          "tansho_odds": 8.7,
+          "popularity": 5
+        },
+        {
+          "umaban": 16,
+          "horse_name": "ポッドドンナー",
+          "pred_order": 2,
+          "p_win": 0.237912,
+          "p_top3": 0.679008,
+          "tansho_odds": 8,
+          "popularity": 4
+        }
+      ],
+      "detail_path": "20260607/race_202609030209.json"
+    },
+    {
+      "race_id": "202609030210",
+      "race_no": 10,
+      "race_name": "三木特別",
+      "course": "阪神",
+      "course_name": "阪神 芝1800m 右回り 外回り",
+      "distance": 1800,
+      "surface": "芝",
+      "going": null,
+      "headcount": 9,
+      "top_ai": [
+        {
+          "umaban": 5,
+          "horse_name": "ジョイエッロ",
+          "pred_order": 1,
+          "p_win": 0.621759,
+          "p_top3": 0.977976,
+          "tansho_odds": 1.4,
+          "popularity": 1
+        },
+        {
+          "umaban": 6,
+          "horse_name": "エバーグルーヴ",
+          "pred_order": 3,
+          "p_win": 0.138684,
+          "p_top3": 0.709532,
+          "tansho_odds": 4.5,
+          "popularity": 2
+        },
+        {
+          "umaban": 8,
+          "horse_name": "ヤマニンガラッシア",
+          "pred_order": 2,
+          "p_win": 0.151752,
+          "p_top3": 0.739255,
+          "tansho_odds": 8.3,
+          "popularity": 3
+        },
+        {
+          "umaban": 3,
+          "horse_name": "ユメハハテシナク",
+          "pred_order": 7,
+          "p_win": 0.006991,
+          "p_top3": 0.04678,
+          "tansho_odds": 19,
+          "popularity": 5
+        },
+        {
+          "umaban": 9,
+          "horse_name": "ツーエムクロノス",
+          "pred_order": 5,
+          "p_win": 0.016012,
+          "p_top3": 0.105946,
+          "tansho_odds": 32.3,
+          "popularity": 6
+        }
+      ],
+      "detail_path": "20260607/race_202609030210.json"
+    },
+    {
+      "race_id": "202609030211",
+      "race_no": 11,
+      "race_name": "水無月S",
+      "course": "阪神",
+      "course_name": "阪神 ダート1200m 右回り",
+      "distance": 1200,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 16,
+      "top_ai": [
+        {
+          "umaban": 15,
+          "horse_name": "コンクイスタ",
+          "pred_order": 2,
+          "p_win": 0.102175,
+          "p_top3": 0.463361,
+          "tansho_odds": 3.5,
+          "popularity": 1
+        },
+        {
+          "umaban": 6,
+          "horse_name": "アンズアメ",
+          "pred_order": 1,
+          "p_win": 0.587503,
+          "p_top3": 0.946496,
+          "tansho_odds": 3.5,
+          "popularity": 2
+        },
+        {
+          "umaban": 5,
+          "horse_name": "ショウナンアビアス",
+          "pred_order": 5,
+          "p_win": 0.046223,
+          "p_top3": 0.23421,
+          "tansho_odds": 16.5,
+          "popularity": 6
+        },
+        {
+          "umaban": 8,
+          "horse_name": "クロジシジョー",
+          "pred_order": 3,
+          "p_win": 0.056381,
+          "p_top3": 0.280834,
+          "tansho_odds": 12.2,
+          "popularity": 5
+        },
+        {
+          "umaban": 14,
+          "horse_name": "サンライズアムール",
+          "pred_order": 12,
+          "p_win": 0.009035,
+          "p_top3": 0.048343,
+          "tansho_odds": 8.3,
+          "popularity": 3
+        }
+      ],
+      "detail_path": "20260607/race_202609030211.json"
+    },
+    {
+      "race_id": "202609030212",
+      "race_no": 12,
+      "race_name": "3歳以上1勝クラス",
+      "course": "阪神",
+      "course_name": "阪神 ダート1800m 右回り",
+      "distance": 1800,
+      "surface": "ダート",
+      "going": null,
+      "headcount": 12,
+      "top_ai": [
+        {
+          "umaban": 3,
+          "horse_name": "チェリヴェント",
+          "pred_order": 3,
+          "p_win": 0.163456,
+          "p_top3": 0.511383,
+          "tansho_odds": 2.1,
+          "popularity": 1
+        },
+        {
+          "umaban": 8,
+          "horse_name": "バートラガッツ",
+          "pred_order": 5,
+          "p_win": 0.054579,
+          "p_top3": 0.199009,
+          "tansho_odds": 4.1,
+          "popularity": 2
+        },
+        {
+          "umaban": 11,
+          "horse_name": "ウルフ",
+          "pred_order": 6,
+          "p_win": 0.053963,
+          "p_top3": 0.196904,
+          "tansho_odds": 13.4,
+          "popularity": 5
+        },
+        {
+          "umaban": 2,
+          "horse_name": "ココロヅヨサ",
+          "pred_order": 4,
+          "p_win": 0.143154,
+          "p_top3": 0.462754,
+          "tansho_odds": 7.2,
+          "popularity": 4
+        },
+        {
+          "umaban": 10,
+          "horse_name": "ガウラディスコ",
+          "pred_order": 2,
+          "p_win": 0.179295,
+          "p_top3": 0.546032,
+          "tansho_odds": 6.4,
+          "popularity": 3
+        }
+      ],
+      "detail_path": "20260607/race_202609030212.json"
     }
   ]
 }
