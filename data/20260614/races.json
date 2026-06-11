@@ -1,0 +1,65 @@
+{
+  "race_date": "20260614",
+  "race_count": 1,
+  "races": [
+    {
+      "race_id": "202609030411",
+      "race_no": 11,
+      "race_name": "宝塚記念",
+      "course": "阪神",
+      "course_name": "阪神 芝2200m 右回り",
+      "distance": 2200,
+      "surface": "芝",
+      "going": null,
+      "headcount": 18,
+      "top_ai": [
+        {
+          "umaban": 2,
+          "horse_name": "ミュージアムマイル",
+          "pred_order": 1,
+          "p_win": 0.310166,
+          "p_top3": 0.757503,
+          "tansho_odds": 5.7,
+          "popularity": 2
+        },
+        {
+          "umaban": 1,
+          "horse_name": "ダノンデサイル",
+          "pred_order": 3,
+          "p_win": 0.138977,
+          "p_top3": 0.469184,
+          "tansho_odds": 10,
+          "popularity": 5
+        },
+        {
+          "umaban": 5,
+          "horse_name": "クロワデュノール",
+          "pred_order": 2,
+          "p_win": 0.276535,
+          "p_top3": 0.720155,
+          "tansho_odds": 2.5,
+          "popularity": 1
+        },
+        {
+          "umaban": 15,
+          "horse_name": "マイユニバース",
+          "pred_order": 6,
+          "p_win": 0.03413,
+          "p_top3": 0.132152,
+          "tansho_odds": 14,
+          "popularity": 6
+        },
+        {
+          "umaban": 4,
+          "horse_name": "ミクニインスパイア",
+          "pred_order": 4,
+          "p_win": 0.081682,
+          "p_top3": 0.298956,
+          "tansho_odds": 20,
+          "popularity": 7
+        }
+      ],
+      "detail_path": "20260614/race_202609030411.json"
+    }
+  ]
+}
